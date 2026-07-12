@@ -1,0 +1,24 @@
+# Nightly Cowork configuration for the hexgen monitor.
+#
+# Inherits everything (problem statement, seed set, keywords, thresholds) from
+# hexgen.yaml and overrides only what the scheduled agent-as-LLM run needs:
+#   - the LLM is fulfilled by the Claude Code agent (provider: batch), not an API
+#   - durable state lives under state/ so it is committed and survives the
+#     ephemeral nightly container (data/ and output/ are gitignored)
+#
+# Run it with the two-phase flow (see docs/NIGHTLY.md):
+#   research-agent source        -c config/hexgen-nightly.yaml
+#   research-agent batch-plan     -c config/hexgen-nightly.yaml   # repeat + answer until "ready"
+#   research-agent batch-apply    -c config/hexgen-nightly.yaml
+
+extends: hexgen.yaml
+
+llm:
+  provider: batch
+  batch_dir: state/batch
+
+storage:
+  db_path: state/hexgen.db
+
+delivery:
+  output_dir: state/output
