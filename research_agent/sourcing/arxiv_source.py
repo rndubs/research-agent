@@ -27,7 +27,7 @@ from .base import PaperSource
 
 logger = logging.getLogger(__name__)
 
-QUERY_URL = "http://export.arxiv.org/api/query"
+QUERY_URL = "https://export.arxiv.org/api/query"
 
 # Atom + arXiv-schema namespaces used throughout the feed.
 NS = {
