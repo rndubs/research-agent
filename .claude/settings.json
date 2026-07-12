@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c 'import research_agent' 2>/dev/null || python3 -m pip install -e . --quiet 2>/dev/null || true; mkdir -p state/batch state/output 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}

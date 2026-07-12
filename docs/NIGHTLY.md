@@ -99,9 +99,10 @@ You are running the nightly hexgen research monitor in this repo (batch / agent-
    {"key": "<request key>", "payload": {...}} to state/batch/answers.jsonl. Then re-run
    batch-plan. Cap at ~6 rounds.
 4. Apply: `research-agent batch-apply -c config/hexgen-nightly.yaml`.
-5. Commit state so it survives to tomorrow:
-   `git add state/ && git commit -m "nightly monitor: $(date -I)" && git push -u origin <this branch>`.
-6. Reply with the top new backlog items from state/output/digest.md (or say "no new items").
+5. Publish to Pages: `bash scripts/publish_pages.sh state/output` (copies the digest to docs/index.html).
+6. Commit state so it survives to tomorrow:
+   `git add state/ docs/ && git commit -m "nightly monitor: $(date -I)" && git push -u origin <this branch>`.
+7. Reply with the top new backlog items from state/output/digest.md (or say "no new items").
 
 You ARE the LLM for the relevance/extraction/scoring judgments — answer them as
 carefully as you would in an interactive session, anchored to the problem statement
@@ -109,6 +110,10 @@ that appears in each prompt.
 ```
 
 Notes:
+- **GitHub Pages dashboard.** The nightly job runs `scripts/publish_pages.sh`,
+  which copies the rendered digest to `docs/index.html`. Enable it once under
+  Settings → Pages → *Deploy from a branch* → this branch, folder `/docs`. The
+  backlog is then browsable at your Pages URL and refreshes each night.
 - First night bootstraps an empty backlog; it accumulates from there because
   `state/hexgen.db` is committed.
 - If you'd rather review than auto-commit to the working branch, point the last
