@@ -33,4 +33,12 @@ def get_llm(config: LLMConfig) -> LLMClient:
         from .anthropic_client import AnthropicLLM
 
         return AnthropicLLM(config)
+    if config.provider == "batch":
+        # Batch/agent-as-LLM mode can't run inside a single `pipeline.run()` call
+        # (a subprocess can't call back up into the agent mid-loop). It is driven
+        # by the two-phase `research-agent batch-plan` / `batch-apply` flow.
+        raise ValueError(
+            "provider='batch' is driven by `research-agent batch-plan` / `batch-apply`, "
+            "not `run`. See docs/NIGHTLY.md."
+        )
     raise ValueError(f"Unknown LLM provider: {config.provider!r}")

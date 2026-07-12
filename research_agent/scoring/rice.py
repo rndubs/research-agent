@@ -248,6 +248,7 @@ def estimate_rice(
             _rice_prompt(config, paper, extraction),
             RiceEstimate,
             model=config.llm.scoring_model,
+            cache_key=paper.id,  # stable key for batch/agent-as-LLM mode
         )
         impact = est.expected_impact
         applicability = est.applicability

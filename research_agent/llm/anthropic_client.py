@@ -68,6 +68,7 @@ class AnthropicLLM(LLMClient):
         model: str | None = None,
         max_tokens: int = 1024,
         temperature: float = 0.0,
+        cache_key: str | None = None,  # unused: direct API needs no request key
     ) -> str:
         kwargs: dict[str, Any] = {
             "model": model or self.config.relevance_model,
@@ -91,6 +92,7 @@ class AnthropicLLM(LLMClient):
         model: str | None = None,
         max_tokens: int = 2048,
         temperature: float = 0.0,
+        cache_key: str | None = None,  # unused: direct API needs no request key
     ) -> T:
         tool_name = _tool_name(schema)
         tool = {

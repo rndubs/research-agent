@@ -50,7 +50,7 @@ class ClaimExtractor:
             limitation_patterns=ex.limitation_section_patterns,
         )
         prompt = self._build_prompt(paper, chunks)
-        result = self._run_llm(prompt)
+        result = self._run_llm(prompt, cache_key=paper.id)
         return self._to_extraction(paper, result, chunks)
 
     # -- internals -------------------------------------------------------- #
@@ -62,11 +62,11 @@ class ClaimExtractor:
             or self.config.llm.extraction_model
         )
 
-    def _run_llm(self, prompt: str) -> ExtractionResult:
+    def _run_llm(self, prompt: str, cache_key: str | None = None) -> ExtractionResult:
         model = self._model_name()
         try:
             return self.llm.structured(
-                prompt, ExtractionResult, model=model, temperature=0
+                prompt, ExtractionResult, model=model, temperature=0, cache_key=cache_key
             )
         except Exception:
             # Malformed output (ValidationError / coercion error) or a transient

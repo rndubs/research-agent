@@ -114,6 +114,46 @@ def run(
     console.print(table)
 
 
+@app.command("batch-plan")
+def batch_plan_cmd(config: str = typer.Option(DEFAULT_CONFIG, "--config", "-c")) -> None:
+    """Batch mode: collect the next round of LLM requests for the agent to answer.
+
+    Re-run until it prints 'ready', answering the emitted requests.jsonl between
+    runs, then run `batch-apply`. See docs/NIGHTLY.md.
+    """
+    import json as _json
+
+    from .nightly import batch_plan
+
+    res = batch_plan(_load(config))
+    if res["status"] == "ready":
+        console.print("[green]ready[/green] — all LLM requests answered. Run `research-agent batch-apply`.")
+    else:
+        console.print(
+            f"[yellow]pending[/yellow] {res['count']} request(s) for stage "
+            f"'{res['stage']}'. Answer {res['requests_path']} -> {res['answers_path']}, "
+            "then re-run `batch-plan`."
+        )
+    console.print(_json.dumps(res))  # machine-readable line for the driving agent
+
+
+@app.command("batch-apply")
+def batch_apply_cmd(config: str = typer.Option(DEFAULT_CONFIG, "--config", "-c")) -> None:
+    """Batch mode: run the stages for real using the answered cache; deliver."""
+    from .llm.batch import MissingBatchAnswer
+    from .nightly import batch_apply
+
+    cfg = _load(config)
+    try:
+        digest = batch_apply(cfg)
+    except MissingBatchAnswer as exc:
+        console.print(f"[red]not ready[/red]: {exc}")
+        raise typer.Exit(1) from None
+    console.print(
+        f"[green]applied[/green] — {digest.new_item_count} new items -> {cfg.delivery.output_dir}/"
+    )
+
+
 @app.command()
 def backlog(
     config: str = typer.Option(DEFAULT_CONFIG, "--config", "-c"),

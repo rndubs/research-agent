@@ -32,8 +32,15 @@ class LLMClient(ABC):
         model: str | None = None,
         max_tokens: int = 1024,
         temperature: float = 0.0,
+        cache_key: str | None = None,
     ) -> str:
-        """Return the model's free-text completion for ``prompt``."""
+        """Return the model's free-text completion for ``prompt``.
+
+        ``cache_key`` is an optional stable identifier for this logical request
+        (e.g. a paper id). Most clients ignore it; the batch/agent-as-LLM client
+        uses it as the request key so a "plan then answer then apply" loop stays
+        stable even if the prompt text varies slightly between passes.
+        """
 
     @abstractmethod
     def structured(
@@ -45,8 +52,12 @@ class LLMClient(ABC):
         model: str | None = None,
         max_tokens: int = 2048,
         temperature: float = 0.0,
+        cache_key: str | None = None,
     ) -> T:
-        """Return a validated instance of ``schema`` produced by the model."""
+        """Return a validated instance of ``schema`` produced by the model.
+
+        See :meth:`complete` for ``cache_key``.
+        """
 
 
 def _default_for_annotation(ann: Any) -> Any:

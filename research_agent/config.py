@@ -18,14 +18,30 @@ import yaml
 from pydantic import BaseModel, Field
 
 
+def _deep_merge(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any]:
+    """Recursively merge ``override`` onto ``base`` (dicts merge; else override wins)."""
+    out = dict(base)
+    for key, val in override.items():
+        if isinstance(val, dict) and isinstance(out.get(key), dict):
+            out[key] = _deep_merge(out[key], val)
+        else:
+            out[key] = val
+    return out
+
+
 class LLMConfig(BaseModel):
-    provider: str = Field(default="anthropic", description="'anthropic' | 'mock'")
+    # 'anthropic' = direct API (needs a key); 'batch' = agent-as-LLM handoff for
+    # Cowork (driven by `research-agent batch-plan`/`batch-apply`); 'mock' = the
+    # deterministic offline stub.
+    provider: str = Field(default="anthropic", description="'anthropic' | 'batch' | 'mock'")
     relevance_model: str = "claude-haiku-4-5-20251001"
     extraction_model: str = "claude-sonnet-5"
     scoring_model: str = "claude-haiku-4-5-20251001"
     max_tokens: int = 4096
     temperature: float = 0.0
     api_key_env: str = "ANTHROPIC_API_KEY"
+    # Where the batch client queues requests / reads answers (batch provider).
+    batch_dir: str = "data/batch"
 
 
 class EmbeddingConfig(BaseModel):
@@ -139,12 +155,30 @@ class Config(BaseModel):
 
     @classmethod
     def load(cls, path: str | os.PathLike[str]) -> Config:
-        """Load config from a YAML file."""
+        """Load config from a YAML file.
+
+        Supports a top-level ``extends: <relative-path>`` key: the referenced
+        base config is loaded first and this file's keys are deep-merged over it
+        (dicts merge recursively; scalars and lists override). This lets a
+        nightly/variant config change only a few fields without duplicating the
+        whole problem definition.
+        """
         p = Path(path)
-        data: dict[str, Any] = yaml.safe_load(p.read_text()) or {}
+        data = cls._load_raw(p)
         cfg = cls.model_validate(data)
         cfg.config_path = str(p)
         return cfg
+
+    @classmethod
+    def _load_raw(cls, p: Path) -> dict[str, Any]:
+        raw: dict[str, Any] = yaml.safe_load(p.read_text()) or {}
+        base_ref = raw.pop("extends", None)
+        if base_ref:
+            base_path = Path(base_ref)
+            if not base_path.is_absolute():
+                base_path = p.parent / base_path
+            return _deep_merge(cls._load_raw(base_path), raw)
+        return raw
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Config:

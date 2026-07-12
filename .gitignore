@@ -232,3 +232,11 @@ models_cache/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+
+# --- nightly monitor durable state (committed so it survives ephemeral runs) ---
+# The default config writes to data/ + output/ (ignored above); the nightly
+# Cowork config writes here and IS committed so the backlog accumulates.
+!state/
+!state/**
+# ...except the transient request queue, which is regenerated each plan round.
+state/batch/requests.jsonl

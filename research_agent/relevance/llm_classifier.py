@@ -69,6 +69,7 @@ class LLMRelevanceClassifier:
             RelevanceJudgment,
             model=self.config.llm.relevance_model,
             temperature=0,
+            cache_key=paper.id,  # stable key for batch/agent-as-LLM mode
         )
         return RelevanceResult(
             paper_id=paper.id,

@@ -44,6 +44,7 @@ class MockLLM(LLMClient):
         model: str | None = None,
         max_tokens: int = 1024,
         temperature: float = 0.0,
+        cache_key: str | None = None,
     ) -> str:
         self.calls.append({"kind": "complete", "prompt": prompt, "system": system})
         if self.handler is not None:
@@ -67,9 +68,16 @@ class MockLLM(LLMClient):
         model: str | None = None,
         max_tokens: int = 2048,
         temperature: float = 0.0,
+        cache_key: str | None = None,
     ) -> T:
         self.calls.append(
-            {"kind": "structured", "prompt": prompt, "schema": schema.__name__, "system": system}
+            {
+                "kind": "structured",
+                "prompt": prompt,
+                "schema": schema.__name__,
+                "system": system,
+                "cache_key": cache_key,
+            }
         )
         if self.handler is not None:
             out = self.handler("structured", prompt=prompt, schema=schema, system=system)

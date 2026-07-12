@@ -83,6 +83,17 @@ independently and idempotently, so a cron entry like
 is the entire "ongoing monitor". Outputs (ranked `backlog.md`, `digest.md`,
 `digest.html`) land in `output/`.
 
+### The LLM backend is pluggable (`llm.provider`)
+
+The three LLM touchpoints (relevance, extraction, scoring) go through one
+interface, so you choose who fulfills them:
+
+- `anthropic` — the Anthropic API (needs `ANTHROPIC_API_KEY`).
+- `batch` — **the Claude Code agent itself**, for running nightly in Claude
+  Cowork with no API key, via a `batch-plan` → answer → `batch-apply` file
+  handoff. See [`docs/NIGHTLY.md`](docs/NIGHTLY.md).
+- `mock` — deterministic offline stub (tests / dry-runs).
+
 ## Configuration (Stage 0)
 
 Everything domain-specific lives in [`config/hexgen.yaml`](config/hexgen.yaml):
