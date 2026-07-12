@@ -7,7 +7,7 @@ so tests can inject an ``httpx.MockTransport``.
 
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 import httpx
 from tenacity import (
@@ -33,8 +33,8 @@ class HttpClient:
     def __init__(
         self,
         timeout: float = 30.0,
-        transport: Optional[httpx.BaseTransport] = None,
-        headers: Optional[dict[str, str]] = None,
+        transport: httpx.BaseTransport | None = None,
+        headers: dict[str, str] | None = None,
         max_attempts: int = 4,
     ) -> None:
         hdrs = {"User-Agent": USER_AGENT}
@@ -75,7 +75,7 @@ class HttpClient:
     def close(self) -> None:
         self._client.close()
 
-    def __enter__(self) -> "HttpClient":
+    def __enter__(self) -> HttpClient:
         return self
 
     def __exit__(self, *exc: Any) -> None:

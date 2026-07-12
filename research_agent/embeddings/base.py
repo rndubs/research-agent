@@ -17,6 +17,11 @@ class Embedder(ABC):
 
     dim: int
     name: str = "embedder"
+    # A calibrated cosine cutoff for relevance filtering. It differs sharply
+    # between embedders (dense SPECTER2 vectors sit much higher than the crude
+    # hashing fallback), so Stage 2 uses it to auto-correct a config threshold
+    # that was tuned for a different embedder when a fallback silently occurs.
+    suggested_relevance_threshold: float = 0.3
 
     @abstractmethod
     def embed(self, texts: list[str]) -> np.ndarray:

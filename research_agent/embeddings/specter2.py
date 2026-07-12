@@ -15,6 +15,7 @@ from .base import Embedder, l2_normalize
 
 class Specter2Embedder(Embedder):
     name = "specter2"
+    suggested_relevance_threshold = 0.5
 
     def __init__(
         self,

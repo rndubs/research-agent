@@ -9,8 +9,8 @@ swapped if it disappears (the Papers With Code shutdown is the cautionary tale).
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import Iterator
 from datetime import datetime
-from typing import Iterator, Optional
 
 from ..models import Paper
 
@@ -24,7 +24,7 @@ class PaperSource(ABC):
     def harvest(
         self,
         *,
-        since: Optional[datetime] = None,
+        since: datetime | None = None,
         max_results: int = 200,
     ) -> Iterator[Paper]:
         """Yield papers created/updated since ``since`` (newest-first is fine).

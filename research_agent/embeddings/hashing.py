@@ -30,7 +30,7 @@ def _char_ngrams(word: str, n: int = 3) -> list[str]:
 def _tokens(text: str) -> list[str]:
     words = _TOKEN_RE.findall(text.lower())
     grams: list[str] = list(words)
-    grams += [f"{a}_{b}" for a, b in zip(words, words[1:])]  # word bigrams
+    grams += [f"{a}_{b}" for a, b in zip(words, words[1:], strict=False)]  # word bigrams
     for w in words:
         if len(w) >= 3:
             grams += _char_ngrams(w, 3)  # subword robustness
@@ -46,6 +46,8 @@ def _hash(token: str, dim: int) -> tuple[int, float]:
 
 class HashingEmbedder(Embedder):
     name = "hashing"
+    # Crude subword-hash cosines run much lower than dense SPECTER2 ones.
+    suggested_relevance_threshold = 0.15
 
     def __init__(self, dim: int = 256) -> None:
         self.dim = dim

@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import yaml
 from pydantic import BaseModel, Field
@@ -43,7 +43,7 @@ class SourcingConfig(BaseModel):
     arxiv_categories: list[str] = Field(default_factory=lambda: ["cs.LG", "cs.CV", "cs.CG"])
     max_results_per_run: int = 200
     # OAI-PMH set for selective harvesting; optional (falls back to the query API).
-    oai_set: Optional[str] = None
+    oai_set: str | None = None
     use_semantic_scholar: bool = True
     use_openalex: bool = True
     use_hf_papers: bool = False
@@ -84,6 +84,10 @@ class ScoringConfig(BaseModel):
     weight_impact: float = 1.0
     weight_applicability: float = 1.0
     weight_confidence: float = 1.0
+    # One backlog item per paper by default (a paper is one "thing to try").
+    # Enable to also spin distinct high-value claimed advantages into their own
+    # items — richer, but risks backlog bloat, so it is opt-in.
+    emit_secondary_items: bool = False
     # Reserve backlog capacity for high-citation foundational papers to fight
     # recency bias (a documented Matthew-effect failure mode).
     foundational_reserved_slots: int = 5
@@ -131,10 +135,10 @@ class Config(BaseModel):
     storage: StorageConfig = Field(default_factory=StorageConfig)
 
     # Populated at load time; not part of the YAML.
-    config_path: Optional[str] = None
+    config_path: str | None = None
 
     @classmethod
-    def load(cls, path: str | os.PathLike[str]) -> "Config":
+    def load(cls, path: str | os.PathLike[str]) -> Config:
         """Load config from a YAML file."""
         p = Path(path)
         data: dict[str, Any] = yaml.safe_load(p.read_text()) or {}
@@ -143,7 +147,7 @@ class Config(BaseModel):
         return cfg
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "Config":
+    def from_dict(cls, data: dict[str, Any]) -> Config:
         return cls.model_validate(data)
 
     def resolved_db_path(self) -> Path:

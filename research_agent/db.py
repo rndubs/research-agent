@@ -14,9 +14,10 @@ from __future__ import annotations
 
 import json
 import sqlite3
+from collections.abc import Iterable, Iterator
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Iterable, Iterator, Optional
+from typing import Any
 
 import numpy as np
 
@@ -115,7 +116,7 @@ class Database:
     def close(self) -> None:
         self.conn.close()
 
-    def __enter__(self) -> "Database":
+    def __enter__(self) -> Database:
         return self
 
     def __exit__(self, *exc: Any) -> None:
@@ -151,7 +152,7 @@ class Database:
         )
         self.conn.commit()
 
-    def get_paper(self, paper_id: str) -> Optional[Paper]:
+    def get_paper(self, paper_id: str) -> Paper | None:
         row = self.conn.execute("SELECT data FROM papers WHERE id = ?", (paper_id,)).fetchone()
         return Paper.model_validate_json(row["data"]) if row else None
 
@@ -166,7 +167,7 @@ class Database:
         paper.status = status
         self.upsert_paper(paper)
 
-    def iter_papers(self, status: Optional[PaperStatus] = None) -> Iterator[Paper]:
+    def iter_papers(self, status: PaperStatus | None = None) -> Iterator[Paper]:
         if status is not None:
             cur = self.conn.execute(
                 "SELECT data FROM papers WHERE status = ? ORDER BY published DESC", (status.value,)
@@ -179,7 +180,7 @@ class Database:
     def papers_by_status(self, status: PaperStatus) -> list[Paper]:
         return list(self.iter_papers(status))
 
-    def count_papers(self, status: Optional[PaperStatus] = None) -> int:
+    def count_papers(self, status: PaperStatus | None = None) -> int:
         if status is not None:
             row = self.conn.execute(
                 "SELECT COUNT(*) AS c FROM papers WHERE status = ?", (status.value,)
@@ -198,7 +199,7 @@ class Database:
         )
         self.conn.commit()
 
-    def get_embedding(self, paper_id: str) -> Optional[np.ndarray]:
+    def get_embedding(self, paper_id: str) -> np.ndarray | None:
         row = self.conn.execute(
             "SELECT vector FROM embeddings WHERE paper_id = ?", (paper_id,)
         ).fetchone()
@@ -225,7 +226,7 @@ class Database:
         )
         self.conn.commit()
 
-    def get_extraction(self, paper_id: str) -> Optional[Extraction]:
+    def get_extraction(self, paper_id: str) -> Extraction | None:
         row = self.conn.execute("SELECT data FROM claims WHERE paper_id = ?", (paper_id,)).fetchone()
         return Extraction.model_validate_json(row["data"]) if row else None
 
@@ -253,13 +254,13 @@ class Database:
         )
         self.conn.commit()
 
-    def get_backlog_item(self, item_id: str) -> Optional[BacklogItem]:
+    def get_backlog_item(self, item_id: str) -> BacklogItem | None:
         row = self.conn.execute("SELECT data FROM backlog WHERE id = ?", (item_id,)).fetchone()
         return BacklogItem.model_validate_json(row["data"]) if row else None
 
     def iter_backlog(
         self,
-        status: Optional[BacklogStatus] = None,
+        status: BacklogStatus | None = None,
         order_by_score: bool = True,
     ) -> Iterator[BacklogItem]:
         q = "SELECT data FROM backlog"
@@ -292,7 +293,7 @@ class Database:
             )
 
     # -- key/value state -------------------------------------------------- #
-    def get_state(self, key: str, default: Optional[str] = None) -> Optional[str]:
+    def get_state(self, key: str, default: str | None = None) -> str | None:
         row = self.conn.execute("SELECT value FROM state WHERE key = ?", (key,)).fetchone()
         return row["value"] if row else default
 
@@ -303,7 +304,7 @@ class Database:
         )
         self.conn.commit()
 
-    def get_last_harvest(self) -> Optional[datetime]:
+    def get_last_harvest(self) -> datetime | None:
         v = self.get_state("last_harvest")
         return datetime.fromisoformat(v) if v else None
 

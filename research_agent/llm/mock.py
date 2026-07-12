@@ -13,20 +13,21 @@ All calls are recorded on ``.calls`` for assertions.
 
 from __future__ import annotations
 
-from typing import Any, Callable, Optional
+from collections.abc import Callable
+from typing import Any
 
 from pydantic import BaseModel
 
-from .base import LLMClient, build_stub, T
+from .base import LLMClient, T, build_stub
 
 
 class MockLLM(LLMClient):
     def __init__(
         self,
         *,
-        text_responses: Optional[dict[str, str] | Callable[[str], str]] = None,
-        structured_responses: Optional[dict[str, Any]] = None,
-        handler: Optional[Callable[..., Any]] = None,
+        text_responses: dict[str, str] | Callable[[str], str] | None = None,
+        structured_responses: dict[str, Any] | None = None,
+        handler: Callable[..., Any] | None = None,
         default_text: str = "mock-response",
     ) -> None:
         self.text_responses = text_responses
@@ -39,8 +40,8 @@ class MockLLM(LLMClient):
         self,
         prompt: str,
         *,
-        system: Optional[str] = None,
-        model: Optional[str] = None,
+        system: str | None = None,
+        model: str | None = None,
         max_tokens: int = 1024,
         temperature: float = 0.0,
     ) -> str:
@@ -62,8 +63,8 @@ class MockLLM(LLMClient):
         prompt: str,
         schema: type[T],
         *,
-        system: Optional[str] = None,
-        model: Optional[str] = None,
+        system: str | None = None,
+        model: str | None = None,
         max_tokens: int = 2048,
         temperature: float = 0.0,
     ) -> T:

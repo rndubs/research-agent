@@ -13,7 +13,7 @@ import enum
 import types
 import typing
 from abc import ABC, abstractmethod
-from typing import Any, Optional, TypeVar, get_args, get_origin
+from typing import Any, TypeVar, get_args, get_origin
 
 from pydantic import BaseModel
 
@@ -28,8 +28,8 @@ class LLMClient(ABC):
         self,
         prompt: str,
         *,
-        system: Optional[str] = None,
-        model: Optional[str] = None,
+        system: str | None = None,
+        model: str | None = None,
         max_tokens: int = 1024,
         temperature: float = 0.0,
     ) -> str:
@@ -41,8 +41,8 @@ class LLMClient(ABC):
         prompt: str,
         schema: type[T],
         *,
-        system: Optional[str] = None,
-        model: Optional[str] = None,
+        system: str | None = None,
+        model: str | None = None,
         max_tokens: int = 2048,
         temperature: float = 0.0,
     ) -> T:
@@ -60,11 +60,11 @@ def _default_for_annotation(ann: Any) -> Any:
             return None
         return _default_for_annotation(args[0]) if args else None
 
-    if origin in (list, typing.List):
+    if origin in (list, list):
         return []
-    if origin in (dict, typing.Dict):
+    if origin in (dict, dict):
         return {}
-    if origin in (tuple, typing.Tuple):
+    if origin in (tuple, tuple):
         return ()
     if origin in (set, frozenset):
         return set()

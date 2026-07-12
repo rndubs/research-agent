@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 from enum import Enum
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -73,10 +73,10 @@ class FieldProvenance(BaseModel):
     to ground its claim in.
     """
 
-    section: Optional[str] = None
-    chunk_index: Optional[int] = None
-    page: Optional[int] = None
-    quote: Optional[str] = None
+    section: str | None = None
+    chunk_index: int | None = None
+    page: int | None = None
+    quote: str | None = None
 
 
 # --------------------------------------------------------------------------- #
@@ -93,27 +93,27 @@ class Paper(BaseModel):
     # Identity ------------------------------------------------------------- #
     arxiv_id: str = Field(..., description="arXiv id without version, e.g. '2409.13740'")
     version: int = Field(default=1, ge=1, description="arXiv version number (v1, v2, ...)")
-    doi: Optional[str] = None
-    corpus_id: Optional[str] = Field(default=None, description="Semantic Scholar corpus id")
-    openalex_id: Optional[str] = None
+    doi: str | None = None
+    corpus_id: str | None = Field(default=None, description="Semantic Scholar corpus id")
+    openalex_id: str | None = None
 
     # Bibliographic ------------------------------------------------------- #
     title: str = ""
     abstract: str = ""
     authors: list[str] = Field(default_factory=list)
     categories: list[str] = Field(default_factory=list, description="arXiv categories")
-    published: Optional[datetime] = Field(default=None, description="'created'/submission date")
-    updated: Optional[datetime] = None
+    published: datetime | None = Field(default=None, description="'created'/submission date")
+    updated: datetime | None = None
 
     # Links / artifacts --------------------------------------------------- #
-    pdf_url: Optional[str] = None
-    html_url: Optional[str] = None
+    pdf_url: str | None = None
+    html_url: str | None = None
     code_links: list[str] = Field(default_factory=list)
 
     # Enrichment (Semantic Scholar / OpenAlex) --------------------------- #
-    citation_count: Optional[int] = None
-    influential_citation_count: Optional[int] = None
-    tldr: Optional[str] = None
+    citation_count: int | None = None
+    influential_citation_count: int | None = None
+    tldr: str | None = None
     fields_of_study: list[str] = Field(default_factory=list)
     reference_ids: list[str] = Field(
         default_factory=list, description="Corpus/arXiv ids of references, for the dependency graph"
@@ -121,15 +121,15 @@ class Paper(BaseModel):
 
     # Processing state ---------------------------------------------------- #
     status: PaperStatus = PaperStatus.SEEN
-    relevance_score: Optional[float] = None
-    relevance_rationale: Optional[str] = None
-    relevance_method: Optional[RelevanceMethod] = None
+    relevance_score: float | None = None
+    relevance_rationale: str | None = None
+    relevance_method: RelevanceMethod | None = None
 
     # Bookkeeping --------------------------------------------------------- #
-    section_hash: Optional[str] = Field(
+    section_hash: str | None = Field(
         default=None, description="Hash of parsed section text; gates re-extraction on new versions"
     )
-    source: Optional[str] = Field(default="arxiv", description="Origin provider name")
+    source: str | None = Field(default="arxiv", description="Origin provider name")
     extra: dict[str, Any] = Field(default_factory=dict, description="Provider-specific overflow")
     created_at: datetime = Field(default_factory=utcnow)
     updated_at: datetime = Field(default_factory=utcnow)
@@ -176,7 +176,7 @@ class Section(BaseModel):
 
     title: str = ""
     text: str = ""
-    page: Optional[int] = None
+    page: int | None = None
 
 
 class Chunk(BaseModel):
@@ -184,8 +184,8 @@ class Chunk(BaseModel):
 
     index: int
     text: str
-    section: Optional[str] = None
-    page: Optional[int] = None
+    section: str | None = None
+    page: int | None = None
 
 
 class FullText(BaseModel):
@@ -231,11 +231,11 @@ class Extraction(BaseModel):
         default="", description="LLM estimate of implementation effort (S/M/L or free text)."
     )
     dependencies_on_other_methods: list[str] = Field(default_factory=list)
-    code_link: Optional[str] = None
+    code_link: str | None = None
 
     provenance: dict[str, FieldProvenance] = Field(default_factory=dict)
-    extraction_model: Optional[str] = None
-    extraction_confidence: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    extraction_model: str | None = None
+    extraction_confidence: float | None = Field(default=None, ge=0.0, le=1.0)
     created_at: datetime = Field(default_factory=utcnow)
 
 
@@ -295,7 +295,7 @@ class DependencyEdge(BaseModel):
     src: str = Field(..., description="Method/paper that depends")
     dst: str = Field(..., description="Method/paper depended upon (foundational)")
     source: str = Field(default="extracted", description="'citation' | 'extracted'")
-    paper_id: Optional[str] = None
+    paper_id: str | None = None
 
 
 # --------------------------------------------------------------------------- #
@@ -308,5 +308,5 @@ class Digest(BaseModel):
     title: str = "research-agent digest"
     new_item_count: int = 0
     markdown: str = ""
-    html: Optional[str] = None
+    html: str | None = None
     top_items: list[BacklogItem] = Field(default_factory=list)
