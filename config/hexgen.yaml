@@ -1,0 +1,238 @@
+# =============================================================================
+# Stage-0 configuration for the "hexgen" research problem.
+#
+# hexgen trains a neural decoder that reads a target part's B-rep and generates a
+# `hexproj` program (a DSL of block/sweep/projection commands) that meshes it —
+# a learned, pointer-network graph-transformer trained on an "inverse data
+# factory", judged by a frozen 7-clause verifier, best-of-N sampled.
+#
+# The open frontier is REAL-CAD GENERALIZATION: near-ceiling on synthetic data,
+# ~0% on real CNC-machined aerospace parts (MAMBO). The binding constraint on
+# hard real parts is STRUCTURAL INVALIDITY (sampled programs don't even execute),
+# not fidelity-once-valid. This config points the monitor at the literature that
+# could move that frontier.
+#
+# This is the anchor against backlog drift: every relevance judgment is made
+# against `problem_statement` + `seed_papers`. Edit deliberately.
+# =============================================================================
+
+name: hexgen
+
+problem_statement: |
+  We are building a neural decoder ("hexgen") that reads a mechanical part's
+  boundary representation (B-rep, given as a small face/edge/vertex graph, ~7-15
+  faces) and autoregressively generates a program in a hex-meshing DSL
+  (block / sweep / projection commands) that, when executed by a deterministic
+  mesher, produces a valid all-hexahedral mesh of that part. The model is a
+  ~27M-parameter graph-transformer encoder-decoder with pointer/copy heads that
+  address faces of the input graph, plus a small closed coordinate vocabulary. It
+  is trained by supervised imitation on programs produced by (a) an "inverse
+  factory" that samples random valid programs and executes them to synthesize
+  (B-rep, program) pairs, and (b) real CAD parts auto-labeled by deterministic
+  construction templates. Candidate programs are drawn best-of-N and screened by
+  a FROZEN, machine-checkable verifier (compiles; runs with zero inverted
+  elements; scaled-Jacobian and aspect-ratio quality bounds; strict parametric
+  surface-match boundary fidelity; feature-edge capture; element-budget sanity).
+
+  A technique, method, dataset, or result is RELEVANT if it plausibly helps with
+  any of the following live problems, ranked roughly by importance:
+
+  1. STRUCTURAL VALIDITY of generated programs — getting autoregressive /
+     graph-conditioned decoders to emit programs that compile and execute (not
+     just score well once valid). Grammar/constrained decoding, execution-guided
+     or verifier-guided generation, value/critic-guided search, MCTS or beam
+     search over program prefixes, repair/edit distillation (DAgger-style
+     learning to fix a model's own broken rollouts).
+  2. DOMAIN GAP / DISTRIBUTION SHIFT — models trained on synthetic or
+     one-distribution CAD that fail to transfer to real/other-distribution parts;
+     domain generalization, sim-to-real, coordinate/tokenization mismatch,
+     data-diversity vs data-volume tradeoffs for geometric generation.
+  3. B-REP / CAD REPRESENTATION LEARNING — encoders over B-rep face-adjacency
+     graphs, CAD generative models, construction-history (sketch/extrude) as a
+     representation, program synthesis for CAD.
+  4. POINTER / COPY MECHANISMS and GRAPH TRANSFORMERS — pointer networks,
+     copy attention, Graphormer-style edge-biased attention, addressing/indexing
+     into an input set, symmetry/orbit ambiguity when pointing at congruent
+     nodes.
+  5. ROTATION / POSE ROBUSTNESS of set/graph models — rotation-invariant or
+     -equivariant encoders, canonical-frame estimation, test-time augmentation
+     over poses. (Note: our own "make the encoder natively rotation-invariant"
+     line is CLOSED; prefer genuinely new mechanisms or deployment-time tricks.)
+  6. SELF-PLAY / VERIFIER-IN-THE-LOOP TRAINING — rejection-sampled SFT against a
+     frozen verifier, best-of-N self-improvement flywheels, learning from
+     execution feedback, LLM-agent authoring pipelines as a training-data source.
+  7. STRUCTURED / SCHEMA-CONSTRAINED SEQUENCE GENERATION and neural MESH
+     generation (especially hexahedral / block-structured meshing).
+
+  A paper is NOT relevant if it is about unrelated applications (NLP-only,
+  vision-only classification, recommendation, tabular ML, pure theory with no
+  transfer to conditional program/geometry generation) with no bridge to the
+  above. Prefer methods with released code and a clear, transferable mechanism.
+
+# --- Curated seed anchor set (Stage-0) -------------------------------------
+# Hand-picked arXiv ids that define the relevance centroid. This is a starting
+# anchor to be curated further (Connected Papers / ResearchRabbit). Ids are
+# version-stripped; the pipeline tolerates any that fail to resolve.
+seed_papers:
+  # Pointer / copy / attention foundations
+  - "1506.03134"   # Pointer Networks
+  - "1706.03762"   # Attention Is All You Need
+  - "1704.04368"   # Get To The Point: Summarization with Pointer-Generator Networks
+  # Graph transformers / set models
+  - "2106.05234"   # Do Transformers Really Perform Bad for Graph Representation? (Graphormer)
+  - "1810.00825"   # Set Transformer
+  # B-rep / CAD representation + generation
+  - "2105.09492"   # DeepCAD: A Deep Generative Network for CAD Models
+  - "2010.02392"   # Fusion 360 Gallery Dataset
+  - "1812.06216"   # ABC: A Big CAD Model Dataset for Geometric Deep Learning
+  - "2104.00706"   # BRepNet: A topological message passing system for solid models
+  - "2006.10211"   # UV-Net: Learning from Boundary Representations
+  # Equivariance / rotation robustness
+  - "2006.10503"   # SE(3)-Transformers
+  - "2104.12229"   # Vector Neurons: A General Framework for SO(3)-Equivariant Networks
+  - "2102.09844"   # E(n) Equivariant Graph Neural Networks
+  - "1802.08219"   # Tensor Field Networks
+  # Program synthesis / execution- & verifier-guided
+  - "1805.04276"   # Leveraging Grammar and Reinforcement Learning for Neural Program Synthesis
+  - "1906.04604"   # Execution-Guided Neural Program Synthesis
+  - "2108.07732"   # Program Synthesis with Large Language Models (MBPP)
+  # Imitation / repair / DAgger
+  - "1011.0686"    # A Reduction of Imitation Learning and Structured Prediction (DAgger)
+  # Search + learned value (AlphaZero family)
+  - "1712.01815"   # Mastering Chess and Shogi by Self-Play (AlphaZero)
+  # Structured / constrained decoding
+  - "2307.09702"   # Grammar-Constrained Decoding for Structured NLP Tasks
+
+include_keywords:
+  - b-rep
+  - brep
+  - boundary representation
+  - cad
+  - computer-aided design
+  - solid model
+  - mesh generation
+  - hexahedral
+  - quad mesh
+  - pointer network
+  - copy mechanism
+  - graph transformer
+  - graph neural network
+  - message passing
+  - program synthesis
+  - neural program
+  - execution-guided
+  - verifier
+  - constrained decoding
+  - grammar
+  - equivariant
+  - equivariance
+  - rotation invariant
+  - rotation-invariant
+  - pose
+  - canonical frame
+  - self-play
+  - rejection sampling
+  - best-of-n
+  - imitation learning
+  - dagger
+  - domain generalization
+  - distribution shift
+  - sim-to-real
+  - value function
+  - monte carlo tree search
+  - beam search
+  - sketch
+  - extrude
+  - construction history
+  - tokenization
+  - autoregressive
+  - encoder-decoder
+
+# Terms borrowed as a taxonomy seed (method/task hierarchy) for the prefilter.
+taxonomy_terms:
+  - geometric deep learning
+  - conditional generation
+  - structured prediction
+  - set-to-sequence
+  - permutation invariance
+  - permutation equivariance
+  - copy attention
+  - execution feedback
+  - reward model
+  - policy network
+
+# Light exclusions: kill obvious off-domain noise without harming signal. Kept
+# short on purpose — equivariance/GNN terms recur in molecular/physics work that
+# can still transfer, so we do not exclude those.
+exclude_keywords:
+  - recommender system
+  - sentiment analysis
+  - question answering benchmark
+  - clinical
+  - electronic health record
+  - stock market
+  - autonomous driving perception
+
+# --- Providers -------------------------------------------------------------
+llm:
+  provider: anthropic          # falls back to 'mock' automatically if no API key
+  relevance_model: claude-haiku-4-5-20251001
+  extraction_model: claude-sonnet-5
+  scoring_model: claude-haiku-4-5-20251001
+  temperature: 0.0
+
+embedding:
+  provider: specter2           # falls back to hashing if torch/transformers absent
+  model_name: allenai/specter2_base
+  fallback_to_hashing: true
+  hashing_dim: 256
+
+sourcing:
+  arxiv_categories:
+    - cs.LG      # machine learning
+    - cs.CV      # vision / geometry
+    - cs.CG      # computational geometry
+    - cs.GR      # graphics (meshing)
+    - cs.AI      # program synthesis / search
+  max_results_per_run: 250
+  use_semantic_scholar: true
+  use_openalex: true
+  use_hf_papers: false
+  harvest_prefilter: true
+
+relevance:
+  embedding_threshold: 0.52
+  embedding_shortlist: 60
+  llm_threshold: 0.5
+  use_bm25_rrf: false
+
+extraction:
+  use_grobid: false            # set true when a GROBID service is reachable
+  grobid_url: http://localhost:8070
+  prefer_html: true            # ar5iv/arXiv HTML avoids PDF-parse errors
+  max_chunk_tokens: 1200
+  max_chunks: 24
+  limitation_section_patterns:
+    - limitation
+    - failure
+    - future work
+    - discussion
+    - conclusion
+
+scoring:
+  weight_impact: 1.0
+  weight_applicability: 1.2    # tilt toward methods that transfer to our setup
+  weight_confidence: 1.0
+  foundational_reserved_slots: 5
+  foundational_min_citations: 100
+  recent_paper_grace_days: 365
+  llm_estimate_effort: true
+
+delivery:
+  top_n: 25
+  digest_window_days: 7
+  output_dir: output
+  render_html: true
+
+storage:
+  db_path: data/hexgen.db

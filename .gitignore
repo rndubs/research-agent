@@ -216,3 +216,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- research-agent runtime artifacts ---
+data/
+output/
+*.db
+*.sqlite
+*.sqlite3
+.env
+.env.*
+!.env.example
+*.log
+.cache/
+models_cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/

@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "research-agent"
+version = "0.1.0"
+description = "An ongoing arXiv research monitor that turns a broad paper corpus into a prioritized, deduplicated backlog for a narrow ML research problem."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "research-agent contributors" }]
+keywords = ["arxiv", "research", "literature-monitoring", "rag", "backlog"]
+
+# Core dependencies are intentionally light so the whole pipeline installs and
+# its tests run fully offline. Heavier, optional capabilities (real embeddings,
+# the Anthropic LLM client, PDF parsing) live under [project.optional-dependencies].
+dependencies = [
+    "pydantic>=2.5",
+    "pyyaml>=6.0",
+    "httpx>=0.27",
+    "numpy>=1.24",
+    "python-dateutil>=2.8",
+    "jinja2>=3.1",
+    "typer>=0.12",
+    "rich>=13.0",
+    "tenacity>=8.2",
+]
+
+[project.optional-dependencies]
+# Real SPECTER2 embeddings. Without these the pipeline falls back to a
+# deterministic HashingEmbedder so everything still runs offline.
+embeddings = [
+    "torch>=2.0",
+    "transformers>=4.40",
+    "adapters>=0.2",
+]
+# Anthropic Claude LLM client for relevance judging and claim extraction.
+llm = [
+    "anthropic>=0.40",
+]
+# Full-text PDF handling (GROBID is an external Docker service; PyMuPDF is used
+# for local PDF fetch/figure crops).
+parsing = [
+    "pymupdf>=1.24",
+    "lxml>=5.0",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.6",
+    "mypy>=1.10",
+]
+all = [
+    "research-agent[embeddings,llm,parsing,dev]",
+]
+
+[project.scripts]
+research-agent = "research_agent.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["research_agent*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+warn_unused_ignores = false
