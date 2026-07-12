@@ -76,7 +76,12 @@
   .tag { font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 700;
          color: var(--found); border: 1px solid var(--found); border-radius: 999px; padding: .05rem .45rem; }
 
-  .summary { color: var(--fg); opacity: .92; margin: .6rem 0 .1rem; white-space: pre-line; }
+  .fields { margin: .65rem 0 .2rem; }
+  .fields dt { font-size: .66rem; text-transform: uppercase; letter-spacing: .05em;
+               font-weight: 700; color: var(--chip-k); margin-top: .55rem; }
+  .fields dt:first-child { margin-top: 0; }
+  .fields dd { margin: .12rem 0 0; color: var(--fg); opacity: .95; }
+  .fields dd.empty { opacity: .5; font-style: italic; }
 
   .chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: .7rem 0 .2rem; }
   .chip { display: inline-flex; align-items: baseline; gap: .35rem; background: var(--chip-bg);
@@ -102,7 +107,15 @@
     <span class="badge" title="composite RICE score">0.028</span>
     <span class="card-title">OPSD-V is an on-policy self-distillation scheme: a student follows its own exact infere...</span>
   </div>
-<p class="summary">Impact 0.55 (On-policy teacher-corrected rollout supervision directly targets our #1 problem (structural validity of AR rollouts) but is demonstrated only on video diffusion, not executable program grammars.); Applicability 0.60; Confidence 0.51 [code=False, provenance=0.78, extraction_conf=0.55, citation=0.50, recent=True]; Effort 6.0/10 (Requires building a &#39;cleaner-context&#39; teacher signal analogous to real-video context (e.g. verifier-repaired continuations) and wiring dense on-policy corrective supervision into training -- a moderate new training-loop component, not a drop-in change.). Score=0.0280.</p>  <div class="chips" aria-label="RICE components">
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>OPSD-V is an on-policy self-distillation scheme: a student follows its own exact inference-time AR rollout (own KV cache), while a teacher is evaluated at the same visited denoising states but with a cleaner AR-consistent cache where older history is replaced by real long-video context, providing dense denoising-level corrective targets without changing the sampler or inference-time cache mechanism.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The on-policy correction pattern (student rolls out exactly as at inference time; a teacher supplies corrective targets at the same visited states using cleaner context) is a directly transferable template for DAgger-style repair distillation on hexgen&#39;s own broken program rollouts -- e.g. having a teacher re-derive a corrective continuation from a verifier-clean program state whenever the student&#39;s own autoregressive rollout drifts, rather than training only on clean expert trajectories.</dd>
+    <dt>Additional context</dt>
+    <dd>Demonstrated only on few-step AR video diffusion, not on executable program grammars, so transfer to hexgen&#39;s discrete program rollouts is unproven. No released code. The &#39;cleaner-context teacher&#39; has no direct hexgen analogue — you&#39;d need to synthesize one (e.g. verifier-repaired continuations), which is a moderate new training-loop component rather than a drop-in.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
     <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.51</span></span>
@@ -120,7 +133,15 @@
     <span class="badge" title="composite RICE score">0.024</span>
     <span class="card-title">Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verif...</span>
   </div>
-<p class="summary">Impact 0.30 (Mainly a validity/reporting caution for best-of-N + verifier evaluation; useful for trusting our own numbers but doesn&#39;t by itself move model capability.); Applicability 0.42; Confidence 0.38 [code=False, provenance=0.45, extraction_conf=0.50, citation=0.50, recent=True]; Effort 2.0/10 (Our verifier is a single frozen deterministic checker, not an ensemble of learned ASR models, so the cross-family rank-ensembling fix isn&#39;t directly applicable -- cheap to internalize as an evaluation-hygiene practice if we ever add secondary proxy verifiers.). Score=0.0242.</p>  <div class="chips" aria-label="RICE components">
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verifier rankings reverse depending on evaluator ASR family despite near-identical representations, then proposes cross-family rank ensembles (rank-averaging and conjunctive max-rank) that reduce this confound.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>hexgen also selects among best-of-N candidate programs via a frozen verifier; this paper&#39;s core finding -- that apparent verifier quality/oracle-headroom recovery can be an artifact of evaluator identity/lineage rather than true representational quality -- is a direct methodological caution for validating and reporting our own best-of-N + verifier pipeline, and its cross-family rank-ensembling fix is a candidate technique if we ever use multiple imperfect verifiers/proxies.</dd>
+    <dt>Additional context</dt>
+    <dd>Evaluated only in zero-shot TTS with learned ASR verifiers; hexgen&#39;s verifier is a single frozen deterministic checker, not an ensemble of learned models, so the cross-family confound may not bite us directly. The value here is evaluation hygiene for best-of-N reporting rather than a capability gain — cheap to adopt only if we ever add proxy verifiers.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
     <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
@@ -138,7 +159,15 @@
     <span class="badge" title="composite RICE score">0.017</span>
     <span class="card-title">IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials...</span>
   </div>
-<p class="summary">Impact 0.55 (Open-vocabulary joint discrete-continuous generation squarely targets our closed-coordinate-vocabulary domain-gap limitation, with strong held-out and out-of-envelope generalization results in an analogous inverse-design setting.); Applicability 0.60; Confidence 0.40 [code=False, provenance=0.50, extraction_conf=0.50, citation=0.50, recent=True]; Effort 8.0/10 (Flow matching is a different generative paradigm from our autoregressive pointer-decoder; adopting the open-vocabulary query-time-candidate-bank mechanism would require substantial architecture and training-pipeline rework, not a plug-in change.). Score=0.0165.</p>  <div class="chips" aria-label="RICE components">
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials/components enter as wavelength-aware optical tokens (not learned fixed identities) supplied at query time; discrete component/material sequences are generated by discrete flow matching over the query-time candidate bank, and continuous parameters (layer thickness) are generated by continuous flow matching without discretization -- jointly, in one 136M-parameter model.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly analogous open-vocabulary/joint discrete-continuous generation pattern: hexgen currently uses a small CLOSED coordinate vocabulary and fixed program-command tokens; IrisFlow&#39;s query-time candidate bank + discrete-flow-matching-for-choices/continuous-flow-matching-for-parameters recipe is a candidate mechanism for generalizing the coordinate vocabulary and command parameterization to real/out-of-distribution CAD parts without retraining -- squarely addresses the domain-gap and structured/schema-constrained generation care areas.</dd>
+    <dt>Additional context</dt>
+    <dd>The domain is optical-coating inverse design, not CAD/geometry — the relevance is by analogy (open-vocabulary + joint discrete/continuous flow matching), not a direct method transfer. Implementation cost is high: a flow-matching generator is a substantial departure from the current autoregressive pointer-decoder. No released code noted.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
     <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
@@ -156,7 +185,15 @@
     <span class="badge" title="composite RICE score">0.012</span>
     <span class="card-title">Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base...</span>
   </div>
-<p class="summary">Impact 0.35 (Generator/detector self-play could stress-test the decoder with adversarially hard B-rep/rollout cases, but this is speculative since our verifier is frozen and deterministic rather than a learned reward model to co-train against.); Applicability 0.42; Confidence 0.58 [code=True, provenance=0.44, extraction_conf=0.50, citation=0.50, recent=True]; Effort 7.0/10 (Would require building a learned proxy verifier or difficulty-generator plus an RLAIF-style training loop -- a substantial new subsystem, not an incremental addition.). Score=0.0122.</p>  <div class="chips" aria-label="RICE components">
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base model: the detector is fine-tuned on human-labeled data then used as a reward model to train the generator via RLAIF to produce increasingly hard-to-detect hallucinations; the evolved generator&#39;s synthesized hallucination data is then used to further optimize the detector via rule-based reinforcement learning.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The generator/detector co-evolution loop (detector trained on labeled data, then used as a reward signal to train an adversarial generator, whose harder outputs retrain the detector) is a transferable self-play/verifier-in-the-loop training template; hexgen&#39;s frozen verifier is deterministic rather than learned, but the same co-evolving flywheel structure could apply if we ever train a learned proxy verifier or a rollout-difficulty generator to stress-test the program decoder.</dd>
+    <dt>Additional context</dt>
+    <dd>The co-evolution loop assumes a learned detector/reward model; hexgen&#39;s verifier is frozen and deterministic, so applicability is speculative and would first require training a learned proxy verifier or a rollout-difficulty generator. Evaluated on RAGTruth (NLP faithfulness), far from geometry/program synthesis.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
     <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.58</span></span>
@@ -176,7 +213,15 @@
 <span class="rank">#1</span>    <span class="badge" title="composite RICE score">0.028</span>
     <span class="card-title">OPSD-V is an on-policy self-distillation scheme: a student follows its own exact infere...</span>
   </div>
-<p class="summary">Impact 0.55 (On-policy teacher-corrected rollout supervision directly targets our #1 problem (structural validity of AR rollouts) but is demonstrated only on video diffusion, not executable program grammars.); Applicability 0.60; Confidence 0.51 [code=False, provenance=0.78, extraction_conf=0.55, citation=0.50, recent=True]; Effort 6.0/10 (Requires building a &#39;cleaner-context&#39; teacher signal analogous to real-video context (e.g. verifier-repaired continuations) and wiring dense on-policy corrective supervision into training -- a moderate new training-loop component, not a drop-in change.). Score=0.0280.</p>  <div class="chips" aria-label="RICE components">
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>OPSD-V is an on-policy self-distillation scheme: a student follows its own exact inference-time AR rollout (own KV cache), while a teacher is evaluated at the same visited denoising states but with a cleaner AR-consistent cache where older history is replaced by real long-video context, providing dense denoising-level corrective targets without changing the sampler or inference-time cache mechanism.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The on-policy correction pattern (student rolls out exactly as at inference time; a teacher supplies corrective targets at the same visited states using cleaner context) is a directly transferable template for DAgger-style repair distillation on hexgen&#39;s own broken program rollouts -- e.g. having a teacher re-derive a corrective continuation from a verifier-clean program state whenever the student&#39;s own autoregressive rollout drifts, rather than training only on clean expert trajectories.</dd>
+    <dt>Additional context</dt>
+    <dd>Demonstrated only on few-step AR video diffusion, not on executable program grammars, so transfer to hexgen&#39;s discrete program rollouts is unproven. No released code. The &#39;cleaner-context teacher&#39; has no direct hexgen analogue — you&#39;d need to synthesize one (e.g. verifier-repaired continuations), which is a moderate new training-loop component rather than a drop-in.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
     <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.51</span></span>
@@ -194,7 +239,15 @@
 <span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.024</span>
     <span class="card-title">Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verif...</span>
   </div>
-<p class="summary">Impact 0.30 (Mainly a validity/reporting caution for best-of-N + verifier evaluation; useful for trusting our own numbers but doesn&#39;t by itself move model capability.); Applicability 0.42; Confidence 0.38 [code=False, provenance=0.45, extraction_conf=0.50, citation=0.50, recent=True]; Effort 2.0/10 (Our verifier is a single frozen deterministic checker, not an ensemble of learned ASR models, so the cross-family rank-ensembling fix isn&#39;t directly applicable -- cheap to internalize as an evaluation-hygiene practice if we ever add secondary proxy verifiers.). Score=0.0242.</p>  <div class="chips" aria-label="RICE components">
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verifier rankings reverse depending on evaluator ASR family despite near-identical representations, then proposes cross-family rank ensembles (rank-averaging and conjunctive max-rank) that reduce this confound.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>hexgen also selects among best-of-N candidate programs via a frozen verifier; this paper&#39;s core finding -- that apparent verifier quality/oracle-headroom recovery can be an artifact of evaluator identity/lineage rather than true representational quality -- is a direct methodological caution for validating and reporting our own best-of-N + verifier pipeline, and its cross-family rank-ensembling fix is a candidate technique if we ever use multiple imperfect verifiers/proxies.</dd>
+    <dt>Additional context</dt>
+    <dd>Evaluated only in zero-shot TTS with learned ASR verifiers; hexgen&#39;s verifier is a single frozen deterministic checker, not an ensemble of learned models, so the cross-family confound may not bite us directly. The value here is evaluation hygiene for best-of-N reporting rather than a capability gain — cheap to adopt only if we ever add proxy verifiers.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
     <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
@@ -212,7 +265,15 @@
 <span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.017</span>
     <span class="card-title">IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials...</span>
   </div>
-<p class="summary">Impact 0.55 (Open-vocabulary joint discrete-continuous generation squarely targets our closed-coordinate-vocabulary domain-gap limitation, with strong held-out and out-of-envelope generalization results in an analogous inverse-design setting.); Applicability 0.60; Confidence 0.40 [code=False, provenance=0.50, extraction_conf=0.50, citation=0.50, recent=True]; Effort 8.0/10 (Flow matching is a different generative paradigm from our autoregressive pointer-decoder; adopting the open-vocabulary query-time-candidate-bank mechanism would require substantial architecture and training-pipeline rework, not a plug-in change.). Score=0.0165.</p>  <div class="chips" aria-label="RICE components">
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials/components enter as wavelength-aware optical tokens (not learned fixed identities) supplied at query time; discrete component/material sequences are generated by discrete flow matching over the query-time candidate bank, and continuous parameters (layer thickness) are generated by continuous flow matching without discretization -- jointly, in one 136M-parameter model.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly analogous open-vocabulary/joint discrete-continuous generation pattern: hexgen currently uses a small CLOSED coordinate vocabulary and fixed program-command tokens; IrisFlow&#39;s query-time candidate bank + discrete-flow-matching-for-choices/continuous-flow-matching-for-parameters recipe is a candidate mechanism for generalizing the coordinate vocabulary and command parameterization to real/out-of-distribution CAD parts without retraining -- squarely addresses the domain-gap and structured/schema-constrained generation care areas.</dd>
+    <dt>Additional context</dt>
+    <dd>The domain is optical-coating inverse design, not CAD/geometry — the relevance is by analogy (open-vocabulary + joint discrete/continuous flow matching), not a direct method transfer. Implementation cost is high: a flow-matching generator is a substantial departure from the current autoregressive pointer-decoder. No released code noted.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
     <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
@@ -230,7 +291,15 @@
 <span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.012</span>
     <span class="card-title">Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base...</span>
   </div>
-<p class="summary">Impact 0.35 (Generator/detector self-play could stress-test the decoder with adversarially hard B-rep/rollout cases, but this is speculative since our verifier is frozen and deterministic rather than a learned reward model to co-train against.); Applicability 0.42; Confidence 0.58 [code=True, provenance=0.44, extraction_conf=0.50, citation=0.50, recent=True]; Effort 7.0/10 (Would require building a learned proxy verifier or difficulty-generator plus an RLAIF-style training loop -- a substantial new subsystem, not an incremental addition.). Score=0.0122.</p>  <div class="chips" aria-label="RICE components">
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base model: the detector is fine-tuned on human-labeled data then used as a reward model to train the generator via RLAIF to produce increasingly hard-to-detect hallucinations; the evolved generator&#39;s synthesized hallucination data is then used to further optimize the detector via rule-based reinforcement learning.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The generator/detector co-evolution loop (detector trained on labeled data, then used as a reward signal to train an adversarial generator, whose harder outputs retrain the detector) is a transferable self-play/verifier-in-the-loop training template; hexgen&#39;s frozen verifier is deterministic rather than learned, but the same co-evolving flywheel structure could apply if we ever train a learned proxy verifier or a rollout-difficulty generator to stress-test the program decoder.</dd>
+    <dt>Additional context</dt>
+    <dd>The co-evolution loop assumes a learned detector/reward model; hexgen&#39;s verifier is frozen and deterministic, so applicability is speculative and would first require training a learned proxy verifier or a rollout-difficulty generator. Evaluated on RAGTruth (NLP faithfulness), far from geometry/program synthesis.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
     <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.58</span></span>

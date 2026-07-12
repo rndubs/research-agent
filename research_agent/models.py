@@ -217,6 +217,10 @@ class Extraction(BaseModel):
 
     problem_addressed: str = ""
     method_summary: str = ""
+    contributions_summary: str = Field(
+        default="",
+        description="Plain-prose summary of the paper's claimed contributions (human-facing).",
+    )
     key_architecture_choices: list[str] = Field(default_factory=list)
     datasets: list[str] = Field(default_factory=list)
     metrics: list[str] = Field(default_factory=list)
@@ -225,7 +229,14 @@ class Extraction(BaseModel):
     limitations: list[str] = Field(default_factory=list)
     applicability_to_our_problem: str = Field(
         default="",
-        description="How the method applies to the configured problem; drop items where the LLM cannot say.",
+        description=(
+            "Which aspect(s) of the paper could apply to the configured problem — "
+            "liberal: a subset, single mechanism, or tangential idea counts."
+        ),
+    )
+    reviewer_notes: str = Field(
+        default="",
+        description="Freeform reviewer context: caveats, limitations, connections, risks.",
     )
     implementation_cost_estimate: str = Field(
         default="", description="LLM estimate of implementation effort (S/M/L or free text)."
@@ -273,6 +284,18 @@ class BacklogItem(BaseModel):
     paper_id: str
     title: str
     description: str = ""
+
+    # Human-facing reviewer summary shown in the digest (three distinct fields,
+    # kept separate from the RICE metric numbers rendered as labels).
+    contributions: str = Field(
+        default="", description="Summary of the paper's claimed contributions."
+    )
+    applicability: str = Field(
+        default="", description="Which aspect(s) of the paper could apply to our work."
+    )
+    reviewer_notes: str = Field(
+        default="", description="Freeform additional context for the reviewer."
+    )
 
     rice: RiceComponents
     score: float = Field(default=0.0, description="Cached rice.score()")

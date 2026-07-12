@@ -17,6 +17,14 @@ class ExtractionResult(BaseModel):
 
     problem_addressed: str = ""
     method_summary: str = ""
+    contributions_summary: str = Field(
+        default="",
+        description=(
+            "A clear, self-contained 2-4 sentence summary of what the paper CLAIMS "
+            "to contribute (its novel method/result), written in plain prose for a "
+            "human reviewer. Do not include our-problem framing or scores here."
+        ),
+    )
     key_architecture_choices: list[str] = Field(default_factory=list)
     datasets: list[str] = Field(default_factory=list)
     metrics: list[str] = Field(default_factory=list)
@@ -25,7 +33,22 @@ class ExtractionResult(BaseModel):
     limitations: list[str] = Field(default_factory=list)
     applicability_to_our_problem: str = Field(
         default="",
-        description="How the method applies to OUR problem; empty if it genuinely does not.",
+        description=(
+            "Which aspects of the paper could be applicable to OUR problem. Be "
+            "LIBERAL: this need not be the whole paper — a small subset, a single "
+            "mechanism, or even a tangential/analogous idea worth borrowing is "
+            "enough. Name the specific transferable aspect(s). Only leave empty if "
+            "there is genuinely nothing worth borrowing."
+        ),
+    )
+    reviewer_notes: str = Field(
+        default="",
+        description=(
+            "Freeform additional context the reviewer should know: caveats, "
+            "relevant limitations, connections to related work, risks, or anything "
+            "important that the contributions/applicability fields above might miss. "
+            "This is your own judgment, not restricted to a single quote."
+        ),
     )
     implementation_cost_estimate: str = Field(
         default="", description="Effort estimate: S / M / L or a short phrase."

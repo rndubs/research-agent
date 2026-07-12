@@ -31,7 +31,10 @@ _MARKDOWN_TEMPLATE = Template(
 {% if new_items %}
 {% for it in new_items %}
 - **{{ it.title }}** · score {{ '%.3f'|format(it.score) }}{{ ' · _foundational_' if it.foundational else '' }}
-  — {{ it.why }}
+  - _Contributions:_ {{ it.contributions or '—' }}
+  - _Applicable to our work:_ {{ it.applicability or '—' }}
+  - _Additional context:_ {{ it.reviewer_notes or '—' }}
+  - _Impact_ {{ '%.2f'|format(it.rice.impact) }} · _Applicability_ {{ '%.2f'|format(it.rice.applicability) }} · _Confidence_ {{ '%.2f'|format(it.rice.confidence) }} · _Effort_ {{ '%.1f'|format(it.rice.effort) }}/10
   [{{ it.paper_id }}](https://arxiv.org/abs/{{ it.paper_id }})
 {% endfor %}
 {% else %}
@@ -127,7 +130,12 @@ _HTML_TEMPLATE = Template(
   .tag { font-size: .68rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 700;
          color: var(--found); border: 1px solid var(--found); border-radius: 999px; padding: .05rem .45rem; }
 
-  .summary { color: var(--fg); opacity: .92; margin: .6rem 0 .1rem; white-space: pre-line; }
+  .fields { margin: .65rem 0 .2rem; }
+  .fields dt { font-size: .66rem; text-transform: uppercase; letter-spacing: .05em;
+               font-weight: 700; color: var(--chip-k); margin-top: .55rem; }
+  .fields dt:first-child { margin-top: 0; }
+  .fields dd { margin: .12rem 0 0; color: var(--fg); opacity: .95; }
+  .fields dd.empty { opacity: .5; font-style: italic; }
 
   .chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: .7rem 0 .2rem; }
   .chip { display: inline-flex; align-items: baseline; gap: .35rem; background: var(--chip-bg);
@@ -152,7 +160,14 @@ _HTML_TEMPLATE = Template(
     <span class="card-title">{{ it.title }}</span>
     {% if it.foundational %}<span class="tag">foundational</span>{% endif %}
   </div>
-  {% if it.summary %}<p class="summary">{{ it.summary }}</p>{% endif %}
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd{% if not it.contributions %} class="empty"{% endif %}>{{ it.contributions or '—' }}</dd>
+    <dt>Applicable to our work</dt>
+    <dd{% if not it.applicability %} class="empty"{% endif %}>{{ it.applicability or '—' }}</dd>
+    <dt>Additional context</dt>
+    <dd{% if not it.reviewer_notes %} class="empty"{% endif %}>{{ it.reviewer_notes or '—' }}</dd>
+  </dl>
   <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">{{ '%.2f'|format(it.rice.impact) }}</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">{{ '%.2f'|format(it.rice.applicability) }}</span></span>
@@ -190,54 +205,49 @@ _HTML_TEMPLATE = Template(
 )
 
 
-def _why(item: BacklogItem) -> str:
-    """A one-line justification for the digest entry.
+# The two legacy substring markers of the old metric-laden ``description``
+# format ("Headline results: ...\n\nApplicability to our problem: ..."), kept so
+# pre-migration backlog rows still render sensibly into the new three fields.
+_DESC_APPLIC_MARKER = "Applicability to our problem:"
+_DESC_HEADLINE_MARKER = "Headline results:"
 
-    Prefer the item's own rationale/description; fall back to a compact RICE
-    readout so a row is never blank.
-    """
-    text = (item.rationale or item.description or "").strip()
+
+def _legacy_split(description: str) -> tuple[str, str]:
+    """Best-effort recovery of (contributions, applicability) from an old
+    ``description`` blob, for backlog rows written before the three fields
+    existed. Never touches ``rationale`` (that string carried the duplicated
+    metric readout we are removing from the body)."""
+    text = (description or "").strip()
     if not text:
-        r = item.rice
-        text = (
-            f"RICE {item.score:.3f}: impact {r.expected_impact:.2f}, "
-            f"applicability {r.applicability:.2f}, confidence {r.confidence:.2f}, "
-            f"effort {r.effort:.1f}"
-        )
-    text = text.split("\n", 1)[0].strip()
-    if len(text) > 180:
-        text = text[:177].rstrip() + "..."
-    return text
-
-
-def _summary(item: BacklogItem) -> str:
-    """The complete, untruncated justification for an item.
-
-    Same source preference as :func:`_why` (rationale, then description), but
-    returns the full text — no first-line clip, no 180-char cap — so the HTML
-    page can render the entire summary. Falls back to a compact RICE readout so
-    a card is never blank.
-    """
-    text = (item.rationale or item.description or "").strip()
-    if not text:
-        r = item.rice
-        text = (
-            f"RICE {item.score:.3f}: impact {r.expected_impact:.2f}, "
-            f"applicability {r.applicability:.2f}, confidence {r.confidence:.2f}, "
-            f"effort {r.effort:.1f}"
-        )
-    return text
+        return "", ""
+    applic = ""
+    if _DESC_APPLIC_MARKER in text:
+        head, _, tail = text.partition(_DESC_APPLIC_MARKER)
+        applic = tail.strip()
+        text = head.strip()
+    if text.startswith(_DESC_HEADLINE_MARKER):
+        text = text[len(_DESC_HEADLINE_MARKER):].strip()
+    return text, applic
 
 
 def _view(item: BacklogItem) -> dict:
     r = item.rice
+    contributions = (item.contributions or "").strip()
+    applicability = (item.applicability or "").strip()
+    reviewer_notes = (item.reviewer_notes or "").strip()
+    # Backward-compatible fallbacks for rows created before the three fields.
+    if not contributions or not applicability:
+        legacy_contrib, legacy_applic = _legacy_split(item.description)
+        contributions = contributions or legacy_contrib
+        applicability = applicability or legacy_applic
     return {
         "title": item.title,
         "paper_id": item.paper_id,
         "score": item.score,
         "foundational": item.foundational,
-        "why": _why(item),
-        "summary": _summary(item),
+        "contributions": contributions,
+        "applicability": applicability,
+        "reviewer_notes": reviewer_notes,
         "rice": {
             "impact": r.expected_impact,
             "applicability": r.applicability,
