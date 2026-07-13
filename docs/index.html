@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-07-12</title>
+<title>hexgen digest — 2026-07-13</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-07-12 · 4 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-07-13 · 7 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -154,6 +154,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.08984">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.020</span>
+    <span class="card-title">Under a unified self-play + MCTS pipeline on Connect Four (solved, exact game-theoretic...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper shows that vanilla AlphaZero achieves strong play in both Connect Four and Chomp but fails to preserve the exact trajectories required for optimal play (losing the optimal line in Connect Four; failing to consistently restore the Grundy g=0 invariant in Chomp), and that naively adding multi-frame inputs does not close this gap on Chomp. They introduce AZAL, which injects oracle-derived policy supervision as an auxiliary loss, and show it substantially improves oracle-consistency: near-perfect on 10x11 Chomp, high but incomplete on 9x10 Chomp, and improved (but still incomplete) oracle-match / delayed first mistake on Connect Four.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly relevant to our verifier-in-the-loop / structural-validity concerns: this paper is empirical evidence that self-play + MCTS alone (analogous to our best-of-N sampling against a frozen verifier) reliably reaches &#39;good&#39; programs but plateaus short of consistently optimal/valid trajectories, and that adding an auxiliary oracle-derived supervision signal (here, oracle policy labels; for us, verifier pass/fail or quality-metric feedback) on top of standard training closes much of that gap. Suggests hexgen&#39;s imitation-learning objective could be augmented with an AZAL-style auxiliary loss derived from the frozen mesh verifier&#39;s pass/fail and quality signals, rather than relying solely on best-of-N rejection at inference time.</dd>
+    <dt>Additional context</dt>
+    <dd>Both test domains are small, fully oracle-evaluable combinatorial games, far simpler than CAD/mesh generation, so the magnitude of the effect may not transfer directly; still, the core finding (self-play plateaus below oracle-optimal without auxiliary oracle supervision) is a useful cautionary/motivating data point for relying purely on best-of-N + frozen verifier at inference without an auxiliary training-time signal. Only the abstract was available for extraction.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.08984</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.08392">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.017</span>
@@ -205,8 +231,60 @@
   </div>
 </a>
 
+<a class="card"
+   href="https://arxiv.org/abs/2607.09059">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.010</span>
+    <span class="card-title">ARCANA decomposes each task into perception, hypothesis generation, symbolic execution,...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The authors present ARCANA, a multi-agent program-synthesis framework for ARC-AGI-2 that combines object-centric perception, diverse DSL program proposal, symbolic execution against demonstrations as a verifier, and reflective failure-driven correction across turns. The system is coordinated via a shared blackboard and a learned meta-controller that schedules the agents. They claim the design improves reasoning efficiency and solution quality on abstract transformation tasks relative to non-iterative program-synthesis baselines.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Close structural analog to hexgen&#39;s own pipeline: (1) symbolic execution against demonstrations as an in-the-loop verifier mirrors our frozen mesh verifier; (2) the reflective agent that turns execution failures into next-round feedback is a candidate mechanism for repair/edit distillation on hexgen&#39;s own broken rollouts (DAgger-style); (3) proposing a diverse set of DSL programs before verification echoes our best-of-N screening and could be extended with ARCANA&#39;s failure-driven feedback loop to make best-of-N adaptive across rounds rather than one-shot.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available; headline quantitative results (efficiency/quality numbers vs. baselines) were not stated in the extracted text, so headline_results is left empty rather than guessed. Domain (ARC grid puzzles) is far from mechanical CAD, so scene-graph perception details are not transferable, but the verify-then-reflect control loop is a well-matched design pattern.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.29</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.09059</span>
+  </div>
+</a>
 
-<h2>Current top 4 backlog</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2607.09366">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.010</span>
+    <span class="card-title">Diversify2Verify is a staged LLM-based pipeline targeting the Why3 verification platfor...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The authors introduce Diversify2Verify, an LLM pipeline that generates multiple task-equivalent but structurally diverse program implementations and repairs their formal-verification annotations against a Why3 verifier over up to two repair passes. They also release a 73-task, 292-implementation-variant verification benchmark over integers, arrays, and lists. Their key empirical finding is that implementation diversity substantially raises the chance that at least one variant is machine-verifiable, even when task-level semantics are identical.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly analogous to our best-of-N + frozen verifier screening: instead of only diversifying final candidate programs, Diversify2Verify diversifies the underlying implementation *structure* before verification, which suggests hexgen could benefit from sampling structurally different DSL programs (not just different token sequences) for the same target mesh, and from a bounded verifier-guided repair loop that edits a near-miss program&#39;s annotations/parameters rather than discarding it and resampling from scratch.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is classical software (arrays/lists over Why3), not geometry/CAD, so the repair mechanism (editing verification annotations) is not a direct transplant to our DSL; the transferable idea is the diversify-then-repair strategy pattern, not specific code. Only an abstract was available for extraction; full paper may contain more detail on the repair-step mechanics worth reviewing before implementing.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.34</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.09366</span>
+  </div>
+</a>
+
+
+<h2>Current top 7 backlog</h2>
 <a class="card"
    href="https://arxiv.org/abs/2607.08766">
   <div class="card-head">
@@ -260,9 +338,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.08984">
+  <div class="card-head">
+<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.020</span>
+    <span class="card-title">Under a unified self-play + MCTS pipeline on Connect Four (solved, exact game-theoretic...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper shows that vanilla AlphaZero achieves strong play in both Connect Four and Chomp but fails to preserve the exact trajectories required for optimal play (losing the optimal line in Connect Four; failing to consistently restore the Grundy g=0 invariant in Chomp), and that naively adding multi-frame inputs does not close this gap on Chomp. They introduce AZAL, which injects oracle-derived policy supervision as an auxiliary loss, and show it substantially improves oracle-consistency: near-perfect on 10x11 Chomp, high but incomplete on 9x10 Chomp, and improved (but still incomplete) oracle-match / delayed first mistake on Connect Four.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly relevant to our verifier-in-the-loop / structural-validity concerns: this paper is empirical evidence that self-play + MCTS alone (analogous to our best-of-N sampling against a frozen verifier) reliably reaches &#39;good&#39; programs but plateaus short of consistently optimal/valid trajectories, and that adding an auxiliary oracle-derived supervision signal (here, oracle policy labels; for us, verifier pass/fail or quality-metric feedback) on top of standard training closes much of that gap. Suggests hexgen&#39;s imitation-learning objective could be augmented with an AZAL-style auxiliary loss derived from the frozen mesh verifier&#39;s pass/fail and quality signals, rather than relying solely on best-of-N rejection at inference time.</dd>
+    <dt>Additional context</dt>
+    <dd>Both test domains are small, fully oracle-evaluable combinatorial games, far simpler than CAD/mesh generation, so the magnitude of the effect may not transfer directly; still, the core finding (self-play plateaus below oracle-optimal without auxiliary oracle supervision) is a useful cautionary/motivating data point for relying purely on best-of-N + frozen verifier at inference without an auxiliary training-time signal. Only the abstract was available for extraction.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.08984</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.08392">
   <div class="card-head">
-<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.017</span>
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.017</span>
     <span class="card-title">IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials...</span>
   </div>
   <dl class="fields">
@@ -288,7 +392,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.07993">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.012</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.012</span>
     <span class="card-title">Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base...</span>
   </div>
   <dl class="fields">
@@ -308,6 +412,58 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.07993</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.09059">
+  <div class="card-head">
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.010</span>
+    <span class="card-title">ARCANA decomposes each task into perception, hypothesis generation, symbolic execution,...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The authors present ARCANA, a multi-agent program-synthesis framework for ARC-AGI-2 that combines object-centric perception, diverse DSL program proposal, symbolic execution against demonstrations as a verifier, and reflective failure-driven correction across turns. The system is coordinated via a shared blackboard and a learned meta-controller that schedules the agents. They claim the design improves reasoning efficiency and solution quality on abstract transformation tasks relative to non-iterative program-synthesis baselines.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Close structural analog to hexgen&#39;s own pipeline: (1) symbolic execution against demonstrations as an in-the-loop verifier mirrors our frozen mesh verifier; (2) the reflective agent that turns execution failures into next-round feedback is a candidate mechanism for repair/edit distillation on hexgen&#39;s own broken rollouts (DAgger-style); (3) proposing a diverse set of DSL programs before verification echoes our best-of-N screening and could be extended with ARCANA&#39;s failure-driven feedback loop to make best-of-N adaptive across rounds rather than one-shot.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available; headline quantitative results (efficiency/quality numbers vs. baselines) were not stated in the extracted text, so headline_results is left empty rather than guessed. Domain (ARC grid puzzles) is far from mechanical CAD, so scene-graph perception details are not transferable, but the verify-then-reflect control loop is a well-matched design pattern.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.29</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.09059</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.09366">
+  <div class="card-head">
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.010</span>
+    <span class="card-title">Diversify2Verify is a staged LLM-based pipeline targeting the Why3 verification platfor...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The authors introduce Diversify2Verify, an LLM pipeline that generates multiple task-equivalent but structurally diverse program implementations and repairs their formal-verification annotations against a Why3 verifier over up to two repair passes. They also release a 73-task, 292-implementation-variant verification benchmark over integers, arrays, and lists. Their key empirical finding is that implementation diversity substantially raises the chance that at least one variant is machine-verifiable, even when task-level semantics are identical.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly analogous to our best-of-N + frozen verifier screening: instead of only diversifying final candidate programs, Diversify2Verify diversifies the underlying implementation *structure* before verification, which suggests hexgen could benefit from sampling structurally different DSL programs (not just different token sequences) for the same target mesh, and from a bounded verifier-guided repair loop that edits a near-miss program&#39;s annotations/parameters rather than discarding it and resampling from scratch.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is classical software (arrays/lists over Why3), not geometry/CAD, so the repair mechanism (editing verification annotations) is not a direct transplant to our DSL; the transferable idea is the diversify-then-repair strategy pattern, not specific code. Only an abstract was available for extraction; full paper may contain more detail on the repair-step mechanics worth reviewing before implementing.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.34</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.09366</span>
   </div>
 </a>
 
