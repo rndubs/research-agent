@@ -30,8 +30,10 @@ def _rich_extraction(paper_id: str, *, code_link: str | None = "https://github.c
         paper_id=paper_id,
         problem_addressed="Decode a B-rep into a hex-meshing DSL program.",
         method_summary="Graph transformer over B-rep faces feeding a pointer-network decoder.",
+        contributions_summary="Introduces an execution-guided graph-transformer decoder that emits valid hex-meshing programs.",
         headline_results="92% structurally valid programs, +8 pts over the prior baseline.",
         applicability_to_our_problem="Maps B-rep faces directly to DSL tokens; near drop-in.",
+        reviewer_notes="Only evaluated on synthetic parts; real-CAD transfer untested.",
         implementation_cost_estimate="M",
         claimed_advantages=["execution-guided decoding substantially improves program validity"],
         dependencies_on_other_methods=["pointer networks", "graph transformer"],
@@ -75,6 +77,10 @@ def test_stage4_creates_scored_backlog_item_and_is_idempotent(config, db):
     # Positive score, cached == recomputed.
     assert item.score > 0
     assert item.score == pytest.approx(item.rice.score())
+    # The three human-facing reviewer fields are threaded from the extraction.
+    assert item.contributions == extraction.contributions_summary
+    assert item.applicability == extraction.applicability_to_our_problem
+    assert item.reviewer_notes == extraction.reviewer_notes
     # RICE inputs came from the LLM estimate (weights default to 1.0).
     assert item.rice.expected_impact == pytest.approx(0.7)
     assert item.rice.applicability == pytest.approx(0.6)

@@ -98,12 +98,23 @@ class ClaimExtractor:
             "You extract structured, grounded claims from a machine-learning "
             "research paper. Extract ONLY claims supported by the PAPER TEXT "
             "below — never invent facts.\n\n"
-            "For EVERY non-empty substantive field you fill, add an entry to "
+            "For EVERY non-empty substantive PAPER-CLAIM field you fill (e.g. "
+            "problem_addressed, method_summary, contributions_summary, "
+            "headline_results, claimed_advantages, limitations), add an entry to "
             "`provenance` mapping that field's name to a SHORT verbatim quote "
             "(<= 200 chars) copied from the PAPER TEXT that supports it. Do not "
-            "assert a field you cannot ground in a quote.\n\n"
-            "Judge `applicability_to_our_problem` strictly against OUR PROBLEM "
-            "STATEMENT; leave it empty if the method genuinely does not apply.\n"
+            "assert a paper-claim field you cannot ground in a quote.\n\n"
+            "Write `contributions_summary` as a clear 2-4 sentence plain-prose "
+            "summary of what the paper CLAIMS to contribute (its novel "
+            "method/result) — no scores, no our-problem framing.\n"
+            "For `applicability_to_our_problem`, be LIBERAL against OUR PROBLEM "
+            "STATEMENT: it need not be the whole paper — name any subset, single "
+            "mechanism, or tangential/analogous idea worth borrowing. Only leave it "
+            "empty if there is genuinely nothing transferable.\n"
+            "Use `reviewer_notes` for freeform additional context a reviewer should "
+            "know (caveats, relevant limitations, connections, risks). "
+            "`applicability_to_our_problem` and `reviewer_notes` are your own "
+            "judgment relative to OUR PROBLEM and do NOT require a paper quote.\n"
             "Set `implementation_cost_estimate` to S, M, or L (or a short phrase).\n"
             "Set `confidence` in [0,1] for your overall extraction confidence.\n\n"
             f"OUR PROBLEM STATEMENT:\n{problem}\n\n"
@@ -138,6 +149,7 @@ class ClaimExtractor:
             paper_id=paper.id,
             problem_addressed=result.problem_addressed,
             method_summary=result.method_summary,
+            contributions_summary=result.contributions_summary,
             key_architecture_choices=result.key_architecture_choices,
             datasets=result.datasets,
             metrics=result.metrics,
@@ -145,6 +157,7 @@ class ClaimExtractor:
             claimed_advantages=result.claimed_advantages,
             limitations=result.limitations,
             applicability_to_our_problem=result.applicability_to_our_problem,
+            reviewer_notes=result.reviewer_notes,
             implementation_cost_estimate=result.implementation_cost_estimate,
             dependencies_on_other_methods=result.dependencies_on_other_methods,
             code_link=result.code_link,

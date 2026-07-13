@@ -65,6 +65,9 @@ def _item(
     dependencies: list[str] | None = None,
     created_at=None,
     rationale: str = "",
+    contributions: str = "",
+    applicability_text: str = "",
+    reviewer_notes: str = "",
 ) -> BacklogItem:
     rice = RiceComponents(
         expected_impact=impact,
@@ -81,6 +84,9 @@ def _item(
         foundational=foundational,
         dependencies=dependencies or [],
         rationale=rationale,
+        contributions=contributions,
+        applicability=applicability_text,
+        reviewer_notes=reviewer_notes,
         status=BacklogStatus.NEW,
     )
     if created_at is not None:
@@ -270,6 +276,67 @@ def test_render_backlog_markdown_has_arxiv_link_and_rice_columns(seeded_db, deli
     assert "Foundational lane" in md
     # a specific arxiv link renders
     assert "https://arxiv.org/abs/2405.00001" in md
+
+
+def test_digest_renders_three_fields_and_drops_metric_prose(delivery_config):
+    """The digest body shows the three reviewer fields and never re-emits the
+    metric-laden rationale prose (which is what the RICE chips are for)."""
+    db = Database(":memory:")
+    db.upsert_paper(_paper("2607.11111", "A Fresh Relevant Paper", authors=["A. Uthor"],
+                           citation_count=3))
+    metric_prose = (
+        "Impact 0.55 (targets our #1 problem); Applicability 0.60; "
+        "Confidence 0.51 [code=False, provenance=0.78]; Effort 6.0/10. Score=0.0280."
+    )
+    db.save_backlog_item(_item(
+        "2607.11111#1", "2607.11111", "A Fresh Relevant Paper",
+        impact=0.55, applicability=0.60, confidence=0.51, effort=6.0,
+        rationale=metric_prose,
+        contributions="Proposes an on-policy self-distillation scheme for AR rollouts.",
+        applicability_text="The corrective-rollout template transfers to hexgen program repair.",
+        reviewer_notes="Demonstrated only on video diffusion, not executable grammars.",
+    ))
+
+    digest = render_digest(delivery_config, db)
+
+    for surface in (digest.markdown, digest.html):
+        assert "on-policy self-distillation scheme" in surface
+        assert "transfers to hexgen program repair" in surface
+        assert "video diffusion, not executable grammars" in surface
+        # the labels are present...
+        assert "Contributions" in surface
+        assert "Additional context" in surface
+        # ...but the duplicated metric readout prose is NOT in the body.
+        assert "provenance=0.78" not in surface
+        assert "Score=0.0280" not in surface
+    db.close()
+
+
+def test_digest_falls_back_for_legacy_items_without_new_fields(delivery_config):
+    """A pre-migration row (only description + metric rationale) still renders a
+    sensible body and never leaks the metric prose."""
+    db = Database(":memory:")
+    db.upsert_paper(_paper("2607.22222", "Legacy Row Paper", authors=["L. Egacy"],
+                           citation_count=3))
+    db.save_backlog_item(_item(
+        "2607.22222#1", "2607.22222", "Legacy Row Paper",
+        impact=0.4, applicability=0.4, confidence=0.4, effort=5.0,
+        rationale="Impact 0.40 (...); Confidence 0.40 [provenance=0.45]; Score=0.0128.",
+    ))
+    # simulate the old description blob on the stored row
+    legacy = db.get_backlog_item("2607.22222#1")
+    legacy.description = (
+        "Headline results: strong held-out generalization.\n\n"
+        "Applicability to our problem: the query-time vocabulary idea could "
+        "generalize hexgen's closed coordinate vocabulary."
+    )
+    db.save_backlog_item(legacy)
+
+    digest = render_digest(delivery_config, db)
+    assert "strong held-out generalization" in digest.html
+    assert "closed coordinate vocabulary" in digest.html
+    assert "provenance=0.45" not in digest.html
+    db.close()
 
 
 def test_render_digest_window_filters_old_and_keeps_fresh(seeded_db, delivery_config):

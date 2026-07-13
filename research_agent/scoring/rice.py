@@ -304,6 +304,24 @@ def _concise_title(paper: Paper, extraction: Extraction) -> str:
     return base
 
 
+def _contributions(extraction: Extraction) -> str:
+    """Human-facing summary of the paper's claimed contributions.
+
+    Prefer the dedicated ``contributions_summary``; fall back to the method
+    summary (optionally enriched with headline results) so the field is never
+    blank for a substantive paper.
+    """
+    text = (extraction.contributions_summary or "").strip()
+    if text:
+        return text
+    parts: list[str] = []
+    if _is_populated(extraction.method_summary):
+        parts.append(extraction.method_summary.strip())
+    if _is_populated(extraction.headline_results):
+        parts.append(f"Headline results: {extraction.headline_results.strip()}")
+    return " ".join(parts)
+
+
 def _description(extraction: Extraction) -> str:
     parts: list[str] = []
     if _is_populated(extraction.headline_results):
@@ -344,6 +362,9 @@ def _maybe_extra_item(
             paper_id=paper.id,
             title=title,
             description=f"Isolated advantage to try: {adv}",
+            contributions=f"Isolated advantage claimed by the paper: {adv}",
+            applicability=extraction.applicability_to_our_problem.strip(),
+            reviewer_notes=extraction.reviewer_notes.strip(),
             rice=rice,
             score=rice.score(),
             dependencies=list(extraction.dependencies_on_other_methods),
@@ -362,6 +383,9 @@ def make_backlog_items(
         paper_id=paper.id,
         title=_concise_title(paper, extraction),
         description=_description(extraction),
+        contributions=_contributions(extraction),
+        applicability=extraction.applicability_to_our_problem.strip(),
+        reviewer_notes=extraction.reviewer_notes.strip(),
         rice=rice,
         score=rice.score(),
         dependencies=list(extraction.dependencies_on_other_methods),
