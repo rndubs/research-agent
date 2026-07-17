@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-07-16</title>
+<title>hexgen digest — 2026-07-17</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-07-16 · 13 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-07-17 · 14 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -306,6 +306,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.13763</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.14545">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.014</span>
+    <span class="card-title">CASP (Certificate-Augmented Solution Pruning) has the predictor propose which parts of...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces CASP, a framework that augments learned predictions for offline NP-hard optimization with a sound polynomial-time verifier so that pruning decisions are certified rather than trusted outright. It develops accompanying learning theory showing the verifier bounds the induced loss class, giving certificate parameters a tilde-O(eps^-2 log K) sample complexity, versus no distribution-free rate (and an Omega(R/eps^2) lower bound under cost spread R) for unverified commitments. It shows verifiable-confidence filtering dominates a standard min-combiner with a closed-form margin, and that verified predictions remain useful even against degenerate LP optimal faces where symmetric policies stall. Experiments on five problems confirm that under distribution shift, unverified pruning can lose up to 26% of the optimum while the verified deployment loses nothing.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core mechanism -- never accept a learned prediction/pruning decision until a sound, cheap verifier has certified it, and prefer verifiable-confidence filtering over trusting raw model confidence -- is directly analogous to hexgen&#39;s design of screening best-of-N candidate programs with a frozen machine-checkable verifier. Their learning-theoretic result (verified filtering has a bounded, learnable loss class with better sample complexity than unverified commitment, and stays robust under distribution shift where unverified predictions lose up to 26% of optimum) is a useful theoretical argument for why verifier-guided best-of-N / rejection sampling should generalize better to real (out-of-distribution) CAD parts than trusting the decoder&#39;s raw scores alone, and could motivate using verifiable-confidence-style filtering (rather than plain likelihood) to rank candidate programs before verification.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available for extraction (no full-text chunks were retrieved), so architecture/dataset details beyond the abstract&#39;s claims could not be grounded; the five test problems and full experimental setup are unknown. The theoretical framing (verified vs. unverified prediction-augmented optimization) is the main transferable idea rather than any concrete algorithm directly reusable in hexgen&#39;s pipeline.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.14545</span>
   </div>
 </a>
 
@@ -650,9 +676,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.14545">
+  <div class="card-head">
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.014</span>
+    <span class="card-title">CASP (Certificate-Augmented Solution Pruning) has the predictor propose which parts of...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces CASP, a framework that augments learned predictions for offline NP-hard optimization with a sound polynomial-time verifier so that pruning decisions are certified rather than trusted outright. It develops accompanying learning theory showing the verifier bounds the induced loss class, giving certificate parameters a tilde-O(eps^-2 log K) sample complexity, versus no distribution-free rate (and an Omega(R/eps^2) lower bound under cost spread R) for unverified commitments. It shows verifiable-confidence filtering dominates a standard min-combiner with a closed-form margin, and that verified predictions remain useful even against degenerate LP optimal faces where symmetric policies stall. Experiments on five problems confirm that under distribution shift, unverified pruning can lose up to 26% of the optimum while the verified deployment loses nothing.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core mechanism -- never accept a learned prediction/pruning decision until a sound, cheap verifier has certified it, and prefer verifiable-confidence filtering over trusting raw model confidence -- is directly analogous to hexgen&#39;s design of screening best-of-N candidate programs with a frozen machine-checkable verifier. Their learning-theoretic result (verified filtering has a bounded, learnable loss class with better sample complexity than unverified commitment, and stays robust under distribution shift where unverified predictions lose up to 26% of optimum) is a useful theoretical argument for why verifier-guided best-of-N / rejection sampling should generalize better to real (out-of-distribution) CAD parts than trusting the decoder&#39;s raw scores alone, and could motivate using verifiable-confidence-style filtering (rather than plain likelihood) to rank candidate programs before verification.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available for extraction (no full-text chunks were retrieved), so architecture/dataset details beyond the abstract&#39;s claims could not be grounded; the five test problems and full experimental setup are unknown. The theoretical framing (verified vs. unverified prediction-augmented optimization) is the main transferable idea rather than any concrete algorithm directly reusable in hexgen&#39;s pipeline.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.14545</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.13436">
   <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.012</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.012</span>
     <span class="card-title">Combines Taylor Series Imitation Learning (TaSIL) to mitigate policy-induced distributi...</span>
   </div>
   <dl class="fields">
@@ -672,32 +724,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.13436</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.07993">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.012</span>
-    <span class="card-title">Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base model: the detector is fine-tuned on human-labeled data then used as a reward model to train the generator via RLAIF to produce increasingly hard-to-detect hallucinations; the evolved generator&#39;s synthesized hallucination data is then used to further optimize the detector via rule-based reinforcement learning.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The generator/detector co-evolution loop (detector trained on labeled data, then used as a reward signal to train an adversarial generator, whose harder outputs retrain the detector) is a transferable self-play/verifier-in-the-loop training template; hexgen&#39;s frozen verifier is deterministic rather than learned, but the same co-evolving flywheel structure could apply if we ever train a learned proxy verifier or a rollout-difficulty generator to stress-test the program decoder.</dd>
-    <dt>Additional context</dt>
-    <dd>The co-evolution loop assumes a learned detector/reward model; hexgen&#39;s verifier is frozen and deterministic, so applicability is speculative and would first require training a learned proxy verifier or a rollout-difficulty generator. Evaluated on RAGTruth (NLP faithfulness), far from geometry/program synthesis.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.58</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.07993</span>
   </div>
 </a>
 

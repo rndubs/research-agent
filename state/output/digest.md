@@ -1,6 +1,6 @@
-# hexgen digest — 2026-07-16
+# hexgen digest — 2026-07-17
 
-**13** new backlog item(s) in the last 7 day(s).
+**14** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -52,6 +52,12 @@
   - _Additional context:_ Application domain (power grids) is different, but the graph-transformer + topology-shift generalization mechanism is a clean, quantitatively validated methodological bridge. Abstract-only extraction; would want the full paper to see exactly how the complementary tasks are chosen and whether that recipe generalizes beyond power-grid physics.
   - _Impact_ 0.50 · _Applicability_ 0.54 · _Confidence_ 0.41 · _Effort_ 7.0/10
   [2607.13763](https://arxiv.org/abs/2607.13763)
+- **CASP (Certificate-Augmented Solution Pruning) has the predictor propose which parts of...** · score 0.014
+  - _Contributions:_ The paper introduces CASP, a framework that augments learned predictions for offline NP-hard optimization with a sound polynomial-time verifier so that pruning decisions are certified rather than trusted outright. It develops accompanying learning theory showing the verifier bounds the induced loss class, giving certificate parameters a tilde-O(eps^-2 log K) sample complexity, versus no distribution-free rate (and an Omega(R/eps^2) lower bound under cost spread R) for unverified commitments. It shows verifiable-confidence filtering dominates a standard min-combiner with a closed-form margin, and that verified predictions remain useful even against degenerate LP optimal faces where symmetric policies stall. Experiments on five problems confirm that under distribution shift, unverified pruning can lose up to 26% of the optimum while the verified deployment loses nothing.
+  - _Applicable to our work:_ The core mechanism -- never accept a learned prediction/pruning decision until a sound, cheap verifier has certified it, and prefer verifiable-confidence filtering over trusting raw model confidence -- is directly analogous to hexgen's design of screening best-of-N candidate programs with a frozen machine-checkable verifier. Their learning-theoretic result (verified filtering has a bounded, learnable loss class with better sample complexity than unverified commitment, and stays robust under distribution shift where unverified predictions lose up to 26% of optimum) is a useful theoretical argument for why verifier-guided best-of-N / rejection sampling should generalize better to real (out-of-distribution) CAD parts than trusting the decoder's raw scores alone, and could motivate using verifiable-confidence-style filtering (rather than plain likelihood) to rank candidate programs before verification.
+  - _Additional context:_ Only the abstract was available for extraction (no full-text chunks were retrieved), so architecture/dataset details beyond the abstract's claims could not be grounded; the five test problems and full experimental setup are unknown. The theoretical framing (verified vs. unverified prediction-augmented optimization) is the main transferable idea rather than any concrete algorithm directly reusable in hexgen's pipeline.
+  - _Impact_ 0.35 · _Applicability_ 0.54 · _Confidence_ 0.43 · _Effort_ 6.0/10
+  [2607.14545](https://arxiv.org/abs/2607.14545)
 - **Combines Taylor Series Imitation Learning (TaSIL) to mitigate policy-induced distributi...** · score 0.012
   - _Contributions:_ The paper proposes a distributionally robust and safe imitation learning framework that jointly addresses two distinct sources of distribution shift: policy-induced shift (via Taylor Series Imitation Learning) and uncertainty-induced shift (via distributionally robust adaptive control), formulated so the learned policy explicitly accounts for safety constraints under distributional uncertainty. It demonstrates the approach on a UAV task that must be completed in an uncertain environment while avoiding unsafe regions.
   - _Applicable to our work:_ Hexgen is itself trained via supervised imitation on synthetic 'inverse factory' rollouts and auto-labeled real CAD parts, and must generalize from that training distribution to arbitrary real parts -- exactly the policy-induced/uncertainty-induced distribution-shift setting this paper targets. The TaSIL mechanism for mitigating policy-induced shift during imitation learning is a candidate technique to make hexgen's decoder more robust when its own generated program prefixes drift from the training distribution of the inverse-factory and template-labeled demonstrations, and the safety-constraint framing maps naturally onto hexgen's hard verifier constraints (zero inverted elements, quality bounds) as constraints to respect under distribution shift rather than just imitate.
@@ -93,5 +99,5 @@
 6. **Under a unified self-play + MCTS pipeline on Connect Four (solved, exact game-theoretic...** · score 0.020 · [2607.08984](https://arxiv.org/abs/2607.08984)
 7. **IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials...** · score 0.017 · [2607.08392](https://arxiv.org/abs/2607.08392)
 8. **MxGPS (Multiplex GPS) runs K task-specialized graph transformer (GPS) branches over a s...** · score 0.016 · [2607.13763](https://arxiv.org/abs/2607.13763)
-9. **Combines Taylor Series Imitation Learning (TaSIL) to mitigate policy-induced distributi...** · score 0.012 · [2607.13436](https://arxiv.org/abs/2607.13436)
-10. **Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base...** · score 0.012 · [2607.07993](https://arxiv.org/abs/2607.07993)
+9. **CASP (Certificate-Augmented Solution Pruning) has the predictor propose which parts of...** · score 0.014 · [2607.14545](https://arxiv.org/abs/2607.14545)
+10. **Combines Taylor Series Imitation Learning (TaSIL) to mitigate policy-induced distributi...** · score 0.012 · [2607.13436](https://arxiv.org/abs/2607.13436)
