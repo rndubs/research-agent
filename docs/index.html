@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-07-19</title>
+<title>hexgen digest — 2026-07-20</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-07-19 · 14 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-07-20 · 9 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -154,32 +154,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.08766">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.028</span>
-    <span class="card-title">OPSD-V is an on-policy self-distillation scheme: a student follows its own exact infere...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>OPSD-V is an on-policy self-distillation scheme: a student follows its own exact inference-time AR rollout (own KV cache), while a teacher is evaluated at the same visited denoising states but with a cleaner AR-consistent cache where older history is replaced by real long-video context, providing dense denoising-level corrective targets without changing the sampler or inference-time cache mechanism.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The on-policy correction pattern (student rolls out exactly as at inference time; a teacher supplies corrective targets at the same visited states using cleaner context) is a directly transferable template for DAgger-style repair distillation on hexgen&#39;s own broken program rollouts -- e.g. having a teacher re-derive a corrective continuation from a verifier-clean program state whenever the student&#39;s own autoregressive rollout drifts, rather than training only on clean expert trajectories.</dd>
-    <dt>Additional context</dt>
-    <dd>Demonstrated only on few-step AR video diffusion, not on executable program grammars, so transfer to hexgen&#39;s discrete program rollouts is unproven. No released code. The &#39;cleaner-context teacher&#39; has no direct hexgen analogue — you&#39;d need to synthesize one (e.g. verifier-repaired continuations), which is a moderate new training-loop component rather than a drop-in.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.51</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.08766</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2607.13416">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.026</span>
@@ -202,84 +176,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.13416</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.08256">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.024</span>
-    <span class="card-title">Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verif...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verifier rankings reverse depending on evaluator ASR family despite near-identical representations, then proposes cross-family rank ensembles (rank-averaging and conjunctive max-rank) that reduce this confound.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>hexgen also selects among best-of-N candidate programs via a frozen verifier; this paper&#39;s core finding -- that apparent verifier quality/oracle-headroom recovery can be an artifact of evaluator identity/lineage rather than true representational quality -- is a direct methodological caution for validating and reporting our own best-of-N + verifier pipeline, and its cross-family rank-ensembling fix is a candidate technique if we ever use multiple imperfect verifiers/proxies.</dd>
-    <dt>Additional context</dt>
-    <dd>Evaluated only in zero-shot TTS with learned ASR verifiers; hexgen&#39;s verifier is a single frozen deterministic checker, not an ensemble of learned models, so the cross-family confound may not bite us directly. The value here is evaluation hygiene for best-of-N reporting rather than a capability gain — cheap to adopt only if we ever add proxy verifiers.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.08256</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.08984">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.020</span>
-    <span class="card-title">Under a unified self-play + MCTS pipeline on Connect Four (solved, exact game-theoretic...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper shows that vanilla AlphaZero achieves strong play in both Connect Four and Chomp but fails to preserve the exact trajectories required for optimal play (losing the optimal line in Connect Four; failing to consistently restore the Grundy g=0 invariant in Chomp), and that naively adding multi-frame inputs does not close this gap on Chomp. They introduce AZAL, which injects oracle-derived policy supervision as an auxiliary loss, and show it substantially improves oracle-consistency: near-perfect on 10x11 Chomp, high but incomplete on 9x10 Chomp, and improved (but still incomplete) oracle-match / delayed first mistake on Connect Four.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly relevant to our verifier-in-the-loop / structural-validity concerns: this paper is empirical evidence that self-play + MCTS alone (analogous to our best-of-N sampling against a frozen verifier) reliably reaches &#39;good&#39; programs but plateaus short of consistently optimal/valid trajectories, and that adding an auxiliary oracle-derived supervision signal (here, oracle policy labels; for us, verifier pass/fail or quality-metric feedback) on top of standard training closes much of that gap. Suggests hexgen&#39;s imitation-learning objective could be augmented with an AZAL-style auxiliary loss derived from the frozen mesh verifier&#39;s pass/fail and quality signals, rather than relying solely on best-of-N rejection at inference time.</dd>
-    <dt>Additional context</dt>
-    <dd>Both test domains are small, fully oracle-evaluable combinatorial games, far simpler than CAD/mesh generation, so the magnitude of the effect may not transfer directly; still, the core finding (self-play plateaus below oracle-optimal without auxiliary oracle supervision) is a useful cautionary/motivating data point for relying purely on best-of-N + frozen verifier at inference without an auxiliary training-time signal. Only the abstract was available for extraction.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.08984</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.08392">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.017</span>
-    <span class="card-title">IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials/components enter as wavelength-aware optical tokens (not learned fixed identities) supplied at query time; discrete component/material sequences are generated by discrete flow matching over the query-time candidate bank, and continuous parameters (layer thickness) are generated by continuous flow matching without discretization -- jointly, in one 136M-parameter model.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly analogous open-vocabulary/joint discrete-continuous generation pattern: hexgen currently uses a small CLOSED coordinate vocabulary and fixed program-command tokens; IrisFlow&#39;s query-time candidate bank + discrete-flow-matching-for-choices/continuous-flow-matching-for-parameters recipe is a candidate mechanism for generalizing the coordinate vocabulary and command parameterization to real/out-of-distribution CAD parts without retraining -- squarely addresses the domain-gap and structured/schema-constrained generation care areas.</dd>
-    <dt>Additional context</dt>
-    <dd>The domain is optical-coating inverse design, not CAD/geometry — the relevance is by analogy (open-vocabulary + joint discrete/continuous flow matching), not a direct method transfer. Implementation cost is high: a flow-matching generator is a substantial departure from the current autoregressive pointer-decoder. No released code noted.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.08392</span>
   </div>
 </a>
 
@@ -336,6 +232,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.15655">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.013</span>
+    <span class="card-title">AdaLook is an adaptive lookahead framework for masked diffusion language model (DLM) de...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes AdaLook, an adaptive multi-step lookahead decoding framework for diffusion language models that replaces shallow one-step lookahead with a variance-based, adaptive-depth rollout policy plus branch expansion at informative intermediate states. Experiments across various benchmarks and models show AdaLook achieves a better accuracy-vs-decoding-steps trade-off than existing one-step lookahead decoding methods.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core mechanism -- adaptively deciding how much value/critic-guided lookahead search to spend at each decode step, based on score variance, plus branch expansion at uncertain states -- is directly transferable to best-of-N / verifier-guided decoding search over hexgen&#39;s program prefixes: instead of fixed-depth beam or MCTS search, hexgen&#39;s decoder could spend more rollout budget only at command positions where candidate scores are uncertain (e.g. ambiguous face pointers or block/sweep choices), cutting compute while preserving structural-validity gains from deeper search.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available (no full text chunks retrieved), so architectural and experimental details beyond the abstract are unknown; this is a decoding-time search technique for masked DLMs, not for autoregressive decoders like hexgen&#39;s, so the adaptation would need validation on autoregressive/verifier-scored program decoding rather than assumed to transfer directly.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.39</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.15655</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.13436">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.012</span>
@@ -362,80 +284,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.07993">
+   href="https://arxiv.org/abs/2607.15536">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.012</span>
-    <span class="card-title">Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base...</span>
+    <span class="badge" title="composite RICE score">0.011</span>
+    <span class="card-title">The paper proves that for spherical-harmonic degrees l&lt;=2, photometry is algebraically...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base model: the detector is fine-tuned on human-labeled data then used as a reward model to train the generator via RLAIF to produce increasingly hard-to-detect hallucinations; the evolved generator&#39;s synthesized hallucination data is then used to further optimize the detector via rule-based reinforcement learning.</dd>
+    <dd>The paper presents E3DGS, an SE(3)-equivariant architecture for 3D Gaussian Splatting built on a &#39;Color-as-Geometry&#39; formulation: a Unified Matrix Embedding maps position, covariance, and spherical-harmonic color coefficients into a unified gl(3) carrier space so a single rigid-body-equivariant architecture can process all Gaussian attributes without expensive Clebsch-Gordan tensor products. Evaluations on object vision and action-conditioned Gaussian world modeling show strong robustness under camera-frame changes and improved data efficiency.</dd>
     <dt>Applicable to our work</dt>
-    <dd>The generator/detector co-evolution loop (detector trained on labeled data, then used as a reward signal to train an adversarial generator, whose harder outputs retrain the detector) is a transferable self-play/verifier-in-the-loop training template; hexgen&#39;s frozen verifier is deterministic rather than learned, but the same co-evolving flywheel structure could apply if we ever train a learned proxy verifier or a rollout-difficulty generator to stress-test the program decoder.</dd>
+    <dd>The core idea -- unifying heterogeneous per-attribute rotation actions (vector, tensor, higher-order harmonic) into one matrix carrier space so a single equivariant architecture handles them all without Clebsch-Gordan products -- is a genuinely new, lower-cost mechanism for building a natively rotation-equivariant B-rep graph encoder: hexgen&#39;s face/edge/vertex graph carries multiple geometric attribute types (positions, normals, possibly surface-curvature tensors) whose rotation actions differ, and this unified-matrix-embedding trick could let a graph-transformer encoder be exactly SE(3)-equivariant across all of them cheaply, which is relevant to the rotation-robustness care area despite that line being otherwise closed to genuinely new mechanisms.</dd>
     <dt>Additional context</dt>
-    <dd>The co-evolution loop assumes a learned detector/reward model; hexgen&#39;s verifier is frozen and deterministic, so applicability is speculative and would first require training a learned proxy verifier or a rollout-difficulty generator. Evaluated on RAGTruth (NLP faithfulness), far from geometry/program synthesis.</dd>
+    <dd>Only the abstract was retrieved (no full-text chunks), so implementation details of the Unified Matrix Embedding and the exact evaluation setup (which &#39;object vision&#39; and &#39;Gaussian world modeling&#39; benchmarks) are unknown; applicability is to the encoder side of hexgen (B-rep graph encoding), not directly to program decoding.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.58</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
     <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.07993</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.09059">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.010</span>
-    <span class="card-title">ARCANA decomposes each task into perception, hypothesis generation, symbolic execution,...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The authors present ARCANA, a multi-agent program-synthesis framework for ARC-AGI-2 that combines object-centric perception, diverse DSL program proposal, symbolic execution against demonstrations as a verifier, and reflective failure-driven correction across turns. The system is coordinated via a shared blackboard and a learned meta-controller that schedules the agents. They claim the design improves reasoning efficiency and solution quality on abstract transformation tasks relative to non-iterative program-synthesis baselines.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Close structural analog to hexgen&#39;s own pipeline: (1) symbolic execution against demonstrations as an in-the-loop verifier mirrors our frozen mesh verifier; (2) the reflective agent that turns execution failures into next-round feedback is a candidate mechanism for repair/edit distillation on hexgen&#39;s own broken rollouts (DAgger-style); (3) proposing a diverse set of DSL programs before verification echoes our best-of-N screening and could be extended with ARCANA&#39;s failure-driven feedback loop to make best-of-N adaptive across rounds rather than one-shot.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract was available; headline quantitative results (efficiency/quality numbers vs. baselines) were not stated in the extracted text, so headline_results is left empty rather than guessed. Domain (ARC grid puzzles) is far from mechanical CAD, so scene-graph perception details are not transferable, but the verify-then-reflect control loop is a well-matched design pattern.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.29</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.09059</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.09366">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.010</span>
-    <span class="card-title">Diversify2Verify is a staged LLM-based pipeline targeting the Why3 verification platfor...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The authors introduce Diversify2Verify, an LLM pipeline that generates multiple task-equivalent but structurally diverse program implementations and repairs their formal-verification annotations against a Why3 verifier over up to two repair passes. They also release a 73-task, 292-implementation-variant verification benchmark over integers, arrays, and lists. Their key empirical finding is that implementation diversity substantially raises the chance that at least one variant is machine-verifiable, even when task-level semantics are identical.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly analogous to our best-of-N + frozen verifier screening: instead of only diversifying final candidate programs, Diversify2Verify diversifies the underlying implementation *structure* before verification, which suggests hexgen could benefit from sampling structurally different DSL programs (not just different token sequences) for the same target mesh, and from a bounded verifier-guided repair loop that edits a near-miss program&#39;s annotations/parameters rather than discarding it and resampling from scratch.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is classical software (arrays/lists over Why3), not geometry/CAD, so the repair mechanism (editing verification annotations) is not a direct transplant to our DSL; the transferable idea is the diversify-then-repair strategy pattern, not specific code. Only an abstract was available for extraction; full paper may contain more detail on the repair-step mechanics worth reviewing before implementing.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.34</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.09366</span>
+    <span class="pid">2607.15536</span>
   </div>
 </a>
 
@@ -702,28 +572,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.13436">
+   href="https://arxiv.org/abs/2607.15655">
   <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.012</span>
-    <span class="card-title">Combines Taylor Series Imitation Learning (TaSIL) to mitigate policy-induced distributi...</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.013</span>
+    <span class="card-title">AdaLook is an adaptive lookahead framework for masked diffusion language model (DLM) de...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper proposes a distributionally robust and safe imitation learning framework that jointly addresses two distinct sources of distribution shift: policy-induced shift (via Taylor Series Imitation Learning) and uncertainty-induced shift (via distributionally robust adaptive control), formulated so the learned policy explicitly accounts for safety constraints under distributional uncertainty. It demonstrates the approach on a UAV task that must be completed in an uncertain environment while avoiding unsafe regions.</dd>
+    <dd>The paper proposes AdaLook, an adaptive multi-step lookahead decoding framework for diffusion language models that replaces shallow one-step lookahead with a variance-based, adaptive-depth rollout policy plus branch expansion at informative intermediate states. Experiments across various benchmarks and models show AdaLook achieves a better accuracy-vs-decoding-steps trade-off than existing one-step lookahead decoding methods.</dd>
     <dt>Applicable to our work</dt>
-    <dd>Hexgen is itself trained via supervised imitation on synthetic &#39;inverse factory&#39; rollouts and auto-labeled real CAD parts, and must generalize from that training distribution to arbitrary real parts -- exactly the policy-induced/uncertainty-induced distribution-shift setting this paper targets. The TaSIL mechanism for mitigating policy-induced shift during imitation learning is a candidate technique to make hexgen&#39;s decoder more robust when its own generated program prefixes drift from the training distribution of the inverse-factory and template-labeled demonstrations, and the safety-constraint framing maps naturally onto hexgen&#39;s hard verifier constraints (zero inverted elements, quality bounds) as constraints to respect under distribution shift rather than just imitate.</dd>
+    <dd>The core mechanism -- adaptively deciding how much value/critic-guided lookahead search to spend at each decode step, based on score variance, plus branch expansion at uncertain states -- is directly transferable to best-of-N / verifier-guided decoding search over hexgen&#39;s program prefixes: instead of fixed-depth beam or MCTS search, hexgen&#39;s decoder could spend more rollout budget only at command positions where candidate scores are uncertain (e.g. ambiguous face pointers or block/sweep choices), cutting compute while preserving structural-validity gains from deeper search.</dd>
     <dt>Additional context</dt>
-    <dd>Application domain is UAV control, not CAD/geometry, so the transfer is at the level of the imitation-learning-under-distribution-shift mechanism (TaSIL) rather than any CAD-specific technique. Abstract-only extraction; no quantitative results are given in the abstract to assess strength of the claims.</dd>
+    <dd>Only the abstract was available (no full text chunks retrieved), so architectural and experimental details beyond the abstract are unknown; this is a decoding-time search technique for masked DLMs, not for autoregressive decoders like hexgen&#39;s, so the adaptation would need validation on autoregressive/verifier-scored program decoding rather than assumed to transfer directly.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.34</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.39</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13436</span>
+    <span class="pid">2607.15655</span>
   </div>
 </a>
 
