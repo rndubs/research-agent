@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-07-20</title>
+<title>hexgen digest — 2026-07-21</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-07-20 · 9 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-07-21 · 15 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -124,6 +124,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.13918</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.17531">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.054</span>
+    <span class="card-title">For a fixed candidate pool, the paper decomposes a selector or verifier&#39;s net gain into...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces a diagnostic framework that decomposes the net gain of test-time collaboration methods (self-consistency, best-of-N, critics, verifiers) into oracle gap, signal fidelity, conditional selection quality, and harm to already-correct outputs, evaluated on LiveCodeBench, MATH Level-5, and GPQA-Diamond. It finds that gains are bounded first by the oracle gap and then by signal fidelity, and shows this varies substantially by verifier type and dataset, including cases where LLM selectors are net-negative. The framework yields a practical pre-deployment diagnostic for deciding whether to invest in test-time collaboration.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly applicable diagnostic for hexgen&#39;s best-of-N plus frozen-verifier design: the oracle-gap / recoverable-mass / signal-fidelity / harm decomposition could be measured on hexgen&#39;s candidate program pools to check whether best-of-N sampling is actually paying off for a given part class, versus the pool lacking any valid program at all (low recoverable mass) or the verifier&#39;s discrimination being too weak to help -- directly targets the self-play/verifier-in-the-loop-training care area.</dd>
+    <dt>Additional context</dt>
+    <dd>hexgen&#39;s verifier is deterministic and machine-checkable (not a noisy LLM verifier), so signal fidelity should be near-perfect by construction; the most relevant transferable piece is &#39;recoverable mass&#39; -- checking whether best-of-N candidate pools for hard parts actually contain a structurally valid program before investing more sampling budget.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.17531</span>
   </div>
 </a>
 
@@ -154,6 +180,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.17570">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.029</span>
+    <span class="card-title">The paper proves that a broad class of hierarchical graph transformers combining global...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper characterizes the expressive power of global-attention graph foundation models for MILPs, proving they are bounded by the 1-WL test regardless of parameter setting, and validates this across ten diverse encoder architectures (Graphormer-, GraphGPS-, Set-Transformer-, and Gasse-style). It further shows that expressiveness beyond 1-WL comes from input encoding rather than attention: random-walk positional encodings can separate 1-WL-equivalent instance pairs, though further constructions expose the limits of that remedy. The result yields an encoder-agnostic diagnostic for detecting 1-WL-induced representation equivalence.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>hexgen&#39;s graph-transformer encoder over B-rep face-adjacency graphs (Graphormer-style edge-biased attention) could suffer the same 1-WL expressiveness ceiling, meaning distinct-but-WL-equivalent faces could be mapped to identical embeddings before the pointer/copy head addresses them -- directly bearing on the &#39;symmetry/orbit ambiguity when pointing at congruent nodes&#39; care area. The paper&#39;s diagnostic could be run on hexgen&#39;s encoder to test for such collapse, and its random-walk-positional-encoding remedy is a concrete, low-cost mechanism to try if collapse is found.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain studied is MILP graphs, not B-rep, but the architectural components (global linear attention, edge-weighted cross-attention, Graphormer/GraphGPS-style encoders) closely match hexgen&#39;s encoder family, so the WL-boundedness result plausibly transfers directly; only the abstract was available, so exact proof scope and remedy details are unverified.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.17570</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.13416">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.026</span>
@@ -176,6 +228,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.13416</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.17641">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.025</span>
+    <span class="card-title">VRR-Stop uses a four-parameter noise model separating verifier false acceptance and fal...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes VRR-Stop, a robust stopping framework for noisy verify-repair-repeat loops in LLM agents that models verifier and repairer noise separately and decides whether to continue repairing based on the sign of the estimated marginal gain in validity. It also introduces VRR-Guard, an estimation-free fallback for when verifier discrimination is too weak for calibration to be reliable. On a GSM8K stress setting, VRR-Stop substantially improves final true validity over fixed-round repair while using fewer average repair rounds.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly transferable stopping/decision framework for hexgen&#39;s best-of-N plus frozen-verifier plus repair pipeline: a VRR-Stop-style noise model and belief-filtering could decide when to keep repairing a candidate hex-mesh program versus commit or discard it, and VRR-Guard&#39;s margin-based fallback guards against acting on an unreliable signal, directly targeting the structural-validity and verifier-in-the-loop-training care areas.</dd>
+    <dt>Additional context</dt>
+    <dd>hexgen&#39;s verifier is described as a FROZEN, machine-checkable, deterministic pass/fail (compiles, zero inverted elements, quality bounds, etc.), so it likely has much higher discrimination than the noisy LLM verifiers this paper targets -- the explicit noise model may be unnecessary overhead, but the general stopping-criterion framing (marginal-gain sign, cost-bounded repair, guard against low-signal regimes) remains a directly applicable design pattern for a repair/edit-distillation loop.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.17641</span>
   </div>
 </a>
 
@@ -228,6 +306,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.14545</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.17524">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.013</span>
+    <span class="card-title">Token-Level Off-Policy Labeling (TOPL) reframes post-training as a token-level correctn...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes TOPL, an off-policy post-training paradigm that trains a model to classify tokens in its own responses as good or bad rather than directly imitating off-policy sequences. On 11 document-summarization datasets it achieves strong out-of-distribution generalization against sequence-level and token-level baselines, and the approach transfers to machine translation. Ablations show the token-level learning signal is essential; sequence-level analogues do not confer the same benefit, and the learned LoRA adapters behave as interpretable linear classification heads and steering vectors.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core idea -- training the model to distinguish good/bad tokens at each generation step rather than only supervising fully correct sequences -- is a direct analogue to hexgen&#39;s structural-validity problem: a token-level (per-DSL-command) correctness signal derived from the verifier could give denser training signal about which partial command choices lead toward a compiling/valid program, potentially improving generalization to out-of-distribution real CAD parts (domain-gap care area) beyond pure best-of-N imitation.</dd>
+    <dt>Additional context</dt>
+    <dd>Applied to text generation faithfulness (summarization/machine translation), not structured program synthesis, but the token-level correctness-prediction framing is architecture-agnostic and plausibly portable to hexgen&#39;s autoregressive DSL decoder and its pointer/coordinate heads.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.37</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.17524</span>
   </div>
 </a>
 
@@ -310,6 +414,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.17540">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.006</span>
+    <span class="card-title">The framework combines an LLM for program synthesis with neural simulation-based infere...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper presents a framework for joint model selection and parameter estimation that combines LLM-based program synthesis with neural simulation-based inference, enabling inference over a pool of candidate model structures rather than only parameters within one fixed model. Given an open-ended natural-language prompt, an LLM proposes and iteratively refines candidate simulator programs, which are scored with neural density estimation. The method is evaluated on benchmarks spanning deterministic dynamics, stochastic epidemic models, and dark matter substructure inference from gravitational-lensing images.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The propose-mutate-evaluate loop -- an LLM proposing candidate programs that are iteratively refined and scored by an external evaluator -- is structurally analogous to hexgen&#39;s best-of-N-plus-verifier generation process and could inform an LLM-agent-authoring pipeline (care area 6) for synthesizing additional diverse (B-rep, program) training pairs beyond the inverse-factory sampler.</dd>
+    <dt>Additional context</dt>
+    <dd>Applied to scientific simulator code synthesis (epidemic models, gravitational lensing), not CAD/geometry; the transferable piece is the propose-mutate-evaluate loop structure and use of an LLM as a program-synthesis proposal mechanism, not any CAD-specific content.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.32</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.17540</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.13563">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.006</span>
@@ -332,6 +462,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.13563</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.18074">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.002</span>
+    <span class="card-title">By reassociating radial projection, spherical-harmonic coupling, and graph aggregation,...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper shows that the edge-sized intermediates conventionally materialized by equivariant tensor-product graph convolutions are artifacts of the execution schedule, not requirements of the operator itself. It introduces a streaming reformulation, implemented as a generated-CUDA backend called Sobek, that consumes edge-local products directly into bounded receiver-side state while preserving full multiplicity mixing and differentiability. Sobek is evaluated across edge-scaling regimes and two operator families against a prior state-of-the-art (OpenEquivariance).</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The streaming reassociation trick that avoids materializing edge-sized tensor-product intermediates is a genuinely new deployment-time mechanism relevant to the rotation/equivariance care area: if hexgen&#39;s encoder were ever extended with equivariant tensor-product layers over B-rep attributes, this would remove the memory bottleneck that otherwise limits scaling such layers.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available. hexgen&#39;s B-rep graphs are tiny (~7-15 faces), so Sobek&#39;s edge-scaling memory benefits are unlikely to matter directly unless a much larger/denser representation or an equivariant-encoder line is adopted; relevance is speculative and forward-looking rather than immediately actionable.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.15</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.24</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.18074</span>
   </div>
 </a>
 
@@ -364,9 +520,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.17531">
+  <div class="card-head">
+<span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.054</span>
+    <span class="card-title">For a fixed candidate pool, the paper decomposes a selector or verifier&#39;s net gain into...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces a diagnostic framework that decomposes the net gain of test-time collaboration methods (self-consistency, best-of-N, critics, verifiers) into oracle gap, signal fidelity, conditional selection quality, and harm to already-correct outputs, evaluated on LiveCodeBench, MATH Level-5, and GPQA-Diamond. It finds that gains are bounded first by the oracle gap and then by signal fidelity, and shows this varies substantially by verifier type and dataset, including cases where LLM selectors are net-negative. The framework yields a practical pre-deployment diagnostic for deciding whether to invest in test-time collaboration.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly applicable diagnostic for hexgen&#39;s best-of-N plus frozen-verifier design: the oracle-gap / recoverable-mass / signal-fidelity / harm decomposition could be measured on hexgen&#39;s candidate program pools to check whether best-of-N sampling is actually paying off for a given part class, versus the pool lacking any valid program at all (low recoverable mass) or the verifier&#39;s discrimination being too weak to help -- directly targets the self-play/verifier-in-the-loop-training care area.</dd>
+    <dt>Additional context</dt>
+    <dd>hexgen&#39;s verifier is deterministic and machine-checkable (not a noisy LLM verifier), so signal fidelity should be near-perfect by construction; the most relevant transferable piece is &#39;recoverable mass&#39; -- checking whether best-of-N candidate pools for hard parts actually contain a structurally valid program before investing more sampling budget.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.17531</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.13921">
   <div class="card-head">
-<span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.033</span>
+<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.033</span>
     <span class="card-title">Introduces &#39;generative compilation&#39;: a &#39;sealor&#39; transformation converts a partial progr...</span>
   </div>
   <dl class="fields">
@@ -390,9 +572,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.17570">
+  <div class="card-head">
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.029</span>
+    <span class="card-title">The paper proves that a broad class of hierarchical graph transformers combining global...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper characterizes the expressive power of global-attention graph foundation models for MILPs, proving they are bounded by the 1-WL test regardless of parameter setting, and validates this across ten diverse encoder architectures (Graphormer-, GraphGPS-, Set-Transformer-, and Gasse-style). It further shows that expressiveness beyond 1-WL comes from input encoding rather than attention: random-walk positional encodings can separate 1-WL-equivalent instance pairs, though further constructions expose the limits of that remedy. The result yields an encoder-agnostic diagnostic for detecting 1-WL-induced representation equivalence.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>hexgen&#39;s graph-transformer encoder over B-rep face-adjacency graphs (Graphormer-style edge-biased attention) could suffer the same 1-WL expressiveness ceiling, meaning distinct-but-WL-equivalent faces could be mapped to identical embeddings before the pointer/copy head addresses them -- directly bearing on the &#39;symmetry/orbit ambiguity when pointing at congruent nodes&#39; care area. The paper&#39;s diagnostic could be run on hexgen&#39;s encoder to test for such collapse, and its random-walk-positional-encoding remedy is a concrete, low-cost mechanism to try if collapse is found.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain studied is MILP graphs, not B-rep, but the architectural components (global linear attention, edge-weighted cross-attention, Graphormer/GraphGPS-style encoders) closely match hexgen&#39;s encoder family, so the WL-boundedness result plausibly transfers directly; only the abstract was available, so exact proof scope and remedy details are unverified.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.17570</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.08766">
   <div class="card-head">
-<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.028</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.028</span>
     <span class="card-title">OPSD-V is an on-policy self-distillation scheme: a student follows its own exact infere...</span>
   </div>
   <dl class="fields">
@@ -418,7 +626,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.13416">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.026</span>
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.026</span>
     <span class="card-title">EXPLORE integrates simulator-guided Monte Carlo Tree Search (MCTS) with transformer-bas...</span>
   </div>
   <dl class="fields">
@@ -442,9 +650,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.17641">
+  <div class="card-head">
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.025</span>
+    <span class="card-title">VRR-Stop uses a four-parameter noise model separating verifier false acceptance and fal...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes VRR-Stop, a robust stopping framework for noisy verify-repair-repeat loops in LLM agents that models verifier and repairer noise separately and decides whether to continue repairing based on the sign of the estimated marginal gain in validity. It also introduces VRR-Guard, an estimation-free fallback for when verifier discrimination is too weak for calibration to be reliable. On a GSM8K stress setting, VRR-Stop substantially improves final true validity over fixed-round repair while using fewer average repair rounds.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly transferable stopping/decision framework for hexgen&#39;s best-of-N plus frozen-verifier plus repair pipeline: a VRR-Stop-style noise model and belief-filtering could decide when to keep repairing a candidate hex-mesh program versus commit or discard it, and VRR-Guard&#39;s margin-based fallback guards against acting on an unreliable signal, directly targeting the structural-validity and verifier-in-the-loop-training care areas.</dd>
+    <dt>Additional context</dt>
+    <dd>hexgen&#39;s verifier is described as a FROZEN, machine-checkable, deterministic pass/fail (compiles, zero inverted elements, quality bounds, etc.), so it likely has much higher discrimination than the noisy LLM verifiers this paper targets -- the explicit noise model may be unnecessary overhead, but the general stopping-criterion framing (marginal-gain sign, cost-bounded repair, guard against low-signal regimes) remains a directly applicable design pattern for a repair/edit-distillation loop.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.17641</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.08256">
   <div class="card-head">
-<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.024</span>
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.024</span>
     <span class="card-title">Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verif...</span>
   </div>
   <dl class="fields">
@@ -470,7 +704,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.08984">
   <div class="card-head">
-<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.020</span>
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.020</span>
     <span class="card-title">Under a unified self-play + MCTS pipeline on Connect Four (solved, exact game-theoretic...</span>
   </div>
   <dl class="fields">
@@ -496,7 +730,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.08392">
   <div class="card-head">
-<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.017</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.017</span>
     <span class="card-title">IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials...</span>
   </div>
   <dl class="fields">
@@ -516,84 +750,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.08392</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.13763">
-  <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.016</span>
-    <span class="card-title">MxGPS (Multiplex GPS) runs K task-specialized graph transformer (GPS) branches over a s...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper identifies &#39;topology overfitting&#39; as a systematic failure mode of single-task GNN fine-tuning for power grids and introduces MxGPS, a multiplex graph-transformer foundation model with a shared node encoder and multiple task-specialized branches, jointly pretrained/fine-tuned on two complementary grid tasks. Under cross-validation across four unseen grid topologies, MxGPS degrades far less under topology shift than single-task baselines despite using far fewer parameters, showing that multi-task joint training is a parameter-efficient route to topology-agnostic generalization.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core diagnosis -- that task-specific fine-tuning on a graph transformer overfits to the relational structure of training-set graph topologies, causing severe degradation when the graph shape shifts -- is a strong structural analogy to hexgen&#39;s domain-gap problem (a graph-transformer encoder over B-rep face-adjacency graphs trained on synthetic &#39;inverse factory&#39; topologies must generalize to real, differently-shaped CAD part graphs). The fix (shared encoder + multiple complementary joint tasks forcing the encoder off topology-specific shortcuts, rather than single-task fine-tuning) suggests hexgen could add a second, complementary self-supervised or auxiliary graph task during pretraining/fine-tuning of its encoder to reduce overfitting to the synthetic B-rep topology distribution.</dd>
-    <dt>Additional context</dt>
-    <dd>Application domain (power grids) is different, but the graph-transformer + topology-shift generalization mechanism is a clean, quantitatively validated methodological bridge. Abstract-only extraction; would want the full paper to see exactly how the complementary tasks are chosen and whether that recipe generalizes beyond power-grid physics.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13763</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.14545">
-  <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.014</span>
-    <span class="card-title">CASP (Certificate-Augmented Solution Pruning) has the predictor propose which parts of...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces CASP, a framework that augments learned predictions for offline NP-hard optimization with a sound polynomial-time verifier so that pruning decisions are certified rather than trusted outright. It develops accompanying learning theory showing the verifier bounds the induced loss class, giving certificate parameters a tilde-O(eps^-2 log K) sample complexity, versus no distribution-free rate (and an Omega(R/eps^2) lower bound under cost spread R) for unverified commitments. It shows verifiable-confidence filtering dominates a standard min-combiner with a closed-form margin, and that verified predictions remain useful even against degenerate LP optimal faces where symmetric policies stall. Experiments on five problems confirm that under distribution shift, unverified pruning can lose up to 26% of the optimum while the verified deployment loses nothing.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core mechanism -- never accept a learned prediction/pruning decision until a sound, cheap verifier has certified it, and prefer verifiable-confidence filtering over trusting raw model confidence -- is directly analogous to hexgen&#39;s design of screening best-of-N candidate programs with a frozen machine-checkable verifier. Their learning-theoretic result (verified filtering has a bounded, learnable loss class with better sample complexity than unverified commitment, and stays robust under distribution shift where unverified predictions lose up to 26% of optimum) is a useful theoretical argument for why verifier-guided best-of-N / rejection sampling should generalize better to real (out-of-distribution) CAD parts than trusting the decoder&#39;s raw scores alone, and could motivate using verifiable-confidence-style filtering (rather than plain likelihood) to rank candidate programs before verification.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract was available for extraction (no full-text chunks were retrieved), so architecture/dataset details beyond the abstract&#39;s claims could not be grounded; the five test problems and full experimental setup are unknown. The theoretical framing (verified vs. unverified prediction-augmented optimization) is the main transferable idea rather than any concrete algorithm directly reusable in hexgen&#39;s pipeline.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.14545</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.15655">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.013</span>
-    <span class="card-title">AdaLook is an adaptive lookahead framework for masked diffusion language model (DLM) de...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes AdaLook, an adaptive multi-step lookahead decoding framework for diffusion language models that replaces shallow one-step lookahead with a variance-based, adaptive-depth rollout policy plus branch expansion at informative intermediate states. Experiments across various benchmarks and models show AdaLook achieves a better accuracy-vs-decoding-steps trade-off than existing one-step lookahead decoding methods.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core mechanism -- adaptively deciding how much value/critic-guided lookahead search to spend at each decode step, based on score variance, plus branch expansion at uncertain states -- is directly transferable to best-of-N / verifier-guided decoding search over hexgen&#39;s program prefixes: instead of fixed-depth beam or MCTS search, hexgen&#39;s decoder could spend more rollout budget only at command positions where candidate scores are uncertain (e.g. ambiguous face pointers or block/sweep choices), cutting compute while preserving structural-validity gains from deeper search.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract was available (no full text chunks retrieved), so architectural and experimental details beyond the abstract are unknown; this is a decoding-time search technique for masked DLMs, not for autoregressive decoders like hexgen&#39;s, so the adaptation would need validation on autoregressive/verifier-scored program decoding rather than assumed to transfer directly.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.39</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.15655</span>
   </div>
 </a>
 
