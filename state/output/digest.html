@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-07-22</title>
+<title>hexgen digest — 2026-07-23</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-07-22 · 15 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-07-23 · 16 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -254,6 +254,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.17641</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.19635">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.017</span>
+    <span class="card-title">Diagnostic analysis of LDT on clue-rich Sudoku: measures how much of the grid is commit...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper shows that a neural Sudoku solver marketed as performing branching search actually commits nearly the whole solution in a single forward pass and is functionally a one-shot predictor wrapped in an exact verifier; all failures trace to a single early, confident wrong deletion (&#39;first-pass poisoning&#39;) rather than to search quality. It further shows that adding learned search machinery (CoLT) does not change which instances are solved, only how much wasted invalid-derivation compute is cut, and that two calibration/symmetry interventions -- digit-permutation augmentation and test-time union over symmetry-transformed passes -- dramatically raise accuracy without retraining. On an out-of-distribution graph-coloring task, the one-shot behavior disappears and search actually changes outcomes, delimiting where the diagnosis applies.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core diagnostic question -- is this verifier-screened autoregressive model actually doing search, or is it a one-shot predictor whose apparent best-of-N selection just amortizes a single confident (and sometimes wrong) forward pass? -- is directly analogous to hexgen&#39;s best-of-N-plus-frozen-verifier pipeline, and worth running as a sanity check (does hexgen&#39;s decoder &#39;first-pass poison&#39; by locking in a wrong face/coordinate choice early, with the frozen verifier just filtering symptoms rather than the model doing real structural search?). Two concrete, low-cost transferable mechanisms: (1) test-time union over symmetry-transformed passes (run the encoder-decoder on several rotated/permuted views of the B-rep and union/vote the candidate programs before verifier screening) as a deployment-time robustness trick for the rotation/pose-robustness care area; (2) a permutation/relabeling-style data augmentation (analogous to digit-permutation here) over face/coordinate labels to break spurious ordering shortcuts, relevant to the domain-gap/tokenization-mismatch care area.</dd>
+    <dt>Additional context</dt>
+    <dd>Results are on toy combinatorial puzzles (Sudoku, graph coloring), not CAD/geometry, so the specific numbers don&#39;t transfer -- but the underlying methodology (probe how much of the output a single forward pass commits vs how much search actually contributes, then intervene with symmetry augmentation) is a cheap, generalizable diagnostic worth adapting to hexgen&#39;s own verifier-in-the-loop pipeline before investing further in search machinery. Only the abstract was available for this extraction (single-chunk paper text), so architectural and experimental details beyond the abstract are not grounded here.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.19635</span>
   </div>
 </a>
 
@@ -728,28 +754,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.08392">
+   href="https://arxiv.org/abs/2607.19635">
   <div class="card-head">
 <span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.017</span>
-    <span class="card-title">IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials...</span>
+    <span class="card-title">Diagnostic analysis of LDT on clue-rich Sudoku: measures how much of the grid is commit...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials/components enter as wavelength-aware optical tokens (not learned fixed identities) supplied at query time; discrete component/material sequences are generated by discrete flow matching over the query-time candidate bank, and continuous parameters (layer thickness) are generated by continuous flow matching without discretization -- jointly, in one 136M-parameter model.</dd>
+    <dd>The paper shows that a neural Sudoku solver marketed as performing branching search actually commits nearly the whole solution in a single forward pass and is functionally a one-shot predictor wrapped in an exact verifier; all failures trace to a single early, confident wrong deletion (&#39;first-pass poisoning&#39;) rather than to search quality. It further shows that adding learned search machinery (CoLT) does not change which instances are solved, only how much wasted invalid-derivation compute is cut, and that two calibration/symmetry interventions -- digit-permutation augmentation and test-time union over symmetry-transformed passes -- dramatically raise accuracy without retraining. On an out-of-distribution graph-coloring task, the one-shot behavior disappears and search actually changes outcomes, delimiting where the diagnosis applies.</dd>
     <dt>Applicable to our work</dt>
-    <dd>Directly analogous open-vocabulary/joint discrete-continuous generation pattern: hexgen currently uses a small CLOSED coordinate vocabulary and fixed program-command tokens; IrisFlow&#39;s query-time candidate bank + discrete-flow-matching-for-choices/continuous-flow-matching-for-parameters recipe is a candidate mechanism for generalizing the coordinate vocabulary and command parameterization to real/out-of-distribution CAD parts without retraining -- squarely addresses the domain-gap and structured/schema-constrained generation care areas.</dd>
+    <dd>The core diagnostic question -- is this verifier-screened autoregressive model actually doing search, or is it a one-shot predictor whose apparent best-of-N selection just amortizes a single confident (and sometimes wrong) forward pass? -- is directly analogous to hexgen&#39;s best-of-N-plus-frozen-verifier pipeline, and worth running as a sanity check (does hexgen&#39;s decoder &#39;first-pass poison&#39; by locking in a wrong face/coordinate choice early, with the frozen verifier just filtering symptoms rather than the model doing real structural search?). Two concrete, low-cost transferable mechanisms: (1) test-time union over symmetry-transformed passes (run the encoder-decoder on several rotated/permuted views of the B-rep and union/vote the candidate programs before verifier screening) as a deployment-time robustness trick for the rotation/pose-robustness care area; (2) a permutation/relabeling-style data augmentation (analogous to digit-permutation here) over face/coordinate labels to break spurious ordering shortcuts, relevant to the domain-gap/tokenization-mismatch care area.</dd>
     <dt>Additional context</dt>
-    <dd>The domain is optical-coating inverse design, not CAD/geometry — the relevance is by analogy (open-vocabulary + joint discrete/continuous flow matching), not a direct method transfer. Implementation cost is high: a flow-matching generator is a substantial departure from the current autoregressive pointer-decoder. No released code noted.</dd>
+    <dd>Results are on toy combinatorial puzzles (Sudoku, graph coloring), not CAD/geometry, so the specific numbers don&#39;t transfer -- but the underlying methodology (probe how much of the output a single forward pass commits vs how much search actually contributes, then intervene with symmetry augmentation) is a cheap, generalizable diagnostic worth adapting to hexgen&#39;s own verifier-in-the-loop pipeline before investing further in search machinery. Only the abstract was available for this extraction (single-chunk paper text), so architectural and experimental details beyond the abstract are not grounded here.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
     <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.08392</span>
+    <span class="pid">2607.19635</span>
   </div>
 </a>
 
