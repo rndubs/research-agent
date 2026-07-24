@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-07-23</title>
+<title>hexgen digest — 2026-07-24</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,35 +98,9 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-07-23 · 16 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-07-24 · 12 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
-<a class="card"
-   href="https://arxiv.org/abs/2607.13918">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.058</span>
-    <span class="card-title">Models the per-instance false-accept rate as a latent variable drawn from a distributio...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper gives a minimal theory of partially correlated verifier cascades: modeling per-instance false-accept/true-accept rates as latent variables, it derives that posterior log-odds are concave in the number of gates k (with the independence-based Odds Law as just the tangent/upper bound), that failure can decay only polynomially instead of exponentially under correlation, and that a &#39;blind-spot&#39; probability mass caps achievable reliability below 1 regardless of how many gates are added. It also shows the theory is empirically measurable and that independence-based extrapolation can underestimate failure by orders of magnitude at larger k.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly applicable to designing/calibrating hexgen&#39;s own frozen verifier, which is itself a multi-gate cascade (compiles; zero inverted elements; scaled-Jacobian/aspect-ratio bounds; surface-match fidelity; feature-edge capture; element-budget sanity): this theory gives a principled way to estimate how correlated those gates are, whether adding more checks is still buying reliability or hitting a blind-spot ceiling, and suggests decorrelating checks (e.g. across independent geometric criteria) rather than stacking more of the same kind of check when screening best-of-N candidates.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a theoretical/methods note (builds on arXiv:2606.15712, the &#39;Odds Law&#39; paper) rather than an applied CAD or program-synthesis paper; abstract-only extraction. The practical takeaway (&#39;decorrelate, don&#39;t just add gates&#39;) is the most directly actionable piece for hexgen&#39;s verifier design.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13918</span>
-  </div>
-</a>
-
 <a class="card"
    href="https://arxiv.org/abs/2607.17531">
   <div class="card-head">
@@ -150,32 +124,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.17531</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.13921">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.033</span>
-    <span class="card-title">Introduces &#39;generative compilation&#39;: a &#39;sealor&#39; transformation converts a partial progr...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces generative compilation, the first method to obtain real compiler feedback on partial programs during generation via a lightweight syntax-guided &#39;sealor&#39; transform, proven correct (mechanized in Lean) on a core Rust-like calculus and then extended to a partial-program checker for real Rust. It shows this reduces non-compiling outputs and improves functional correctness on repository-level Rust tasks across frontier and open-weight models by catching errors early, close to their source, rather than only after full generation.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The &#39;sealor&#39; idea -- transform a partial program into something a checker can diagnose without prematurely rejecting completable prefixes -- is directly transferable to hexgen&#39;s structural-validity problem: instead of only screening complete best-of-N candidates with the frozen verifier, a similar completion transform could let the hex-meshing DSL compiler/mesher give early feedback on partial programs during autoregressive decoding, catching dead-end block/sweep/projection prefixes before a full rollout is wasted.</dd>
-    <dt>Additional context</dt>
-    <dd>Abstract-only extraction (no full text/GROBID parse available yet). The core mechanism is language-agnostic in principle (syntax-guided completion + diagnosis), but the concrete sealor construction is specific to a Rust-like calculus/real Rust; porting it to a hex-meshing DSL would require redesigning the completion transform for that grammar. Worth a closer read of the full paper for the completion-transform design once code/paper text is available.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.70</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13921</span>
   </div>
 </a>
 
@@ -206,32 +154,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.13416">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.026</span>
-    <span class="card-title">EXPLORE integrates simulator-guided Monte Carlo Tree Search (MCTS) with transformer-bas...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper presents EXPLORE, the first framework to combine structured test-time search (simulator-guided MCTS) with language-model decoding for analog circuit topology generation. By allocating simulator budget selectively to topology-altering decisions rather than uniformly across all tokens, it substantially raises success rate and lowers error over one-shot generation and sampling-and-filter baselines under a matched search budget.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>This is a close structural analog to hexgen&#39;s own best-of-N + frozen-verifier screening: EXPLORE&#39;s core idea of using MCTS guided by an expensive simulator, but only spending that simulator budget on the decoding steps that actually alter structure (topology-altering tokens) rather than every token, is directly transferable to hexgen&#39;s decoding of block/sweep/projection DSL programs -- the mesher/verifier could similarly be invoked selectively at structurally consequential decision points during search over program prefixes rather than only at full-candidate screening time, which is exactly care-area 1&#39;s &#39;MCTS or beam search over program prefixes&#39; concern.</dd>
-    <dt>Additional context</dt>
-    <dd>Application domain is analog circuit design, but the search-budget-allocation mechanism (LM priors to skip cheap/confident tokens, spend simulator calls on the hard topology decisions) is a concrete, quantitatively validated technique rather than just a conceptual analogy. Abstract-only extraction.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.65</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13416</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2607.17641">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.025</span>
@@ -258,6 +180,58 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.20908">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.025</span>
+    <span class="card-title">CudaPerf is a reflective RL framework combining verifiable execution rewards with struc...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes CudaPerf, a reflective reinforcement-learning framework for CUDA kernel generation that augments verifiable execution rewards with structural, parallelization-aware code rewards, trained in an offline contrastive-ranking stage followed by online RL with iterative execution-feedback refinement. It also introduces a dataset of 2.9k C-to-CUDA and 1k PyTorch-to-CUDA programs with diverse implementations and input configurations, and shows CudaPerf substantially outperforms strong baselines (Qwen-3-32B, CUDA Agent) in both speedup and correctness.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The two-stage recipe -- offline contrastive pairwise ranking of program candidates followed by online RL with a unified reward combining execution/structural-validity signals, plus iterative execution-feedback refinement of the model&#39;s own broken rollouts -- maps closely onto our best-of-N plus frozen-verifier setup: our verifier&#39;s compile/valid-mesh/quality-bound checks could serve as the structural and execution reward terms for an analogous RL or DAgger-style repair-distillation loop on hexgen&#39;s own rollouts.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is CUDA kernel code generation rather than CAD/mesh DSL programs, but both are settings where autoregressive decoders must emit programs that both execute correctly and satisfy secondary structural-quality properties beyond bare validity -- the reward-decomposition approach (execution correctness + structural/quality-aware terms) is a close conceptual match to our verifier&#39;s multi-criteria checks (Jacobian/aspect-ratio quality, feature-edge capture, element-budget sanity).</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.20908</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.21591">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.022</span>
+    <span class="card-title">Progressive Seed Pruning (PSP) scores intermediate denoised estimates and progressively...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Progressive Seed Pruning (PSP), an inference-time scaling method for diffusion and flow-matching models that evaluates many noise seeds early and progressively narrows the candidate set based on intermediate denoised estimates, using a fixed compute budget more effectively than existing best-of-N or resampling approaches. Across diffusion and flow-matching backbones, PSP improves reward-guided selection and achieves higher automated (GenEval) and human-evaluated prompt-alignment scores than best-of-N, importance-sampling, and tree-search baselines at matched compute.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The progressive-pruning-under-fixed-budget mechanism is transferable to our best-of-N program screening against the frozen verifier: score partial/intermediate decoder rollouts and prune low-promise candidates early instead of fully executing/verifying every candidate to completion, evaluating more candidates within the same verifier-call budget.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is image diffusion/flow-matching, not autoregressive program synthesis, so the scoring signal (denoised-estimate quality) would need to be replaced by a partial-program value estimate or fast proxy verifier; the core budget-allocation idea (front-load exploration, prune progressively) is architecture-agnostic.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.58</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.21591</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.19635">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.017</span>
@@ -280,58 +254,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.19635</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.13763">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.016</span>
-    <span class="card-title">MxGPS (Multiplex GPS) runs K task-specialized graph transformer (GPS) branches over a s...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper identifies &#39;topology overfitting&#39; as a systematic failure mode of single-task GNN fine-tuning for power grids and introduces MxGPS, a multiplex graph-transformer foundation model with a shared node encoder and multiple task-specialized branches, jointly pretrained/fine-tuned on two complementary grid tasks. Under cross-validation across four unseen grid topologies, MxGPS degrades far less under topology shift than single-task baselines despite using far fewer parameters, showing that multi-task joint training is a parameter-efficient route to topology-agnostic generalization.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core diagnosis -- that task-specific fine-tuning on a graph transformer overfits to the relational structure of training-set graph topologies, causing severe degradation when the graph shape shifts -- is a strong structural analogy to hexgen&#39;s domain-gap problem (a graph-transformer encoder over B-rep face-adjacency graphs trained on synthetic &#39;inverse factory&#39; topologies must generalize to real, differently-shaped CAD part graphs). The fix (shared encoder + multiple complementary joint tasks forcing the encoder off topology-specific shortcuts, rather than single-task fine-tuning) suggests hexgen could add a second, complementary self-supervised or auxiliary graph task during pretraining/fine-tuning of its encoder to reduce overfitting to the synthetic B-rep topology distribution.</dd>
-    <dt>Additional context</dt>
-    <dd>Application domain (power grids) is different, but the graph-transformer + topology-shift generalization mechanism is a clean, quantitatively validated methodological bridge. Abstract-only extraction; would want the full paper to see exactly how the complementary tasks are chosen and whether that recipe generalizes beyond power-grid physics.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13763</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.14545">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.014</span>
-    <span class="card-title">CASP (Certificate-Augmented Solution Pruning) has the predictor propose which parts of...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces CASP, a framework that augments learned predictions for offline NP-hard optimization with a sound polynomial-time verifier so that pruning decisions are certified rather than trusted outright. It develops accompanying learning theory showing the verifier bounds the induced loss class, giving certificate parameters a tilde-O(eps^-2 log K) sample complexity, versus no distribution-free rate (and an Omega(R/eps^2) lower bound under cost spread R) for unverified commitments. It shows verifiable-confidence filtering dominates a standard min-combiner with a closed-form margin, and that verified predictions remain useful even against degenerate LP optimal faces where symmetric policies stall. Experiments on five problems confirm that under distribution shift, unverified pruning can lose up to 26% of the optimum while the verified deployment loses nothing.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core mechanism -- never accept a learned prediction/pruning decision until a sound, cheap verifier has certified it, and prefer verifiable-confidence filtering over trusting raw model confidence -- is directly analogous to hexgen&#39;s design of screening best-of-N candidate programs with a frozen machine-checkable verifier. Their learning-theoretic result (verified filtering has a bounded, learnable loss class with better sample complexity than unverified commitment, and stays robust under distribution shift where unverified predictions lose up to 26% of optimum) is a useful theoretical argument for why verifier-guided best-of-N / rejection sampling should generalize better to real (out-of-distribution) CAD parts than trusting the decoder&#39;s raw scores alone, and could motivate using verifiable-confidence-style filtering (rather than plain likelihood) to rank candidate programs before verification.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract was available for extraction (no full-text chunks were retrieved), so architecture/dataset details beyond the abstract&#39;s claims could not be grounded; the five test problems and full experimental setup are unknown. The theoretical framing (verified vs. unverified prediction-augmented optimization) is the main transferable idea rather than any concrete algorithm directly reusable in hexgen&#39;s pipeline.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.14545</span>
   </div>
 </a>
 
@@ -388,32 +310,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.13436">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.012</span>
-    <span class="card-title">Combines Taylor Series Imitation Learning (TaSIL) to mitigate policy-induced distributi...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes a distributionally robust and safe imitation learning framework that jointly addresses two distinct sources of distribution shift: policy-induced shift (via Taylor Series Imitation Learning) and uncertainty-induced shift (via distributionally robust adaptive control), formulated so the learned policy explicitly accounts for safety constraints under distributional uncertainty. It demonstrates the approach on a UAV task that must be completed in an uncertain environment while avoiding unsafe regions.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Hexgen is itself trained via supervised imitation on synthetic &#39;inverse factory&#39; rollouts and auto-labeled real CAD parts, and must generalize from that training distribution to arbitrary real parts -- exactly the policy-induced/uncertainty-induced distribution-shift setting this paper targets. The TaSIL mechanism for mitigating policy-induced shift during imitation learning is a candidate technique to make hexgen&#39;s decoder more robust when its own generated program prefixes drift from the training distribution of the inverse-factory and template-labeled demonstrations, and the safety-constraint framing maps naturally onto hexgen&#39;s hard verifier constraints (zero inverted elements, quality bounds) as constraints to respect under distribution shift rather than just imitate.</dd>
-    <dt>Additional context</dt>
-    <dd>Application domain is UAV control, not CAD/geometry, so the transfer is at the level of the imitation-learning-under-distribution-shift mechanism (TaSIL) rather than any CAD-specific technique. Abstract-only extraction; no quantitative results are given in the abstract to assess strength of the claims.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.34</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13436</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2607.15536">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.011</span>
@@ -440,6 +336,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.20950">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.007</span>
+    <span class="card-title">Best-of-Evidence (BoE) keeps the BoN candidate pool fixed, represents reusable claims v...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Best-of-Evidence (BoE), an inference-time selection framework for best-of-N candidate pools under partial verification, using a signed candidate-factor claim graph and a budget-limited evidence controller. It provides theoretical results showing residual evidence capacity bounds achievable improvement and that shared factor queries can achieve O(log K) versus Theta(K) query cost separation, and shows empirically on four medical VQA settings that BoE can improve fixed-pool selection and rescue some BoN failures.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Our verifier is a frozen set of independent partial checks (compiles, zero inverted elements, Jacobian/aspect-ratio bounds, surface-match fidelity, feature-edge capture, element-budget) rather than one whole-program verifier -- BoE&#39;s idea of representing these partial checks as a shared claim/factor graph across the N candidate programs and adaptively allocating verifier-check budget to the checks most likely to change which candidate is selected could reduce the number of full verifier runs needed during best-of-N screening.</dd>
+    <dt>Additional context</dt>
+    <dd>Application domain is medical VQA, quite far from CAD/mesh program generation, and the theoretical guarantees are stated for a &#39;factor-code model&#39; abstraction whose fit to our verifier&#39;s check structure is unproven; would need validation that our verifier checks are similarly decomposable and reusable across candidates.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.20950</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.17540">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.006</span>
@@ -462,32 +384,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.17540</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.13563">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.006</span>
-    <span class="card-title">Nexus decouples mesh generation into two diffusion sub-problems: vertices are represent...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper presents Nexus, a diffusion-based mesh generator that avoids autoregressive serialization by decoupling vertex generation (via octree-structured coarse-to-fine diffusion) from topology generation (via a continuous per-vertex embedding scheme called Spacetime Interval, generated with a second diffusion model). It reports that this holistic, non-sequential approach outperforms state-of-the-art autoregressive and two-stage mesh-generation baselines on standard 3D datasets and in a practitioner user study.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Nexus targets triangle meshes rather than block-structured hex meshes and is not directly reusable, but its core motivating argument -- that sequential/autoregressive generation of mesh structure is error-prone and that decoupling geometry (vertices) from combinatorial structure (topology) into separate, non-autoregressive generative stages avoids this -- is a relevant structural alternative worth considering for hexgen&#39;s own DSL-program decoder, and &#39;Spacetime Interval&#39; as a continuous encoding of discrete topological relationships could inspire an alternative (non-pointer) representation for face/edge adjacency targets.</dd>
-    <dt>Additional context</dt>
-    <dd>Different mesh family (unstructured triangle vs. all-hex block-structured) and different generation problem (unconditional/image-conditioned free mesh generation vs. B-rep-conditioned DSL program synthesis), so the applicability is at the level of a design-philosophy argument (avoid autoregressive error accumulation) rather than a directly portable technique. Abstract-only extraction.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">9.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13563</span>
   </div>
 </a>
 
@@ -702,9 +598,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.20908">
+  <div class="card-head">
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.025</span>
+    <span class="card-title">CudaPerf is a reflective RL framework combining verifiable execution rewards with struc...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes CudaPerf, a reflective reinforcement-learning framework for CUDA kernel generation that augments verifiable execution rewards with structural, parallelization-aware code rewards, trained in an offline contrastive-ranking stage followed by online RL with iterative execution-feedback refinement. It also introduces a dataset of 2.9k C-to-CUDA and 1k PyTorch-to-CUDA programs with diverse implementations and input configurations, and shows CudaPerf substantially outperforms strong baselines (Qwen-3-32B, CUDA Agent) in both speedup and correctness.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The two-stage recipe -- offline contrastive pairwise ranking of program candidates followed by online RL with a unified reward combining execution/structural-validity signals, plus iterative execution-feedback refinement of the model&#39;s own broken rollouts -- maps closely onto our best-of-N plus frozen-verifier setup: our verifier&#39;s compile/valid-mesh/quality-bound checks could serve as the structural and execution reward terms for an analogous RL or DAgger-style repair-distillation loop on hexgen&#39;s own rollouts.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is CUDA kernel code generation rather than CAD/mesh DSL programs, but both are settings where autoregressive decoders must emit programs that both execute correctly and satisfy secondary structural-quality properties beyond bare validity -- the reward-decomposition approach (execution correctness + structural/quality-aware terms) is a close conceptual match to our verifier&#39;s multi-criteria checks (Jacobian/aspect-ratio quality, feature-edge capture, element-budget sanity).</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.20908</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.08256">
   <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.024</span>
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.024</span>
     <span class="card-title">Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verif...</span>
   </div>
   <dl class="fields">
@@ -728,54 +650,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.08984">
+   href="https://arxiv.org/abs/2607.21591">
   <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.020</span>
-    <span class="card-title">Under a unified self-play + MCTS pipeline on Connect Four (solved, exact game-theoretic...</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.022</span>
+    <span class="card-title">Progressive Seed Pruning (PSP) scores intermediate denoised estimates and progressively...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper shows that vanilla AlphaZero achieves strong play in both Connect Four and Chomp but fails to preserve the exact trajectories required for optimal play (losing the optimal line in Connect Four; failing to consistently restore the Grundy g=0 invariant in Chomp), and that naively adding multi-frame inputs does not close this gap on Chomp. They introduce AZAL, which injects oracle-derived policy supervision as an auxiliary loss, and show it substantially improves oracle-consistency: near-perfect on 10x11 Chomp, high but incomplete on 9x10 Chomp, and improved (but still incomplete) oracle-match / delayed first mistake on Connect Four.</dd>
+    <dd>The paper introduces Progressive Seed Pruning (PSP), an inference-time scaling method for diffusion and flow-matching models that evaluates many noise seeds early and progressively narrows the candidate set based on intermediate denoised estimates, using a fixed compute budget more effectively than existing best-of-N or resampling approaches. Across diffusion and flow-matching backbones, PSP improves reward-guided selection and achieves higher automated (GenEval) and human-evaluated prompt-alignment scores than best-of-N, importance-sampling, and tree-search baselines at matched compute.</dd>
     <dt>Applicable to our work</dt>
-    <dd>Directly relevant to our verifier-in-the-loop / structural-validity concerns: this paper is empirical evidence that self-play + MCTS alone (analogous to our best-of-N sampling against a frozen verifier) reliably reaches &#39;good&#39; programs but plateaus short of consistently optimal/valid trajectories, and that adding an auxiliary oracle-derived supervision signal (here, oracle policy labels; for us, verifier pass/fail or quality-metric feedback) on top of standard training closes much of that gap. Suggests hexgen&#39;s imitation-learning objective could be augmented with an AZAL-style auxiliary loss derived from the frozen mesh verifier&#39;s pass/fail and quality signals, rather than relying solely on best-of-N rejection at inference time.</dd>
+    <dd>The progressive-pruning-under-fixed-budget mechanism is transferable to our best-of-N program screening against the frozen verifier: score partial/intermediate decoder rollouts and prune low-promise candidates early instead of fully executing/verifying every candidate to completion, evaluating more candidates within the same verifier-call budget.</dd>
     <dt>Additional context</dt>
-    <dd>Both test domains are small, fully oracle-evaluable combinatorial games, far simpler than CAD/mesh generation, so the magnitude of the effect may not transfer directly; still, the core finding (self-play plateaus below oracle-optimal without auxiliary oracle supervision) is a useful cautionary/motivating data point for relying purely on best-of-N + frozen verifier at inference without an auxiliary training-time signal. Only the abstract was available for extraction.</dd>
+    <dd>Domain is image diffusion/flow-matching, not autoregressive program synthesis, so the scoring signal (denoised-estimate quality) would need to be replaced by a partial-program value estimate or fast proxy verifier; the core budget-allocation idea (front-load exploration, prune progressively) is architecture-agnostic.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.58</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.08984</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.19635">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.017</span>
-    <span class="card-title">Diagnostic analysis of LDT on clue-rich Sudoku: measures how much of the grid is commit...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper shows that a neural Sudoku solver marketed as performing branching search actually commits nearly the whole solution in a single forward pass and is functionally a one-shot predictor wrapped in an exact verifier; all failures trace to a single early, confident wrong deletion (&#39;first-pass poisoning&#39;) rather than to search quality. It further shows that adding learned search machinery (CoLT) does not change which instances are solved, only how much wasted invalid-derivation compute is cut, and that two calibration/symmetry interventions -- digit-permutation augmentation and test-time union over symmetry-transformed passes -- dramatically raise accuracy without retraining. On an out-of-distribution graph-coloring task, the one-shot behavior disappears and search actually changes outcomes, delimiting where the diagnosis applies.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core diagnostic question -- is this verifier-screened autoregressive model actually doing search, or is it a one-shot predictor whose apparent best-of-N selection just amortizes a single confident (and sometimes wrong) forward pass? -- is directly analogous to hexgen&#39;s best-of-N-plus-frozen-verifier pipeline, and worth running as a sanity check (does hexgen&#39;s decoder &#39;first-pass poison&#39; by locking in a wrong face/coordinate choice early, with the frozen verifier just filtering symptoms rather than the model doing real structural search?). Two concrete, low-cost transferable mechanisms: (1) test-time union over symmetry-transformed passes (run the encoder-decoder on several rotated/permuted views of the B-rep and union/vote the candidate programs before verifier screening) as a deployment-time robustness trick for the rotation/pose-robustness care area; (2) a permutation/relabeling-style data augmentation (analogous to digit-permutation here) over face/coordinate labels to break spurious ordering shortcuts, relevant to the domain-gap/tokenization-mismatch care area.</dd>
-    <dt>Additional context</dt>
-    <dd>Results are on toy combinatorial puzzles (Sudoku, graph coloring), not CAD/geometry, so the specific numbers don&#39;t transfer -- but the underlying methodology (probe how much of the output a single forward pass commits vs how much search actually contributes, then intervene with symmetry augmentation) is a cheap, generalizable diagnostic worth adapting to hexgen&#39;s own verifier-in-the-loop pipeline before investing further in search machinery. Only the abstract was available for this extraction (single-chunk paper text), so architectural and experimental details beyond the abstract are not grounded here.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.19635</span>
+    <span class="pid">2607.21591</span>
   </div>
 </a>
 
