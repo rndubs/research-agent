@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-07-26</title>
+<title>hexgen digest — 2026-07-27</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-07-26 · 12 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-07-27 · 13 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -332,6 +332,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.15536</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.21928">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.008</span>
+    <span class="card-title">A two-stage diffusion framework that decouples topology and geometry: a surface-centric...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes TG-Diff, a lightweight two-stage diffusion-based B-rep generation framework that decouples topology modeling from geometric modeling via a surface-centric representation (surfaces + adjacency only). Two independent diffusion models generate surface adjacency (via discrete diffusion/D3PM) and surface latents (via a topology-conditioned latent diffusion DiT), with topology used as guidance to stabilize and structurally complete the geometry generation. Edges/vertices are derived by post-processing the decoded surfaces into a watertight B-rep. Despite a compact footprint (82.18M parameters, 2.2 GFLOPs), the method reports superior validity and COV/MMD/JSD metrics versus prior work on DeepCAD and ABC.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core idea -- decoupling topology (a small discrete adjacency/graph structure) from continuous geometry generation, and using the generated topology to condition/guide geometry generation -- is directly analogous to hexgen&#39;s face-graph-conditioned program generation and could inform a two-pass generation strategy (predict block/sweep structure/connectivity first, then condition coordinate/parameter generation on that structure) to improve structural validity. Their post-hoc derivation of edges/vertices from decoded surfaces (deterministic reconstruction from a smaller committed representation) is also analogous to hexgen&#39;s deterministic mesher executing a committed program -- worth reviewing for how they guarantee watertightness/consistency after generation, which maps to our verifier&#39;s structural checks.</dd>
+    <dt>Additional context</dt>
+    <dd>This is diffusion-based (parallel, discrete+continuous diffusion), not autoregressive/pointer-based like hexgen, so the training/inference mechanics differ substantially; the transferable idea is the topology/geometry decoupling and topology-first conditioning, not the diffusion machinery itself. Only the abstract was available for extraction (single-chunk paper text); no limitations, dataset details beyond names, or code link were stated in the available text -- extraction is grounded solely in the abstract.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.21928</span>
   </div>
 </a>
 
