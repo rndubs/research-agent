@@ -1,6 +1,6 @@
-# hexgen digest — 2026-07-26
+# hexgen digest — 2026-07-27
 
-**12** new backlog item(s) in the last 7 day(s).
+**13** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -58,6 +58,12 @@
   - _Additional context:_ Only the abstract was retrieved (no full-text chunks), so implementation details of the Unified Matrix Embedding and the exact evaluation setup (which 'object vision' and 'Gaussian world modeling' benchmarks) are unknown; applicability is to the encoder side of hexgen (B-rep graph encoding), not directly to program decoding.
   - _Impact_ 0.50 · _Applicability_ 0.42 · _Confidence_ 0.38 · _Effort_ 7.0/10
   [2607.15536](https://arxiv.org/abs/2607.15536)
+- **A two-stage diffusion framework that decouples topology and geometry: a surface-centric...** · score 0.008
+  - _Contributions:_ The paper proposes TG-Diff, a lightweight two-stage diffusion-based B-rep generation framework that decouples topology modeling from geometric modeling via a surface-centric representation (surfaces + adjacency only). Two independent diffusion models generate surface adjacency (via discrete diffusion/D3PM) and surface latents (via a topology-conditioned latent diffusion DiT), with topology used as guidance to stabilize and structurally complete the geometry generation. Edges/vertices are derived by post-processing the decoded surfaces into a watertight B-rep. Despite a compact footprint (82.18M parameters, 2.2 GFLOPs), the method reports superior validity and COV/MMD/JSD metrics versus prior work on DeepCAD and ABC.
+  - _Applicable to our work:_ The core idea -- decoupling topology (a small discrete adjacency/graph structure) from continuous geometry generation, and using the generated topology to condition/guide geometry generation -- is directly analogous to hexgen's face-graph-conditioned program generation and could inform a two-pass generation strategy (predict block/sweep structure/connectivity first, then condition coordinate/parameter generation on that structure) to improve structural validity. Their post-hoc derivation of edges/vertices from decoded surfaces (deterministic reconstruction from a smaller committed representation) is also analogous to hexgen's deterministic mesher executing a committed program -- worth reviewing for how they guarantee watertightness/consistency after generation, which maps to our verifier's structural checks.
+  - _Additional context:_ This is diffusion-based (parallel, discrete+continuous diffusion), not autoregressive/pointer-based like hexgen, so the training/inference mechanics differ substantially; the transferable idea is the topology/geometry decoupling and topology-first conditioning, not the diffusion machinery itself. Only the abstract was available for extraction (single-chunk paper text); no limitations, dataset details beyond names, or code link were stated in the available text -- extraction is grounded solely in the abstract.
+  - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.38 · _Effort_ 6.0/10
+  [2607.21928](https://arxiv.org/abs/2607.21928)
 - **Best-of-Evidence (BoE) keeps the BoN candidate pool fixed, represents reusable claims v...** · score 0.007
   - _Contributions:_ The paper introduces Best-of-Evidence (BoE), an inference-time selection framework for best-of-N candidate pools under partial verification, using a signed candidate-factor claim graph and a budget-limited evidence controller. It provides theoretical results showing residual evidence capacity bounds achievable improvement and that shared factor queries can achieve O(log K) versus Theta(K) query cost separation, and shows empirically on four medical VQA settings that BoE can improve fixed-pool selection and rescue some BoN failures.
   - _Applicable to our work:_ Our verifier is a frozen set of independent partial checks (compiles, zero inverted elements, Jacobian/aspect-ratio bounds, surface-match fidelity, feature-edge capture, element-budget) rather than one whole-program verifier -- BoE's idea of representing these partial checks as a shared claim/factor graph across the N candidate programs and adaptively allocating verifier-check budget to the checks most likely to change which candidate is selected could reduce the number of full verifier runs needed during best-of-N screening.

@@ -26,9 +26,9 @@ _25 item(s) shown · top_n = 25 · 5 foundational slots reserved._
 | 20 | 0.011 | The paper proves that for spherical-harmonic degrees l<=2, photometry is algebraically... | 0.50 | 0.42 | 0.38 | 7.0 | — | [2607.15536](https://arxiv.org/abs/2607.15536) | — |
 | 21 | 0.010 | ARCANA decomposes each task into perception, hypothesis generation, symbolic execution,... | 0.40 | 0.60 | 0.29 | 7.0 | — | [2607.09059](https://arxiv.org/abs/2607.09059) | symbolic execution engine for the target DSL, learned meta-controller |
 | 22 | 0.010 | Diversify2Verify is a staged LLM-based pipeline targeting the Why3 verification platfor... | 0.35 | 0.48 | 0.34 | 6.0 | — | [2607.09366](https://arxiv.org/abs/2607.09366) | Why3 verification platform, LLM contract inference |
-| 23 | 0.007 | Best-of-Evidence (BoE) keeps the BoN candidate pool fixed, represents reusable claims v... | 0.30 | 0.42 | 0.36 | 7.0 | — | [2607.20950](https://arxiv.org/abs/2607.20950) | Best-of-N (BoN) baseline |
-| 24 | 0.006 | The framework combines an LLM for program synthesis with neural simulation-based infere... | 0.30 | 0.42 | 0.32 | 7.0 | — | [2607.17540](https://arxiv.org/abs/2607.17540) | — |
-| 25 | 0.006 | Nexus decouples mesh generation into two diffusion sub-problems: vertices are represent... | 0.35 | 0.36 | 0.40 | 9.0 | — | [2607.13563](https://arxiv.org/abs/2607.13563) | Octree voxel representations, Diffusion models, Spacetime Distance (prior work being extended) |
+| 23 | 0.008 | A two-stage diffusion framework that decouples topology and geometry: a surface-centric... | 0.30 | 0.42 | 0.38 | 6.0 | — | [2607.21928](https://arxiv.org/abs/2607.21928) | D3PM (discrete denoising diffusion), DiT (Diffusion Transformer) |
+| 24 | 0.007 | Best-of-Evidence (BoE) keeps the BoN candidate pool fixed, represents reusable claims v... | 0.30 | 0.42 | 0.36 | 7.0 | — | [2607.20950](https://arxiv.org/abs/2607.20950) | Best-of-N (BoN) baseline |
+| 25 | 0.006 | The framework combines an LLM for program synthesis with neural simulation-based infere... | 0.30 | 0.42 | 0.32 | 7.0 | — | [2607.17540](https://arxiv.org/abs/2607.17540) | — |
 
 ## Foundational lane
 
