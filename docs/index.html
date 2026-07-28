@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-07-27</title>
+<title>hexgen digest — 2026-07-28</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-07-27 · 13 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-07-28 · 11 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -280,58 +280,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.17524</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.15655">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.013</span>
-    <span class="card-title">AdaLook is an adaptive lookahead framework for masked diffusion language model (DLM) de...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes AdaLook, an adaptive multi-step lookahead decoding framework for diffusion language models that replaces shallow one-step lookahead with a variance-based, adaptive-depth rollout policy plus branch expansion at informative intermediate states. Experiments across various benchmarks and models show AdaLook achieves a better accuracy-vs-decoding-steps trade-off than existing one-step lookahead decoding methods.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core mechanism -- adaptively deciding how much value/critic-guided lookahead search to spend at each decode step, based on score variance, plus branch expansion at uncertain states -- is directly transferable to best-of-N / verifier-guided decoding search over hexgen&#39;s program prefixes: instead of fixed-depth beam or MCTS search, hexgen&#39;s decoder could spend more rollout budget only at command positions where candidate scores are uncertain (e.g. ambiguous face pointers or block/sweep choices), cutting compute while preserving structural-validity gains from deeper search.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract was available (no full text chunks retrieved), so architectural and experimental details beyond the abstract are unknown; this is a decoding-time search technique for masked DLMs, not for autoregressive decoders like hexgen&#39;s, so the adaptation would need validation on autoregressive/verifier-scored program decoding rather than assumed to transfer directly.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.39</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.15655</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.15536">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.011</span>
-    <span class="card-title">The paper proves that for spherical-harmonic degrees l&lt;=2, photometry is algebraically...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper presents E3DGS, an SE(3)-equivariant architecture for 3D Gaussian Splatting built on a &#39;Color-as-Geometry&#39; formulation: a Unified Matrix Embedding maps position, covariance, and spherical-harmonic color coefficients into a unified gl(3) carrier space so a single rigid-body-equivariant architecture can process all Gaussian attributes without expensive Clebsch-Gordan tensor products. Evaluations on object vision and action-conditioned Gaussian world modeling show strong robustness under camera-frame changes and improved data efficiency.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core idea -- unifying heterogeneous per-attribute rotation actions (vector, tensor, higher-order harmonic) into one matrix carrier space so a single equivariant architecture handles them all without Clebsch-Gordan products -- is a genuinely new, lower-cost mechanism for building a natively rotation-equivariant B-rep graph encoder: hexgen&#39;s face/edge/vertex graph carries multiple geometric attribute types (positions, normals, possibly surface-curvature tensors) whose rotation actions differ, and this unified-matrix-embedding trick could let a graph-transformer encoder be exactly SE(3)-equivariant across all of them cheaply, which is relevant to the rotation-robustness care area despite that line being otherwise closed to genuinely new mechanisms.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract was retrieved (no full-text chunks), so implementation details of the Unified Matrix Embedding and the exact evaluation setup (which &#39;object vision&#39; and &#39;Gaussian world modeling&#39; benchmarks) are unknown; applicability is to the encoder side of hexgen (B-rep graph encoding), not directly to program decoding.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.15536</span>
   </div>
 </a>
 
