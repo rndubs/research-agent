@@ -21,14 +21,14 @@ _25 item(s) shown · top_n = 25 · 5 foundational slots reserved._
 | 15 | 0.014 | CASP (Certificate-Augmented Solution Pruning) has the predictor propose which parts of... | 0.35 | 0.54 | 0.43 | 6.0 | — | [2607.14545](https://arxiv.org/abs/2607.14545) | — |
 | 16 | 0.013 | Token-Level Off-Policy Labeling (TOPL) reframes post-training as a token-level correctn... | 0.45 | 0.48 | 0.37 | 6.0 | — | [2607.17524](https://arxiv.org/abs/2607.17524) | — |
 | 17 | 0.013 | AdaLook is an adaptive lookahead framework for masked diffusion language model (DLM) de... | 0.35 | 0.48 | 0.39 | 5.0 | — | [2607.15655](https://arxiv.org/abs/2607.15655) | — |
-| 18 | 0.012 | Combines Taylor Series Imitation Learning (TaSIL) to mitigate policy-induced distributi... | 0.45 | 0.48 | 0.34 | 6.0 | — | [2607.13436](https://arxiv.org/abs/2607.13436) | Taylor Series Imitation Learning (TaSIL), Distributionally robust adaptive control |
-| 19 | 0.012 | Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base... | 0.35 | 0.42 | 0.58 | 7.0 | — | [2607.07993](https://arxiv.org/abs/2607.07993) | RLAIF, rule-based reinforcement learning |
-| 20 | 0.011 | The paper proves that for spherical-harmonic degrees l<=2, photometry is algebraically... | 0.50 | 0.42 | 0.38 | 7.0 | — | [2607.15536](https://arxiv.org/abs/2607.15536) | — |
-| 21 | 0.011 | GARI exposes selected transformation generators to a generic sequence backbone via alig... | 0.30 | 0.48 | 0.39 | 5.0 | — | [2607.25988](https://arxiv.org/abs/2607.25988) | — |
-| 22 | 0.010 | ARCANA decomposes each task into perception, hypothesis generation, symbolic execution,... | 0.40 | 0.60 | 0.29 | 7.0 | — | [2607.09059](https://arxiv.org/abs/2607.09059) | symbolic execution engine for the target DSL, learned meta-controller |
-| 23 | 0.010 | Diversify2Verify is a staged LLM-based pipeline targeting the Why3 verification platfor... | 0.35 | 0.48 | 0.34 | 6.0 | — | [2607.09366](https://arxiv.org/abs/2607.09366) | Why3 verification platform, LLM contract inference |
-| 24 | 0.008 | A two-stage diffusion framework that decouples topology and geometry: a surface-centric... | 0.30 | 0.42 | 0.38 | 6.0 | — | [2607.21928](https://arxiv.org/abs/2607.21928) | D3PM (discrete denoising diffusion), DiT (Diffusion Transformer) |
-| 25 | 0.007 | Best-of-Evidence (BoE) keeps the BoN candidate pool fixed, represents reusable claims v... | 0.30 | 0.42 | 0.36 | 7.0 | — | [2607.20950](https://arxiv.org/abs/2607.20950) | Best-of-N (BoN) baseline |
+| 18 | 0.012 | LADDER (Latent Adaptive Domain Disentanglement and Environment Reweighting) is a fixed-... | 0.35 | 0.48 | 0.37 | 5.0 | — | [2607.26458](https://arxiv.org/abs/2607.26458) | — |
+| 19 | 0.012 | Combines Taylor Series Imitation Learning (TaSIL) to mitigate policy-induced distributi... | 0.45 | 0.48 | 0.34 | 6.0 | — | [2607.13436](https://arxiv.org/abs/2607.13436) | Taylor Series Imitation Learning (TaSIL), Distributionally robust adaptive control |
+| 20 | 0.012 | Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base... | 0.35 | 0.42 | 0.58 | 7.0 | — | [2607.07993](https://arxiv.org/abs/2607.07993) | RLAIF, rule-based reinforcement learning |
+| 21 | 0.011 | The paper proves that for spherical-harmonic degrees l<=2, photometry is algebraically... | 0.50 | 0.42 | 0.38 | 7.0 | — | [2607.15536](https://arxiv.org/abs/2607.15536) | — |
+| 22 | 0.011 | GARI exposes selected transformation generators to a generic sequence backbone via alig... | 0.30 | 0.48 | 0.39 | 5.0 | — | [2607.25988](https://arxiv.org/abs/2607.25988) | — |
+| 23 | 0.010 | MindForge is an automated pipeline that converts open-source command-line programs into... | 0.35 | 0.48 | 0.37 | 6.0 | — | [2607.27146](https://arxiv.org/abs/2607.27146) | GLM-5.2 as teacher agent, Qwen3.6-27B as student backbone |
+| 24 | 0.010 | ARCANA decomposes each task into perception, hypothesis generation, symbolic execution,... | 0.40 | 0.60 | 0.29 | 7.0 | — | [2607.09059](https://arxiv.org/abs/2607.09059) | symbolic execution engine for the target DSL, learned meta-controller |
+| 25 | 0.010 | DHRCL decomposes reward feedback into syntax validation, execution success, unit-test p... | 0.35 | 0.48 | 0.35 | 6.0 | — | [2607.26457](https://arxiv.org/abs/2607.26457) | Qwen3 backbones (4B/8B/14B), KodCode benchmark/environment |
 
 ## Foundational lane
 
