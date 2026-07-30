@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-07-29</title>
+<title>hexgen digest — 2026-07-30</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-07-29 · 6 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-07-30 · 10 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -154,28 +154,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.19635">
+   href="https://arxiv.org/abs/2607.26458">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.017</span>
-    <span class="card-title">Diagnostic analysis of LDT on clue-rich Sudoku: measures how much of the grid is commit...</span>
+    <span class="badge" title="composite RICE score">0.012</span>
+    <span class="card-title">LADDER (Latent Adaptive Domain Disentanglement and Environment Reweighting) is a fixed-...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper shows that a neural Sudoku solver marketed as performing branching search actually commits nearly the whole solution in a single forward pass and is functionally a one-shot predictor wrapped in an exact verifier; all failures trace to a single early, confident wrong deletion (&#39;first-pass poisoning&#39;) rather than to search quality. It further shows that adding learned search machinery (CoLT) does not change which instances are solved, only how much wasted invalid-derivation compute is cut, and that two calibration/symmetry interventions -- digit-permutation augmentation and test-time union over symmetry-transformed passes -- dramatically raise accuracy without retraining. On an out-of-distribution graph-coloring task, the one-shot behavior disappears and search actually changes outcomes, delimiting where the diagnosis applies.</dd>
+    <dd>The paper proposes LADDER, which reframes cross-domain style variation as a signal for locating an unseen target domain among source domains rather than noise to be removed, using it to reweight a set of frozen source-specific classifiers at inference time. It provides theoretical guarantees for this source-reweighting scheme and validates it on simulations, FMoW, and a location-grouped iWildCam protocol, showing gains in overall and group-averaged accuracy over invariance-based baselines.</dd>
     <dt>Applicable to our work</dt>
-    <dd>The core diagnostic question -- is this verifier-screened autoregressive model actually doing search, or is it a one-shot predictor whose apparent best-of-N selection just amortizes a single confident (and sometimes wrong) forward pass? -- is directly analogous to hexgen&#39;s best-of-N-plus-frozen-verifier pipeline, and worth running as a sanity check (does hexgen&#39;s decoder &#39;first-pass poison&#39; by locking in a wrong face/coordinate choice early, with the frozen verifier just filtering symptoms rather than the model doing real structural search?). Two concrete, low-cost transferable mechanisms: (1) test-time union over symmetry-transformed passes (run the encoder-decoder on several rotated/permuted views of the B-rep and union/vote the candidate programs before verifier screening) as a deployment-time robustness trick for the rotation/pose-robustness care area; (2) a permutation/relabeling-style data augmentation (analogous to digit-permutation here) over face/coordinate labels to break spurious ordering shortcuts, relevant to the domain-gap/tokenization-mismatch care area.</dd>
+    <dd>The core idea -- keeping a fixed, frozen model and using unlabeled target-distribution covariates only to reweight among source-specific predictors, rather than retraining or forcing domain-invariant features -- is a deployment-time technique directly applicable to hexgen&#39;s domain-gap problem: hexgen could maintain source-specific (synthetic inverse-factory vs. real auto-labeled CAD) decoding heads or verifier-tuned variants and use unlabeled real-part statistics at inference to reweight/select among them, without retraining on new real-part distributions.</dd>
     <dt>Additional context</dt>
-    <dd>Results are on toy combinatorial puzzles (Sudoku, graph coloring), not CAD/geometry, so the specific numbers don&#39;t transfer -- but the underlying methodology (probe how much of the output a single forward pass commits vs how much search actually contributes, then intervene with symmetry augmentation) is a cheap, generalizable diagnostic worth adapting to hexgen&#39;s own verifier-in-the-loop pipeline before investing further in search machinery. Only the abstract was available for this extraction (single-chunk paper text), so architectural and experimental details beyond the abstract are not grounded here.</dd>
+    <dd>Only the abstract was available; details of the causal/style disentanglement mechanism and the theoretical guarantees are not grounded beyond the abstract&#39;s description. Evaluated on image/tabular domain-generalization benchmarks (FMoW, iWildCam), not CAD or geometric data, so transfer is at the algorithmic-pattern level.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.37</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.19635</span>
+    <span class="pid">2607.26458</span>
   </div>
 </a>
 
@@ -206,6 +206,84 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2607.27146">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.010</span>
+    <span class="card-title">MindForge is an automated pipeline that converts open-source command-line programs into...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces MindForge, a pipeline that builds source-free program-synthesis training environments from open-source CLI programs, and uses it to distill teacher-agent trajectories into a smaller model. Fine-tuning on this data raises the student&#39;s ProgramBench pass rate from 37.98% to 49.51%, matching much larger frontier models, and improves the student across seven unseen software-engineering benchmarks spanning repository generation/translation, bug fixing, and cross-language issue resolution.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core recipe -- auto-generate a training environment from a reference oracle (here a compiled executable; for hexgen, the deterministic mesher/verifier), curate teacher trajectories, and distill into a smaller student model -- mirrors hexgen&#39;s own inverse-factory + imitation-learning setup and suggests using a stronger teacher (e.g. a larger model or search-augmented sampler) to generate additional distillation trajectories for the 27M-parameter hexgen decoder, especially for from-scratch or long-horizon program construction.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available for extraction; no architecture or algorithmic details of the environment-construction pipeline or trajectory curation are grounded beyond what the abstract states. No code link given in the supplied text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.37</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.27146</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.26457">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.010</span>
+    <span class="card-title">DHRCL decomposes reward feedback into syntax validation, execution success, unit-test p...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces DHRCL, a reinforcement learning framework that decomposes code-generation reward into a hierarchy of dense signals (syntax, execution, unit-test pass rate, structural similarity) and schedules them through an automatically-timed curriculum rather than fixed thresholds. It further proposes stage-aware token credit redistribution following a consolidation-to-refinement principle, and shows consistent gains over binary, pass-rate, reward-model, and other verifiable dense-reward baselines across Qwen3-4B/8B/14B backbones.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The staged reward decomposition (syntax validity -&gt; executability -&gt; pass/structural quality) mirrors hexgen&#39;s own layered frozen verifier (compiles -&gt; zero inverted elements -&gt; quality bounds -&gt; boundary fidelity), and DHRCL&#39;s curriculum-scheduled, stage-aware credit redistribution could inform how hexgen&#39;s future RL/rejection-sampling refinement stages weight token-level credit differently depending on which verifier gate is currently the binding constraint, rather than treating the frozen verifier as a single flat pass/fail signal during any RL fine-tuning.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available; the exact curriculum-timing heuristic and credit-redistribution formula are not grounded beyond the high-level description given. Domain is text code LLMs (Qwen backbones), not geometric/CAD program generation, and DHRCL assumes a differentiable RL training loop rather than hexgen&#39;s current supervised-imitation + frozen-verifier screening setup.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.26457</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.26656">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.009</span>
+    <span class="card-title">VulAgentRL builds an agentic RL framework on a Code Property Graph (CPG) that the polic...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes VulAgentRL, which uses a Code Property Graph both as a queryable evidence source at inference and as an exact, non-textual verifier of cited evidence at training time to produce a reliable RL reward. It shows a teacher-investigation distillation warm start is necessary because RL cannot acquire tool-use behavior it never samples, and demonstrates the approach outperforms state-of-the-art baselines, including frontier models, under a leakage-preventing repository-level split.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core mechanism -- using a structured graph as an exact, machine-checkable verifier of the evidence/steps a policy takes, rather than trusting a final verdict alone -- is directly analogous to hexgen&#39;s frozen verifier gating best-of-N program candidates; the idea of grounding reward in exact structural correspondence (node IDs) rather than approximate matching could inform how hexgen credits partial program correctness (e.g. per-command face/edge references) during RL or rejection-sampled fine-tuning, and the teacher-distillation warm-start-before-RL pattern parallels hexgen&#39;s supervised imitation phase preceding any future RL refinement.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available for extraction; specific RL algorithm, reward shaping formula, and CPG construction details are not grounded here. Domain is software vulnerability detection, not geometry/program generation, so transfer is at the reward-design/verifier-architecture level only.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.37</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.26656</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.21928">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.008</span>
@@ -228,6 +306,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.21928</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.26946">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.007</span>
+    <span class="card-title">The paper disentangles the policy head from a separate Belief head that acts as an inte...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes a Belief-Guided architecture with a disentangled Belief head that serves as an internal simulator/critic distinct from the traditional value function, combined with a gating mechanism that filters overconfident policy errors. It claims this shifts the burden of intelligence from runtime MCTS search to parametric intuition, improving search-free win rates and reducing hallucinated moves, enabling professional-level play on limited hardware.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The disentangled belief/critic head that gates overconfident policy outputs is directly analogous to hexgen&#39;s value/critic-guided search and verifier-guided generation goals: a learned critic that flags likely-invalid program continuations before expensive verifier execution could reduce reliance on best-of-N sampling plus full verifier runs, cutting search cost while catching structurally-fatal (non-compiling/inverted-element) rollouts earlier in decoding.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available; no quantitative results, ablations, or architecture details beyond the high-level description are grounded here. Domain (Go) is far from CAD/program generation, so the applicability is at the mechanism level (critic disentanglement + uncertainty gating), not a directly reusable component.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.26946</span>
   </div>
 </a>
 
