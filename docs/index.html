@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-07-30</title>
+<title>hexgen digest — 2026-07-31</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-07-30 · 10 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-07-31 · 12 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -150,6 +150,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.21591</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.27964">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.019</span>
+    <span class="card-title">Syntropy synthesizes protocol refinements guided by MPST specifications and LLMs, incor...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The authors present Syntropy, a framework that combines LLM-based code generation with multiparty-session-type (MPST) specifications to synthesize deadlock-free communication protocol refinements. By embedding the refinement constraints directly into the generation process, Syntropy achieves 95.6%-99.5% validity while maintaining high syntactic correctness, and produces diverse, non-trivial refinements across multiple LLMs.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The central mechanism -- incorporating formal specification constraints (here MPST guarantees) directly into the LLM generation process to push structural/behavioral validity rates into the 95%+ range -- is a directly transferable pattern for hexgen&#39;s structural-validity problem: constraining or guiding the autoregressive decoder&#39;s generation process with the same machine-checkable rules used by our frozen verifier (compiles, zero inverted elements, etc.) rather than only screening after the fact with best-of-N sampling. Their evaluation methodology (validity rate + syntactic correctness + diversity of valid outputs) is also a useful template for reporting hexgen&#39;s own generation quality.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available; the exact mechanism by which refinement constraints are &#39;incorporated directly into the generation process&#39; (e.g. constrained decoding, iterative repair, verifier-guided resampling) is not specified here and matters a great deal for how directly this transfers to hexgen&#39;s decoder -- would need the full paper to determine if this is grammar-constrained decoding, post-hoc filtering, or an LLM-agent repair loop.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.34</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.27964</span>
   </div>
 </a>
 
@@ -332,6 +358,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.26946</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.28050">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.007</span>
+    <span class="card-title">Build IndustryForge-27B on top of Qwen3.5-VL-27B by curating six industrial-CAD sub-cor...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The authors introduce IndustryForge-27B, a domain-enhanced multimodal foundation model for industrial CAD built on Qwen3.5-VL-27B via multi-task SFT over six curated industrial-CAD corpora. It substantially outperforms the base model and a strong closed-source model (GPT-5.4) on CAD-domain benchmarks while retaining general capability, and is positioned as a shared substrate for downstream industrial-agent systems spanning CAD design to closed-loop self-improvement.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The paper&#39;s core recipe -- curating a corpus that pairs CAD geometry/drawings with correct parametric-modelling program code (text2cadquery) and multi-task SFT to produce a model that reliably emits valid CAD program syntax -- is directly analogous to hexgen&#39;s task of mapping B-rep graphs to valid hex-meshing DSL programs. Their CAD-VQA and text2cadquery corpora construction methodology could inform how we synthesize/augment (B-rep, program) training pairs or evaluate structural validity of generated CAD code at larger scale, even though their approach uses a large general-purpose VLM rather than a small graph-transformer with pointer heads.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available for extraction; architectural and training details (loss functions, exact validity-checking mechanism, whether generated code is verified against a compiler/checker) are not described here and would need the full paper to assess concretely transferable mechanisms versus scale-driven gains from a 27B-parameter base model.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2607.28050</span>
   </div>
 </a>
 
