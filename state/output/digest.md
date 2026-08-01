@@ -1,21 +1,9 @@
-# hexgen digest — 2026-07-31
+# hexgen digest — 2026-08-01
 
-**12** new backlog item(s) in the last 7 day(s).
+**9** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
-- **CudaPerf is a reflective RL framework combining verifiable execution rewards with struc...** · score 0.025
-  - _Contributions:_ The paper proposes CudaPerf, a reflective reinforcement-learning framework for CUDA kernel generation that augments verifiable execution rewards with structural, parallelization-aware code rewards, trained in an offline contrastive-ranking stage followed by online RL with iterative execution-feedback refinement. It also introduces a dataset of 2.9k C-to-CUDA and 1k PyTorch-to-CUDA programs with diverse implementations and input configurations, and shows CudaPerf substantially outperforms strong baselines (Qwen-3-32B, CUDA Agent) in both speedup and correctness.
-  - _Applicable to our work:_ The two-stage recipe -- offline contrastive pairwise ranking of program candidates followed by online RL with a unified reward combining execution/structural-validity signals, plus iterative execution-feedback refinement of the model's own broken rollouts -- maps closely onto our best-of-N plus frozen-verifier setup: our verifier's compile/valid-mesh/quality-bound checks could serve as the structural and execution reward terms for an analogous RL or DAgger-style repair-distillation loop on hexgen's own rollouts.
-  - _Additional context:_ Domain is CUDA kernel code generation rather than CAD/mesh DSL programs, but both are settings where autoregressive decoders must emit programs that both execute correctly and satisfy secondary structural-quality properties beyond bare validity -- the reward-decomposition approach (execution correctness + structural/quality-aware terms) is a close conceptual match to our verifier's multi-criteria checks (Jacobian/aspect-ratio quality, feature-edge capture, element-budget sanity).
-  - _Impact_ 0.55 · _Applicability_ 0.72 · _Confidence_ 0.38 · _Effort_ 6.0/10
-  [2607.20908](https://arxiv.org/abs/2607.20908)
-- **Progressive Seed Pruning (PSP) scores intermediate denoised estimates and progressively...** · score 0.022
-  - _Contributions:_ The paper introduces Progressive Seed Pruning (PSP), an inference-time scaling method for diffusion and flow-matching models that evaluates many noise seeds early and progressively narrows the candidate set based on intermediate denoised estimates, using a fixed compute budget more effectively than existing best-of-N or resampling approaches. Across diffusion and flow-matching backbones, PSP improves reward-guided selection and achieves higher automated (GenEval) and human-evaluated prompt-alignment scores than best-of-N, importance-sampling, and tree-search baselines at matched compute.
-  - _Applicable to our work:_ The progressive-pruning-under-fixed-budget mechanism is transferable to our best-of-N program screening against the frozen verifier: score partial/intermediate decoder rollouts and prune low-promise candidates early instead of fully executing/verifying every candidate to completion, evaluating more candidates within the same verifier-call budget.
-  - _Additional context:_ Domain is image diffusion/flow-matching, not autoregressive program synthesis, so the scoring signal (denoised-estimate quality) would need to be replaced by a partial-program value estimate or fast proxy verifier; the core budget-allocation idea (front-load exploration, prune progressively) is architecture-agnostic.
-  - _Impact_ 0.35 · _Applicability_ 0.54 · _Confidence_ 0.58 · _Effort_ 5.0/10
-  [2607.21591](https://arxiv.org/abs/2607.21591)
 - **Syntropy synthesizes protocol refinements guided by MPST specifications and LLMs, incor...** · score 0.019
   - _Contributions:_ The authors present Syntropy, a framework that combines LLM-based code generation with multiparty-session-type (MPST) specifications to synthesize deadlock-free communication protocol refinements. By embedding the refinement constraints directly into the generation process, Syntropy achieves 95.6%-99.5% validity while maintaining high syntactic correctness, and produces diverse, non-trivial refinements across multiple LLMs.
   - _Applicable to our work:_ The central mechanism -- incorporating formal specification constraints (here MPST guarantees) directly into the LLM generation process to push structural/behavioral validity rates into the 95%+ range -- is a directly transferable pattern for hexgen's structural-validity problem: constraining or guiding the autoregressive decoder's generation process with the same machine-checkable rules used by our frozen verifier (compiles, zero inverted elements, etc.) rather than only screening after the fact with best-of-N sampling. Their evaluation methodology (validity rate + syntactic correctness + diversity of valid outputs) is also a useful template for reporting hexgen's own generation quality.
@@ -70,12 +58,6 @@
   - _Additional context:_ Only the abstract was available for extraction; architectural and training details (loss functions, exact validity-checking mechanism, whether generated code is verified against a compiler/checker) are not described here and would need the full paper to assess concretely transferable mechanisms versus scale-driven gains from a 27B-parameter base model.
   - _Impact_ 0.35 · _Applicability_ 0.36 · _Confidence_ 0.38 · _Effort_ 7.0/10
   [2607.28050](https://arxiv.org/abs/2607.28050)
-- **Best-of-Evidence (BoE) keeps the BoN candidate pool fixed, represents reusable claims v...** · score 0.007
-  - _Contributions:_ The paper introduces Best-of-Evidence (BoE), an inference-time selection framework for best-of-N candidate pools under partial verification, using a signed candidate-factor claim graph and a budget-limited evidence controller. It provides theoretical results showing residual evidence capacity bounds achievable improvement and that shared factor queries can achieve O(log K) versus Theta(K) query cost separation, and shows empirically on four medical VQA settings that BoE can improve fixed-pool selection and rescue some BoN failures.
-  - _Applicable to our work:_ Our verifier is a frozen set of independent partial checks (compiles, zero inverted elements, Jacobian/aspect-ratio bounds, surface-match fidelity, feature-edge capture, element-budget) rather than one whole-program verifier -- BoE's idea of representing these partial checks as a shared claim/factor graph across the N candidate programs and adaptively allocating verifier-check budget to the checks most likely to change which candidate is selected could reduce the number of full verifier runs needed during best-of-N screening.
-  - _Additional context:_ Application domain is medical VQA, quite far from CAD/mesh program generation, and the theoretical guarantees are stated for a 'factor-code model' abstraction whose fit to our verifier's check structure is unproven; would need validation that our verifier checks are similarly decomposable and reusable across candidates.
-  - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.36 · _Effort_ 7.0/10
-  [2607.20950](https://arxiv.org/abs/2607.20950)
 
 ## Current top 10 backlog
 
