@@ -19,16 +19,16 @@ _25 item(s) shown · top_n = 25 · 5 foundational slots reserved._
 | 13 | 0.017 | Diagnostic analysis of LDT on clue-rich Sudoku: measures how much of the grid is commit... | 0.40 | 0.42 | 0.40 | 4.0 | — | [2607.19635](https://arxiv.org/abs/2607.19635) | CoLT (learned branching/backtracking baseline) |
 | 14 | 0.017 | IrisFlow is a query-based, open-vocabulary flow-matching framework: candidate materials... | 0.55 | 0.60 | 0.40 | 8.0 | — | [2607.08392](https://arxiv.org/abs/2607.08392) | flow matching |
 | 15 | 0.016 | MxGPS (Multiplex GPS) runs K task-specialized graph transformer (GPS) branches over a s... | 0.50 | 0.54 | 0.41 | 7.0 | — | [2607.13763](https://arxiv.org/abs/2607.13763) | GPS graph transformer architecture, GridFM reference baseline |
-| 16 | 0.014 | CASP (Certificate-Augmented Solution Pruning) has the predictor propose which parts of... | 0.35 | 0.54 | 0.43 | 6.0 | — | [2607.14545](https://arxiv.org/abs/2607.14545) | — |
-| 17 | 0.013 | Token-Level Off-Policy Labeling (TOPL) reframes post-training as a token-level correctn... | 0.45 | 0.48 | 0.37 | 6.0 | — | [2607.17524](https://arxiv.org/abs/2607.17524) | — |
-| 18 | 0.013 | AdaLook is an adaptive lookahead framework for masked diffusion language model (DLM) de... | 0.35 | 0.48 | 0.39 | 5.0 | — | [2607.15655](https://arxiv.org/abs/2607.15655) | — |
-| 19 | 0.012 | LADDER (Latent Adaptive Domain Disentanglement and Environment Reweighting) is a fixed-... | 0.35 | 0.48 | 0.37 | 5.0 | — | [2607.26458](https://arxiv.org/abs/2607.26458) | — |
-| 20 | 0.012 | Combines Taylor Series Imitation Learning (TaSIL) to mitigate policy-induced distributi... | 0.45 | 0.48 | 0.34 | 6.0 | — | [2607.13436](https://arxiv.org/abs/2607.13436) | Taylor Series Imitation Learning (TaSIL), Distributionally robust adaptive control |
-| 21 | 0.012 | Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base... | 0.35 | 0.42 | 0.58 | 7.0 | — | [2607.07993](https://arxiv.org/abs/2607.07993) | RLAIF, rule-based reinforcement learning |
-| 22 | 0.011 | The paper proves that for spherical-harmonic degrees l<=2, photometry is algebraically... | 0.50 | 0.42 | 0.38 | 7.0 | — | [2607.15536](https://arxiv.org/abs/2607.15536) | — |
-| 23 | 0.011 | GARI exposes selected transformation generators to a generic sequence backbone via alig... | 0.30 | 0.48 | 0.39 | 5.0 | — | [2607.25988](https://arxiv.org/abs/2607.25988) | — |
-| 24 | 0.010 | MindForge is an automated pipeline that converts open-source command-line programs into... | 0.35 | 0.48 | 0.37 | 6.0 | — | [2607.27146](https://arxiv.org/abs/2607.27146) | GLM-5.2 as teacher agent, Qwen3.6-27B as student backbone |
-| 25 | 0.010 | ARCANA decomposes each task into perception, hypothesis generation, symbolic execution,... | 0.40 | 0.60 | 0.29 | 7.0 | — | [2607.09059](https://arxiv.org/abs/2607.09059) | symbolic execution engine for the target DSL, learned meta-controller |
+| 16 | 0.016 | MARS formulates MAS repair as a Monte Carlo Tree Search process over the space of poten... | 0.45 | 0.54 | 0.39 | 6.0 | — | [2607.29055](https://arxiv.org/abs/2607.29055) | — |
+| 17 | 0.015 | Introduces OVI, an interactive on-policy imitation learning algorithm that only needs t... | 0.50 | 0.54 | 0.43 | 8.0 | — | [2607.29617](https://arxiv.org/abs/2607.29617) | DAgger (used as an interactive policy-based baseline), Behavior Cloning (used as the offline policy-based baseline) |
+| 18 | 0.014 | CASP (Certificate-Augmented Solution Pruning) has the predictor propose which parts of... | 0.35 | 0.54 | 0.43 | 6.0 | — | [2607.14545](https://arxiv.org/abs/2607.14545) | — |
+| 19 | 0.013 | Token-Level Off-Policy Labeling (TOPL) reframes post-training as a token-level correctn... | 0.45 | 0.48 | 0.37 | 6.0 | — | [2607.17524](https://arxiv.org/abs/2607.17524) | — |
+| 20 | 0.013 | AdaLook is an adaptive lookahead framework for masked diffusion language model (DLM) de... | 0.35 | 0.48 | 0.39 | 5.0 | — | [2607.15655](https://arxiv.org/abs/2607.15655) | — |
+| 21 | 0.013 | MolGVR is a Generator-Verifier-Refiner pipeline: the Generator infers structural eviden... | 0.35 | 0.48 | 0.38 | 5.0 | — | [2607.29479](https://arxiv.org/abs/2607.29479) | — |
+| 22 | 0.012 | LADDER (Latent Adaptive Domain Disentanglement and Environment Reweighting) is a fixed-... | 0.35 | 0.48 | 0.37 | 5.0 | — | [2607.26458](https://arxiv.org/abs/2607.26458) | — |
+| 23 | 0.012 | Combines Taylor Series Imitation Learning (TaSIL) to mitigate policy-induced distributi... | 0.45 | 0.48 | 0.34 | 6.0 | — | [2607.13436](https://arxiv.org/abs/2607.13436) | Taylor Series Imitation Learning (TaSIL), Distributionally robust adaptive control |
+| 24 | 0.012 | Hallucination Self-Play (HSP) co-evolves a detector and a generator from the same base... | 0.35 | 0.42 | 0.58 | 7.0 | — | [2607.07993](https://arxiv.org/abs/2607.07993) | RLAIF, rule-based reinforcement learning |
+| 25 | 0.011 | The paper proves that for spherical-harmonic degrees l<=2, photometry is algebraically... | 0.50 | 0.42 | 0.38 | 7.0 | — | [2607.15536](https://arxiv.org/abs/2607.15536) | — |
 
 ## Foundational lane
 
