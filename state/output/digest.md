@@ -1,6 +1,6 @@
-# hexgen digest — 2026-08-03
+# hexgen digest — 2026-08-04
 
-**11** new backlog item(s) in the last 7 day(s).
+**12** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -70,6 +70,12 @@
   - _Additional context:_ Only the abstract was available for extraction; architectural and training details (loss functions, exact validity-checking mechanism, whether generated code is verified against a compiler/checker) are not described here and would need the full paper to assess concretely transferable mechanisms versus scale-driven gains from a 27B-parameter base model.
   - _Impact_ 0.35 · _Applicability_ 0.36 · _Confidence_ 0.38 · _Effort_ 7.0/10
   [2607.28050](https://arxiv.org/abs/2607.28050)
+- **Build an 18K-surface TPMS dataset by enumerating admissible boundary loops on mirrorabl...** · score 0.003
+  - _Contributions:_ The paper introduces a diffusion-based generative framework for triply periodic minimal surfaces (TPMS) that generates diverse, low-curvature candidates beyond the small canonical families used by prior work. It builds a large dataset of 18K+ unique TPMS via enumerated boundary loops on fundamental bounding volumes, encodes surfaces into a compact symmetry-aware Fourier latent space, and trains a transformer diffusion model there to support sampling, inversion, editing, and conditional generation matching target elastic properties.
+  - _Applicable to our work:_ The compact, symmetry-enforcing latent representation (projecting geometry into a structured latent space that bakes in known invariances, here periodicity/D_2h symmetry) is a transferable idea for encoding B-rep/CAD geometry compactly. The constraint-conditioned generation setup (sampling geometry that must satisfy sparse geometric constraints and match target physical properties) is methodologically analogous to verifier-guided or constraint-satisfying program generation, though this paper uses continuous diffusion rather than autoregressive discrete program synthesis, so the structural-validity mechanism does not transfer directly.
+  - _Additional context:_ Only the abstract was available for extraction (no further chunks retrieved); architecture, training, and evaluation details beyond the abstract are not grounded and should be treated as unconfirmed. The generation target (continuous periodic surfaces) is quite different from our discrete DSL program generation, so applicability is at the level of representation/conditioning ideas rather than a directly reusable method.
+  - _Impact_ 0.25 · _Applicability_ 0.24 · _Confidence_ 0.36 · _Effort_ 7.0/10
+  [2608.02151](https://arxiv.org/abs/2608.02151)
 
 ## Current top 10 backlog
 
