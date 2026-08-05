@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-04</title>
+<title>hexgen digest — 2026-08-05</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,9 +98,35 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-04 · 12 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-05 · 13 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2608.03471">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.020</span>
+    <span class="card-title">Hi-Token encodes each coordinate with axis-specific tokens for the hundreds, tens, and...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes Hi-Token, a hierarchical digit-level coordinate tokenization scheme for generative visual grounding that adds coarse-to-fine numerical structure without changing the underlying VLM architecture, and Hi-GAR, a geometry-based GRPO reward that uses multi-scale box overlap and coordinate accuracy during training. Together they consistently improve localization across three VLM backbones and the RefCOCO benchmark family, with Hi-R1 outperforming strong specialist baselines on most metrics, and analyses show the gains trace to the structured coordinate representation and reward design.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>hexgen already relies on a small closed coordinate vocabulary for its pointer/copy heads; Hi-Token&#39;s hierarchical digit-level tokenization (separate axis-specific tokens for coarse and fine digits) is a directly transferable mechanism for how we discretize/tokenize coordinates, potentially improving numerical precision and generalization without touching the graph-transformer architecture. The Hi-GAR geometry-based, multi-scale reward (box overlap + coordinate accuracy) is also a transferable idea for shaping a verifier-guided or RL fine-tuning signal that rewards partial geometric correctness rather than only binary compile/pass-fail from our frozen verifier.</dd>
+    <dt>Additional context</dt>
+    <dd>Extraction is abstract-only (no full paper text was provided in the prompt). Domain is 2D visual grounding (bounding boxes in images), not 3D CAD/B-rep geometry, so the mechanism would need adaptation to hexgen&#39;s coordinate/DSL vocabulary, but the tokenization idea is architecture-agnostic and should generalize.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.03471</span>
+  </div>
+</a>
+
 <a class="card"
    href="https://arxiv.org/abs/2607.27964">
   <div class="card-head">
@@ -124,6 +150,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.27964</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.03506">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.016</span>
+    <span class="card-title">CALVER (Causal Axiom-Level VERification) is a training-free symbolic verifier that scor...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces CALVER, a training-free symbolic verifier that selects among best-of-K sampled reasoning traces by scoring them against formal causal-inference axioms rather than by majority vote. On causal-reasoning queries with multiple valid answers, CALVER substantially outperforms plurality voting, a reward model, an LLM judge, and model confidence, and the advantage widens as the sampling budget grows. The approach generalizes across ten Bayesian networks, a second model family, settings where the causal graph must be built from text, and even to propositional logic under a truth-table checker.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core pattern -- a training-free, symbolic/axiomatic verifier that scores best-of-K candidates against hard structural rules and picks the winner, beating majority voting, learned reward models, and LLM judges -- is directly analogous to hexgen&#39;s best-of-N generation screened by a frozen, machine-checkable verifier. It&#39;s evidence that axiom-based scoring functions (as opposed to learned critics) scale better with sampling budget, which could support using stricter or additional structural axioms (e.g. topological/parametric consistency rules beyond pass/fail) when ranking hexgen&#39;s best-of-N candidates rather than picking the first that passes the verifier.</dd>
+    <dt>Additional context</dt>
+    <dd>Extraction is abstract-only (no full paper text was provided in the prompt), so architectural and experimental details are limited to what the abstract states. Domain is causal QA over Bayesian networks, not geometry/program generation, but the selection-under-verifier pattern is the transferable piece, not the causal-inference specifics.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.03506</span>
   </div>
 </a>
 
@@ -228,32 +280,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.26458</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.25988">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.011</span>
-    <span class="card-title">GARI exposes selected transformation generators to a generic sequence backbone via alig...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces GARI, a representation-level interface that exposes transformation generators to a generic sequence backbone instead of hard-coding group actions into specialized operators. It formalizes a soft-equivariance residual and instantiates the interface as GARI-Net, using shared-parameter generator-indexed streams and a Direct Equivariance Error (DEE) diagnostic. Experiments across genomic sequences, images, and 3D point clouds (sequence reversal, planar rotations/reflections, axial transfer) show the same interface principle generalizes to held-out probes without group-specific backbone redesign.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Our own native-rotation-invariance encoder line is closed, but GARI&#39;s generator-indexed-stream idea is a genuinely different mechanism: it could be layered on the existing B-rep graph-transformer encoder as extra generator-aligned views (e.g. for rotated/reflected face graphs) without redesigning the backbone, and DEE could serve as a cheap frozen-checkpoint diagnostic to quantify residual rotation/reflection sensitivity of the current encoder or of candidate deployment-time augmentation tricks.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract chunk was available for extraction (no body text was supplied), so architecture/experiment details beyond the abstract are not grounded here and should be verified against the full paper before implementation. No code link or concrete dataset/benchmark names are given in the text provided.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.39</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.25988</span>
   </div>
 </a>
 
