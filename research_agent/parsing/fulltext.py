@@ -129,8 +129,15 @@ def parse_html_sections(html: str) -> list[Section]:
 
 
 def _fetch_html(paper: Paper, http: HttpClient) -> str | None:
-    """Fetch arXiv HTML from ar5iv, trying the labs host then the mirror."""
+    """Fetch arXiv HTML, trying arXiv's own native renderer then the ar5iv mirrors.
+
+    arXiv absorbed ar5iv's LaTeXML rendering into ``arxiv.org/html/<id>`` directly,
+    so that's tried first (also the only host reachable from some sandboxed network
+    policies, where the standalone ar5iv hosts are unresolvable); the legacy ar5iv
+    hosts remain as a fallback for older ids they may still cover.
+    """
     urls = [
+        f"https://arxiv.org/html/{paper.id}",
         f"https://ar5iv.labs.arxiv.org/html/{paper.id}",
         f"https://ar5iv.org/abs/{paper.id}",
     ]
