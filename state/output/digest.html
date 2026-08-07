@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-06</title>
+<title>hexgen digest — 2026-08-07</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,9 +98,35 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-06 · 9 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-07 · 9 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2608.05714">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.025</span>
+    <span class="card-title">RA-CAD (ReAct Agent for CAD) runs a state-aware Generate-Execute-Critique-Rewrite loop:...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper formulates state-aware text-to-CAD generation as a closed loop with post-execution critique modeled as an explicit, learnable agent-side policy component rather than a fixed prompt or post-hoc reviewer. It introduces trajectory-level Feedback-driven Agent Optimization (FAO) built on CAD Code Bootstrapping (CCB), which assigns terminal CAD-quality rewards (F1 + Chamfer Distance) to the entire Generate-Execute-Critique-Rewrite trajectory and jointly optimizes code generation, critique, and rewriting via GRPO. Experiments on CADFusion and Text2CAD show this closed-loop approach achieves state-of-the-art execution validity and geometric quality versus prior text-to-CAD methods and strong proprietary LLMs used as 8-shot baselines.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>This is a close methodological match to hexgen&#39;s structural-validity problem (care area 1) and worth studying closely: (1) the Generate-Execute-Critique-Rewrite loop with an explicit, learned critique policy conditioned on execution feedback is a candidate mechanism for repairing hexgen&#39;s own broken best-of-N rollouts -- instead of (or in addition to) discarding candidates that fail the frozen verifier, a trained critique/rewrite step could target-fix them, directly relevant to the &#39;repair/edit distillation, DAgger-style learning to fix a model&#39;s own broken rollouts&#39; line item. (2) The reward design -- hard-zeroing the geometric-fidelity reward whenever the candidate program fails to execute -- mirrors how our own frozen verifier&#39;s pass/fail gate could be composed with a continuous quality signal (scaled-Jacobian/aspect-ratio/surface-fidelity) for a GRPO-style trajectory-level RL stage on top of hexgen&#39;s current supervised-imitation training. (3) Trajectory-level (not per-step) reward assignment over an interaction that includes both generation and self-critique tokens is a concrete recipe if we want to add an RL fine-tuning stage after hexgen&#39;s current SFT-on-inverse-factory-data regime. (4) The ablation isolating the contribution of the critique component (removing it while keeping GRPO degrades performance) is useful evidence that a dedicated repair/critique head, not just outcome-reward RL, is worth the added complexity.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is parametric sketch-extrude CAD code (not B-rep/hex-meshing), and the base model is a general LLM (Llama-3-8B) rather than a small graph-transformer with pointer/copy heads, so architecture details do not transfer directly -- the transferable content is the training-loop pattern (execute -&gt; critique -&gt; rewrite -&gt; trajectory-level RL with an execution-gated reward), not the network design. Baselines are 8-shot-prompted proprietary LLMs, which is a somewhat easy comparison; the more informative comparison for us is the CCB/FAO/Critique ablation in Table 3. Chamfer Distance and F1-over-topological-tokens are the fidelity metrics used; our own verifier&#39;s scaled-Jacobian/aspect-ratio/surface-match criteria would need their own reward shaping if adapting this recipe.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.05714</span>
+  </div>
+</a>
+
 <a class="card"
    href="https://arxiv.org/abs/2608.03471">
   <div class="card-head">
@@ -124,32 +150,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.03471</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.27964">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.019</span>
-    <span class="card-title">Syntropy synthesizes protocol refinements guided by MPST specifications and LLMs, incor...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The authors present Syntropy, a framework that combines LLM-based code generation with multiparty-session-type (MPST) specifications to synthesize deadlock-free communication protocol refinements. By embedding the refinement constraints directly into the generation process, Syntropy achieves 95.6%-99.5% validity while maintaining high syntactic correctness, and produces diverse, non-trivial refinements across multiple LLMs.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The central mechanism -- incorporating formal specification constraints (here MPST guarantees) directly into the LLM generation process to push structural/behavioral validity rates into the 95%+ range -- is a directly transferable pattern for hexgen&#39;s structural-validity problem: constraining or guiding the autoregressive decoder&#39;s generation process with the same machine-checkable rules used by our frozen verifier (compiles, zero inverted elements, etc.) rather than only screening after the fact with best-of-N sampling. Their evaluation methodology (validity rate + syntactic correctness + diversity of valid outputs) is also a useful template for reporting hexgen&#39;s own generation quality.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract was available; the exact mechanism by which refinement constraints are &#39;incorporated directly into the generation process&#39; (e.g. constrained decoding, iterative repair, verifier-guided resampling) is not specified here and matters a great deal for how directly this transfers to hexgen&#39;s decoder -- would need the full paper to determine if this is grammar-constrained decoding, post-hoc filtering, or an LLM-agent repair loop.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.34</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.27964</span>
   </div>
 </a>
 
@@ -284,28 +284,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.28050">
+   href="https://arxiv.org/abs/2608.05810">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.007</span>
-    <span class="card-title">Build IndustryForge-27B on top of Qwen3.5-VL-27B by curating six industrial-CAD sub-cor...</span>
+    <span class="badge" title="composite RICE score">0.008</span>
+    <span class="card-title">Verifier-as-Gatekeeper (VaG): a pre-commit, progressive trust hierarchy (Cold-&gt;Warm-&gt;Ho...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The authors introduce IndustryForge-27B, a domain-enhanced multimodal foundation model for industrial CAD built on Qwen3.5-VL-27B via multi-task SFT over six curated industrial-CAD corpora. It substantially outperforms the base model and a strong closed-source model (GPT-5.4) on CAD-domain benchmarks while retaining general capability, and is positioned as a shared substrate for downstream industrial-agent systems spanning CAD design to closed-loop self-improvement.</dd>
+    <dd>The paper identifies and formalizes a &#39;capability-contamination tipping point&#39; in self-evolving LLM agents, showing skill accumulation is non-monotone and that contamination is structurally irreversible because later skills are distilled conditioned on earlier (possibly defective) ones, so post-hoc rollback of a source skill cannot undo the flawed reasoning inherited by its descendants. It proposes VaG, a pre-commit gating mechanism combining three complementary per-skill critics with marginal-gain greedy subset selection, and demonstrates on Terminal-Bench 2 that VaG improves monotonically across five evolution rounds (reaching 72% pass@1 with a 5x smaller pool) versus ungated evolution&#39;s peak-then-collapse pattern, with the gated pool transferring positively across five backbones and to a second benchmark.</dd>
     <dt>Applicable to our work</dt>
-    <dd>The paper&#39;s core recipe -- curating a corpus that pairs CAD geometry/drawings with correct parametric-modelling program code (text2cadquery) and multi-task SFT to produce a model that reliably emits valid CAD program syntax -- is directly analogous to hexgen&#39;s task of mapping B-rep graphs to valid hex-meshing DSL programs. Their CAD-VQA and text2cadquery corpora construction methodology could inform how we synthesize/augment (B-rep, program) training pairs or evaluate structural validity of generated CAD code at larger scale, even though their approach uses a large general-purpose VLM rather than a small graph-transformer with pointer heads.</dd>
+    <dd>The core transferable mechanism is the pre-commit, multi-critic gating pattern applied to our own best-of-N verifier-screened candidate generation and any self-improvement/distillation loop we build around hexgen: (1) the &#39;irreversibility&#39; argument -- that data/programs generated conditioned on a prior, possibly-flawed pool propagate contamination into later training rounds -- is directly relevant if we ever bootstrap new (B-rep, program) training pairs from the model&#39;s own verified outputs (rejection-sampled SFT / self-play flywheel), since a subtly-bad verified program could still bias later generations; this argues for pre-commit filtering of self-generated training data rather than only post-hoc pool cleanup. (2) The heterogeneous, cheap-first, conjunctive critic design (deterministic structural check -&gt; behavioral replay -&gt; expensive semantic/LLM check) is a reusable template for staging our own frozen verifier (compiles -&gt; zero-inverted -&gt; quality bounds -&gt; feature-edge capture) to front-load the cheapest checks. (3) Marginal-gain greedy subset selection for catching combinatorial (not just individual) failure modes could inform how we curate a growing self-play training corpus, since two individually-valid synthesized programs could still be redundant or jointly harmful to training-set diversity/quality.</dd>
     <dt>Additional context</dt>
-    <dd>Only the abstract was available for extraction; architectural and training details (loss functions, exact validity-checking mechanism, whether generated code is verified against a compiler/checker) are not described here and would need the full paper to assess concretely transferable mechanisms versus scale-driven gains from a 27B-parameter base model.</dd>
+    <dd>This is an agent-skill-library paper (Terminal-Bench 2 CLI tasks), not CAD/mesh generation -- the bridge to hexgen is purely at the level of the self-improvement/verifier-gating methodology, not the domain. The &#39;structural validity&#39; critic here (SchemaCritic) is a much weaker notion (frontmatter schema check) than our frozen geometric verifier, so don&#39;t over-read the terminology overlap. Worth citing as evidence for why any future self-play/rejection-sampling loop for hexgen should gate admission of new synthetic training examples before they influence subsequent generations, not just filter at generation time.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.28050</span>
+    <span class="pid">2608.05810</span>
   </div>
 </a>
 
@@ -546,9 +546,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.05714">
+  <div class="card-head">
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.025</span>
+    <span class="card-title">RA-CAD (ReAct Agent for CAD) runs a state-aware Generate-Execute-Critique-Rewrite loop:...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper formulates state-aware text-to-CAD generation as a closed loop with post-execution critique modeled as an explicit, learnable agent-side policy component rather than a fixed prompt or post-hoc reviewer. It introduces trajectory-level Feedback-driven Agent Optimization (FAO) built on CAD Code Bootstrapping (CCB), which assigns terminal CAD-quality rewards (F1 + Chamfer Distance) to the entire Generate-Execute-Critique-Rewrite trajectory and jointly optimizes code generation, critique, and rewriting via GRPO. Experiments on CADFusion and Text2CAD show this closed-loop approach achieves state-of-the-art execution validity and geometric quality versus prior text-to-CAD methods and strong proprietary LLMs used as 8-shot baselines.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>This is a close methodological match to hexgen&#39;s structural-validity problem (care area 1) and worth studying closely: (1) the Generate-Execute-Critique-Rewrite loop with an explicit, learned critique policy conditioned on execution feedback is a candidate mechanism for repairing hexgen&#39;s own broken best-of-N rollouts -- instead of (or in addition to) discarding candidates that fail the frozen verifier, a trained critique/rewrite step could target-fix them, directly relevant to the &#39;repair/edit distillation, DAgger-style learning to fix a model&#39;s own broken rollouts&#39; line item. (2) The reward design -- hard-zeroing the geometric-fidelity reward whenever the candidate program fails to execute -- mirrors how our own frozen verifier&#39;s pass/fail gate could be composed with a continuous quality signal (scaled-Jacobian/aspect-ratio/surface-fidelity) for a GRPO-style trajectory-level RL stage on top of hexgen&#39;s current supervised-imitation training. (3) Trajectory-level (not per-step) reward assignment over an interaction that includes both generation and self-critique tokens is a concrete recipe if we want to add an RL fine-tuning stage after hexgen&#39;s current SFT-on-inverse-factory-data regime. (4) The ablation isolating the contribution of the critique component (removing it while keeping GRPO degrades performance) is useful evidence that a dedicated repair/critique head, not just outcome-reward RL, is worth the added complexity.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is parametric sketch-extrude CAD code (not B-rep/hex-meshing), and the base model is a general LLM (Llama-3-8B) rather than a small graph-transformer with pointer/copy heads, so architecture details do not transfer directly -- the transferable content is the training-loop pattern (execute -&gt; critique -&gt; rewrite -&gt; trajectory-level RL with an execution-gated reward), not the network design. Baselines are 8-shot-prompted proprietary LLMs, which is a somewhat easy comparison; the more informative comparison for us is the CCB/FAO/Critique ablation in Table 3. Chamfer Distance and F1-over-topological-tokens are the fidelity metrics used; our own verifier&#39;s scaled-Jacobian/aspect-ratio/surface-match criteria would need their own reward shaping if adapting this recipe.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.05714</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.08256">
   <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.024</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.024</span>
     <span class="card-title">Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verif...</span>
   </div>
   <dl class="fields">
@@ -568,32 +594,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.08256</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.21591">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.022</span>
-    <span class="card-title">Progressive Seed Pruning (PSP) scores intermediate denoised estimates and progressively...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces Progressive Seed Pruning (PSP), an inference-time scaling method for diffusion and flow-matching models that evaluates many noise seeds early and progressively narrows the candidate set based on intermediate denoised estimates, using a fixed compute budget more effectively than existing best-of-N or resampling approaches. Across diffusion and flow-matching backbones, PSP improves reward-guided selection and achieves higher automated (GenEval) and human-evaluated prompt-alignment scores than best-of-N, importance-sampling, and tree-search baselines at matched compute.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The progressive-pruning-under-fixed-budget mechanism is transferable to our best-of-N program screening against the frozen verifier: score partial/intermediate decoder rollouts and prune low-promise candidates early instead of fully executing/verifying every candidate to completion, evaluating more candidates within the same verifier-call budget.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is image diffusion/flow-matching, not autoregressive program synthesis, so the scoring signal (denoised-estimate quality) would need to be replaced by a partial-program value estimate or fast proxy verifier; the core budget-allocation idea (front-load exploration, prune progressively) is architecture-agnostic.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.58</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.21591</span>
   </div>
 </a>
 

@@ -79,7 +79,8 @@ A cheap→expensive cascade over `SEEN` papers:
 Runs on `RELEVANT` papers only.
 
 - **Parse:** GROBID (TEI/XML sections/tables/refs) when a service is configured;
-  otherwise arXiv HTML (ar5iv, which avoids PDF-parse errors); otherwise
+  otherwise arXiv HTML — arxiv.org's own native `/html/<id>` rendering first,
+  then the legacy ar5iv mirrors — which avoids PDF-parse errors; otherwise
   abstract-only. Full text is chunked by section, with limitation-bearing
   sections (Discussion/Limitations/Future Work) always retained.
 - **Extract:** a flat, schema-constrained LLM extraction into `Extraction`
