@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-09</title>
+<title>hexgen digest — 2026-08-10</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-09 · 9 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-10 · 6 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -202,84 +202,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.03506</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.29055">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.016</span>
-    <span class="card-title">MARS formulates MAS repair as a Monte Carlo Tree Search process over the space of poten...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes MARS, a search-based framework that casts multi-agent-system repair as an MCTS problem, navigating the repair space via diagnosis-guided expansion and taxonomy-augmented evaluation, and using partial rollouts instead of full simulations to cut token cost. It also introduces StateMAS, a benchmark of 1,310 replayable multi-agent failure trajectories across four agent architectures and four LLM backbones, and shows MARS improves repair success by 3.0-12.1 percentage points over prior state-of-the-art at comparable token cost.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core idea -- using MCTS with diagnosis-guided expansion and partial-rollout evaluation to search a large space of candidate repairs cheaply -- maps directly onto our care-area-1 goal of &#39;MCTS or beam search over program prefixes&#39; and &#39;repair/edit distillation&#39; for fixing a hexgen model&#39;s own broken program rollouts. Partial-rollout evaluation is especially attractive for us since our frozen verifier can likely give partial-program signals (e.g. early detection of an unrecoverable topology) cheaper than executing full mesh generation, mirroring their token-cost savings.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is LLM multi-agent-system failure repair, not program/geometry synthesis, so the notion of &#39;diagnosis taxonomy&#39; and &#39;agent trajectory&#39; would need to be re-derived for our verifier&#39;s specific failure modes (inverted elements, surface-fidelity misses, etc.); the general search-with-partial-rollout-and-guided-expansion pattern is the transferable part, not the taxonomy itself.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.39</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.29055</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.29617">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.015</span>
-    <span class="card-title">Introduces OVI, an interactive on-policy imitation learning algorithm that only needs t...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper shows that interactive expert querying relaxes representational demands on an imitation learner: it suffices to realize the expert&#39;s value function rather than its full policy. It introduces OVI, an on-policy IL algorithm exploiting this, proves a matching negative result that offline IL without interaction must scale with the expert policy class&#39;s complexity, and shows OVI empirically beats BC, DAgger, and offline value-based IL, especially when the learner is much less expressive than the expert.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Our hexgen decoder is trained by supervised imitation (BC-style) on inverse-factory and auto-labeled programs and is likely far less expressive than the &#39;expert&#39; generator (the inverse factory + template labeler) that produced its training data -- exactly the regime where the paper shows BC plateaus and value-based/interactive methods win most. If we can define a value/critic function over partial programs (e.g. via the frozen verifier as a proxy value signal) and allow the model to query it while rolling out its own prefixes, this could reduce compounding errors in structural validity without needing full expert-policy realizability. Even without true interactivity, the paper&#39;s diagnosis suggests critic-guided decoding (value/critic-guided search, listed in our care-area 1) is likely to help more than more BC data alone.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a theory-and-algorithm paper (regret bounds, oracle-based algorithm), not a paper with released code or a directly pluggable module -- adapting it would require nontrivial design work to define a &#39;value function&#39; analogue over partial hex-meshing programs. Still a useful conceptual anchor for why compounding errors happen and what class of fix (value realizability, on-policy interaction) actually addresses them, which is directly relevant to our care-area-1 (structural validity) priorities.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.29617</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.29479">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.013</span>
-    <span class="card-title">MolGVR is a Generator-Verifier-Refiner pipeline: the Generator infers structural eviden...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes MolGVR, a chemistry-grounded Generator-Verifier-Refiner framework for text-to-molecule generation that explicitly checks generated candidates against constraints derived from the input description and iteratively refines rejected candidates. It reports improved exact-match performance on ChEBI-20 and PCDes, arguing that coupling generation with executable verification and feedback-guided refinement improves structured generation quality.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The Generator-Verifier-Refiner structure is directly analogous to what our hexgen pipeline could do at inference/training time: best-of-N candidate programs are already screened by our frozen verifier (compiles, zero inverted elements, quality bounds, etc.), but this paper&#39;s explicit &#39;Refiner&#39; stage -- conditioning a repair model specifically on which constraint the verifier rejected -- is a concrete, transferable mechanism for repair/edit distillation (our care-area-1 DAgger-style &#39;learning to fix a model&#39;s own broken rollouts&#39;) that we do not yet have a dedicated component for.</dd>
-    <dt>Additional context</dt>
-    <dd>Different domain (molecules/SMILES-like representations vs hex-meshing DSL programs) and no architectural details beyond the abstract are available in this chunk, so the exact mechanism for how the Refiner is trained (RL, supervised, iterative prompting) is unclear from what we extracted; would need the full paper to assess implementation cost and whether the Refiner is a separate trained model or a prompting scheme.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.29479</span>
   </div>
 </a>
 
