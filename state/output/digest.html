@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-10</title>
+<title>hexgen digest — 2026-08-11</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,9 +98,61 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-10 · 6 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-11 · 8 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2608.09706">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.039</span>
+    <span class="card-title">3D CAD consensus selection: sample N parametric CAD programs from an LLM, compile each...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes verifier-free &#39;consensus selection&#39; for text-to-CAD generation: instead of using a separate vision-language judge, it compiles every sampled candidate program to a 3D model and picks the one that agrees most with the rest of the pool, under geometric or topological notions of agreement. On the candidate pools of a state-of-the-art CAD generation method, geometric consensus improves all three geometric metrics over that method&#39;s own verifier, and topological consensus matches it on topology. The method is training-free and works across every tested LLM and prompt variant, reducing Chamfer distance by 1-10% versus random selection from the same pool.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly applicable to hexgen&#39;s best-of-N candidate screening: alongside (or as a cheap pre-filter before) the frozen machine-checkable verifier, a consensus/agreement score computed across the compiled meshes of the N sampled hex-meshing programs could re-rank or triage candidates using signal the pool itself provides, potentially reducing how often the expensive verifier must run.</dd>
+    <dt>Additional context</dt>
+    <dd>Consensus selection implicitly assumes the majority of sampled candidates are &#39;roughly correct&#39;, so the informative signal is majority agreement; if hexgen&#39;s decoder occasionally produces a correct-but-structurally-distinct minority candidate (e.g. a valid but unusual block/sweep decomposition), consensus selection could systematically penalize good outliers -- worth checking against hexgen&#39;s actual candidate-pool diversity before adopting wholesale.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.09706</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.09898">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.027</span>
+    <span class="card-title">Introduces &#39;consilience&#39;, a verifier-free rollout-selection metric that scores each rea...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper shows confidence-based verifier-free test-time scaling catastrophically breaks down on hard problems because uniformly high confidence often marks a failure to explore rather than correctness. It introduces consilience, a metric that evaluates the temporal asymmetry of a rollout&#39;s confidence trajectory (low-then-high) to pick better completions without any external verifier. Experiments on graduate math, QA, and free-form code generation show consilience beats confidence-maximization and matches or exceeds verifier-based selection in some settings. It notably works in domains like free-form code generation where voting-based selection is inapplicable.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Hexgen screens best-of-N candidate programs with an expensive frozen machine-checkable verifier. Consilience&#39;s confidence-trajectory signal could serve as a cheap, verifier-free pre-filter or complementary ranking over decoder rollouts -- e.g. to triage which of N sampled programs to run through the verifier first under a compute budget, or as an additional selection signal alongside the verifier&#39;s pass/fail result.</dd>
+    <dt>Additional context</dt>
+    <dd>Validated only on free-form LLM token-level reasoning (math/code/QA); hexgen&#39;s decoder emits short DSL programs via pointer/copy heads over a small closed vocabulary, a very different confidence regime, so it&#39;s unclear the same low-then-high confidence signature would emerge -- would need empirical validation on hexgen&#39;s own rollouts before relying on it to replace/triage the frozen verifier.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.64</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.09898</span>
+  </div>
+</a>
+
 <a class="card"
    href="https://arxiv.org/abs/2608.05714">
   <div class="card-head">
@@ -232,28 +284,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.02151">
+   href="https://arxiv.org/abs/2608.09296">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.003</span>
-    <span class="card-title">Build an 18K-surface TPMS dataset by enumerating admissible boundary loops on mirrorabl...</span>
+    <span class="badge" title="composite RICE score">0.007</span>
+    <span class="card-title">CADEngBench, a two-track benchmark: CADEngBench-P evaluates 300 parametric parts on B-R...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper introduces a diffusion-based generative framework for triply periodic minimal surfaces (TPMS) that generates diverse, low-curvature candidates beyond the small canonical families used by prior work. It builds a large dataset of 18K+ unique TPMS via enumerated boundary loops on fundamental bounding volumes, encodes surfaces into a compact symmetry-aware Fourier latent space, and trains a transformer diffusion model there to support sampling, inversion, editing, and conditional generation matching target elastic properties.</dd>
+    <dd>The paper argues CAD evaluation must test engineering behavior, not just visual/geometric correctness, and introduces CADEngBench to do so. CADEngBench-P covers 600 zero-to-CAD and functional-editing tasks over 300 parametric parts, checked via B-Rep validity, DFM rules, parameter perturbations, and matched FEA simulation. CADEngBench-A covers 150 assembly body pairs, testing joint retrieval, face/edge grounding, joint-frame prediction, and kinematic verification. Evaluating eight multimodal, code-capable models shows editing supplied CAD is much easier than generating it from scratch, complex edits and matched FEA remain hard, and assembly predictions often find the right region but miss the exact joint or mating entities.</dd>
     <dt>Applicable to our work</dt>
-    <dd>The compact, symmetry-enforcing latent representation (projecting geometry into a structured latent space that bakes in known invariances, here periodicity/D_2h symmetry) is a transferable idea for encoding B-rep/CAD geometry compactly. The constraint-conditioned generation setup (sampling geometry that must satisfy sparse geometric constraints and match target physical properties) is methodologically analogous to verifier-guided or constraint-satisfying program generation, though this paper uses continuous diffusion rather than autoregressive discrete program synthesis, so the structural-validity mechanism does not transfer directly.</dd>
+    <dd>Directly on-target for hexgen: CADEngBench&#39;s B-Rep-validity and matched-FEA-style evaluation methodology is close kin to hexgen&#39;s own frozen verifier (compiles, zero inverted elements, scaled-Jacobian/aspect-ratio bounds, surface-match fidelity). Its finding that &#39;editing is easier than generating&#39; and that complex edits/FEA remain hard is a useful calibration point for how hard the hexgen program-generation task should be expected to be, and its parameter-family-perturbation protocol is a candidate template for stress-testing hexgen&#39;s generalization to nearby part variants.</dd>
     <dt>Additional context</dt>
-    <dd>Only the abstract was available for extraction (no further chunks retrieved); architecture, training, and evaluation details beyond the abstract are not grounded and should be treated as unconfirmed. The generation target (continuous periodic surfaces) is quite different from our discrete DSL program generation, so applicability is at the level of representation/conditioning ideas rather than a directly reusable method.</dd>
+    <dd>This is a benchmark/evaluation paper, not a method paper -- it doesn&#39;t propose a generation technique to borrow, but it&#39;s a strong candidate source of evaluation methodology (B-Rep validity + FEA-matched checks + parameter perturbations) that hexgen&#39;s own verifier design could be compared against or extended with.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.24</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.02151</span>
+    <span class="pid">2608.09296</span>
   </div>
 </a>
 
@@ -312,9 +364,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.09706">
+  <div class="card-head">
+<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.039</span>
+    <span class="card-title">3D CAD consensus selection: sample N parametric CAD programs from an LLM, compile each...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes verifier-free &#39;consensus selection&#39; for text-to-CAD generation: instead of using a separate vision-language judge, it compiles every sampled candidate program to a 3D model and picks the one that agrees most with the rest of the pool, under geometric or topological notions of agreement. On the candidate pools of a state-of-the-art CAD generation method, geometric consensus improves all three geometric metrics over that method&#39;s own verifier, and topological consensus matches it on topology. The method is training-free and works across every tested LLM and prompt variant, reducing Chamfer distance by 1-10% versus random selection from the same pool.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly applicable to hexgen&#39;s best-of-N candidate screening: alongside (or as a cheap pre-filter before) the frozen machine-checkable verifier, a consensus/agreement score computed across the compiled meshes of the N sampled hex-meshing programs could re-rank or triage candidates using signal the pool itself provides, potentially reducing how often the expensive verifier must run.</dd>
+    <dt>Additional context</dt>
+    <dd>Consensus selection implicitly assumes the majority of sampled candidates are &#39;roughly correct&#39;, so the informative signal is majority agreement; if hexgen&#39;s decoder occasionally produces a correct-but-structurally-distinct minority candidate (e.g. a valid but unusual block/sweep decomposition), consensus selection could systematically penalize good outliers -- worth checking against hexgen&#39;s actual candidate-pool diversity before adopting wholesale.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.09706</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.13921">
   <div class="card-head">
-<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.033</span>
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.033</span>
     <span class="card-title">Introduces &#39;generative compilation&#39;: a &#39;sealor&#39; transformation converts a partial progr...</span>
   </div>
   <dl class="fields">
@@ -340,7 +418,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.17570">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.029</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.029</span>
     <span class="card-title">The paper proves that a broad class of hierarchical graph transformers combining global...</span>
   </div>
   <dl class="fields">
@@ -366,7 +444,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.08766">
   <div class="card-head">
-<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.028</span>
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.028</span>
     <span class="card-title">OPSD-V is an on-policy self-distillation scheme: a student follows its own exact infere...</span>
   </div>
   <dl class="fields">
@@ -390,9 +468,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.09898">
+  <div class="card-head">
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.027</span>
+    <span class="card-title">Introduces &#39;consilience&#39;, a verifier-free rollout-selection metric that scores each rea...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper shows confidence-based verifier-free test-time scaling catastrophically breaks down on hard problems because uniformly high confidence often marks a failure to explore rather than correctness. It introduces consilience, a metric that evaluates the temporal asymmetry of a rollout&#39;s confidence trajectory (low-then-high) to pick better completions without any external verifier. Experiments on graduate math, QA, and free-form code generation show consilience beats confidence-maximization and matches or exceeds verifier-based selection in some settings. It notably works in domains like free-form code generation where voting-based selection is inapplicable.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Hexgen screens best-of-N candidate programs with an expensive frozen machine-checkable verifier. Consilience&#39;s confidence-trajectory signal could serve as a cheap, verifier-free pre-filter or complementary ranking over decoder rollouts -- e.g. to triage which of N sampled programs to run through the verifier first under a compute budget, or as an additional selection signal alongside the verifier&#39;s pass/fail result.</dd>
+    <dt>Additional context</dt>
+    <dd>Validated only on free-form LLM token-level reasoning (math/code/QA); hexgen&#39;s decoder emits short DSL programs via pointer/copy heads over a small closed vocabulary, a very different confidence regime, so it&#39;s unclear the same low-then-high confidence signature would emerge -- would need empirical validation on hexgen&#39;s own rollouts before relying on it to replace/triage the frozen verifier.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.64</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.09898</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.13416">
   <div class="card-head">
-<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.026</span>
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.026</span>
     <span class="card-title">EXPLORE integrates simulator-guided Monte Carlo Tree Search (MCTS) with transformer-bas...</span>
   </div>
   <dl class="fields">
@@ -418,7 +522,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.17641">
   <div class="card-head">
-<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.025</span>
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.025</span>
     <span class="card-title">VRR-Stop uses a four-parameter noise model separating verifier false acceptance and fal...</span>
   </div>
   <dl class="fields">
@@ -444,7 +548,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.20908">
   <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.025</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.025</span>
     <span class="card-title">CudaPerf is a reflective RL framework combining verifiable execution rewards with struc...</span>
   </div>
   <dl class="fields">
@@ -464,58 +568,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.20908</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.05714">
-  <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.025</span>
-    <span class="card-title">RA-CAD (ReAct Agent for CAD) runs a state-aware Generate-Execute-Critique-Rewrite loop:...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper formulates state-aware text-to-CAD generation as a closed loop with post-execution critique modeled as an explicit, learnable agent-side policy component rather than a fixed prompt or post-hoc reviewer. It introduces trajectory-level Feedback-driven Agent Optimization (FAO) built on CAD Code Bootstrapping (CCB), which assigns terminal CAD-quality rewards (F1 + Chamfer Distance) to the entire Generate-Execute-Critique-Rewrite trajectory and jointly optimizes code generation, critique, and rewriting via GRPO. Experiments on CADFusion and Text2CAD show this closed-loop approach achieves state-of-the-art execution validity and geometric quality versus prior text-to-CAD methods and strong proprietary LLMs used as 8-shot baselines.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>This is a close methodological match to hexgen&#39;s structural-validity problem (care area 1) and worth studying closely: (1) the Generate-Execute-Critique-Rewrite loop with an explicit, learned critique policy conditioned on execution feedback is a candidate mechanism for repairing hexgen&#39;s own broken best-of-N rollouts -- instead of (or in addition to) discarding candidates that fail the frozen verifier, a trained critique/rewrite step could target-fix them, directly relevant to the &#39;repair/edit distillation, DAgger-style learning to fix a model&#39;s own broken rollouts&#39; line item. (2) The reward design -- hard-zeroing the geometric-fidelity reward whenever the candidate program fails to execute -- mirrors how our own frozen verifier&#39;s pass/fail gate could be composed with a continuous quality signal (scaled-Jacobian/aspect-ratio/surface-fidelity) for a GRPO-style trajectory-level RL stage on top of hexgen&#39;s current supervised-imitation training. (3) Trajectory-level (not per-step) reward assignment over an interaction that includes both generation and self-critique tokens is a concrete recipe if we want to add an RL fine-tuning stage after hexgen&#39;s current SFT-on-inverse-factory-data regime. (4) The ablation isolating the contribution of the critique component (removing it while keeping GRPO degrades performance) is useful evidence that a dedicated repair/critique head, not just outcome-reward RL, is worth the added complexity.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is parametric sketch-extrude CAD code (not B-rep/hex-meshing), and the base model is a general LLM (Llama-3-8B) rather than a small graph-transformer with pointer/copy heads, so architecture details do not transfer directly -- the transferable content is the training-loop pattern (execute -&gt; critique -&gt; rewrite -&gt; trajectory-level RL with an execution-gated reward), not the network design. Baselines are 8-shot-prompted proprietary LLMs, which is a somewhat easy comparison; the more informative comparison for us is the CCB/FAO/Critique ablation in Table 3. Chamfer Distance and F1-over-topological-tokens are the fidelity metrics used; our own verifier&#39;s scaled-Jacobian/aspect-ratio/surface-match criteria would need their own reward shaping if adapting this recipe.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.05714</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.08256">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.024</span>
-    <span class="card-title">Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verif...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Study of Best-of-N zero-shot TTS candidate selection using an ASR verifier; shows verifier rankings reverse depending on evaluator ASR family despite near-identical representations, then proposes cross-family rank ensembles (rank-averaging and conjunctive max-rank) that reduce this confound.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>hexgen also selects among best-of-N candidate programs via a frozen verifier; this paper&#39;s core finding -- that apparent verifier quality/oracle-headroom recovery can be an artifact of evaluator identity/lineage rather than true representational quality -- is a direct methodological caution for validating and reporting our own best-of-N + verifier pipeline, and its cross-family rank-ensembling fix is a candidate technique if we ever use multiple imperfect verifiers/proxies.</dd>
-    <dt>Additional context</dt>
-    <dd>Evaluated only in zero-shot TTS with learned ASR verifiers; hexgen&#39;s verifier is a single frozen deterministic checker, not an ensemble of learned models, so the cross-family confound may not bite us directly. The value here is evaluation hygiene for best-of-N reporting rather than a capability gain — cheap to adopt only if we ever add proxy verifiers.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.08256</span>
   </div>
 </a>
 
