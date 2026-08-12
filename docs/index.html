@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-11</title>
+<title>hexgen digest — 2026-08-12</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-11 · 8 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-12 · 8 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -154,6 +154,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.10843">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.026</span>
+    <span class="card-title">Hypothesis Frontier is a verifier-guided neurosymbolic search loop: each LLM-proposed f...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Hypothesis Frontier, which evaluates every LLM-generated first-order formula exactly against training data, uses the concrete errors to drive bounded symbolic repair of the LLM&#39;s own formula, and retains the strongest verified formula across LLM rounds rather than treating each generation as final. It also proposes a final exact-simplification pass that shortens train-valid formulas without changing any training prediction, and a symbolic-first cascade that runs a Z3 solver before invoking the LLM loop at all. Under matched models and LLM-round budgets it beats repeated direct prompting in 9 of 9 comparisons.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core loop — when a best-of-N candidate fails our frozen verifier, don&#39;t discard it; extract the concrete residual (which check failed: inverted elements, Jacobian/aspect-ratio bound, surface-fidelity mismatch, feature-edge miss) and use it to drive a bounded, parent-derived repair of the model&#39;s own DSL program (edit/patch the offending block/sweep/projection call rather than resample from scratch), then keep a deterministic &#39;best verified-so-far&#39; frontier program across repair rounds and feed its residual failures back as context for the next generation attempt — this maps directly onto our structural-validity and repair/edit-distillation care area. The &#39;symbolic-first cascade&#39; (run a cheap deterministic procedure first, only invoke the learned model on what it can&#39;t resolve) also echoes our existing deterministic-construction-template auto-labeling path and suggests we could similarly gate hexgen invocation behind template-based solvers for the parts they already cover.</dd>
+    <dt>Additional context</dt>
+    <dd>The domain (first-order logic formula induction with a trivial finite-model verifier) is far cheaper to check than our mesh verifier (compiling + meshing + Jacobian/aspect-ratio computation), so a per-round repair loop of this style would be much more expensive for us per iteration; the paper&#39;s own ablation shows repair reduces mismatch on 83-98% of invalid candidates but reaches exact validity immediately only 1-8% of the time, which is a useful expectation-setter for how much a similar repair loop might realistically buy us rather than a guarantee of large gains. No repository/code link was found in the extracted text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.10843</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.05714">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.025</span>
@@ -180,28 +206,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.03471">
+   href="https://arxiv.org/abs/2608.10684">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.020</span>
-    <span class="card-title">Hi-Token encodes each coordinate with axis-specific tokens for the hundreds, tens, and...</span>
+    <span class="badge" title="composite RICE score">0.021</span>
+    <span class="card-title">RISTER is an encoder-decoder STR network combining a rotation-equivariant encoder (RELG...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper proposes Hi-Token, a hierarchical digit-level coordinate tokenization scheme for generative visual grounding that adds coarse-to-fine numerical structure without changing the underlying VLM architecture, and Hi-GAR, a geometry-based GRPO reward that uses multi-scale box overlap and coordinate accuracy during training. Together they consistently improve localization across three VLM backbones and the RefCOCO benchmark family, with Hi-R1 outperforming strong specialist baselines on most metrics, and analyses show the gains trace to the structured coordinate representation and reward design.</dd>
+    <dd>The paper proves that the cross-attention mechanism is rotation-invariant when its query is held fixed and its source (key/value) tokens are rotated, and uses this to derive design principles for a Rotation-Invariant Text Decoder (RITD). It also proposes RELG, a rotation-equivariant local-global backbone combining deep equivariant convolutions with self-attention to preserve fine-grained detail and model inter-character dependencies. Combining RELG and RITD yields RISTER, an end-to-end rotation-invariant scene text recognizer that needs no orientation-estimation module or rotation-based data augmentation.</dd>
     <dt>Applicable to our work</dt>
-    <dd>hexgen already relies on a small closed coordinate vocabulary for its pointer/copy heads; Hi-Token&#39;s hierarchical digit-level tokenization (separate axis-specific tokens for coarse and fine digits) is a directly transferable mechanism for how we discretize/tokenize coordinates, potentially improving numerical precision and generalization without touching the graph-transformer architecture. The Hi-GAR geometry-based, multi-scale reward (box overlap + coordinate accuracy) is also a transferable idea for shaping a verifier-guided or RL fine-tuning signal that rewards partial geometric correctness rather than only binary compile/pass-fail from our frozen verifier.</dd>
+    <dd>Our own &#39;make the encoder natively rotation-invariant&#39; line is closed, but this paper&#39;s most transferable idea is decoder-side and architecture-agnostic: constructing the decoder&#39;s query purely from already-emitted output tokens (not from the raw, possibly-rotated input features) makes any subsequent cross-/pointer-attention over the input features provably invariant to whatever transformation was applied to those features. Applied to our pointer/copy decoder over B-rep faces, this suggests forming the pointer query solely from the previously-emitted program tokens (never mixing in raw per-face coordinate features into the query itself) so that the face-addressing/copy attention becomes provably rotation-invariant regardless of how the B-rep&#39;s face features are rotated — a decoder-only change that doesn&#39;t require revisiting the (closed) equivariant-encoder question. The underlying proof technique (cross-attention over an unordered token set is invariant to any joint transform of keys/values given an invariant query) generalizes beyond 2D images to graphs/sets in general.</dd>
     <dt>Additional context</dt>
-    <dd>Extraction is abstract-only (no full paper text was provided in the prompt). Domain is 2D visual grounding (bounding boxes in images), not 3D CAD/B-rep geometry, so the mechanism would need adaptation to hexgen&#39;s coordinate/DSL vocabulary, but the tokenization idea is architecture-agnostic and should generalize.</dd>
+    <dd>Because our &#39;encoder rotation-invariance&#39; line is explicitly closed per the problem statement, most of this paper&#39;s direct architectural contribution (the RELG equivariant-convolution backbone, tied to a discrete C4 group over 2D pixel grids) has limited transfer value and does not obviously port to 3D SE(3) B-rep face graphs, which are non-grid and variable-cardinality. The decoder-side invariant-query trick is the one genuinely new, cheaply-testable mechanism, and it is worth flagging that RISTER&#39;s guarantee is exact only at 4 canonical angles and approximate elsewhere — our own rotation robustness needs are likely continuous (arbitrary part orientation), so the guarantee would only partially transfer.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.03471</span>
+    <span class="pid">2608.10684</span>
   </div>
 </a>
 
@@ -228,32 +254,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.04955</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.03506">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.016</span>
-    <span class="card-title">CALVER (Causal Axiom-Level VERification) is a training-free symbolic verifier that scor...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces CALVER, a training-free symbolic verifier that selects among best-of-K sampled reasoning traces by scoring them against formal causal-inference axioms rather than by majority vote. On causal-reasoning queries with multiple valid answers, CALVER substantially outperforms plurality voting, a reward model, an LLM judge, and model confidence, and the advantage widens as the sampling budget grows. The approach generalizes across ten Bayesian networks, a second model family, settings where the causal graph must be built from text, and even to propositional logic under a truth-table checker.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core pattern -- a training-free, symbolic/axiomatic verifier that scores best-of-K candidates against hard structural rules and picks the winner, beating majority voting, learned reward models, and LLM judges -- is directly analogous to hexgen&#39;s best-of-N generation screened by a frozen, machine-checkable verifier. It&#39;s evidence that axiom-based scoring functions (as opposed to learned critics) scale better with sampling budget, which could support using stricter or additional structural axioms (e.g. topological/parametric consistency rules beyond pass/fail) when ranking hexgen&#39;s best-of-N candidates rather than picking the first that passes the verifier.</dd>
-    <dt>Additional context</dt>
-    <dd>Extraction is abstract-only (no full paper text was provided in the prompt), so architectural and experimental details are limited to what the abstract states. Domain is causal QA over Bayesian networks, not geometry/program generation, but the selection-under-verifier pattern is the transferable piece, not the causal-inference specifics.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.03506</span>
   </div>
 </a>
 
@@ -494,9 +494,35 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.13416">
+   href="https://arxiv.org/abs/2608.10843">
   <div class="card-head">
 <span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.026</span>
+    <span class="card-title">Hypothesis Frontier is a verifier-guided neurosymbolic search loop: each LLM-proposed f...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Hypothesis Frontier, which evaluates every LLM-generated first-order formula exactly against training data, uses the concrete errors to drive bounded symbolic repair of the LLM&#39;s own formula, and retains the strongest verified formula across LLM rounds rather than treating each generation as final. It also proposes a final exact-simplification pass that shortens train-valid formulas without changing any training prediction, and a symbolic-first cascade that runs a Z3 solver before invoking the LLM loop at all. Under matched models and LLM-round budgets it beats repeated direct prompting in 9 of 9 comparisons.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core loop — when a best-of-N candidate fails our frozen verifier, don&#39;t discard it; extract the concrete residual (which check failed: inverted elements, Jacobian/aspect-ratio bound, surface-fidelity mismatch, feature-edge miss) and use it to drive a bounded, parent-derived repair of the model&#39;s own DSL program (edit/patch the offending block/sweep/projection call rather than resample from scratch), then keep a deterministic &#39;best verified-so-far&#39; frontier program across repair rounds and feed its residual failures back as context for the next generation attempt — this maps directly onto our structural-validity and repair/edit-distillation care area. The &#39;symbolic-first cascade&#39; (run a cheap deterministic procedure first, only invoke the learned model on what it can&#39;t resolve) also echoes our existing deterministic-construction-template auto-labeling path and suggests we could similarly gate hexgen invocation behind template-based solvers for the parts they already cover.</dd>
+    <dt>Additional context</dt>
+    <dd>The domain (first-order logic formula induction with a trivial finite-model verifier) is far cheaper to check than our mesh verifier (compiling + meshing + Jacobian/aspect-ratio computation), so a per-round repair loop of this style would be much more expensive for us per iteration; the paper&#39;s own ablation shows repair reduces mismatch on 83-98% of invalid candidates but reaches exact validity immediately only 1-8% of the time, which is a useful expectation-setter for how much a similar repair loop might realistically buy us rather than a guarantee of large gains. No repository/code link was found in the extracted text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.10843</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2607.13416">
+  <div class="card-head">
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.026</span>
     <span class="card-title">EXPLORE integrates simulator-guided Monte Carlo Tree Search (MCTS) with transformer-bas...</span>
   </div>
   <dl class="fields">
@@ -522,7 +548,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.17641">
   <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.025</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.025</span>
     <span class="card-title">VRR-Stop uses a four-parameter noise model separating verifier false acceptance and fal...</span>
   </div>
   <dl class="fields">
@@ -542,32 +568,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.17641</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.20908">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.025</span>
-    <span class="card-title">CudaPerf is a reflective RL framework combining verifiable execution rewards with struc...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes CudaPerf, a reflective reinforcement-learning framework for CUDA kernel generation that augments verifiable execution rewards with structural, parallelization-aware code rewards, trained in an offline contrastive-ranking stage followed by online RL with iterative execution-feedback refinement. It also introduces a dataset of 2.9k C-to-CUDA and 1k PyTorch-to-CUDA programs with diverse implementations and input configurations, and shows CudaPerf substantially outperforms strong baselines (Qwen-3-32B, CUDA Agent) in both speedup and correctness.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The two-stage recipe -- offline contrastive pairwise ranking of program candidates followed by online RL with a unified reward combining execution/structural-validity signals, plus iterative execution-feedback refinement of the model&#39;s own broken rollouts -- maps closely onto our best-of-N plus frozen-verifier setup: our verifier&#39;s compile/valid-mesh/quality-bound checks could serve as the structural and execution reward terms for an analogous RL or DAgger-style repair-distillation loop on hexgen&#39;s own rollouts.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is CUDA kernel code generation rather than CAD/mesh DSL programs, but both are settings where autoregressive decoders must emit programs that both execute correctly and satisfy secondary structural-quality properties beyond bare validity -- the reward-decomposition approach (execution correctness + structural/quality-aware terms) is a close conceptual match to our verifier&#39;s multi-criteria checks (Jacobian/aspect-ratio quality, feature-edge capture, element-budget sanity).</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.20908</span>
   </div>
 </a>
 
