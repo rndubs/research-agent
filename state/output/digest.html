@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-12</title>
+<title>hexgen digest — 2026-08-13</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-12 · 8 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-13 · 9 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -232,28 +232,54 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.04955">
+   href="https://arxiv.org/abs/2608.11793">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.017</span>
-    <span class="card-title">WDR (Wireframe Detection and Repair) is a training-free framework that intervenes at th...</span>
+    <span class="badge" title="composite RICE score">0.021</span>
+    <span class="card-title">PolarSym adds a polar-coordinate geometry-aware attention module that decouples geometr...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper proposes WDR, a training-free framework that detects and repairs geometric/topological anomalies at the intermediate wireframe stage of multi-stage B-Rep CAD generation, avoiding costly retraining of the underlying generative model. It combines a VLM-based and geometric/topological anomaly detector (GTAD) with an energy-guided repair module (EGGTR) that can plug into both autoregressive and diffusion CAD pipelines without retraining. Experiments show consistent improvements in kernel-checked B-Rep validity while largely preserving the diversity and distributional quality of generated CAD models.</dd>
+    <dd>The paper proposes PolarSym, a polar-coordinate geometry-aware attention framework for CAD floorplan parsing that explicitly decouples direction and distance modeling and fuses them via dynamic gating, addressing symmetric and long-range spatial correspondence failures in prior Transformer-based parsers. It reports improvements over a reproduced SymPoint V2 baseline with faster, more stable convergence and low added computational cost.</dd>
     <dt>Applicable to our work</dt>
-    <dd>Directly relevant to STRUCTURAL VALIDITY: WDR&#39;s core idea -- detect geometric/topological anomalies in an intermediate representation and trigger targeted, guided repair/regeneration rather than retraining -- is a candidate mechanism to add on top of our verifier-guided best-of-N screening. In hexgen, an analogous &#39;detect-then-repair&#39; pass could operate on partially-generated block/sweep/projection programs (or their intermediate geometric state) before full execution, potentially reducing wasted verifier calls on doomed candidates and providing a cheaper alternative/complement to full rejection sampling. The GTAD detector-routing idea (route to a dedicated repair branch based on predicted invalidity risk) also parallels our frozen verifier&#39;s role, and could inspire a lightweight risk-predictor that pre-screens candidates before the expensive verifier pass.</dd>
+    <dd>The core idea — explicitly decoupling direction and distance into separate geometry-aware attention branches (in polar coordinates) with a gate to fuse them, specifically to resolve ambiguous long-range correspondences among geometrically symmetric/repeated elements — is directly transferable to our pointer/copy heads&#39; face-addressing problem: our B-rep face graphs can have congruent or symmetric faces that are hard to disambiguate with semantic attention alone, and an analogous geometry-aware (direction/distance) attention bias could reduce mis-addressing when the pointer head must pick among visually/topologically similar faces.</dd>
     <dt>Additional context</dt>
-    <dd>Only the abstract was available in this harvest (no body chunks), so architecture/dataset/metric details beyond the abstract are unknown -- &#39;code will be made publicly available upon acceptance&#39; but no link is given yet, and the paper appears to be a preprint/submission, not yet peer-reviewed. Worth a follow-up read once the full text or code lands, since &#39;wireframe&#39; here is a CAD-generation intermediate representation, not the hexgen DSL program itself, so the repair mechanism would need adaptation rather than direct reuse.</dd>
+    <dd>Domain is 2D architectural floorplans (BIM), not 3D mechanical B-rep, so the polar-coordinate parameterization would need rework for 3D face geometry; the mechanism (decoupled geometric attention + gating for symmetric-element disambiguation) is the transferable piece, not the specific coordinate system. No code link found in the text provided.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.04955</span>
+    <span class="pid">2608.11793</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.12010">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.009</span>
+    <span class="card-title">The authors prove that for a given feature space and input symmetry group, the increase...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper gives a rigorous mathematical characterization of &#39;symmetry increase&#39; in equivariant neural networks: it proves the increased symmetry has a computable infimum fixed by the feature space, derives an orbit-type-based algorithm and design guidelines to reach that infimum, and shows under regularity assumptions that generic equivariant maps attain it. Experiments on synthetic k-fold-symmetric structures and the real-world QM9 dataset validate the theoretical predictions and show the guidelines reduce harmful representation collapse.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Our B-rep face graphs frequently contain congruent/symmetric substructures (e.g. repeated faces from patterned or symmetric parts), which is exactly the setting where pointer/copy heads face orbit/symmetry ambiguity when addressing faces. This paper&#39;s symmetry-infimum framework and feature-design guidelines are a genuinely new (not our closed rotation-invariant-encoder) mechanism for reasoning about and reducing harmful symmetry collapse in our graph-transformer encoder&#39;s features, which could directly inform how we design pointer/copy addressing to avoid ambiguous ties between congruent faces.</dd>
+    <dt>Additional context</dt>
+    <dd>Highly theoretical (group-representation-theory heavy); applying it to our setting would require translating the orbit-type analysis from continuous SO(3)/O(3) symmetry groups to our discrete/mixed graph-symmetry setting (permutation symmetry among congruent faces), which is nontrivial. Code released at the linked GitHub repo, which may help validate applicability faster than re-deriving the theory from scratch.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.65</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.12010</span>
   </div>
 </a>
 
