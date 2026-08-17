@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-16</title>
+<title>hexgen digest — 2026-08-17</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-16 · 8 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-17 · 10 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -232,6 +232,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.14530">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.014</span>
+    <span class="card-title">Marionette factors the world model into three parts: a two-stage autoregressive dynamic...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes explicitly modeling the evolving world state and delegating exact geometric computation to a fixed, zero-parameter renderer while letting only the neural model handle appearance, instantiated as Marionette for articulated multi-character games. It shows the predicted state is directly controllable (forcing a mismatched action stream changes joint error by 31%) and that long-horizon failures (character drift, ground penetration) are properties of the state that can be repaired by rules imposed on the state alone, without touching the observation model. Routing appearance through the predicted state costs no detectable fidelity versus an end-to-end pixel-autoregressive baseline.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core offloading principle -- predict a small, structured, interpretable state with a neural model and delegate all exact geometric computation to a fixed, zero-parameter deterministic operator -- is structurally identical to hexgen&#39;s split between a neural program-emitting decoder and a deterministic mesher executor. Their finding that state infeasibility (drift, penetration) is best repaired by projecting/clamping the *interpretable intermediate state* back into a feasible region via explicit rules, rather than through differentiable training-time penalties (which the optimizer actively traded away), is directly relevant to hexgen&#39;s verifier-guided generation: it argues for post-hoc feasibility projection/repair on decoded program parameters as a more reliable lever than soft training losses alone. The two-stage decomposition (compact discrete decision model + larger continuous execution model) also mirrors a possible split between command-token selection and coordinate/parameter regression heads in hexgen&#39;s decoder.</dd>
+    <dt>Additional context</dt>
+    <dd>This is a game-world-model paper, not CAD/geometry program synthesis -- the applicability is a mechanism-level analogy (explicit interpretable state + deterministic renderer) rather than a directly reusable component. Code is promised but not yet confirmed live at review time; the WildWorld dataset is already public. Worth revisiting once code lands, since the state-projection-as-repair idea could be prototyped directly against hexgen&#39;s frozen verifier.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.14530</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.13179">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.009</span>
@@ -306,6 +332,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.09296</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.13827">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.007</span>
+    <span class="card-title">HI-MeshGraphNets (HI-MGN) replaces the flat GNN processor of MeshGraphNets with a hiera...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes a hierarchical multiscale extension of MeshGraphNets that coarsens simulation meshes via FPS and Voronoi partitioning to enable long-range message passing with fewer layers, then reconstructs fine-resolution features with a learned interpolation network. Across three structural and fluid benchmarks (2D thermoelastic, 3D nonlinear contact, 3D aerodynamic), the method improves accuracy relative to MeshGraphNets and Bi-Stride Multi-Scale GNN (BSMS-GNN) at a comparable number of message-passing blocks, while reducing training time and peak memory usage. The authors argue this demonstrates topology-aware hierarchical processing and learned coarse-to-fine interpolation as a practical route to scalable mesh-based physics surrogates.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>HI-MGN&#39;s FPS + Voronoi hierarchical coarsening and learned coarse-to-fine interpolation is a directly transferable mechanism for hexgen&#39;s graph-transformer encoder over B-rep face-adjacency graphs: if hexgen&#39;s B-rep graphs grow beyond the current ~7-15 faces (or if the mesher-side program needs to reason over finer element-level topology), the same coarsen/message-pass/interpolate recipe could extend the encoder&#39;s effective receptive field over graph hops without deepening the transformer, and it explicitly preserves topology rather than introducing artificial adjacency -- a property that matters for a domain where boundary fidelity and feature-edge capture are verifier-checked.</dd>
+    <dt>Additional context</dt>
+    <dd>This is a physics-simulation surrogate paper (structural/fluid FEM-style meshes), not CAD B-rep or program synthesis -- relevance is via the shared substrate (graph/mesh-structured data) and multiscale message-passing mechanism, not the task itself. Extraction is based on the abstract/introduction; the numbered results tables in Sections 3-4 were not visible in the supplied text, so quantitative deltas beyond the qualitative headline claim are not confirmed here.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.13827</span>
   </div>
 </a>
 
