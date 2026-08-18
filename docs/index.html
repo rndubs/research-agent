@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-17</title>
+<title>hexgen digest — 2026-08-18</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,9 +98,87 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-17 · 10 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-18 · 14 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2608.16485">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.093</span>
+    <span class="card-title">HiFi-BRep is a two-stage VAE + latent-diffusion pipeline for B-Rep generation. The topo...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes HiFi-BRep, a framework addressing both representation and generation brittleness in B-Rep synthesis. It introduces a compact B-Rep representation (Bezier curves/surfaces plus an explicit edge-face incidence matrix) and a topology-aware encoder that eliminates padding noise via learnable queries and prevents feature contamination via topology-guided (Topo-Mask) attention, yielding a high-fidelity fixed-length latent. It also designs a single-stage decoder that jointly predicts geometry and topology in parallel and enforces the manifold &#39;two faces per edge&#39; constraint via a differentiable row-wise two-peak objective, rather than deferring validity to post-processing. Experiments show state-of-the-art structural validity and geometric fidelity versus BRepGen, BrepDiff, and DTGBrepGen, plus faster inference.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Highly applicable to hexgen&#39;s B-rep encoder and structural-validity goals: (1) the Topo-Mask idea -- restricting cross-entity attention to only topologically adjacent face/edge pairs via a hard attention mask -- is directly transferable to hexgen&#39;s graph-transformer encoder over the B-rep face-adjacency graph, potentially sharpening pointer/copy-head addressing by preventing irrelevant cross-face attention; (2) the row-wise two-peak differentiable-validity-objective pattern (turning a hard combinatorial validity rule -- &#39;each edge has exactly 2 faces&#39; -- into a supervised, differentiable training signal rather than a post-hoc filter) is a template for embedding some of hexgen&#39;s own frozen-verifier checks (e.g. simpler structural ones like feature-edge capture or element-budget sanity) directly into training rather than relying solely on best-of-N + reject; (3) their single-stage parallel joint geometry+topology decoding vs. cascaded generation ablation (Valid 95.2%-&gt;69.3% when reverting to cascaded) is direct evidence that jointly generating structure and parameters (as hexgen&#39;s pointer/coordinate-vocabulary decoder already does) outperforms sequential decomposition, reinforcing hexgen&#39;s existing single-decoder design choice.</dd>
+    <dt>Additional context</dt>
+    <dd>This is the closest paper of the four to hexgen&#39;s actual domain (CAD B-Rep generation) and the highest-confidence match. Code and pretrained models are public (github.com/1nnoh/HiFi-BRep), so architectural details (Topo-Mask implementation, row-wise two-peak loss) could be inspected directly rather than re-derived from the paper text. Note their B-reps are unconditional/class-conditional generative targets (~6-29 faces, similar scale to hexgen&#39;s 7-15 faces) rather than a program/DSL output, so this bears on the ENCODER and validity-loss side of hexgen, not the decoder&#39;s program-generation grammar.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.75</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">1.00</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.68</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.5</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.16485</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.16742">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.067</span>
+    <span class="card-title">TDD-Agent is a single agent operationalizing test-driven development: Phase 1 (test-fir...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes TDD-Agent, which adapts test-driven development to LLM code generation by treating test generation as a reasoning step performed before implementation rather than a fixed post-hoc validator. It shows on LiveCodeBench (via a lightweight TDD-prompt variant) that test-first reasoning alone consistently improves over CoT/SCoT/Self-Planning/ICoT baselines. On the repository-level RepoEval benchmark, the full TDD-Agent framework, which additionally allows tests themselves to be revised jointly with code across iterations, consistently outperforms retrieval-based (RAG, RepoCoder) and agent-based (mini-SWE-agent) baselines.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The dual-track refinement loop -- iteratively revising BOTH the generated artifact and its own self-check (here: tests; for hexgen: candidate program) using execution/verifier feedback, rather than treating the verifier as a fixed post-hoc filter -- is a directly transferable pattern for repair/edit distillation (care area 1): after a best-of-N candidate program fails the frozen verifier, feed the specific verifier failure signal (e.g. which check failed: compiles / inverted elements / Jacobian bound / surface fidelity) back to the model for targeted repair, and track iteration-level improvement the way this paper tracks pass-rate-per-iteration, rather than only doing flat resampling.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is software/code generation, not geometry, and the &#39;test&#39; side of the dual-track loop has no clean hexgen analogue (our verifier is frozen and machine-checkable, not something the model generates and can revise) -- so only the code-repair-via-execution-feedback half transfers directly, not the co-evolving-oracle half. Also worth noting: the paper&#39;s own failure analysis (matched failures = self-consistent but wrong) is a caution against letting a model-generated proxy substitute for the real frozen verifier, which reinforces hexgen&#39;s existing design of keeping the verifier frozen and external.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.16742</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.16794">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.059</span>
+    <span class="card-title">A two-phase neurosymbolic agent: Phase I couples a VLM to a deterministic exploration h...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper presents a two-phase architecture separating task-directed visual state acquisition from goal-directed symbolic planning through a narrow grounded-state interface. It introduces a state-dependent decoding procedure that enforces PDDL action applicability at the token level, coupled with language-guided MCTS over executable plan prefixes, guaranteeing plans are executable by construction under the transition model. It empirically validates the approach on VirtualHome and ALFWorld against direct visual and embodied-model baselines, with component ablations, cost analysis, and causal failure attribution.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The state-dependent constrained decoding + MCTS-over-executable-prefixes pattern is close to directly transferable to hexgen: mask the decoder&#39;s token distribution at each step to only tokens/pointer targets that keep the partial hex-meshing program compileable/executable under the deterministic mesher&#39;s grammar (analogous to PDDL applicability), then use token/step-level MCTS with PUCB (LM prior + a value from partial verifier checks, e.g. partial Jacobian/element-budget feasibility) to search over executable program prefixes rather than relying on flat best-of-N sampling after the fact. Their component ablation (Table 2, constraints-alone vs. search-alone vs. combined) is a template for validating whether constrained decoding or MCTS (or both) is where hexgen&#39;s structural-validity gains actually come from.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is household robot planning (PDDL/VirtualHome/ALFWorld), not CAD, so transfer is purely at the decoding/search-architecture level. Note the validity guarantee is conditional on domain-model soundness and correct instance grounding -- for hexgen the analogous caveat is that constrained decoding only guarantees syntactic/grammar validity, not full verifier pass (quality bounds, surface-match fidelity still need best-of-N/MCTS value guidance as this paper does with its planning heuristic). Ablation Table 2 is worth replicating in miniature for hexgen before committing engineering effort.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.70</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.90</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.16794</span>
+  </div>
+</a>
+
 <a class="card"
    href="https://arxiv.org/abs/2608.09706">
   <div class="card-head">
@@ -228,6 +306,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.11793</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.16876">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.018</span>
+    <span class="card-title">AutoSR builds a branching tree of &#39;Research States&#39; -- each a persistent record of a ca...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Research-Space Symbolic Regression and formulates Research-State Search as the underlying sequential decision problem, the first such formulation. It implements AutoSR, combining persistent Research States, independent proposer/reviewer roles, and PW-MCTS-based search, and demonstrates exact algebraic recovery on nine selected challenge equations across two benchmark suites, including three cp3-bench problems no prior published system recovered.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core search architecture -- MCTS with progressive widening over persistent search states, percentile-normalized rewards, and a separate reviewer role that GATES acceptance on hard requirements rather than trading them for fit -- is directly transferable to hexgen&#39;s best-of-N + frozen-verifier setup: replace flat best-of-N sampling of full programs with an MCTS over partial hexmesh-DSL programs where the frozen verifier plays the reviewer&#39;s role (hard pass/fail on compiles/zero-inverted-elements/etc.) and only requirement-satisfying children are retained/expanded; branch-local memory of failed attempts (with their verifier diagnostics) is also a natural fit for DAgger-style repair distillation.</dd>
+    <dt>Additional context</dt>
+    <dd>This is a symbolic-regression paper, not CAD/geometry, so the transfer is purely architectural (MCTS + persistent-state + verifier-gated acceptance), not domain-specific. The evaluation is admittedly small-N/cherry-picked and lacks ablations, so the MCTS-over-Research-States idea should be treated as promising but unvalidated at scale -- would want our own ablation of progressive-widening hyperparameters (kpw, beta) before adopting.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.16876</span>
   </div>
 </a>
 
@@ -364,9 +468,87 @@
 
 <h2>Current top 10 backlog</h2>
 <a class="card"
+   href="https://arxiv.org/abs/2608.16485">
+  <div class="card-head">
+<span class="rank">#1</span>    <span class="badge" title="composite RICE score">0.093</span>
+    <span class="card-title">HiFi-BRep is a two-stage VAE + latent-diffusion pipeline for B-Rep generation. The topo...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes HiFi-BRep, a framework addressing both representation and generation brittleness in B-Rep synthesis. It introduces a compact B-Rep representation (Bezier curves/surfaces plus an explicit edge-face incidence matrix) and a topology-aware encoder that eliminates padding noise via learnable queries and prevents feature contamination via topology-guided (Topo-Mask) attention, yielding a high-fidelity fixed-length latent. It also designs a single-stage decoder that jointly predicts geometry and topology in parallel and enforces the manifold &#39;two faces per edge&#39; constraint via a differentiable row-wise two-peak objective, rather than deferring validity to post-processing. Experiments show state-of-the-art structural validity and geometric fidelity versus BRepGen, BrepDiff, and DTGBrepGen, plus faster inference.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Highly applicable to hexgen&#39;s B-rep encoder and structural-validity goals: (1) the Topo-Mask idea -- restricting cross-entity attention to only topologically adjacent face/edge pairs via a hard attention mask -- is directly transferable to hexgen&#39;s graph-transformer encoder over the B-rep face-adjacency graph, potentially sharpening pointer/copy-head addressing by preventing irrelevant cross-face attention; (2) the row-wise two-peak differentiable-validity-objective pattern (turning a hard combinatorial validity rule -- &#39;each edge has exactly 2 faces&#39; -- into a supervised, differentiable training signal rather than a post-hoc filter) is a template for embedding some of hexgen&#39;s own frozen-verifier checks (e.g. simpler structural ones like feature-edge capture or element-budget sanity) directly into training rather than relying solely on best-of-N + reject; (3) their single-stage parallel joint geometry+topology decoding vs. cascaded generation ablation (Valid 95.2%-&gt;69.3% when reverting to cascaded) is direct evidence that jointly generating structure and parameters (as hexgen&#39;s pointer/coordinate-vocabulary decoder already does) outperforms sequential decomposition, reinforcing hexgen&#39;s existing single-decoder design choice.</dd>
+    <dt>Additional context</dt>
+    <dd>This is the closest paper of the four to hexgen&#39;s actual domain (CAD B-Rep generation) and the highest-confidence match. Code and pretrained models are public (github.com/1nnoh/HiFi-BRep), so architectural details (Topo-Mask implementation, row-wise two-peak loss) could be inspected directly rather than re-derived from the paper text. Note their B-reps are unconditional/class-conditional generative targets (~6-29 faces, similar scale to hexgen&#39;s 7-15 faces) rather than a program/DSL output, so this bears on the ENCODER and validity-loss side of hexgen, not the decoder&#39;s program-generation grammar.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.75</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">1.00</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.68</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.5</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.16485</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.16742">
+  <div class="card-head">
+<span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.067</span>
+    <span class="card-title">TDD-Agent is a single agent operationalizing test-driven development: Phase 1 (test-fir...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes TDD-Agent, which adapts test-driven development to LLM code generation by treating test generation as a reasoning step performed before implementation rather than a fixed post-hoc validator. It shows on LiveCodeBench (via a lightweight TDD-prompt variant) that test-first reasoning alone consistently improves over CoT/SCoT/Self-Planning/ICoT baselines. On the repository-level RepoEval benchmark, the full TDD-Agent framework, which additionally allows tests themselves to be revised jointly with code across iterations, consistently outperforms retrieval-based (RAG, RepoCoder) and agent-based (mini-SWE-agent) baselines.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The dual-track refinement loop -- iteratively revising BOTH the generated artifact and its own self-check (here: tests; for hexgen: candidate program) using execution/verifier feedback, rather than treating the verifier as a fixed post-hoc filter -- is a directly transferable pattern for repair/edit distillation (care area 1): after a best-of-N candidate program fails the frozen verifier, feed the specific verifier failure signal (e.g. which check failed: compiles / inverted elements / Jacobian bound / surface fidelity) back to the model for targeted repair, and track iteration-level improvement the way this paper tracks pass-rate-per-iteration, rather than only doing flat resampling.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is software/code generation, not geometry, and the &#39;test&#39; side of the dual-track loop has no clean hexgen analogue (our verifier is frozen and machine-checkable, not something the model generates and can revise) -- so only the code-repair-via-execution-feedback half transfers directly, not the co-evolving-oracle half. Also worth noting: the paper&#39;s own failure analysis (matched failures = self-consistent but wrong) is a caution against letting a model-generated proxy substitute for the real frozen verifier, which reinforces hexgen&#39;s existing design of keeping the verifier frozen and external.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.16742</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.16794">
+  <div class="card-head">
+<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.059</span>
+    <span class="card-title">A two-phase neurosymbolic agent: Phase I couples a VLM to a deterministic exploration h...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper presents a two-phase architecture separating task-directed visual state acquisition from goal-directed symbolic planning through a narrow grounded-state interface. It introduces a state-dependent decoding procedure that enforces PDDL action applicability at the token level, coupled with language-guided MCTS over executable plan prefixes, guaranteeing plans are executable by construction under the transition model. It empirically validates the approach on VirtualHome and ALFWorld against direct visual and embodied-model baselines, with component ablations, cost analysis, and causal failure attribution.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The state-dependent constrained decoding + MCTS-over-executable-prefixes pattern is close to directly transferable to hexgen: mask the decoder&#39;s token distribution at each step to only tokens/pointer targets that keep the partial hex-meshing program compileable/executable under the deterministic mesher&#39;s grammar (analogous to PDDL applicability), then use token/step-level MCTS with PUCB (LM prior + a value from partial verifier checks, e.g. partial Jacobian/element-budget feasibility) to search over executable program prefixes rather than relying on flat best-of-N sampling after the fact. Their component ablation (Table 2, constraints-alone vs. search-alone vs. combined) is a template for validating whether constrained decoding or MCTS (or both) is where hexgen&#39;s structural-validity gains actually come from.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is household robot planning (PDDL/VirtualHome/ALFWorld), not CAD, so transfer is purely at the decoding/search-architecture level. Note the validity guarantee is conditional on domain-model soundness and correct instance grounding -- for hexgen the analogous caveat is that constrained decoding only guarantees syntactic/grammar validity, not full verifier pass (quality bounds, surface-match fidelity still need best-of-N/MCTS value guidance as this paper does with its planning heuristic). Ablation Table 2 is worth replicating in miniature for hexgen before committing engineering effort.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.70</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.90</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.16794</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.13918">
   <div class="card-head">
-<span class="rank">#1</span>    <span class="badge" title="composite RICE score">0.058</span>
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.058</span>
     <span class="card-title">Models the per-instance false-accept rate as a latent variable drawn from a distributio...</span>
   </div>
   <dl class="fields">
@@ -392,7 +574,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.17531">
   <div class="card-head">
-<span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.054</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.054</span>
     <span class="card-title">For a fixed candidate pool, the paper decomposes a selector or verifier&#39;s net gain into...</span>
   </div>
   <dl class="fields">
@@ -418,7 +600,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.09706">
   <div class="card-head">
-<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.039</span>
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.039</span>
     <span class="card-title">3D CAD consensus selection: sample N parametric CAD programs from an LLM, compile each...</span>
   </div>
   <dl class="fields">
@@ -444,7 +626,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.13921">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.033</span>
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.033</span>
     <span class="card-title">Introduces &#39;generative compilation&#39;: a &#39;sealor&#39; transformation converts a partial progr...</span>
   </div>
   <dl class="fields">
@@ -470,7 +652,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.17570">
   <div class="card-head">
-<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.029</span>
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.029</span>
     <span class="card-title">The paper proves that a broad class of hierarchical graph transformers combining global...</span>
   </div>
   <dl class="fields">
@@ -496,7 +678,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.08766">
   <div class="card-head">
-<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.028</span>
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.028</span>
     <span class="card-title">OPSD-V is an on-policy self-distillation scheme: a student follows its own exact infere...</span>
   </div>
   <dl class="fields">
@@ -522,7 +704,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.09898">
   <div class="card-head">
-<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.027</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.027</span>
     <span class="card-title">Introduces &#39;consilience&#39;, a verifier-free rollout-selection metric that scores each rea...</span>
   </div>
   <dl class="fields">
@@ -542,84 +724,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.09898</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.10843">
-  <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.026</span>
-    <span class="card-title">Hypothesis Frontier is a verifier-guided neurosymbolic search loop: each LLM-proposed f...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces Hypothesis Frontier, which evaluates every LLM-generated first-order formula exactly against training data, uses the concrete errors to drive bounded symbolic repair of the LLM&#39;s own formula, and retains the strongest verified formula across LLM rounds rather than treating each generation as final. It also proposes a final exact-simplification pass that shortens train-valid formulas without changing any training prediction, and a symbolic-first cascade that runs a Z3 solver before invoking the LLM loop at all. Under matched models and LLM-round budgets it beats repeated direct prompting in 9 of 9 comparisons.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core loop — when a best-of-N candidate fails our frozen verifier, don&#39;t discard it; extract the concrete residual (which check failed: inverted elements, Jacobian/aspect-ratio bound, surface-fidelity mismatch, feature-edge miss) and use it to drive a bounded, parent-derived repair of the model&#39;s own DSL program (edit/patch the offending block/sweep/projection call rather than resample from scratch), then keep a deterministic &#39;best verified-so-far&#39; frontier program across repair rounds and feed its residual failures back as context for the next generation attempt — this maps directly onto our structural-validity and repair/edit-distillation care area. The &#39;symbolic-first cascade&#39; (run a cheap deterministic procedure first, only invoke the learned model on what it can&#39;t resolve) also echoes our existing deterministic-construction-template auto-labeling path and suggests we could similarly gate hexgen invocation behind template-based solvers for the parts they already cover.</dd>
-    <dt>Additional context</dt>
-    <dd>The domain (first-order logic formula induction with a trivial finite-model verifier) is far cheaper to check than our mesh verifier (compiling + meshing + Jacobian/aspect-ratio computation), so a per-round repair loop of this style would be much more expensive for us per iteration; the paper&#39;s own ablation shows repair reduces mismatch on 83-98% of invalid candidates but reaches exact validity immediately only 1-8% of the time, which is a useful expectation-setter for how much a similar repair loop might realistically buy us rather than a guarantee of large gains. No repository/code link was found in the extracted text.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.10843</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.13416">
-  <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.026</span>
-    <span class="card-title">EXPLORE integrates simulator-guided Monte Carlo Tree Search (MCTS) with transformer-bas...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper presents EXPLORE, the first framework to combine structured test-time search (simulator-guided MCTS) with language-model decoding for analog circuit topology generation. By allocating simulator budget selectively to topology-altering decisions rather than uniformly across all tokens, it substantially raises success rate and lowers error over one-shot generation and sampling-and-filter baselines under a matched search budget.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>This is a close structural analog to hexgen&#39;s own best-of-N + frozen-verifier screening: EXPLORE&#39;s core idea of using MCTS guided by an expensive simulator, but only spending that simulator budget on the decoding steps that actually alter structure (topology-altering tokens) rather than every token, is directly transferable to hexgen&#39;s decoding of block/sweep/projection DSL programs -- the mesher/verifier could similarly be invoked selectively at structurally consequential decision points during search over program prefixes rather than only at full-candidate screening time, which is exactly care-area 1&#39;s &#39;MCTS or beam search over program prefixes&#39; concern.</dd>
-    <dt>Additional context</dt>
-    <dd>Application domain is analog circuit design, but the search-budget-allocation mechanism (LM priors to skip cheap/confident tokens, spend simulator calls on the hard topology decisions) is a concrete, quantitatively validated technique rather than just a conceptual analogy. Abstract-only extraction.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.65</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13416</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.17641">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.025</span>
-    <span class="card-title">VRR-Stop uses a four-parameter noise model separating verifier false acceptance and fal...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes VRR-Stop, a robust stopping framework for noisy verify-repair-repeat loops in LLM agents that models verifier and repairer noise separately and decides whether to continue repairing based on the sign of the estimated marginal gain in validity. It also introduces VRR-Guard, an estimation-free fallback for when verifier discrimination is too weak for calibration to be reliable. On a GSM8K stress setting, VRR-Stop substantially improves final true validity over fixed-round repair while using fewer average repair rounds.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly transferable stopping/decision framework for hexgen&#39;s best-of-N plus frozen-verifier plus repair pipeline: a VRR-Stop-style noise model and belief-filtering could decide when to keep repairing a candidate hex-mesh program versus commit or discard it, and VRR-Guard&#39;s margin-based fallback guards against acting on an unreliable signal, directly targeting the structural-validity and verifier-in-the-loop-training care areas.</dd>
-    <dt>Additional context</dt>
-    <dd>hexgen&#39;s verifier is described as a FROZEN, machine-checkable, deterministic pass/fail (compiles, zero inverted elements, quality bounds, etc.), so it likely has much higher discrimination than the noisy LLM verifiers this paper targets -- the explicit noise model may be unnecessary overhead, but the general stopping-criterion framing (marginal-gain sign, cost-bounded repair, guard against low-signal regimes) remains a directly applicable design pattern for a repair/edit-distillation loop.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.17641</span>
   </div>
 </a>
 
