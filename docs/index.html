@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-18</title>
+<title>hexgen digest — 2026-08-19</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-18 · 14 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-19 · 11 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -176,58 +176,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.16794</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.09706">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.039</span>
-    <span class="card-title">3D CAD consensus selection: sample N parametric CAD programs from an LLM, compile each...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes verifier-free &#39;consensus selection&#39; for text-to-CAD generation: instead of using a separate vision-language judge, it compiles every sampled candidate program to a 3D model and picks the one that agrees most with the rest of the pool, under geometric or topological notions of agreement. On the candidate pools of a state-of-the-art CAD generation method, geometric consensus improves all three geometric metrics over that method&#39;s own verifier, and topological consensus matches it on topology. The method is training-free and works across every tested LLM and prompt variant, reducing Chamfer distance by 1-10% versus random selection from the same pool.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly applicable to hexgen&#39;s best-of-N candidate screening: alongside (or as a cheap pre-filter before) the frozen machine-checkable verifier, a consensus/agreement score computed across the compiled meshes of the N sampled hex-meshing programs could re-rank or triage candidates using signal the pool itself provides, potentially reducing how often the expensive verifier must run.</dd>
-    <dt>Additional context</dt>
-    <dd>Consensus selection implicitly assumes the majority of sampled candidates are &#39;roughly correct&#39;, so the informative signal is majority agreement; if hexgen&#39;s decoder occasionally produces a correct-but-structurally-distinct minority candidate (e.g. a valid but unusual block/sweep decomposition), consensus selection could systematically penalize good outliers -- worth checking against hexgen&#39;s actual candidate-pool diversity before adopting wholesale.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.09706</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.09898">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.027</span>
-    <span class="card-title">Introduces &#39;consilience&#39;, a verifier-free rollout-selection metric that scores each rea...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper shows confidence-based verifier-free test-time scaling catastrophically breaks down on hard problems because uniformly high confidence often marks a failure to explore rather than correctness. It introduces consilience, a metric that evaluates the temporal asymmetry of a rollout&#39;s confidence trajectory (low-then-high) to pick better completions without any external verifier. Experiments on graduate math, QA, and free-form code generation show consilience beats confidence-maximization and matches or exceeds verifier-based selection in some settings. It notably works in domains like free-form code generation where voting-based selection is inapplicable.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Hexgen screens best-of-N candidate programs with an expensive frozen machine-checkable verifier. Consilience&#39;s confidence-trajectory signal could serve as a cheap, verifier-free pre-filter or complementary ranking over decoder rollouts -- e.g. to triage which of N sampled programs to run through the verifier first under a compute budget, or as an additional selection signal alongside the verifier&#39;s pass/fail result.</dd>
-    <dt>Additional context</dt>
-    <dd>Validated only on free-form LLM token-level reasoning (math/code/QA); hexgen&#39;s decoder emits short DSL programs via pointer/copy heads over a small closed vocabulary, a very different confidence regime, so it&#39;s unclear the same low-then-high confidence signature would emerge -- would need empirical validation on hexgen&#39;s own rollouts before relying on it to replace/triage the frozen verifier.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.64</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.09898</span>
   </div>
 </a>
 
@@ -410,32 +358,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.12010</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.09296">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.007</span>
-    <span class="card-title">CADEngBench, a two-track benchmark: CADEngBench-P evaluates 300 parametric parts on B-R...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper argues CAD evaluation must test engineering behavior, not just visual/geometric correctness, and introduces CADEngBench to do so. CADEngBench-P covers 600 zero-to-CAD and functional-editing tasks over 300 parametric parts, checked via B-Rep validity, DFM rules, parameter perturbations, and matched FEA simulation. CADEngBench-A covers 150 assembly body pairs, testing joint retrieval, face/edge grounding, joint-frame prediction, and kinematic verification. Evaluating eight multimodal, code-capable models shows editing supplied CAD is much easier than generating it from scratch, complex edits and matched FEA remain hard, and assembly predictions often find the right region but miss the exact joint or mating entities.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly on-target for hexgen: CADEngBench&#39;s B-Rep-validity and matched-FEA-style evaluation methodology is close kin to hexgen&#39;s own frozen verifier (compiles, zero inverted elements, scaled-Jacobian/aspect-ratio bounds, surface-match fidelity). Its finding that &#39;editing is easier than generating&#39; and that complex edits/FEA remain hard is a useful calibration point for how hard the hexgen program-generation task should be expected to be, and its parameter-family-perturbation protocol is a candidate template for stress-testing hexgen&#39;s generalization to nearby part variants.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a benchmark/evaluation paper, not a method paper -- it doesn&#39;t propose a generation technique to borrow, but it&#39;s a strong candidate source of evaluation methodology (B-Rep validity + FEA-matched checks + parameter perturbations) that hexgen&#39;s own verifier design could be compared against or extended with.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.09296</span>
   </div>
 </a>
 
