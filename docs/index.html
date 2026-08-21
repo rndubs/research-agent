@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-20</title>
+<title>hexgen digest — 2026-08-21</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-20 · 11 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-21 · 14 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -154,6 +154,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.19751">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.062</span>
+    <span class="card-title">GenMatch maps a full dispatch batch directly to an assignment sequence via an encoder-d...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes GenMatch, stated to be the first end-to-end generative framework for ride-hailing Micro-View Order-Dispatching deployed in a production environment, replacing a multi-stage predict-then-match pipeline with a single encoder-decoder model that autoregressively generates the full batch assignment. It reports consistent improvements over competitive baselines in offline evaluation and online A/B tests across five cities in DiDi&#39;s international markets.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The State-Aware Pointer Decoder -- which autoregressively points into a graph&#39;s node set while dynamically masking candidates invalidated by prior selections -- is a close structural analogue to hexgen&#39;s pointer/copy heads addressing faces of the input B-rep graph: GenMatch&#39;s evolving-state masking mechanism (removing already-claimed nodes/edges from the pointer&#39;s feasible set at each decoding step) is directly transferable to enforcing hexgen&#39;s own structural constraints during autoregressive decoding, e.g. masking already-consumed faces or geometrically infeasible next-commands, which bears on care area 1 (structural validity) and area 4 (pointer/graph-transformer mechanisms).</dd>
+    <dt>Additional context</dt>
+    <dd>Deployed at production scale (DiDi, five cities), so the pointer-decoder-plus-dynamic-masking design has been stress-tested for latency and reliability under strict batch-level latency constraints, which is reassuring evidence for the masking idea -- though the application domain (bipartite driver-order matching) is unrelated to CAD/mesh generation, and the datasets/metrics are proprietary production data, not released.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.19751</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.16794">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.059</span>
@@ -180,28 +206,54 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.11793">
+   href="https://arxiv.org/abs/2608.20099">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.021</span>
-    <span class="card-title">PolarSym adds a polar-coordinate geometry-aware attention module that decouples geometr...</span>
+    <span class="badge" title="composite RICE score">0.057</span>
+    <span class="card-title">RGA-Designer fine-tunes a pretrained autoregressive graph generator (ARG-Designer) usin...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper proposes PolarSym, a polar-coordinate geometry-aware attention framework for CAD floorplan parsing that explicitly decouples direction and distance modeling and fuses them via dynamic gating, addressing symmetric and long-range spatial correspondence failures in prior Transformer-based parsers. It reports improvements over a reproduced SymPoint V2 baseline with faster, more stable convergence and low added computational cost.</dd>
+    <dd>The paper introduces RGA-Designer, which fine-tunes a pretrained autoregressive multi-agent-topology graph generator (ARG-Designer) against a learned reward model that jointly scores task correctness and structural compactness, via an RLHF-style GRPO policy-optimization stage. Across six benchmarks it reduces token consumption by an average of 20.5% relative to ARG-Designer while preserving task accuracy.</dd>
     <dt>Applicable to our work</dt>
-    <dd>The core idea — explicitly decoupling direction and distance into separate geometry-aware attention branches (in polar coordinates) with a gate to fuse them, specifically to resolve ambiguous long-range correspondences among geometrically symmetric/repeated elements — is directly transferable to our pointer/copy heads&#39; face-addressing problem: our B-rep face graphs can have congruent or symmetric faces that are hard to disambiguate with semantic attention alone, and an analogous geometry-aware (direction/distance) attention bias could reduce mis-addressing when the pointer head must pick among visually/topologically similar faces.</dd>
+    <dd>RGA-Designer&#39;s recipe -- take a pretrained autoregressive graph generator, train a separate reward model over generated graphs (here: task-correctness + structural-compactness), then RL-fine-tune the generator against that reward with GRPO -- maps directly onto hexgen: our frozen verifier&#39;s pass/fail plus quality-bound margins (scaled-Jacobian, aspect ratio, element budget, boundary fidelity) could be distilled into a learned reward model, and hexgen&#39;s pointer-based graph-conditioned decoder could then be GRPO-fine-tuned against it to push beyond what supervised imitation alone reaches -- directly serving care area 6 (verifier-in-the-loop training) and area 1 (structural validity via RL fine-tuning).</dd>
     <dt>Additional context</dt>
-    <dd>Domain is 2D architectural floorplans (BIM), not 3D mechanical B-rep, so the polar-coordinate parameterization would need rework for 3D face geometry; the mechanism (decoupled geometric attention + gating for symmetric-element disambiguation) is the transferable piece, not the specific coordinate system. No code link found in the text provided.</dd>
+    <dd>The predecessor ARG-Designer&#39;s node-then-edges autoregressive generation conditioned on a partial graph is structurally close to hexgen&#39;s own graph-conditioned autoregressive decoding, which strengthens transferability despite the unrelated application domain (multi-agent LLM topology design vs. CAD/mesh programs). Code is stated to be released.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.78</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.61</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.11793</span>
+    <span class="pid">2608.20099</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.19748">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.020</span>
+    <span class="card-title">TUP is a rank-based target policy for Best-of-N-style distillation that removes low-ran...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes TUP (Truncate-bad, Upweight-good Policy), a Best-of-N distillation method that decouples lower-tail truncation from upper-tail reweighting sharpness, admits a closed-form prompt-independent normalization, and trains via a binary cross-entropy objective purely from offline data. It gives theoretical support showing hard lower-tail truncation can match the best monotone rank-reweighting policy under an oracle reward, and shows TUP is competitive with strong offline alignment baselines on the QRPO benchmark.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>TUP&#39;s core mechanism -- distilling Best-of-N selection into a single policy by hard-truncating low-ranked candidates from the training target while softly upweighting the retained top tail -- is directly applicable to hexgen&#39;s own best-of-N + frozen-verifier screening: instead of only using the verifier to pick a winner per B-rep at inference time, hexgen could train against TUP-style truncated/upweighted targets over its own best-of-N program samples (ranked by verifier pass/fail plus quality-bound margins) to amortize the best-of-N search into the base policy itself, directly serving care area 6 (self-play / verifier-in-the-loop training, best-of-N self-improvement flywheels).</dd>
+    <dt>Additional context</dt>
+    <dd>Evaluated only on language-model chat/instruction-following alignment (Llama/Mistral on UltraFeedback/Magpie Air) with continuous learned reward models, not on structured/program generation or a hard pass/fail verifier like hexgen&#39;s -- the truncation-threshold semantics (a win-rate cutoff) may need rethinking when the underlying signal is a binary verifier plus continuous quality margins rather than a single scalar reward model score.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.57</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.19748</span>
   </div>
 </a>
 
@@ -254,6 +306,58 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.14530</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.20123">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.013</span>
+    <span class="card-title">Formulates nested SMC (NSMC) and fully-adapted nested SMC (FA-NSMC) for Feynman-Kac rew...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper develops properly-weighted nested SMC (NSMC) and fully-adapted NSMC (FA-NSMC) algorithms for Feynman-Kac reward-steering of discrete diffusion language models, identifying and fixing a systematic bias in a prior nested-SMC diffusion-guidance formulation. It empirically shows NSMC and FA-NSMC consistently outperform best-of-N and bootstrap SMC baselines on toxicity- and fluency-steering tasks for a masked diffusion language model.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>NSMC/FA-NSMC&#39;s Feynman-Kac steering -- spawning an inner SMC per outer particle to approximate the locally optimal proposal at each generation step -- is a transferable search strategy for our best-of-N + frozen-verifier screening: it could augment or replace plain best-of-N sampling with a properly-weighted particle-filtering search over program prefixes, using the verifier&#39;s pass/fail and quality-bound margins as the steered reward, potentially finding valid/high-quality hex-meshing programs more sample-efficiently than best-of-N alone (directly serving care area 1: execution/verifier-guided generation and search over program prefixes).</dd>
+    <dt>Additional context</dt>
+    <dd>Targets masked discrete-diffusion LMs, not autoregressive decoders like hexgen&#39;s -- but SMC-style steering over sequence prefixes is decoder-family-agnostic in principle (classical SMC steering of autoregressive LMs is well established), so the nested-proposal correctness fix here is the transferable contribution rather than the diffusion-specific machinery. Directly benchmarks against best-of-N, which is exactly hexgen&#39;s current screening strategy, making this a natural comparison point. Only the abstract/introduction were available for this extraction; results/limitations sections were not inspected in depth.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.20123</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.19567">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.012</span>
+    <span class="card-title">Block3D partitions a discrete shape-token sequence into contiguous blocks, generates bl...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Block3D, a block-wise autoregressive-diffusion hybrid for text-to-3D shape generation that shifts causal dependency from individual shape tokens to contiguous latent blocks, paired with a confidence-guided intra-block correction mechanism that revises low-confidence tokens before a block is finalized. On a held-out TRELLIS-500K set it reduces mean end-to-end generation time from 25.71s to 4.99s (a 5.15x speedup) relative to a fine-tuned autoregressive baseline while achieving the best geometric fidelity among evaluated methods.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Block3D&#39;s confidence-guided intra-block correction -- letting the decoder revise its own low-confidence emitted tokens before committing a block, rather than being purely causal and irrevocable like standard autoregressive decoding -- is directly relevant to care area 1 (structural validity of generated programs): hexgen&#39;s autoregressive DSL-program decoder currently cannot revise an earlier bad command choice, and a block-wise generate-then-correct scheme applied to short spans of the DSL program could reduce compounding errors that lead to non-compiling or invalid programs, complementing (not replacing) hexgen&#39;s existing best-of-N + verifier screening.</dd>
+    <dt>Additional context</dt>
+    <dd>Applied to continuous/discretized 3D shape tokens from a frozen VQ-style tokenizer, not to a structured DSL grammar with hard syntactic/semantic validity constraints like hexgen&#39;s -- adapting block-wise joint denoising plus token correction to a strict program grammar (where partial-block edits could transiently produce syntactically invalid states) would need care. A project page and an appendix section describing a released code/data package are mentioned, though the exact code repository URL was not visible in the excerpted text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.58</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.19567</span>
   </div>
 </a>
 
@@ -332,32 +436,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.13179</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.12010">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.009</span>
-    <span class="card-title">The authors prove that for a given feature space and input symmetry group, the increase...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper gives a rigorous mathematical characterization of &#39;symmetry increase&#39; in equivariant neural networks: it proves the increased symmetry has a computable infimum fixed by the feature space, derives an orbit-type-based algorithm and design guidelines to reach that infimum, and shows under regularity assumptions that generic equivariant maps attain it. Experiments on synthetic k-fold-symmetric structures and the real-world QM9 dataset validate the theoretical predictions and show the guidelines reduce harmful representation collapse.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Our B-rep face graphs frequently contain congruent/symmetric substructures (e.g. repeated faces from patterned or symmetric parts), which is exactly the setting where pointer/copy heads face orbit/symmetry ambiguity when addressing faces. This paper&#39;s symmetry-infimum framework and feature-design guidelines are a genuinely new (not our closed rotation-invariant-encoder) mechanism for reasoning about and reducing harmful symmetry collapse in our graph-transformer encoder&#39;s features, which could directly inform how we design pointer/copy addressing to avoid ambiguous ties between congruent faces.</dd>
-    <dt>Additional context</dt>
-    <dd>Highly theoretical (group-representation-theory heavy); applying it to our setting would require translating the orbit-type analysis from continuous SO(3)/O(3) symmetry groups to our discrete/mixed graph-symmetry setting (permutation symmetry among congruent faces), which is nontrivial. Code released at the linked GitHub repo, which may help validate applicability faster than re-deriving the theory from scratch.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.65</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.12010</span>
   </div>
 </a>
 
@@ -442,9 +520,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.19751">
+  <div class="card-head">
+<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.062</span>
+    <span class="card-title">GenMatch maps a full dispatch batch directly to an assignment sequence via an encoder-d...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes GenMatch, stated to be the first end-to-end generative framework for ride-hailing Micro-View Order-Dispatching deployed in a production environment, replacing a multi-stage predict-then-match pipeline with a single encoder-decoder model that autoregressively generates the full batch assignment. It reports consistent improvements over competitive baselines in offline evaluation and online A/B tests across five cities in DiDi&#39;s international markets.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The State-Aware Pointer Decoder -- which autoregressively points into a graph&#39;s node set while dynamically masking candidates invalidated by prior selections -- is a close structural analogue to hexgen&#39;s pointer/copy heads addressing faces of the input B-rep graph: GenMatch&#39;s evolving-state masking mechanism (removing already-claimed nodes/edges from the pointer&#39;s feasible set at each decoding step) is directly transferable to enforcing hexgen&#39;s own structural constraints during autoregressive decoding, e.g. masking already-consumed faces or geometrically infeasible next-commands, which bears on care area 1 (structural validity) and area 4 (pointer/graph-transformer mechanisms).</dd>
+    <dt>Additional context</dt>
+    <dd>Deployed at production scale (DiDi, five cities), so the pointer-decoder-plus-dynamic-masking design has been stress-tested for latency and reliability under strict batch-level latency constraints, which is reassuring evidence for the masking idea -- though the application domain (bipartite driver-order matching) is unrelated to CAD/mesh generation, and the datasets/metrics are proprietary production data, not released.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.19751</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.16794">
   <div class="card-head">
-<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.059</span>
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.059</span>
     <span class="card-title">A two-phase neurosymbolic agent: Phase I couples a VLM to a deterministic exploration h...</span>
   </div>
   <dl class="fields">
@@ -470,7 +574,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.13918">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.058</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.058</span>
     <span class="card-title">Models the per-instance false-accept rate as a latent variable drawn from a distributio...</span>
   </div>
   <dl class="fields">
@@ -494,9 +598,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.20099">
+  <div class="card-head">
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.057</span>
+    <span class="card-title">RGA-Designer fine-tunes a pretrained autoregressive graph generator (ARG-Designer) usin...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces RGA-Designer, which fine-tunes a pretrained autoregressive multi-agent-topology graph generator (ARG-Designer) against a learned reward model that jointly scores task correctness and structural compactness, via an RLHF-style GRPO policy-optimization stage. Across six benchmarks it reduces token consumption by an average of 20.5% relative to ARG-Designer while preserving task accuracy.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>RGA-Designer&#39;s recipe -- take a pretrained autoregressive graph generator, train a separate reward model over generated graphs (here: task-correctness + structural-compactness), then RL-fine-tune the generator against that reward with GRPO -- maps directly onto hexgen: our frozen verifier&#39;s pass/fail plus quality-bound margins (scaled-Jacobian, aspect ratio, element budget, boundary fidelity) could be distilled into a learned reward model, and hexgen&#39;s pointer-based graph-conditioned decoder could then be GRPO-fine-tuned against it to push beyond what supervised imitation alone reaches -- directly serving care area 6 (verifier-in-the-loop training) and area 1 (structural validity via RL fine-tuning).</dd>
+    <dt>Additional context</dt>
+    <dd>The predecessor ARG-Designer&#39;s node-then-edges autoregressive generation conditioned on a partial graph is structurally close to hexgen&#39;s own graph-conditioned autoregressive decoding, which strengthens transferability despite the unrelated application domain (multi-agent LLM topology design vs. CAD/mesh programs). Code is stated to be released.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.78</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.61</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.20099</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2607.17531">
   <div class="card-head">
-<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.054</span>
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.054</span>
     <span class="card-title">For a fixed candidate pool, the paper decomposes a selector or verifier&#39;s net gain into...</span>
   </div>
   <dl class="fields">
@@ -522,7 +652,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.09706">
   <div class="card-head">
-<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.039</span>
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.039</span>
     <span class="card-title">3D CAD consensus selection: sample N parametric CAD programs from an LLM, compile each...</span>
   </div>
   <dl class="fields">
@@ -548,7 +678,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.13921">
   <div class="card-head">
-<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.033</span>
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.033</span>
     <span class="card-title">Introduces &#39;generative compilation&#39;: a &#39;sealor&#39; transformation converts a partial progr...</span>
   </div>
   <dl class="fields">
@@ -574,7 +704,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.17570">
   <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.029</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.029</span>
     <span class="card-title">The paper proves that a broad class of hierarchical graph transformers combining global...</span>
   </div>
   <dl class="fields">
@@ -594,58 +724,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2607.17570</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.08766">
-  <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.028</span>
-    <span class="card-title">OPSD-V is an on-policy self-distillation scheme: a student follows its own exact infere...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>OPSD-V is an on-policy self-distillation scheme: a student follows its own exact inference-time AR rollout (own KV cache), while a teacher is evaluated at the same visited denoising states but with a cleaner AR-consistent cache where older history is replaced by real long-video context, providing dense denoising-level corrective targets without changing the sampler or inference-time cache mechanism.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The on-policy correction pattern (student rolls out exactly as at inference time; a teacher supplies corrective targets at the same visited states using cleaner context) is a directly transferable template for DAgger-style repair distillation on hexgen&#39;s own broken program rollouts -- e.g. having a teacher re-derive a corrective continuation from a verifier-clean program state whenever the student&#39;s own autoregressive rollout drifts, rather than training only on clean expert trajectories.</dd>
-    <dt>Additional context</dt>
-    <dd>Demonstrated only on few-step AR video diffusion, not on executable program grammars, so transfer to hexgen&#39;s discrete program rollouts is unproven. No released code. The &#39;cleaner-context teacher&#39; has no direct hexgen analogue — you&#39;d need to synthesize one (e.g. verifier-repaired continuations), which is a moderate new training-loop component rather than a drop-in.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.51</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.08766</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.09898">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.027</span>
-    <span class="card-title">Introduces &#39;consilience&#39;, a verifier-free rollout-selection metric that scores each rea...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper shows confidence-based verifier-free test-time scaling catastrophically breaks down on hard problems because uniformly high confidence often marks a failure to explore rather than correctness. It introduces consilience, a metric that evaluates the temporal asymmetry of a rollout&#39;s confidence trajectory (low-then-high) to pick better completions without any external verifier. Experiments on graduate math, QA, and free-form code generation show consilience beats confidence-maximization and matches or exceeds verifier-based selection in some settings. It notably works in domains like free-form code generation where voting-based selection is inapplicable.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Hexgen screens best-of-N candidate programs with an expensive frozen machine-checkable verifier. Consilience&#39;s confidence-trajectory signal could serve as a cheap, verifier-free pre-filter or complementary ranking over decoder rollouts -- e.g. to triage which of N sampled programs to run through the verifier first under a compute budget, or as an additional selection signal alongside the verifier&#39;s pass/fail result.</dd>
-    <dt>Additional context</dt>
-    <dd>Validated only on free-form LLM token-level reasoning (math/code/QA); hexgen&#39;s decoder emits short DSL programs via pointer/copy heads over a small closed vocabulary, a very different confidence regime, so it&#39;s unclear the same low-then-high confidence signature would emerge -- would need empirical validation on hexgen&#39;s own rollouts before relying on it to replace/triage the frozen verifier.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.64</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.09898</span>
   </div>
 </a>
 
