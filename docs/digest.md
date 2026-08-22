@@ -1,6 +1,6 @@
-# hexgen digest — 2026-08-21
+# hexgen digest — 2026-08-22
 
-**14** new backlog item(s) in the last 7 day(s).
+**13** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -76,12 +76,6 @@
   - _Additional context:_ Domain is quantum circuit compilation, not CAD/geometry, and the action space (three discrete Clifford gates) and state space (linear algebra over GF(2)) are far simpler and more structured than B-rep/mesh program generation, so the exact machinery won't port directly — but the search-over-program-space design pattern is a clean, well-validated analogue worth studying alongside prior AlphaTensor/AlphaCNOT work this paper builds on. No public code link found in the extracted text.
   - _Impact_ 0.45 · _Applicability_ 0.42 · _Confidence_ 0.47 · _Effort_ 8.0/10
   [2608.18946](https://arxiv.org/abs/2608.18946)
-- **CrEST is a hierarchical credit assignment framework combining turn-segmented verified a...** · score 0.009
-  - _Contributions:_ The paper introduces CrEST, a two-level credit assignment framework for RLVR training of multi-turn tool-use agents that resolves credit both across turns (via turn-segmented verified advantages) and within turns (via entropy-gated self-teacher modulation of token-level updates). It shows on BFCL V3 and WildToolBench that CrEST outperforms both pure RL and on-policy distillation baselines across two model scales, with the largest gains on long-trajectory and strict session-level metrics, demonstrating that dense credit assignment can be obtained without sacrificing the verifier-bounded ceiling.
-  - _Applicable to our work:_ The turn-segmented verified-advantage idea is directly analogous to our best-of-N rejection-sampled training against a frozen verifier: rather than a single trajectory-level (whole-program) verifier signal, credit could be segmented per DSL command/block so the model gets denser feedback on which part of a generated program caused a verifier failure (e.g. which block/sweep/projection step produced an inverted element or boundary-fidelity violation), potentially improving structural-validity learning beyond flat best-of-N SFT.
-  - _Additional context:_ Only the abstract was available for extraction (no further chunks provided in the source prompt), so method details beyond the abstract are not independently verified here; application domain is LLM tool-use agents, not CAD/program generation, so the transfer is at the credit-assignment-mechanism level only.
-  - _Impact_ 0.35 · _Applicability_ 0.42 · _Confidence_ 0.38 · _Effort_ 6.0/10
-  [2608.13179](https://arxiv.org/abs/2608.13179)
 - **HI-MeshGraphNets (HI-MGN) replaces the flat GNN processor of MeshGraphNets with a hiera...** · score 0.007
   - _Contributions:_ The paper proposes a hierarchical multiscale extension of MeshGraphNets that coarsens simulation meshes via FPS and Voronoi partitioning to enable long-range message passing with fewer layers, then reconstructs fine-resolution features with a learned interpolation network. Across three structural and fluid benchmarks (2D thermoelastic, 3D nonlinear contact, 3D aerodynamic), the method improves accuracy relative to MeshGraphNets and Bi-Stride Multi-Scale GNN (BSMS-GNN) at a comparable number of message-passing blocks, while reducing training time and peak memory usage. The authors argue this demonstrates topology-aware hierarchical processing and learned coarse-to-fine interpolation as a practical route to scalable mesh-based physics surrogates.
   - _Applicable to our work:_ HI-MGN's FPS + Voronoi hierarchical coarsening and learned coarse-to-fine interpolation is a directly transferable mechanism for hexgen's graph-transformer encoder over B-rep face-adjacency graphs: if hexgen's B-rep graphs grow beyond the current ~7-15 faces (or if the mesher-side program needs to reason over finer element-level topology), the same coarsen/message-pass/interpolate recipe could extend the encoder's effective receptive field over graph hops without deepening the transformer, and it explicitly preserves topology rather than introducing artificial adjacency -- a property that matters for a domain where boundary fidelity and feature-edge capture are verifier-checked.

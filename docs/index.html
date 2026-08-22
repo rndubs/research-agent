@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-21</title>
+<title>hexgen digest — 2026-08-22</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-21 · 14 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-22 · 13 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -410,32 +410,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.18946</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.13179">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.009</span>
-    <span class="card-title">CrEST is a hierarchical credit assignment framework combining turn-segmented verified a...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces CrEST, a two-level credit assignment framework for RLVR training of multi-turn tool-use agents that resolves credit both across turns (via turn-segmented verified advantages) and within turns (via entropy-gated self-teacher modulation of token-level updates). It shows on BFCL V3 and WildToolBench that CrEST outperforms both pure RL and on-policy distillation baselines across two model scales, with the largest gains on long-trajectory and strict session-level metrics, demonstrating that dense credit assignment can be obtained without sacrificing the verifier-bounded ceiling.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The turn-segmented verified-advantage idea is directly analogous to our best-of-N rejection-sampled training against a frozen verifier: rather than a single trajectory-level (whole-program) verifier signal, credit could be segmented per DSL command/block so the model gets denser feedback on which part of a generated program caused a verifier failure (e.g. which block/sweep/projection step produced an inverted element or boundary-fidelity violation), potentially improving structural-validity learning beyond flat best-of-N SFT.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract was available for extraction (no further chunks provided in the source prompt), so method details beyond the abstract are not independently verified here; application domain is LLM tool-use agents, not CAD/program generation, so the transfer is at the credit-assignment-mechanism level only.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.13179</span>
   </div>
 </a>
 
