@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-23</title>
+<title>hexgen digest — 2026-08-24</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-23 · 13 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-24 · 15 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -232,6 +232,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.20611">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.030</span>
+    <span class="card-title">DASO profiles each on-policy rollout group by prefix-match depth against the target SID...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper diagnoses that under a frozen SFT checkpoint, the top-16 beam-decoded candidates miss the target item&#39;s first SID token for 52.5-63.9% of test prompts, causing degenerate GRPO reward variation. It introduces DASO, a tree-aware GRPO post-training method combining online prefix-depth profiling, bottleneck-aware bounded rollout reallocation, a graded SID-prefix reward, and SFT-anchored stabilization. DASO improves over MiniOneRec-style GRPO on 11 of 12 public-benchmark metrics (best on 9 of 12) across two Amazon categories and two Qwen backbone sizes, and improves most level-wise recall metrics on an internal four-level industrial SID task, with the largest gains concentrated on initially partial-prefix and no-prefix (&#39;Hard&#39;/&#39;Medium&#39;) prompts.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core mechanism -- diagnose exactly where in a partially-generated structured/tree output a policy&#39;s rollouts diverge from a valid target, then spend a bounded, prefix-conditioned repair budget concentrated at that bottleneck depth while keeping the rest of the rollout group on-policy -- is a close analog to hexgen&#39;s structural-validity live problem #1 (DAgger-style repair/edit distillation for broken autoregressive rollouts). Hexgen could similarly profile where best-of-N program rollouts first diverge from compiling/verifier-passing continuations (e.g., which DSL command position first goes wrong), then allocate repair-guided completions (teacher-forcing the correct prefix up to that command) concentrated there, while preserving raw on-policy rollouts as contrast for an RL/GRPO-style update -- rather than either uniform ground-truth injection or ignoring the failure-location signal entirely. The graded partial-credit reward (matched-prefix-depth / total-depth) is also directly reusable as a shaping signal for partially-valid but not-yet-compiling programs.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is generative recommendation (semantic-ID retrieval), not program/CAD synthesis, so this is a methodological transfer, not a technique with released CAD-relevant code. The &#39;prefix-depth bottleneck profiling + bounded guided reallocation&#39; idea generalizes naturally to any tree/sequence-structured autoregressive generation task with a verifiable/checkable target structure, which includes hexgen&#39;s DSL programs (command sequence with a well-defined &#39;first point of divergence&#39; concept, analogous to prefix-match depth here). Code released at https://github.com/LucasXinYu/DASO.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.20611</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.19748">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.020</span>
@@ -280,6 +306,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.16876</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.21204">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.016</span>
+    <span class="card-title">Q-Planning attaches a small (~1B-parameter) off-policy Q-function, with its own DinoV2/...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Q-Planning, which equips a frozen large visuomotor BC policy with a small off-policy Q-function that can be trained on both successful and failed rollouts (an asymmetry BC lacks). It combines a real-time Q-weighted action selector over BC draws with an online self-improvement loop that updates only the Q-function. Across LIBERO, bimanual RoboTwin, and two real-robot contact-rich tasks, ten iterations of self-improvement lift every benchmark tested (e.g., RoboTwin 83.8%-&gt;91.4%, real-robot stack-cups 40%-&gt;90%), and it is shown to be the only method among five online baselines (Best-of-N, filtered SFT, IBRL, DSRL, DAWR) that improves stably from failures without training an auxiliary actor.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly transferable pattern for hexgen&#39;s self-play/verifier-in-the-loop and value/critic-guided search live problems: instead of (or alongside) resampling best-of-N candidates purely by rerunning the frozen verifier, train a small auxiliary value/critic head (analogous scale to hexgen&#39;s own ~27M decoder) that scores candidate programs/program-prefixes, is trained on both verifier-pass and verifier-fail rollouts, and is periodically refreshed from deployment while the main graph-transformer decoder stays frozen -- giving cheap, decoupled self-improvement from the verifier&#39;s pass/fail signal without expensive full-model RL. The single-step softmax-weighted aggregation over multiple decoder draws (rather than iterative MCTS/beam search) is also a cheap alternative worth considering for combining best-of-N program candidates at inference.</dd>
+    <dt>Additional context</dt>
+    <dd>This is a robotics/VLA paper, not CAD or program synthesis, so the applicability is a structural/methodological analogy rather than a direct technique transfer. The core insight -- decouple a frozen generator from a small trainable critic that can learn from failures the generator itself cannot be trained on -- maps well onto hexgen&#39;s frozen-verifier + best-of-N sampling setup, where the verifier already supplies a natural pass/fail (and possibly graded) reward signal that could train such a critic over program prefixes for value-guided beam/MCTS search (a live problem #1 item explicitly named in our problem statement).</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.21204</span>
   </div>
 </a>
 
@@ -676,28 +728,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2607.17570">
+   href="https://arxiv.org/abs/2608.20611">
   <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.029</span>
-    <span class="card-title">The paper proves that a broad class of hierarchical graph transformers combining global...</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.030</span>
+    <span class="card-title">DASO profiles each on-policy rollout group by prefix-match depth against the target SID...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper characterizes the expressive power of global-attention graph foundation models for MILPs, proving they are bounded by the 1-WL test regardless of parameter setting, and validates this across ten diverse encoder architectures (Graphormer-, GraphGPS-, Set-Transformer-, and Gasse-style). It further shows that expressiveness beyond 1-WL comes from input encoding rather than attention: random-walk positional encodings can separate 1-WL-equivalent instance pairs, though further constructions expose the limits of that remedy. The result yields an encoder-agnostic diagnostic for detecting 1-WL-induced representation equivalence.</dd>
+    <dd>The paper diagnoses that under a frozen SFT checkpoint, the top-16 beam-decoded candidates miss the target item&#39;s first SID token for 52.5-63.9% of test prompts, causing degenerate GRPO reward variation. It introduces DASO, a tree-aware GRPO post-training method combining online prefix-depth profiling, bottleneck-aware bounded rollout reallocation, a graded SID-prefix reward, and SFT-anchored stabilization. DASO improves over MiniOneRec-style GRPO on 11 of 12 public-benchmark metrics (best on 9 of 12) across two Amazon categories and two Qwen backbone sizes, and improves most level-wise recall metrics on an internal four-level industrial SID task, with the largest gains concentrated on initially partial-prefix and no-prefix (&#39;Hard&#39;/&#39;Medium&#39;) prompts.</dd>
     <dt>Applicable to our work</dt>
-    <dd>hexgen&#39;s graph-transformer encoder over B-rep face-adjacency graphs (Graphormer-style edge-biased attention) could suffer the same 1-WL expressiveness ceiling, meaning distinct-but-WL-equivalent faces could be mapped to identical embeddings before the pointer/copy head addresses them -- directly bearing on the &#39;symmetry/orbit ambiguity when pointing at congruent nodes&#39; care area. The paper&#39;s diagnostic could be run on hexgen&#39;s encoder to test for such collapse, and its random-walk-positional-encoding remedy is a concrete, low-cost mechanism to try if collapse is found.</dd>
+    <dd>The core mechanism -- diagnose exactly where in a partially-generated structured/tree output a policy&#39;s rollouts diverge from a valid target, then spend a bounded, prefix-conditioned repair budget concentrated at that bottleneck depth while keeping the rest of the rollout group on-policy -- is a close analog to hexgen&#39;s structural-validity live problem #1 (DAgger-style repair/edit distillation for broken autoregressive rollouts). Hexgen could similarly profile where best-of-N program rollouts first diverge from compiling/verifier-passing continuations (e.g., which DSL command position first goes wrong), then allocate repair-guided completions (teacher-forcing the correct prefix up to that command) concentrated there, while preserving raw on-policy rollouts as contrast for an RL/GRPO-style update -- rather than either uniform ground-truth injection or ignoring the failure-location signal entirely. The graded partial-credit reward (matched-prefix-depth / total-depth) is also directly reusable as a shaping signal for partially-valid but not-yet-compiling programs.</dd>
     <dt>Additional context</dt>
-    <dd>Domain studied is MILP graphs, not B-rep, but the architectural components (global linear attention, edge-weighted cross-attention, Graphormer/GraphGPS-style encoders) closely match hexgen&#39;s encoder family, so the WL-boundedness result plausibly transfers directly; only the abstract was available, so exact proof scope and remedy details are unverified.</dd>
+    <dd>Domain is generative recommendation (semantic-ID retrieval), not program/CAD synthesis, so this is a methodological transfer, not a technique with released CAD-relevant code. The &#39;prefix-depth bottleneck profiling + bounded guided reallocation&#39; idea generalizes naturally to any tree/sequence-structured autoregressive generation task with a verifiable/checkable target structure, which includes hexgen&#39;s DSL programs (command sequence with a well-defined &#39;first point of divergence&#39; concept, analogous to prefix-match depth here). Code released at https://github.com/LucasXinYu/DASO.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.17570</span>
+    <span class="pid">2608.20611</span>
   </div>
 </a>
 
