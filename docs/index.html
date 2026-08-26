@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-25</title>
+<title>hexgen digest — 2026-08-26</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,9 +98,35 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-25 · 11 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-26 · 15 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2608.24338">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.069</span>
+    <span class="card-title">SRD generates N candidate trajectories, routes each to Keep/Refine/Discard via rank-nor...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Selective Regenerative Decoding (SRD), an inference-time decoding algorithm that performs segment-level intervention on reasoning trajectories instead of whole-trajectory accept/reject, regenerating only a trajectory&#39;s degraded suffix while keeping its useful prefix. It proves SRD achieves a provable 1.28-1.36x sample-efficiency gain and strictly higher expected best-trajectory quality than rejection sampling, with formal termination and monotonicity guarantees. Across MATH500, GPQA Diamond, HotpotQA, and AlpacaEval, SRD matches Best-of-N accuracy with substantially fewer generated tokens and beats speculative rejection in low-compute regimes.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly borrowable as a best-of-N alternative for hexgen&#39;s own program sampling: instead of discarding whole failed candidate programs from the frozen verifier, route partially-valid candidates (e.g. correct block/sweep prefix but a broken final projection command) to &#39;Refine&#39; and regenerate only the tail of the program conditioned on the verifier&#39;s failure signal, keeping the valid prefix. This is a concrete mechanism for structural validity via repair/edit distillation (area #1) and best-of-N self-improvement flywheels (area #6) that doesn&#39;t require a larger teacher model -- a good fit since hexgen&#39;s verifier is frozen and machine-checkable, giving a clean segment-level signal (which command first breaks execution) to drive Keep/Refine/Discard routing.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is LLM text/math reasoning (token-level trajectories scored by a separate reward model), not structured DSL program generation, so the routing/reward machinery (rank-normalized thresholds tuned per task) would need re-deriving against our verifier&#39;s specific failure modes rather than a scalar reward-model score. The theoretical efficiency-gain guarantees rest on assumptions (e.g. stochastic dominance of refinement) that would need re-validating in the DSL-program setting, but the core three-phase Keep/Refine/Discard mechanism is architecture-agnostic and a natural fit for a frozen, machine-checkable verifier like ours.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.78</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.44</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.24338</span>
+  </div>
+</a>
+
 <a class="card"
    href="https://arxiv.org/abs/2608.19751">
   <div class="card-head">
@@ -150,6 +176,58 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.20099</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.24020">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.046</span>
+    <span class="card-title">IterCAD reformulates CAD generation as iterative program repair: given target views and...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper reformulates CAD code generation from orthographic views as an iterative program-repair problem rather than one-shot prediction. It introduces IterCAD-RS, a synthesized dataset of repairable and already-correct intermediate CAD states built via controlled perturbations of a structured geometric representation, and a three-stage training recipe (initial generation, revise/stop supervision, multi-turn GRPO) that teaches a VLM to inspect, revise, or stop refining its own CAD code. On CADExpert this raises IoU from 80.71% (best one-shot baseline) to 91.61% and executability from 98.25% to 99.33%.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly transferable pattern: (1) the revise-or-stop decoding loop -- treat program generation as iterative repair against our frozen verifier&#39;s failure signal (structural validity, area #1) rather than pure one-shot autoregressive generation; (2) IterCAD-RS&#39;s perturbation-based synthesis of repairable intermediate states is a template for building our own repair-supervision set by injecting controlled faults into good hexgen programs (wrong block dims, missing sweep, bad projection target) paired with repair labels; (3) the composite reward (final quality + format + syntax + decision correctness) is a template for shaping our own verifier-guided training signal.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is sketch-extrude parametric CAD (CadQuery) from 2D orthographic drawings, not our B-rep-graph -&gt; hex-meshing DSL setting, and the backbone is a large VLM fine-tuned with SFT+GRPO rather than our small 27M graph-transformer with pointer heads, so the specific architecture doesn&#39;t port directly. The valuable transferable piece is the repair-formulation + synthetic-perturbation-dataset recipe, which is architecture-agnostic. Ablations (Table 3) are a good template for demonstrating that the repair loop, not just more supervision, drives the gain.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.70</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.24020</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.24056">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.035</span>
+    <span class="card-title">PhysicsBench is a unified benchmark/leaderboard spanning 7 generation and prediction ta...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper presents PhysicsBench, a unified cross-family leaderboard that ranks both generative and predictive engineering-AI models under one standardized training/inference/metric/ranking procedure, evaluated at realistic small-to-extra-large industrial data scales rather than unconstrained academic ones. It introduces BenchRank, a debiased graph-based ranking that down-weights correlated metrics and separately reports quality vs. computational-cost efficiency, plus ranked engineering-validity metrics (field-validity, shape-validity) beyond standard pixel/point error. The central empirical finding is that no single model wins across tasks, and the top model changes with data scale in 6 of 7 tasks.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Not a new hexgen method, but useful as an evaluation-methodology reference (area #3): its metric-suite design -- separating generic error/distributional-distance metrics from geometry-specific validity metrics (their field-/shape-validity vs. our verifier&#39;s zero-inverted-elements / scaled-Jacobian / feature-edge-capture checks) -- and its insistence on evaluating across data scales rather than one fixed training-set size are patterns worth mirroring when reporting hexgen results. Also a potential dataset source: the CAD/CFD/FEA datasets used here (DeepJEB, DrivAerML, etc.) could be scouted for real-CAD B-rep sources or a domain-gap sanity check (area #2).</dd>
+    <dt>Additional context</dt>
+    <dd>This is a benchmark/leaderboard paper, not a new predictive or generative method -- no single new model to adopt. Its dielectric/aerodynamic/structural focus and generation tasks (2D/3D image/shape generation via GAN/VAE/diffusion/DeepSDF/PointFlow) are unrelated to hex-mesh program synthesis, but its evaluation philosophy (standardized cross-scale, cross-family ranking; separating cost from quality; validity-aware metrics) is the kind of rigor our own backlog scoring could borrow from. Note the benchmark is vendor-hosted (narnia.ai) with the authors also contributing datasets/models, which the paper itself flags as a governance/conflict-of-interest caveat.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.64</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.24056</span>
   </div>
 </a>
 
@@ -387,6 +465,32 @@
   </div>
 </a>
 
+<a class="card"
+   href="https://arxiv.org/abs/2608.24386">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.007</span>
+    <span class="card-title">The paper decomposes the 6x6 Kelvin-Mandel covariance of a symmetric rank-2 tensor into...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces an E(3)-equivariant uncertainty-quantification framework for symmetric rank-2 tensor prediction that guarantees both exact rotational equivariance and strict positive-definiteness of the predicted covariance, via an irreducible-representation decomposition and a matrix-exponential map from a flat Lie algebra to the curved SPD manifold. It proposes LE-ESO, a Laplace-based scoring objective robust to heavy-tailed materials-science residuals. On ModelNet40 inertia tensors and Materials Project dielectric tensors, the method achieves competitive accuracy (MAE 1.55 vs 1.96-2.25 for UQ baselines) while providing physically consistent, calibrated, symmetry-preserving uncertainty with useful out-of-distribution sensitivity.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>A genuinely new mechanism for rotation/pose robustness (area #5), applicable even though our own rotation-invariant-encoder line is closed: the matrix-exponential SPD-covariance trick is a general recipe for adding calibrated, equivariance-preserving uncertainty to any equivariant output head, which could be adapted to give hexgen calibrated confidence over its predicted coordinate/pointer outputs (e.g. per-face pointer-target uncertainty or per-command parameter uncertainty) without breaking whatever rotation robustness our graph encoder has. It&#39;s most directly borrowable as a design pattern (equivariant-mean-plus-equivariant-covariance-via-matrix-exp) rather than a drop-in module, since our outputs are discrete/pointer-valued rather than continuous tensors.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is materials-property tensor regression (inertia, dielectric), not program synthesis or B-rep encoding, and there&#39;s no program generation, verifier, or graph-transformer decoder involved -- the relevance is purely at the level of a transferable equivariance/UQ mechanism, not an applicable end-to-end pipeline. The rank-2-only validation (rank-4 is preliminary appendix evidence) means the covariance-size blowup (O(k^4)) could be a real obstacle if adapted to a higher-dimensional output space in hexgen.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.24386</span>
+  </div>
+</a>
+
 
 <h2>Current top 10 backlog</h2>
 <a class="card"
@@ -416,9 +520,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.24338">
+  <div class="card-head">
+<span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.069</span>
+    <span class="card-title">SRD generates N candidate trajectories, routes each to Keep/Refine/Discard via rank-nor...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Selective Regenerative Decoding (SRD), an inference-time decoding algorithm that performs segment-level intervention on reasoning trajectories instead of whole-trajectory accept/reject, regenerating only a trajectory&#39;s degraded suffix while keeping its useful prefix. It proves SRD achieves a provable 1.28-1.36x sample-efficiency gain and strictly higher expected best-trajectory quality than rejection sampling, with formal termination and monotonicity guarantees. Across MATH500, GPQA Diamond, HotpotQA, and AlpacaEval, SRD matches Best-of-N accuracy with substantially fewer generated tokens and beats speculative rejection in low-compute regimes.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly borrowable as a best-of-N alternative for hexgen&#39;s own program sampling: instead of discarding whole failed candidate programs from the frozen verifier, route partially-valid candidates (e.g. correct block/sweep prefix but a broken final projection command) to &#39;Refine&#39; and regenerate only the tail of the program conditioned on the verifier&#39;s failure signal, keeping the valid prefix. This is a concrete mechanism for structural validity via repair/edit distillation (area #1) and best-of-N self-improvement flywheels (area #6) that doesn&#39;t require a larger teacher model -- a good fit since hexgen&#39;s verifier is frozen and machine-checkable, giving a clean segment-level signal (which command first breaks execution) to drive Keep/Refine/Discard routing.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is LLM text/math reasoning (token-level trajectories scored by a separate reward model), not structured DSL program generation, so the routing/reward machinery (rank-normalized thresholds tuned per task) would need re-deriving against our verifier&#39;s specific failure modes rather than a scalar reward-model score. The theoretical efficiency-gain guarantees rest on assumptions (e.g. stochastic dominance of refinement) that would need re-validating in the DSL-program setting, but the core three-phase Keep/Refine/Discard mechanism is architecture-agnostic and a natural fit for a frozen, machine-checkable verifier like ours.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.78</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.44</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.24338</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.16742">
   <div class="card-head">
-<span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.067</span>
+<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.067</span>
     <span class="card-title">TDD-Agent is a single agent operationalizing test-driven development: Phase 1 (test-fir...</span>
   </div>
   <dl class="fields">
@@ -444,7 +574,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.19751">
   <div class="card-head">
-<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.062</span>
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.062</span>
     <span class="card-title">GenMatch maps a full dispatch batch directly to an assignment sequence via an encoder-d...</span>
   </div>
   <dl class="fields">
@@ -470,7 +600,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.16794">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.059</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.059</span>
     <span class="card-title">A two-phase neurosymbolic agent: Phase I couples a VLM to a deterministic exploration h...</span>
   </div>
   <dl class="fields">
@@ -496,7 +626,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.13918">
   <div class="card-head">
-<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.058</span>
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.058</span>
     <span class="card-title">Models the per-instance false-accept rate as a latent variable drawn from a distributio...</span>
   </div>
   <dl class="fields">
@@ -522,7 +652,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.20099">
   <div class="card-head">
-<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.057</span>
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.057</span>
     <span class="card-title">RGA-Designer fine-tunes a pretrained autoregressive graph generator (ARG-Designer) usin...</span>
   </div>
   <dl class="fields">
@@ -548,7 +678,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2607.17531">
   <div class="card-head">
-<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.054</span>
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.054</span>
     <span class="card-title">For a fixed candidate pool, the paper decomposes a selector or verifier&#39;s net gain into...</span>
   </div>
   <dl class="fields">
@@ -572,9 +702,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.24020">
+  <div class="card-head">
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.046</span>
+    <span class="card-title">IterCAD reformulates CAD generation as iterative program repair: given target views and...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper reformulates CAD code generation from orthographic views as an iterative program-repair problem rather than one-shot prediction. It introduces IterCAD-RS, a synthesized dataset of repairable and already-correct intermediate CAD states built via controlled perturbations of a structured geometric representation, and a three-stage training recipe (initial generation, revise/stop supervision, multi-turn GRPO) that teaches a VLM to inspect, revise, or stop refining its own CAD code. On CADExpert this raises IoU from 80.71% (best one-shot baseline) to 91.61% and executability from 98.25% to 99.33%.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly transferable pattern: (1) the revise-or-stop decoding loop -- treat program generation as iterative repair against our frozen verifier&#39;s failure signal (structural validity, area #1) rather than pure one-shot autoregressive generation; (2) IterCAD-RS&#39;s perturbation-based synthesis of repairable intermediate states is a template for building our own repair-supervision set by injecting controlled faults into good hexgen programs (wrong block dims, missing sweep, bad projection target) paired with repair labels; (3) the composite reward (final quality + format + syntax + decision correctness) is a template for shaping our own verifier-guided training signal.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is sketch-extrude parametric CAD (CadQuery) from 2D orthographic drawings, not our B-rep-graph -&gt; hex-meshing DSL setting, and the backbone is a large VLM fine-tuned with SFT+GRPO rather than our small 27M graph-transformer with pointer heads, so the specific architecture doesn&#39;t port directly. The valuable transferable piece is the repair-formulation + synthetic-perturbation-dataset recipe, which is architecture-agnostic. Ablations (Table 3) are a good template for demonstrating that the repair loop, not just more supervision, drives the gain.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.70</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.24020</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.09706">
   <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.039</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.039</span>
     <span class="card-title">3D CAD consensus selection: sample N parametric CAD programs from an LLM, compile each...</span>
   </div>
   <dl class="fields">
@@ -594,58 +750,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.09706</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.13921">
-  <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.033</span>
-    <span class="card-title">Introduces &#39;generative compilation&#39;: a &#39;sealor&#39; transformation converts a partial progr...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces generative compilation, the first method to obtain real compiler feedback on partial programs during generation via a lightweight syntax-guided &#39;sealor&#39; transform, proven correct (mechanized in Lean) on a core Rust-like calculus and then extended to a partial-program checker for real Rust. It shows this reduces non-compiling outputs and improves functional correctness on repository-level Rust tasks across frontier and open-weight models by catching errors early, close to their source, rather than only after full generation.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The &#39;sealor&#39; idea -- transform a partial program into something a checker can diagnose without prematurely rejecting completable prefixes -- is directly transferable to hexgen&#39;s structural-validity problem: instead of only screening complete best-of-N candidates with the frozen verifier, a similar completion transform could let the hex-meshing DSL compiler/mesher give early feedback on partial programs during autoregressive decoding, catching dead-end block/sweep/projection prefixes before a full rollout is wasted.</dd>
-    <dt>Additional context</dt>
-    <dd>Abstract-only extraction (no full text/GROBID parse available yet). The core mechanism is language-agnostic in principle (syntax-guided completion + diagnosis), but the concrete sealor construction is specific to a Rust-like calculus/real Rust; porting it to a hex-meshing DSL would require redesigning the completion transform for that grammar. Worth a closer read of the full paper for the completion-transform design once code/paper text is available.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.70</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13921</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.20611">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.030</span>
-    <span class="card-title">DASO profiles each on-policy rollout group by prefix-match depth against the target SID...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper diagnoses that under a frozen SFT checkpoint, the top-16 beam-decoded candidates miss the target item&#39;s first SID token for 52.5-63.9% of test prompts, causing degenerate GRPO reward variation. It introduces DASO, a tree-aware GRPO post-training method combining online prefix-depth profiling, bottleneck-aware bounded rollout reallocation, a graded SID-prefix reward, and SFT-anchored stabilization. DASO improves over MiniOneRec-style GRPO on 11 of 12 public-benchmark metrics (best on 9 of 12) across two Amazon categories and two Qwen backbone sizes, and improves most level-wise recall metrics on an internal four-level industrial SID task, with the largest gains concentrated on initially partial-prefix and no-prefix (&#39;Hard&#39;/&#39;Medium&#39;) prompts.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core mechanism -- diagnose exactly where in a partially-generated structured/tree output a policy&#39;s rollouts diverge from a valid target, then spend a bounded, prefix-conditioned repair budget concentrated at that bottleneck depth while keeping the rest of the rollout group on-policy -- is a close analog to hexgen&#39;s structural-validity live problem #1 (DAgger-style repair/edit distillation for broken autoregressive rollouts). Hexgen could similarly profile where best-of-N program rollouts first diverge from compiling/verifier-passing continuations (e.g., which DSL command position first goes wrong), then allocate repair-guided completions (teacher-forcing the correct prefix up to that command) concentrated there, while preserving raw on-policy rollouts as contrast for an RL/GRPO-style update -- rather than either uniform ground-truth injection or ignoring the failure-location signal entirely. The graded partial-credit reward (matched-prefix-depth / total-depth) is also directly reusable as a shaping signal for partially-valid but not-yet-compiling programs.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is generative recommendation (semantic-ID retrieval), not program/CAD synthesis, so this is a methodological transfer, not a technique with released CAD-relevant code. The &#39;prefix-depth bottleneck profiling + bounded guided reallocation&#39; idea generalizes naturally to any tree/sequence-structured autoregressive generation task with a verifiable/checkable target structure, which includes hexgen&#39;s DSL programs (command sequence with a well-defined &#39;first point of divergence&#39; concept, analogous to prefix-match depth here). Code released at https://github.com/LucasXinYu/DASO.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.20611</span>
   </div>
 </a>
 
