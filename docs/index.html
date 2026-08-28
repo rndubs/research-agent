@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-27</title>
+<title>hexgen digest — 2026-08-28</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-27 · 19 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-28 · 16 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -232,54 +232,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.19751">
+   href="https://arxiv.org/abs/2608.26859">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.062</span>
-    <span class="card-title">GenMatch maps a full dispatch batch directly to an assignment sequence via an encoder-d...</span>
+    <span class="badge" title="composite RICE score">0.056</span>
+    <span class="card-title">The pi-Mechanism computes each object&#39;s principal axes of inertia (eigen-decomposition...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper proposes GenMatch, stated to be the first end-to-end generative framework for ride-hailing Micro-View Order-Dispatching deployed in a production environment, replacing a multi-stage predict-then-match pipeline with a single encoder-decoder model that autoregressively generates the full batch assignment. It reports consistent improvements over competitive baselines in offline evaluation and online A/B tests across five cities in DiDi&#39;s international markets.</dd>
+    <dd>The paper proposes a data-centric, model-agnostic preprocessing method (the pi-Mechanism) that replaces arbitrary object coordinate frames with a canonical frame defined by the object&#39;s principal axes of inertia, claiming three benefits: inherent robustness to noise/occlusion from the energy-minimizing property of principal axes, an analytical (loss- and architecture-free) resolution of rotational ambiguity for symmetric objects, and plug-and-play compatibility with any existing pose network. It reports consistent rotation-error reductions when applied on top of multiple instance- and category-level pose estimation baselines across several benchmarks.</dd>
     <dt>Applicable to our work</dt>
-    <dd>The State-Aware Pointer Decoder -- which autoregressively points into a graph&#39;s node set while dynamically masking candidates invalidated by prior selections -- is a close structural analogue to hexgen&#39;s pointer/copy heads addressing faces of the input B-rep graph: GenMatch&#39;s evolving-state masking mechanism (removing already-claimed nodes/edges from the pointer&#39;s feasible set at each decoding step) is directly transferable to enforcing hexgen&#39;s own structural constraints during autoregressive decoding, e.g. masking already-consumed faces or geometrically infeasible next-commands, which bears on care area 1 (structural validity) and area 4 (pointer/graph-transformer mechanisms).</dd>
+    <dd>This is a close match to the still-open &#39;rotation/pose robustness&#39; care area: rather than a native rotation-invariant encoder, it is exactly the kind of deployment-time / data-level canonicalization trick that remains in scope -- computing a canonical, physically/geometrically-grounded reference frame (here, principal axes of inertia of the mesh) and re-expressing all training labels relative to it before training, with zero architecture change. For hexgen this suggests canonicalizing each B-rep&#39;s pose (e.g. via principal axes of the part&#39;s geometry) before graph-transformer encoding and coordinate-vocabulary prediction, which could reduce sensitivity to arbitrary input orientation. The symmetry-detection-and-canonical-relabeling procedure (classifying continuous/N-fold/2-fold symmetry via a shape-congruence test, then deterministically picking a canonical representative) is also a directly transferable analogue for resolving orbit ambiguity among congruent faces/features in a B-rep, similar in spirit to (and possibly simpler than) the Gromov-Monge graph-alignment idea in a companion paper reviewed this round.</dd>
     <dt>Additional context</dt>
-    <dd>Deployed at production scale (DiDi, five cities), so the pointer-decoder-plus-dynamic-masking design has been stress-tested for latency and reliability under strict batch-level latency constraints, which is reassuring evidence for the masking idea -- though the application domain (bipartite driver-order matching) is unrelated to CAD/mesh generation, and the datasets/metrics are proprietary production data, not released.</dd>
+    <dd>The technique presumes a full 3D mesh/point cloud of the object is available to compute the inertia tensor and run the Chamfer-distance symmetry test -- for hexgen this exists (the B-rep/mechanical part mesh), so applicability is plausible, though the target objects here are single mechanical parts (not classification categories with intra-class shape variation as tricky as in the category-level NOCS setting) and continuous or high-order polyhedral symmetries are only partially handled. Results are consistent but individually modest (roughly 3-26% relative rotation-error reduction) except on the T-LESS heavily-symmetric objects, where gains are large; the mechanism is orthogonal to and could be combined with other robustness techniques.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.5</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.19751</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.20099">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.057</span>
-    <span class="card-title">RGA-Designer fine-tunes a pretrained autoregressive graph generator (ARG-Designer) usin...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces RGA-Designer, which fine-tunes a pretrained autoregressive multi-agent-topology graph generator (ARG-Designer) against a learned reward model that jointly scores task correctness and structural compactness, via an RLHF-style GRPO policy-optimization stage. Across six benchmarks it reduces token consumption by an average of 20.5% relative to ARG-Designer while preserving task accuracy.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>RGA-Designer&#39;s recipe -- take a pretrained autoregressive graph generator, train a separate reward model over generated graphs (here: task-correctness + structural-compactness), then RL-fine-tune the generator against that reward with GRPO -- maps directly onto hexgen: our frozen verifier&#39;s pass/fail plus quality-bound margins (scaled-Jacobian, aspect ratio, element budget, boundary fidelity) could be distilled into a learned reward model, and hexgen&#39;s pointer-based graph-conditioned decoder could then be GRPO-fine-tuned against it to push beyond what supervised imitation alone reaches -- directly serving care area 6 (verifier-in-the-loop training) and area 1 (structural validity via RL fine-tuning).</dd>
-    <dt>Additional context</dt>
-    <dd>The predecessor ARG-Designer&#39;s node-then-edges autoregressive generation conditioned on a partial graph is structurally close to hexgen&#39;s own graph-conditioned autoregressive decoding, which strengthens transferability despite the unrelated application domain (multi-agent LLM topology design vs. CAD/mesh programs). Code is stated to be released.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.78</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.61</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.20099</span>
+    <span class="pid">2608.26859</span>
   </div>
 </a>
 
@@ -440,32 +414,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.19748">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.020</span>
-    <span class="card-title">TUP is a rank-based target policy for Best-of-N-style distillation that removes low-ran...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes TUP (Truncate-bad, Upweight-good Policy), a Best-of-N distillation method that decouples lower-tail truncation from upper-tail reweighting sharpness, admits a closed-form prompt-independent normalization, and trains via a binary cross-entropy objective purely from offline data. It gives theoretical support showing hard lower-tail truncation can match the best monotone rank-reweighting policy under an oracle reward, and shows TUP is competitive with strong offline alignment baselines on the QRPO benchmark.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>TUP&#39;s core mechanism -- distilling Best-of-N selection into a single policy by hard-truncating low-ranked candidates from the training target while softly upweighting the retained top tail -- is directly applicable to hexgen&#39;s own best-of-N + frozen-verifier screening: instead of only using the verifier to pick a winner per B-rep at inference time, hexgen could train against TUP-style truncated/upweighted targets over its own best-of-N program samples (ranked by verifier pass/fail plus quality-bound margins) to amortize the best-of-N search into the base policy itself, directly serving care area 6 (self-play / verifier-in-the-loop training, best-of-N self-improvement flywheels).</dd>
-    <dt>Additional context</dt>
-    <dd>Evaluated only on language-model chat/instruction-following alignment (Llama/Mistral on UltraFeedback/Magpie Air) with continuous learned reward models, not on structured/program generation or a hard pass/fail verifier like hexgen&#39;s -- the truncation-threshold semantics (a win-rate cutoff) may need rethinking when the underlying signal is a binary verifier plus continuous quality margins rather than a single scalar reward model score.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.57</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.19748</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2608.22915">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.017</span>
@@ -518,54 +466,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.20123">
+   href="https://arxiv.org/abs/2608.26961">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.013</span>
-    <span class="card-title">Formulates nested SMC (NSMC) and fully-adapted nested SMC (FA-NSMC) for Feynman-Kac rew...</span>
+    <span class="badge" title="composite RICE score">0.009</span>
+    <span class="card-title">The paper defines the graph quotient (Wasserstein) geometry under node relabeling and s...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper develops properly-weighted nested SMC (NSMC) and fully-adapted NSMC (FA-NSMC) algorithms for Feynman-Kac reward-steering of discrete diffusion language models, identifying and fixing a systematic bias in a prior nested-SMC diffusion-guidance formulation. It empirically shows NSMC and FA-NSMC consistently outperform best-of-N and bootstrap SMC baselines on toxicity- and fluency-steering tasks for a masked diffusion language model.</dd>
+    <dd>The paper shows that optimal couplings on the graph-orbit quotient space lift to Euclidean couplings of the same cost, and that symmetrizing a coupling over the permutation group preserves the flow-matching objective and yields an equivariant minimizer, including for categorical (discrete) endpoint prediction. It then gives a practical outer-inner Gromov-Wasserstein/FLB alignment procedure for constructing minibatch training couplings for graph flow matching, and shows on cycle-graph, stochastic-block-model, QM9, and ZINC250k benchmarks that these structure-aware couplings substantially improve sample quality at small integration (Euler-step) budgets while remaining competitive with prior graph generative models at large budgets.</dd>
     <dt>Applicable to our work</dt>
-    <dd>NSMC/FA-NSMC&#39;s Feynman-Kac steering -- spawning an inner SMC per outer particle to approximate the locally optimal proposal at each generation step -- is a transferable search strategy for our best-of-N + frozen-verifier screening: it could augment or replace plain best-of-N sampling with a properly-weighted particle-filtering search over program prefixes, using the verifier&#39;s pass/fail and quality-bound margins as the steered reward, potentially finding valid/high-quality hex-meshing programs more sample-efficiently than best-of-N alone (directly serving care area 1: execution/verifier-guided generation and search over program prefixes).</dd>
+    <dd>The core mechanism -- resolving symmetry/orbit ambiguity by explicitly computing a canonical node correspondence (via Gromov-Wasserstein / Gromov-Monge alignment) between two graphs that are equivalent up to relabeling -- is directly analogous to the &#39;symmetry/orbit ambiguity when pointing at congruent nodes&#39; problem named in our own care areas for the pointer/copy decoder: when multiple B-rep faces are geometrically congruent, a GW-style alignment could be used at data-generation time (in the inverse-factory pairing of B-reps to programs) to pick a canonical, low-ambiguity face correspondence rather than an arbitrary one, potentially reducing label noise for the pointer/copy heads. The diagonal-symmetrization result (Theorem 3.2) -- that averaging a coupling over the permutation group yields an equivariant training objective without changing the model -- is also a transferable training-time trick for making supervision robust to face relabeling without touching the graph-transformer architecture.</dd>
     <dt>Additional context</dt>
-    <dd>Targets masked discrete-diffusion LMs, not autoregressive decoders like hexgen&#39;s -- but SMC-style steering over sequence prefixes is decoder-family-agnostic in principle (classical SMC steering of autoregressive LMs is well established), so the nested-proposal correctness fix here is the transferable contribution rather than the diffusion-specific machinery. Directly benchmarks against best-of-N, which is exactly hexgen&#39;s current screening strategy, making this a natural comparison point. Only the abstract/introduction were available for this extraction; results/limitations sections were not inspected in depth.</dd>
+    <dd>This is a fairly theoretical/methods paper on flow-matching-style graph generation (not autoregressive program synthesis), evaluated only on small graphs (N&lt;=38) and generic graph-quality metrics rather than any structural/executability verifier, so the improvements shown (FGW-NNA, MMD, molecular validity/FCD) do not directly measure anything like our compiles/zero-inverted-elements verifier. The GW alignment step adds nontrivial training-time compute (Frank-Wolfe iterations per minibatch) though it is not needed at inference; a cheaper FLB variant captures part of the benefit. Most directly relevant to our care area 4/5 (pointer/graph-transformer symmetry and orbit ambiguity), only weakly to structural validity or B-rep representation learning per se.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
     <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.20123</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.19567">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.012</span>
-    <span class="card-title">Block3D partitions a discrete shape-token sequence into contiguous blocks, generates bl...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces Block3D, a block-wise autoregressive-diffusion hybrid for text-to-3D shape generation that shifts causal dependency from individual shape tokens to contiguous latent blocks, paired with a confidence-guided intra-block correction mechanism that revises low-confidence tokens before a block is finalized. On a held-out TRELLIS-500K set it reduces mean end-to-end generation time from 25.71s to 4.99s (a 5.15x speedup) relative to a fine-tuned autoregressive baseline while achieving the best geometric fidelity among evaluated methods.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Block3D&#39;s confidence-guided intra-block correction -- letting the decoder revise its own low-confidence emitted tokens before committing a block, rather than being purely causal and irrevocable like standard autoregressive decoding -- is directly relevant to care area 1 (structural validity of generated programs): hexgen&#39;s autoregressive DSL-program decoder currently cannot revise an earlier bad command choice, and a block-wise generate-then-correct scheme applied to short spans of the DSL program could reduce compounding errors that lead to non-compiling or invalid programs, complementing (not replacing) hexgen&#39;s existing best-of-N + verifier screening.</dd>
-    <dt>Additional context</dt>
-    <dd>Applied to continuous/discretized 3D shape tokens from a frozen VQ-style tokenizer, not to a structured DSL grammar with hard syntactic/semantic validity constraints like hexgen&#39;s -- adapting block-wise joint denoising plus token correction to a strict program grammar (where partial-block edits could transiently produce syntactically invalid states) would need care. A project page and an appendix section describing a released code/data package are mentioned, though the exact code repository URL was not visible in the excerpted text.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.58</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.19567</span>
+    <span class="pid">2608.26961</span>
   </div>
 </a>
 
