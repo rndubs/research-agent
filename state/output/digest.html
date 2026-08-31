@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-08-30</title>
+<title>hexgen digest — 2026-08-31</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-08-30 · 16 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-08-31 · 19 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -150,6 +150,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.25608</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.28229">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.073</span>
+    <span class="card-title">SWYB (Stay Within Your Bounds) models the grammar as a pushdown automaton (PDA) and off...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes SWYB, a lookahead-guided decoding framework for context-free grammars that augments local prefix-feasibility checks with bounded pushdown-automaton distance-to-acceptance estimates, enabling budget-aware pruning and beam search. Across JSON, SQL, and Linear Temporal Logic generation tasks and three base LLMs, SWYB is the only method that achieves 100% syntactic validity in every setting while also improving task-specific accuracy (schema validity, SQL execution accuracy, LTL semantic correctness) over prior constrained decoders, at a moderate decoding-time overhead.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly transferable to our hex-meshing DSL decoder&#39;s structural-validity problem: our DSL (block/sweep/projection commands with a closed coordinate vocabulary) is plausibly expressible as a context-free grammar, so compiling it to a PDA and using SWYB&#39;s offline bounded-distance-to-acceptance summaries plus online horizon-aware pruning/beam search could guarantee every generated program is syntactically well-formed (compiles) within budget, directly addressing care area #1 (structural validity, beam search over program prefixes) and reducing reliance on best-of-N rejection sampling purely for syntax. This is a strong, released-code (github.com/Enzossssss/SWYB), mechanism-level fit even though the evaluated domains (JSON/SQL/LTL) are unrelated to CAD.</dd>
+    <dt>Additional context</dt>
+    <dd>SWYB only guarantees *grammar* (syntactic) validity, not semantic/geometric validity (e.g. it would not by itself guarantee zero inverted elements or Jacobian quality bounds) — our frozen machine-checkable verifier would still be needed downstream for those checks. Also note our DSL likely has context-sensitive constraints (e.g., referencing specific input-graph face indices via pointer/copy heads) that a plain CFG may not capture; adapting SWYB&#39;s PDA formalism to a pointer-augmented grammar would need care. Code is released, which lowers integration cost.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.62</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.65</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.28229</span>
   </div>
 </a>
 
@@ -336,6 +362,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.27996">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.038</span>
+    <span class="card-title">The paper frames the decision as a sequential hypothesis test on the paired loss differ...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes aeSFT, a doubly-adaptive statistical test that decides whether augmenting a real training dataset with a candidate synthetic dataset improves true population-level model performance, using as little real test data as possible while providing anytime-valid Type-I error control. Compared to a fixed-sample sign-flip test, a paired t-test, and an existing adaptive martingale test (aMT), aeSFT detects useful synthetic datasets with substantially fewer real test samples across a synthetic binary-classification task, a digital-twin-aided wireless packet-scheduling task, and a radio-map prediction task, while keeping the false-positive rate below the target level.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly applicable to our data-diversity/data-volume and domain-gap concern: we train on a mix of inverse-factory-synthesized (B-rep, program) pairs and real, auto-labeled CAD parts, and aeSFT gives a principled, sample-efficient statistical test — using a limited held-out set of real CAD parts — for whether adding more inverse-factory synthetic data (or a proposed new synthetic-generation recipe) actually improves true performance on real parts, rather than just improving on synthetic-distribution validation metrics. This could replace ad-hoc A/B comparisons when deciding whether to scale up the inverse factory vs. invest in more real auto-labeled data, and could also be applied per-subpopulation (e.g. per CAD part family) to detect where synthetic data specifically fails to transfer.</dd>
+    <dt>Additional context</dt>
+    <dd>The method itself is domain-agnostic statistics (sequential/e-process hypothesis testing) demonstrated on toy/engineering tasks, not on generative CAD/mesh models; applying it to hexgen would require defining an appropriate bounded per-part loss (e.g. verifier pass/fail or hex-quality score) and a limited pool of real, verifier-scored CAD parts held out purely for this test. No code link found in the excerpted text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.27996</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.24056">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.035</span>
@@ -362,28 +414,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.20611">
+   href="https://arxiv.org/abs/2608.27893">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.030</span>
-    <span class="card-title">DASO profiles each on-policy rollout group by prefix-match depth against the target SID...</span>
+    <span class="badge" title="composite RICE score">0.028</span>
+    <span class="card-title">CommerceVibe formulates e-commerce creative generation as conditional program synthesis...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper diagnoses that under a frozen SFT checkpoint, the top-16 beam-decoded candidates miss the target item&#39;s first SID token for 52.5-63.9% of test prompts, causing degenerate GRPO reward variation. It introduces DASO, a tree-aware GRPO post-training method combining online prefix-depth profiling, bottleneck-aware bounded rollout reallocation, a graded SID-prefix reward, and SFT-anchored stabilization. DASO improves over MiniOneRec-style GRPO on 11 of 12 public-benchmark metrics (best on 9 of 12) across two Amazon categories and two Qwen backbone sizes, and improves most level-wise recall metrics on an internal four-level industrial SID task, with the largest gains concentrated on initially partial-prefix and no-prefix (&#39;Hard&#39;/&#39;Medium&#39;) prompts.</dd>
+    <dd>The paper presents CommerceVibe, which casts e-commerce creative design as generating executable HTML/CSS program output rather than raster pixels, making the result renderable, editable, and reusable and enabling explicit rule-based structural verification. It introduces a dual-feedback reinforcement learning recipe (rule-based structural checks plus VLM-based preference judging) applied via GRPO on top of an SFT policy, and shows on a 1,300-case benchmark (with independent expert evaluation) that this combination outperforms strong external multimodal models (GPT-5.5, Claude Opus 4.8, Gemini 3.5 Flash) as well as SFT-only and single-feedback RL variants.</dd>
     <dt>Applicable to our work</dt>
-    <dd>The core mechanism -- diagnose exactly where in a partially-generated structured/tree output a policy&#39;s rollouts diverge from a valid target, then spend a bounded, prefix-conditioned repair budget concentrated at that bottleneck depth while keeping the rest of the rollout group on-policy -- is a close analog to hexgen&#39;s structural-validity live problem #1 (DAgger-style repair/edit distillation for broken autoregressive rollouts). Hexgen could similarly profile where best-of-N program rollouts first diverge from compiling/verifier-passing continuations (e.g., which DSL command position first goes wrong), then allocate repair-guided completions (teacher-forcing the correct prefix up to that command) concentrated there, while preserving raw on-policy rollouts as contrast for an RL/GRPO-style update -- rather than either uniform ground-truth injection or ignoring the failure-location signal entirely. The graded partial-credit reward (matched-prefix-depth / total-depth) is also directly reusable as a shaping signal for partially-valid but not-yet-compiling programs.</dd>
+    <dd>Strong structural analogy to hexgen: CommerceVibe generates an executable *program* (HTML/CSS) conditioned on multimodal input, verified with deterministic rule-based structural checks (analogous to our compiles/zero-inverted-elements/Jacobian/boundary-fidelity verifier) plus a learned quality judge, and trained via GRPO with within-group standardized advantages on top of SFT — essentially rejection-sampled/RL self-improvement against a verifier, matching our care area #6 (self-play/verifier-in-the-loop training) and #1 (structural validity via verifier-guided generation). The dual-feedback design (hard rule reward + soft learned-quality reward, equally weighted into GRPO advantage) is a directly transferable recipe for combining our frozen machine-checkable mesh verifier with a softer learned quality signal (e.g. a learned mesh-quality critic) during RL fine-tuning of the hexgen decoder, beyond pure best-of-N screening.</dd>
     <dt>Additional context</dt>
-    <dd>Domain is generative recommendation (semantic-ID retrieval), not program/CAD synthesis, so this is a methodological transfer, not a technique with released CAD-relevant code. The &#39;prefix-depth bottleneck profiling + bounded guided reallocation&#39; idea generalizes naturally to any tree/sequence-structured autoregressive generation task with a verifiable/checkable target structure, which includes hexgen&#39;s DSL programs (command sequence with a well-defined &#39;first point of divergence&#39; concept, analogous to prefix-match depth here). Code released at https://github.com/LucasXinYu/DASO.</dd>
+    <dd>The &#39;rule-based&#39; checks here are simple, cheap, differentiable-adjacent structural detectors (text overflow/overlap, out-of-canvas, occlusion) computed directly from the rendered artifact, much cheaper to evaluate per-sample than a full deterministic mesher+verifier pass; this asymmetry (cheap partial checks vs. our expensive full mesh generation+verification) should be kept in mind when adapting the GRPO recipe — sample efficiency of K=8 rollouts per input may not be affordable for us without a cheaper proxy verifier for shaping.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.20611</span>
+    <span class="pid">2608.27893</span>
   </div>
 </a>
 
@@ -440,28 +492,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.21204">
+   href="https://arxiv.org/abs/2608.28128">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.016</span>
-    <span class="card-title">Q-Planning attaches a small (~1B-parameter) off-policy Q-function, with its own DinoV2/...</span>
+    <span class="badge" title="composite RICE score">0.010</span>
+    <span class="card-title">VICT (Verifier-Instrumented Credit Tracing) exposes the terminal verifier&#39;s internal ch...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper introduces Q-Planning, which equips a frozen large visuomotor BC policy with a small off-policy Q-function that can be trained on both successful and failed rollouts (an asymmetry BC lacks). It combines a real-time Q-weighted action selector over BC draws with an online self-improvement loop that updates only the Q-function. Across LIBERO, bimanual RoboTwin, and two real-robot contact-rich tasks, ten iterations of self-improvement lift every benchmark tested (e.g., RoboTwin 83.8%-&gt;91.4%, real-robot stack-cups 40%-&gt;90%), and it is shown to be the only method among five online baselines (Best-of-N, filtered SFT, IBRL, DSRL, DAWR) that improves stably from failures without training an auxiliary actor.</dd>
+    <dd>The paper introduces VICT, a training-time interface for long-horizon LLM agent RL that traces a task&#39;s terminal verifier&#39;s own internal structure back to individual actions through dependency-valid proof edges, and redistributes RL advantage along those edges instead of broadcasting a single sparse outcome. On ALFWorld, WebShop, and tau-bench, VICT substantially outperforms outcome-only GRPO/RLOO and several fine-grained-credit baselines (GiGPO, SALT, HCAPO), is compatible with (and improves on top of) those rollout-side methods, and its verifier-interface diagnostics (reconstruction/mutation conformance, eligibility-invariant pass rate) confirm the credit signal is verifier-backed rather than heuristic.</dd>
     <dt>Applicable to our work</dt>
-    <dd>Directly transferable pattern for hexgen&#39;s self-play/verifier-in-the-loop and value/critic-guided search live problems: instead of (or alongside) resampling best-of-N candidates purely by rerunning the frozen verifier, train a small auxiliary value/critic head (analogous scale to hexgen&#39;s own ~27M decoder) that scores candidate programs/program-prefixes, is trained on both verifier-pass and verifier-fail rollouts, and is periodically refreshed from deployment while the main graph-transformer decoder stays frozen -- giving cheap, decoupled self-improvement from the verifier&#39;s pass/fail signal without expensive full-model RL. The single-step softmax-weighted aggregation over multiple decoder draws (rather than iterative MCTS/beam search) is also a cheap alternative worth considering for combining best-of-N program candidates at inference.</dd>
+    <dd>Our frozen, machine-checkable verifier (compiles, zero inverted elements, Jacobian/aspect-ratio bounds, boundary fidelity, feature-edge capture, element-budget) already resembles VICT&#39;s target setting: a terminal, programmatically-verifiable check with decomposable sub-checks (per-command/per-face contributions to inverted elements, boundary-fidelity misses, etc.). VICT&#39;s approach of tracing which sub-checks each generated command/face-pointer action is responsible for, and shaping RL/best-of-N training advantage accordingly rather than a single pass/fail signal, is directly applicable to strengthening our verifier-in-the-loop training beyond simple rejection sampling — e.g. giving credit/blame to specific block/sweep/projection commands for specific verifier failures (inverted element at a specific hex, surface-fidelity miss at a specific face) instead of only screening whole candidate programs.</dd>
     <dt>Additional context</dt>
-    <dd>This is a robotics/VLA paper, not CAD or program synthesis, so the applicability is a structural/methodological analogy rather than a direct technique transfer. The core insight -- decouple a frozen generator from a small trainable critic that can learn from failures the generator itself cannot be trained on -- maps well onto hexgen&#39;s frozen-verifier + best-of-N sampling setup, where the verifier already supplies a natural pass/fail (and possibly graded) reward signal that could train such a critic over program prefixes for value-guided beam/MCTS search (a live problem #1 item explicitly named in our problem statement).</dd>
+    <dd>Evaluated only on text/embodied-agent benchmarks (ALFWorld, WebShop, tau-bench) with LLM policies, not on any geometric/program-synthesis-for-CAD domain, so the concrete atom/proof-edge instrumentation would need to be redesigned for our mesher&#39;s verifier (e.g. treating per-element Jacobian violations or per-face boundary-fidelity misses as atoms). The method assumes the verifier can be instrumented to expose intermediate atoms/dependencies, which is plausible for our deterministic mesher+verifier pipeline but is nontrivial engineering.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.21204</span>
+    <span class="pid">2608.28128</span>
   </div>
 </a>
 
@@ -514,6 +566,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.24386</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2608.28276">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.002</span>
+    <span class="card-title">PASK (Parser-Aware Structural KV Persistence) tags each generated token with a structur...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces PASK, an offline-calibrated, online-lookup KV persistence policy that reuses parser transitions already produced by grammar-constrained decoding to decide, per token and layer group, how much KV precision to retain. It shows that combining a task-error-sensitivity protection floor with a distortion-ranked residual budget preserves substantially more function-calling accuracy under aggressive KV compression than prior attention-based or structure-aware KV compression baselines, while also cutting peak GPU memory and improving serving throughput/latency.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Not directly about program correctness, but the core idea — using the decoder&#39;s own grammar/parser state (which our closed-vocabulary DSL decoding already tracks) to identify which token positions are structurally/schema-critical — could inform where to spend extra decoding budget (e.g. beam width, verifier calls, or repair effort) in our hex-meshing DSL decoder: critical positions like block/sweep/projection command heads or coordinate-pointer tokens vs. low-risk filler tokens. Marginal relevance for our own KV/inference-efficiency concerns if the decoder is ever served at scale.</dd>
+    <dt>Additional context</dt>
+    <dd>This is primarily an inference-efficiency (KV cache compression) paper for existing LLM agents doing JSON/SQL/function-calling, evaluated only on BFCL with Qwen3 models; it does not address structural validity of the *generated* program itself (constrained decoding already guarantees that), only serving cost. Relevance to hexgen is via analogy (parser-state-conditioned resource allocation), not a directly transferable method.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.15</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.22</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.28276</span>
   </div>
 </a>
 
@@ -598,9 +676,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2608.28229">
+  <div class="card-head">
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.073</span>
+    <span class="card-title">SWYB (Stay Within Your Bounds) models the grammar as a pushdown automaton (PDA) and off...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes SWYB, a lookahead-guided decoding framework for context-free grammars that augments local prefix-feasibility checks with bounded pushdown-automaton distance-to-acceptance estimates, enabling budget-aware pruning and beam search. Across JSON, SQL, and Linear Temporal Logic generation tasks and three base LLMs, SWYB is the only method that achieves 100% syntactic validity in every setting while also improving task-specific accuracy (schema validity, SQL execution accuracy, LTL semantic correctness) over prior constrained decoders, at a moderate decoding-time overhead.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly transferable to our hex-meshing DSL decoder&#39;s structural-validity problem: our DSL (block/sweep/projection commands with a closed coordinate vocabulary) is plausibly expressible as a context-free grammar, so compiling it to a PDA and using SWYB&#39;s offline bounded-distance-to-acceptance summaries plus online horizon-aware pruning/beam search could guarantee every generated program is syntactically well-formed (compiles) within budget, directly addressing care area #1 (structural validity, beam search over program prefixes) and reducing reliance on best-of-N rejection sampling purely for syntax. This is a strong, released-code (github.com/Enzossssss/SWYB), mechanism-level fit even though the evaluated domains (JSON/SQL/LTL) are unrelated to CAD.</dd>
+    <dt>Additional context</dt>
+    <dd>SWYB only guarantees *grammar* (syntactic) validity, not semantic/geometric validity (e.g. it would not by itself guarantee zero inverted elements or Jacobian quality bounds) — our frozen machine-checkable verifier would still be needed downstream for those checks. Also note our DSL likely has context-sensitive constraints (e.g., referencing specific input-graph face indices via pointer/copy heads) that a plain CFG may not capture; adapting SWYB&#39;s PDA formalism to a pointer-augmented grammar would need care. Code is released, which lowers integration cost.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.62</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.65</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2608.28229</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.24338">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.069</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.069</span>
     <span class="card-title">SRD generates N candidate trajectories, routes each to Keep/Refine/Discard via rank-nor...</span>
   </div>
   <dl class="fields">
@@ -626,7 +730,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.16742">
   <div class="card-head">
-<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.067</span>
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.067</span>
     <span class="card-title">TDD-Agent is a single agent operationalizing test-driven development: Phase 1 (test-fir...</span>
   </div>
   <dl class="fields">
@@ -652,7 +756,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25761">
   <div class="card-head">
-<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.066</span>
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.066</span>
     <span class="card-title">Four sizes of Qwen2.5-Instruct (0.5B, 1.5B, 3B, 7B; 4-bit NF4 quantized) are evaluated...</span>
   </div>
   <dl class="fields">
@@ -678,7 +782,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25652">
   <div class="card-head">
-<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.062</span>
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.062</span>
     <span class="card-title">RoofDiT is a two-stage pipeline built on the GSDiff framework: a conditional diffusion...</span>
   </div>
   <dl class="fields">
@@ -704,7 +808,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.19751">
   <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.062</span>
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.062</span>
     <span class="card-title">GenMatch maps a full dispatch batch directly to an assignment sequence via an encoder-d...</span>
   </div>
   <dl class="fields">
@@ -730,7 +834,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.16794">
   <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.059</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.059</span>
     <span class="card-title">A two-phase neurosymbolic agent: Phase I couples a VLM to a deterministic exploration h...</span>
   </div>
   <dl class="fields">
@@ -750,32 +854,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.16794</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2607.13918">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.058</span>
-    <span class="card-title">Models the per-instance false-accept rate as a latent variable drawn from a distributio...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper gives a minimal theory of partially correlated verifier cascades: modeling per-instance false-accept/true-accept rates as latent variables, it derives that posterior log-odds are concave in the number of gates k (with the independence-based Odds Law as just the tangent/upper bound), that failure can decay only polynomially instead of exponentially under correlation, and that a &#39;blind-spot&#39; probability mass caps achievable reliability below 1 regardless of how many gates are added. It also shows the theory is empirically measurable and that independence-based extrapolation can underestimate failure by orders of magnitude at larger k.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly applicable to designing/calibrating hexgen&#39;s own frozen verifier, which is itself a multi-gate cascade (compiles; zero inverted elements; scaled-Jacobian/aspect-ratio bounds; surface-match fidelity; feature-edge capture; element-budget sanity): this theory gives a principled way to estimate how correlated those gates are, whether adding more checks is still buying reliability or hitting a blind-spot ceiling, and suggests decorrelating checks (e.g. across independent geometric criteria) rather than stacking more of the same kind of check when screening best-of-N candidates.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a theoretical/methods note (builds on arXiv:2606.15712, the &#39;Odds Law&#39; paper) rather than an applied CAD or program-synthesis paper; abstract-only extraction. The practical takeaway (&#39;decorrelate, don&#39;t just add gates&#39;) is the most directly actionable piece for hexgen&#39;s verifier design.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2607.13918</span>
   </div>
 </a>
 
