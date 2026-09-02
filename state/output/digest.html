@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-01</title>
+<title>hexgen digest — 2026-09-02</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,9 +98,35 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-01 · 21 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-09-02 · 27 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2609.01441">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.078</span>
+    <span class="card-title">Defines a per-edge structural invariant, edge-girth g_e (length of the shortest cycle t...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes the per-edge pair (edge-girth, multiplicity) as an unbounded structural descriptor requiring no motif-size budget, and EGAGNN, a gated message-passing architecture that consumes it. On the Zinc-12k regression benchmark at matched ~100k parameters it reaches a test MAE a factor of 3 below the closest gated comparator and beats bounded cycle-count dictionaries unless they are extended to length 8. The authors also prove that on edge-girth-regular graphs the descriptor becomes constant and any model built on it collapses to the 1-WL bound, and verify this holds without exception on all 90 applicable pairs of the BREC isomorphism benchmark.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The edge-girth + multiplicity pair is a cheap, exact, unbounded-length structural edge feature that could be added to our graph-transformer encoder over the B-rep face-adjacency graph (7-15 faces, so BFS cost is negligible) to give edge-biased attention more topological signal without committing to a fixed cycle-length ceiling -- directly relevant to care area 4 (graph transformers / Graphormer-style edge-biased attention). It is also a candidate mechanism for helping the encoder disambiguate symmetric/orbit-congruent faces (another concern in care area 4), since edges lying on cycles of different lengths receive different values even when nodes look locally identical -- though the paper&#39;s own Proposition 1 shows it provides no help distinguishing graphs where every edge has the same edge-girth/multiplicity (e.g. highly symmetric block structures), which is worth checking against typical B-rep topologies before relying on it for symmetry-breaking.</dd>
+    <dt>Additional context</dt>
+    <dd>This is a small, rigorous, mostly negative-result-aware paper (a single independent-researcher-style academic paper) with released code and a formal expressivity proof, not just an empirical claim -- the kind of paper worth actually reading rather than skimming the abstract. The main risk for us is that B-rep face-adjacency graphs are small (7-15 faces) and may often be edge-girth-regular or close to it (e.g. simple block/box topologies), which is exactly the regime where this descriptor is proven to add nothing; a quick audit of edge-girth variance across our training corpus would tell us whether it&#39;s worth the (very low) implementation cost.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.01441</span>
+  </div>
+</a>
+
 <a class="card"
    href="https://arxiv.org/abs/2608.25622">
   <div class="card-head">
@@ -414,6 +440,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.01345">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.038</span>
+    <span class="card-title">Builds a &#39;wind tunnel&#39; with tasks that have a cheap ground-truth oracle from which the...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper measures, on real LLM cascades, that a verifier&#39;s blind spot (fraction of a student&#39;s wrong answers it accepts) grows with student capability and shrinks with verifier capability, is worst exactly in the cheap-student/cheap-verifier regime cascades are built for, and that swapping in a frontier verifier to fix this simply pays the frontier cost back via massive over-escalation. It further shows that naive corrective fine-tuning on the verifier-rejected tail degrades and eventually collapses the student across every teacher tried, while every verifier-computed dashboard metric stays flat even as true delivered error swings to 32%, and derives a conservation-law explanation (error floor anchored at the verifier&#39;s initial blind-spot mass) validated synthetically.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>This is a direct risk analysis of the exact training philosophy our pipeline depends on: rejection-sampled/best-of-N screening against a frozen, machine-checkable verifier as a self-improvement flywheel (care area 6). The key transferable warnings are (1) our frozen mesh verifier&#39;s blind spot -- programs that compile, run with zero inverted elements, and pass quality/fidelity bounds by the verifier&#39;s exact checks but are nonetheless &#39;wrong&#39; in some way the verifier doesn&#39;t catch -- could grow rather than shrink as our model gets better at producing verifier-satisfying-but-flawed programs, exactly the &#39;cheap-student, cheap-verifier&#39; danger zone described here; and (2) any dashboard we build purely from verifier pass/fail statistics may look healthy while true mesh quality on held-out real parts degrades, so we should hold out an independently-audited (e.g. human- or higher-fidelity-checked) sample the way this paper&#39;s &#39;wind tunnel&#39; holds out a cheap oracle the verifier never sees.</dd>
+    <dt>Additional context</dt>
+    <dd>Highly relevant as a methodological caution rather than a technique to adopt outright -- the domain is LLM inference cascades, not program/geometry generation, but the mechanism (train against a frozen verifier&#39;s signal; verifier blind spots are worst exactly where the approach is cheapest to apply) generalizes directly to our best-of-N-against-a-frozen-verifier design. Recommend periodically auditing our verifier against a held-out, more expensive/manual quality check to detect blind-spot drift, mirroring this paper&#39;s wind-tunnel method.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.01345</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.24056">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.035</span>
@@ -436,6 +488,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.24056</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.00838">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.031</span>
+    <span class="card-title">Extracts a discrete-time Markov chain (DTMC) from a system-under-test&#39;s token-by-token...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces a probabilistic-model-checking pipeline for autoregressive transformers, built on a DTMC abstraction with a soundness theorem yielding certified reachability intervals, PCTL specification verification via PRISM, CEGAR-style interval refinement, and maximum-likelihood counterexample extraction. Applied to a GPT-2 computer-aided process-planning (CAPP) model with 100% test accuracy, the pipeline reveals that the smallest checkpoint still routes over 9% of its probability mass to completions greedy decoding never selects, and that data-starved checkpoints have a most-probable hidden trace violating manufacturing phase ordering; applied to a 50x-larger-vocabulary SMILES molecular generator, it identifies the gap between structural completeness and chemical validity.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>This is very close to a ready-made framework for certifying structural validity in our own setting (care area 1, our single highest-priority live problem): treating our graph-conditioned autoregressive DSL decoder as the SUT, extracting a DTMC over its token-by-token program generation (with structural-validity pruning tied to our DSL grammar), and verifying PCTL properties analogous to &#39;compiles&#39;, &#39;zero inverted elements reachable under sampling&#39;, or &#39;element-budget sanity&#39; would give us a certified, population-level bound on how much probability mass our decoder places on invalid/verifier-rejecting programs -- something neither our current best-of-N sampling nor pass/fail verifier statistics currently quantify. The paper&#39;s explicit &#39;best-of-N as a certifiable decoder&#39; framing and its use of an external domain-validity oracle swapped in without re-deriving the pipeline (CAPP -&gt; SMILES) map directly onto swapping in our own frozen mesh verifier as the oracle.</dd>
+    <dt>Additional context</dt>
+    <dd>This is the strongest hit in this batch: the CAPP and SMILES case studies are both autoregressive-sequence-generation-with-an-external-validity-oracle setups structurally analogous to hexgen, and the paper is explicitly about quantifying probability mass on constraint-violating-but-reachable generations, which is exactly our structural-validity concern. Worth flagging to the team for a deeper read and possible prototype (DTMC size for our ~7-15-face graphs and DSL vocabulary should be checked for PRISM tractability).</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.70</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.00838</span>
   </div>
 </a>
 
@@ -488,6 +566,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.27893</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.01354">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.019</span>
+    <span class="card-title">Applies metamorphic testing to the verifier rather than the model: constructs certified...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper decomposes verifier self-validation error by category using metamorphic testing, finding that self-validation acceptance ranges from 53.8% to 95.2% across four widely used verifiers on identical certified-equivalent inputs (a 41.3-point spread), that whitespace and punctuation handling (not LaTeX grammar) accounts for 93.0% of in-contract failures for the default configuration, and that verifiers with similar aggregate error rates fail for structurally different reasons -- including a numeric cascade verifier that accepts off-by-one wrong answers as a scale-dependent step function due to a scale-invariant relative tolerance.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core methodology -- metamorphic testing of the verifier itself via meaning-preserving transformations of a known-valid input, to certify false negatives without human labeling -- is directly transferable to auditing blind spots and false-negative/false-positive rates in our own frozen mesh verifier (compiles/zero-inverted-elements/scaled-Jacobian/aspect-ratio/surface-match checks). We could construct meaning-preserving program transformations (e.g. reordering independent block/sweep commands, equivalent coordinate-vocabulary re-expressions) and check whether our verifier consistently accepts/rejects them, plus separately track &#39;verifier configuration/threshold&#39; as a reportable hyperparameter the way this paper argues benchmark accuracy figures should be (care area 6, self-play/verifier-in-the-loop training).</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is RLVR math-answer verification, quite far from geometric mesh verification, but the general lesson -- that verifier self-validation rates vary hugely by implementation/configuration and that failure categories concentrate in unexpected places (string hygiene, not the &#39;hard&#39; grammar cases) -- is a useful cautionary parallel: our own verifier&#39;s blind spots may similarly concentrate in a small number of unexamined edge cases (e.g. degenerate/near-planar geometry) rather than the &#39;hard&#39; cases we&#39;d intuitively worry about. Code and data are released.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.61</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.01354</span>
   </div>
 </a>
 
@@ -596,6 +700,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.01409">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.006</span>
+    <span class="card-title">Mines 391K plausible TikZ edit pairs from arXiv, GitHub, and TeX Stack Exchange revisio...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces DaEdiTikZ, the first large-scale dataset of revision-derived scientific figure edits mined from real repositories rather than synthetic generation, and DaEdiTikZ-Bench, a human-refined benchmark of 790 instances. It trains two compact EdiTikZ models via joint reconstruction/editing SFT followed by RL with rendering-fidelity and edit-application rewards, reporting that its 9B model beats all tested baselines automatically and is rated above GPT-5.6-Sol and on par with Gemini-3.1-Pro by human annotators, while remaining competitive under severe out-of-distribution length shifts.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core transferable idea is training a DSL-code-generation/editing model with RL rewards computed from executing the DSL (rendering TikZ) and comparing the execution artifact to a target via an embedding-distance reward, plus a separate reward for whether the requested edit was actually applied -- directly analogous to using our frozen mesh verifier&#39;s outputs (or a differentiable/embedding proxy of mesh quality) as a dense RL signal on top of best-of-N screening for the hex-meshing DSL (care areas 1, 6, 7). The strategy of mining real revision/edit trajectories as scalable supervision is also a candidate alternative or complement to our &#39;inverse factory&#39; + auto-labeled-real-parts data sources if any repository of real CAD program edits/iterations exists. Freezing the vision/embedding encoder used for reward computation to avoid reward hacking is a directly reusable engineering practice for any verifier-adjacent reward model we build.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain (TikZ figure editing) is unrelated to mechanical CAD, but the training recipe -- joint reconstruct+edit SFT, then RL with execution-grounded rendering-fidelity plus instruction-following rewards, with a frozen reward encoder -- is a clean, fairly complete recipe worth reading in full if we ever add an RL fine-tuning stage on top of our best-of-N + frozen-verifier pipeline. Models and data are stated to be released, which would make the reward-modeling code directly inspectable.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.01409</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.30417">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.006</span>
@@ -618,6 +748,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.30417</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.00920">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.005</span>
+    <span class="card-title">VerNav replaces per-step autoregressive generation with batched verification over execu...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes a verifier-first decision interface for LLM-based VLN that replaces autoregressive per-step generation with batched action verification, an entropy-based collaboration framework that invokes a generator only for uncertain decisions, and a two-stage (static DPO-style + dynamic RL) verifier alignment scheme. On the Room-to-Room benchmark, the verifier-only decision path achieves competitive navigation performance among representative LLM-based VLN agents while cutting average decision-stage LLM latency per step by more than 10x compared to autoregressive methods.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The verifier-first architecture -- replacing costly per-step autoregressive decoding with a batched verifier over a candidate action/command set, escalating to full generation only when verifier-score entropy signals uncertainty -- is a directly transferable mechanism for speeding up or de-risking our best-of-N candidate-program screening loop: rather than always generating N full programs and running the full frozen verifier, an entropy-based trigger could decide when a partial program prefix already has a confidently-good candidate versus when more autoregressive search/expansion is needed (care areas 1 and 6). The two-stage VPO-then-RL verifier training recipe is also a candidate way to train a learned proxy/critic verifier that pre-screens candidates before the expensive frozen mesh verifier is invoked.</dd>
+    <dt>Additional context</dt>
+    <dd>Application domain (embodied navigation) is unrelated to CAD/mesh generation, but the mechanism is a clean, general pattern (verifier-as-primary-decision-path, generator-as-fallback) that could plausibly reduce the cost of our best-of-N + frozen-verifier screening loop if adapted; worth a closer read of the entropy-trigger and VPO training details before attempting to port.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.38</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.00920</span>
   </div>
 </a>
 
@@ -676,9 +832,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.01441">
+  <div class="card-head">
+<span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.078</span>
+    <span class="card-title">Defines a per-edge structural invariant, edge-girth g_e (length of the shortest cycle t...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes the per-edge pair (edge-girth, multiplicity) as an unbounded structural descriptor requiring no motif-size budget, and EGAGNN, a gated message-passing architecture that consumes it. On the Zinc-12k regression benchmark at matched ~100k parameters it reaches a test MAE a factor of 3 below the closest gated comparator and beats bounded cycle-count dictionaries unless they are extended to length 8. The authors also prove that on edge-girth-regular graphs the descriptor becomes constant and any model built on it collapses to the 1-WL bound, and verify this holds without exception on all 90 applicable pairs of the BREC isomorphism benchmark.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The edge-girth + multiplicity pair is a cheap, exact, unbounded-length structural edge feature that could be added to our graph-transformer encoder over the B-rep face-adjacency graph (7-15 faces, so BFS cost is negligible) to give edge-biased attention more topological signal without committing to a fixed cycle-length ceiling -- directly relevant to care area 4 (graph transformers / Graphormer-style edge-biased attention). It is also a candidate mechanism for helping the encoder disambiguate symmetric/orbit-congruent faces (another concern in care area 4), since edges lying on cycles of different lengths receive different values even when nodes look locally identical -- though the paper&#39;s own Proposition 1 shows it provides no help distinguishing graphs where every edge has the same edge-girth/multiplicity (e.g. highly symmetric block structures), which is worth checking against typical B-rep topologies before relying on it for symmetry-breaking.</dd>
+    <dt>Additional context</dt>
+    <dd>This is a small, rigorous, mostly negative-result-aware paper (a single independent-researcher-style academic paper) with released code and a formal expressivity proof, not just an empirical claim -- the kind of paper worth actually reading rather than skimming the abstract. The main risk for us is that B-rep face-adjacency graphs are small (7-15 faces) and may often be edge-girth-regular or close to it (e.g. simple block/box topologies), which is exactly the regime where this descriptor is proven to add nothing; a quick audit of edge-girth variance across our training corpus would tell us whether it&#39;s worth the (very low) implementation cost.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.01441</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.25622">
   <div class="card-head">
-<span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.077</span>
+<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.077</span>
     <span class="card-title">RefineCut is a two-stage training recipe plus a closed-loop inference procedure for a c...</span>
   </div>
   <dl class="fields">
@@ -704,7 +886,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25608">
   <div class="card-head">
-<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.075</span>
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.075</span>
     <span class="card-title">A wall-first network reuses the Raster2Seq backbone (ResNet features + deformable-atten...</span>
   </div>
   <dl class="fields">
@@ -730,7 +912,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.28229">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.073</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.073</span>
     <span class="card-title">SWYB (Stay Within Your Bounds) models the grammar as a pushdown automaton (PDA) and off...</span>
   </div>
   <dl class="fields">
@@ -756,7 +938,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.24338">
   <div class="card-head">
-<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.069</span>
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.069</span>
     <span class="card-title">SRD generates N candidate trajectories, routes each to Keep/Refine/Discard via rank-nor...</span>
   </div>
   <dl class="fields">
@@ -782,7 +964,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.16742">
   <div class="card-head">
-<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.067</span>
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.067</span>
     <span class="card-title">TDD-Agent is a single agent operationalizing test-driven development: Phase 1 (test-fir...</span>
   </div>
   <dl class="fields">
@@ -808,7 +990,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25761">
   <div class="card-head">
-<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.066</span>
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.066</span>
     <span class="card-title">Four sizes of Qwen2.5-Instruct (0.5B, 1.5B, 3B, 7B; 4-bit NF4 quantized) are evaluated...</span>
   </div>
   <dl class="fields">
@@ -834,7 +1016,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25652">
   <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.062</span>
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.062</span>
     <span class="card-title">RoofDiT is a two-stage pipeline built on the GSDiff framework: a conditional diffusion...</span>
   </div>
   <dl class="fields">
@@ -860,7 +1042,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.19751">
   <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.062</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.062</span>
     <span class="card-title">GenMatch maps a full dispatch batch directly to an assignment sequence via an encoder-d...</span>
   </div>
   <dl class="fields">
@@ -880,32 +1062,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.19751</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.16794">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.059</span>
-    <span class="card-title">A two-phase neurosymbolic agent: Phase I couples a VLM to a deterministic exploration h...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper presents a two-phase architecture separating task-directed visual state acquisition from goal-directed symbolic planning through a narrow grounded-state interface. It introduces a state-dependent decoding procedure that enforces PDDL action applicability at the token level, coupled with language-guided MCTS over executable plan prefixes, guaranteeing plans are executable by construction under the transition model. It empirically validates the approach on VirtualHome and ALFWorld against direct visual and embodied-model baselines, with component ablations, cost analysis, and causal failure attribution.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The state-dependent constrained decoding + MCTS-over-executable-prefixes pattern is close to directly transferable to hexgen: mask the decoder&#39;s token distribution at each step to only tokens/pointer targets that keep the partial hex-meshing program compileable/executable under the deterministic mesher&#39;s grammar (analogous to PDDL applicability), then use token/step-level MCTS with PUCB (LM prior + a value from partial verifier checks, e.g. partial Jacobian/element-budget feasibility) to search over executable program prefixes rather than relying on flat best-of-N sampling after the fact. Their component ablation (Table 2, constraints-alone vs. search-alone vs. combined) is a template for validating whether constrained decoding or MCTS (or both) is where hexgen&#39;s structural-validity gains actually come from.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is household robot planning (PDDL/VirtualHome/ALFWorld), not CAD, so transfer is purely at the decoding/search-architecture level. Note the validity guarantee is conditional on domain-model soundness and correct instance grounding -- for hexgen the analogous caveat is that constrained decoding only guarantees syntactic/grammar validity, not full verifier pass (quality bounds, surface-match fidelity still need best-of-N/MCTS value guidance as this paper does with its planning heuristic). Ablation Table 2 is worth replicating in miniature for hexgen before committing engineering effort.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.70</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.90</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.16794</span>
   </div>
 </a>
 
