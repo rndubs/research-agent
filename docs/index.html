@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-02</title>
+<title>hexgen digest — 2026-09-03</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-02 · 27 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-09-03 · 25 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -202,32 +202,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.28229</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.24338">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.069</span>
-    <span class="card-title">SRD generates N candidate trajectories, routes each to Keep/Refine/Discard via rank-nor...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces Selective Regenerative Decoding (SRD), an inference-time decoding algorithm that performs segment-level intervention on reasoning trajectories instead of whole-trajectory accept/reject, regenerating only a trajectory&#39;s degraded suffix while keeping its useful prefix. It proves SRD achieves a provable 1.28-1.36x sample-efficiency gain and strictly higher expected best-trajectory quality than rejection sampling, with formal termination and monotonicity guarantees. Across MATH500, GPQA Diamond, HotpotQA, and AlpacaEval, SRD matches Best-of-N accuracy with substantially fewer generated tokens and beats speculative rejection in low-compute regimes.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly borrowable as a best-of-N alternative for hexgen&#39;s own program sampling: instead of discarding whole failed candidate programs from the frozen verifier, route partially-valid candidates (e.g. correct block/sweep prefix but a broken final projection command) to &#39;Refine&#39; and regenerate only the tail of the program conditioned on the verifier&#39;s failure signal, keeping the valid prefix. This is a concrete mechanism for structural validity via repair/edit distillation (area #1) and best-of-N self-improvement flywheels (area #6) that doesn&#39;t require a larger teacher model -- a good fit since hexgen&#39;s verifier is frozen and machine-checkable, giving a clean segment-level signal (which command first breaks execution) to drive Keep/Refine/Discard routing.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is LLM text/math reasoning (token-level trajectories scored by a separate reward model), not structured DSL program generation, so the routing/reward machinery (rank-normalized thresholds tuned per task) would need re-deriving against our verifier&#39;s specific failure modes rather than a scalar reward-model score. The theoretical efficiency-gain guarantees rest on assumptions (e.g. stochastic dominance of refinement) that would need re-validating in the DSL-program setting, but the core three-phase Keep/Refine/Discard mechanism is architecture-agnostic and a natural fit for a frozen, machine-checkable verifier like ours.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.78</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.44</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.24338</span>
   </div>
 </a>
 
@@ -388,32 +362,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.24020">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.046</span>
-    <span class="card-title">IterCAD reformulates CAD generation as iterative program repair: given target views and...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper reformulates CAD code generation from orthographic views as an iterative program-repair problem rather than one-shot prediction. It introduces IterCAD-RS, a synthesized dataset of repairable and already-correct intermediate CAD states built via controlled perturbations of a structured geometric representation, and a three-stage training recipe (initial generation, revise/stop supervision, multi-turn GRPO) that teaches a VLM to inspect, revise, or stop refining its own CAD code. On CADExpert this raises IoU from 80.71% (best one-shot baseline) to 91.61% and executability from 98.25% to 99.33%.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly transferable pattern: (1) the revise-or-stop decoding loop -- treat program generation as iterative repair against our frozen verifier&#39;s failure signal (structural validity, area #1) rather than pure one-shot autoregressive generation; (2) IterCAD-RS&#39;s perturbation-based synthesis of repairable intermediate states is a template for building our own repair-supervision set by injecting controlled faults into good hexgen programs (wrong block dims, missing sweep, bad projection target) paired with repair labels; (3) the composite reward (final quality + format + syntax + decision correctness) is a template for shaping our own verifier-guided training signal.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is sketch-extrude parametric CAD (CadQuery) from 2D orthographic drawings, not our B-rep-graph -&gt; hex-meshing DSL setting, and the backbone is a large VLM fine-tuned with SFT+GRPO rather than our small 27M graph-transformer with pointer heads, so the specific architecture doesn&#39;t port directly. The valuable transferable piece is the repair-formulation + synthetic-perturbation-dataset recipe, which is architecture-agnostic. Ablations (Table 3) are a good template for demonstrating that the repair loop, not just more supervision, drives the gain.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.70</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.24020</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2608.27996">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.038</span>
@@ -462,32 +410,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.01345</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.24056">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.035</span>
-    <span class="card-title">PhysicsBench is a unified benchmark/leaderboard spanning 7 generation and prediction ta...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper presents PhysicsBench, a unified cross-family leaderboard that ranks both generative and predictive engineering-AI models under one standardized training/inference/metric/ranking procedure, evaluated at realistic small-to-extra-large industrial data scales rather than unconstrained academic ones. It introduces BenchRank, a debiased graph-based ranking that down-weights correlated metrics and separately reports quality vs. computational-cost efficiency, plus ranked engineering-validity metrics (field-validity, shape-validity) beyond standard pixel/point error. The central empirical finding is that no single model wins across tasks, and the top model changes with data scale in 6 of 7 tasks.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Not a new hexgen method, but useful as an evaluation-methodology reference (area #3): its metric-suite design -- separating generic error/distributional-distance metrics from geometry-specific validity metrics (their field-/shape-validity vs. our verifier&#39;s zero-inverted-elements / scaled-Jacobian / feature-edge-capture checks) -- and its insistence on evaluating across data scales rather than one fixed training-set size are patterns worth mirroring when reporting hexgen results. Also a potential dataset source: the CAD/CFD/FEA datasets used here (DeepJEB, DrivAerML, etc.) could be scouted for real-CAD B-rep sources or a domain-gap sanity check (area #2).</dd>
-    <dt>Additional context</dt>
-    <dd>This is a benchmark/leaderboard paper, not a new predictive or generative method -- no single new model to adopt. Its dielectric/aerodynamic/structural focus and generation tasks (2D/3D image/shape generation via GAN/VAE/diffusion/DeepSDF/PointFlow) are unrelated to hex-mesh program synthesis, but its evaluation philosophy (standardized cross-scale, cross-family ranking; separating cost from quality; validity-aware metrics) is the kind of rigor our own backlog scoring could borrow from. Note the benchmark is vendor-hosted (narnia.ai) with the authors also contributing datasets/models, which the paper itself flags as a governance/conflict-of-interest caveat.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.64</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.24056</span>
   </div>
 </a>
 
@@ -570,6 +492,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.02401">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.021</span>
+    <span class="card-title">CA-OPD gates every student-generated token by exact teacher confidence (not just teache...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Confidence-Aware On-Policy Distillation (CA-OPD), which uses exact teacher confidence (rather than rank) to decide when to correct a student&#39;s autoregressive rollout, and couples that same correct/retain decision to which supervision signal (hard cross-entropy vs. full distributional) is applied at each position. In a multi-teacher GUI-grounding + OCR distillation setup into Qwen3.5-0.8B, CA-OPD beats the base model, offline KD, standard on-policy distillation, and speculative knowledge distillation on all six target benchmarks, and controlled ablations show the gains depend on intervention placement and progressive control, not just intervention frequency.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The confidence-gated intervene-or-retain mechanism is a strong candidate for a DAgger-style repair/edit distillation scheme for hexgen: during rollout, a stronger oracle/verifier-in-the-loop signal (or a higher-capacity teacher policy) could replace low-confidence DSL command predictions with a corrected command while leaving high-confidence commands untouched, with intervention frequency annealed down as the ~27M model&#39;s own rollouts become more reliable -- directly targeting our care-area-1 goal of getting the decoder to emit structurally valid programs. The idea of tying the supervision TYPE (hard replacement vs. soft distributional) to the same confidence gate used for rollout control is a specific, transferable design choice we could borrow even if we don&#39;t adopt the full framework.</dd>
+    <dt>Additional context</dt>
+    <dd>Structured visual prediction (GUI/OCR token sequences) is architecturally close to our setting (autoregressive decoder over a structured output space with compounding-error risk), more so than most other papers in this batch, but there is no B-rep/CAD or geometric-verifier connection here -- &#39;teacher confidence&#39; would need to be replaced by something we can compute cheaply for hexgen (e.g. a smaller learned critic, or the frozen verifier applied to partial/simulated completions) since we don&#39;t have a stronger teacher policy in the same sense.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.02401</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2609.01354">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.019</span>
@@ -592,6 +540,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.01354</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.02817">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.017</span>
+    <span class="card-title">Cliff uses a stronger teacher LLM to locate the single &#39;Pitfall Step&#39; (first mistake) i...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes Cliff, a reward-shaping method that asks a teacher model to identify only the first mistake in a rollout (rather than fully evaluating every step), decomposing rollouts into a valid prefix and an invalid suffix for GRPO-style token-level advantage assignment. Across 12 math/coding scenarios it outperforms on-policy distillation by 15% and vanilla GRPO by 7%, even with only moderately capable teachers, and the authors show the gains come from this two-segment credit assignment rather than merely adding a teacher signal.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core mechanism -- using a stronger checker to localize the FIRST point at which an autoregressive rollout goes wrong, then giving differentiated credit to the valid prefix vs. the invalid suffix -- maps directly onto hexgen&#39;s own verifier-in-the-loop training: our frozen verifier already tells us pass/fail (and even which check failed, e.g. first inverted element or first bad face-pointer), so Cliff-style prefix/suffix credit assignment could turn our coarse best-of-N accept/reject signal into token-level (i.e. command-level) advantages during RL fine-tuning, potentially improving structural-validity learning beyond pure imitation. It&#39;s also a plausible mechanism for the DAgger-style repair/edit distillation we&#39;re interested in: the &#39;pitfall step&#39; the verifier or a teacher identifies (e.g. the first DSL command that makes the mesh invalid) is a natural boundary for constructing repair-distillation training pairs.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is pure LLM math/code reasoning, not geometry/program synthesis, so nothing here is plug-and-play; the transferable part is purely the credit-assignment idea (localize-first-failure -&gt; segment rollout -&gt; differentiated advantage), which would need adaptation to our deterministic mesher verifier (which can already point to the exact failing check, arguably an even stronger &#39;pitfall&#39; signal than an LLM judge). Authors note in future work they plan to extend Cliff to agentic settings, which is worth tracking.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.02817</span>
   </div>
 </a>
 
@@ -670,32 +644,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.26961</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.24386">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.007</span>
-    <span class="card-title">The paper decomposes the 6x6 Kelvin-Mandel covariance of a symmetric rank-2 tensor into...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces an E(3)-equivariant uncertainty-quantification framework for symmetric rank-2 tensor prediction that guarantees both exact rotational equivariance and strict positive-definiteness of the predicted covariance, via an irreducible-representation decomposition and a matrix-exponential map from a flat Lie algebra to the curved SPD manifold. It proposes LE-ESO, a Laplace-based scoring objective robust to heavy-tailed materials-science residuals. On ModelNet40 inertia tensors and Materials Project dielectric tensors, the method achieves competitive accuracy (MAE 1.55 vs 1.96-2.25 for UQ baselines) while providing physically consistent, calibrated, symmetry-preserving uncertainty with useful out-of-distribution sensitivity.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>A genuinely new mechanism for rotation/pose robustness (area #5), applicable even though our own rotation-invariant-encoder line is closed: the matrix-exponential SPD-covariance trick is a general recipe for adding calibrated, equivariance-preserving uncertainty to any equivariant output head, which could be adapted to give hexgen calibrated confidence over its predicted coordinate/pointer outputs (e.g. per-face pointer-target uncertainty or per-command parameter uncertainty) without breaking whatever rotation robustness our graph encoder has. It&#39;s most directly borrowable as a design pattern (equivariant-mean-plus-equivariant-covariance-via-matrix-exp) rather than a drop-in module, since our outputs are discrete/pointer-valued rather than continuous tensors.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is materials-property tensor regression (inertia, dielectric), not program synthesis or B-rep encoding, and there&#39;s no program generation, verifier, or graph-transformer decoder involved -- the relevance is purely at the level of a transferable equivariance/UQ mechanism, not an applicable end-to-end pipeline. The rank-2-only validation (rank-4 is preliminary appendix evidence) means the covariance-size blowup (O(k^4)) could be a real obstacle if adapted to a higher-dimensional output space in hexgen.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.24386</span>
   </div>
 </a>
 
