@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-03</title>
+<title>hexgen digest — 2026-09-04</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-03 · 25 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-09-04 · 22 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -124,58 +124,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.01441</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.25622">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.077</span>
-    <span class="card-title">RefineCut is a two-stage training recipe plus a closed-loop inference procedure for a c...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper formulates executable video-editing planning and releases RefineCut-Bench, a benchmark with real clip/music metadata, explicit constraint ledgers, and multi-teacher trajectories. It proposes verifier-replayed trajectory distillation, which canonicalizes and replays noisy frontier-teacher branches through a deterministic verifier to produce verified SFT targets and preference pairs instead of imitating a teacher&#39;s unreliable first-choice branch. It introduces RefineCut-Evo, a verifier-centered, rubric-structured self-improvement stage trained with DPO on the student&#39;s own scored repair candidates. The authors show the resulting 8B open-weight planner substantially outperforms raw imitation, transfers across three backbones, and matches or exceeds its frontier API teachers when run in an identical closed verifier loop.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Strong structural analogy to hexgen&#39;s problem #1 (structural validity of generated programs) and #6 (verifier-in-the-loop self-improvement). The core transferable mechanism is &#39;verifier replay&#39;: instead of trusting the sampler&#39;s/teacher&#39;s first-choice output as a label, replay every candidate through the frozen, machine-checkable verifier and keep only verifier-best candidates as SFT targets -- directly applicable to screening hexgen&#39;s inverse-factory-sampled programs and best-of-N candidates before imitation training. Second, the two-stage recipe (SFT on verifier-best examples, then a self-improvement DPO stage where the student itself samples K candidates, gets them verifier+rubric scored, and trains on high-margin chosen/rejected pairs) is a ready template for a post-imitation self-improvement stage for hexgen, using its existing frozen verifier (compiles, zero inverted elements, quality bounds, feature capture, element-budget) as the scoring signal in place of RefineCut&#39;s constraint ledger. Third, the paper&#39;s decomposed branch-score (delta constraint-satisfaction, targeted repair, required-element recall, applicability, no-regression, locality) is a usable template for turning hexgen&#39;s pass/fail verifier checks into a graded scalar reward for ranking/repair. Fourth, their ablation showing verifier-only DPO scoring captures most of the gain (0.909 of 0.924 VES) with a learned/heuristic rubric adding only a small increment is encouraging evidence that a frozen-verifier-only self-improvement loop (no learned rubric) -- matching hexgen&#39;s current design -- can still deliver most of the benefit. Weaker, tangential borrow: the DAgger-adjacent framing of &#39;replay noisy demonstrations through an executor before imitating them&#39; generalizes to hexgen&#39;s auto-labeled real-CAD programs from construction templates, which could analogously be verifier-replayed rather than trusted outright.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain (video-editing planning) is unrelated to CAD/meshing, so nothing here transfers as a ready-made component -- the value is entirely in the training-recipe structure, which closely mirrors hexgen&#39;s own plan (imitation from a synthetic/auto-labeled sampler, screened best-of-N against a frozen verifier). The clean separation of &#39;verifier-only DPO&#39; (0.909) vs. full rubric-margin DPO (0.924) is the most actionable data point: it suggests hexgen&#39;s planned frozen-verifier-only setup could capture most of a similar self-improvement gain without needing to build a learned quality rubric. Caveat: their verifier yields rich graded partial-credit (per-entry ledger pass rate), letting branch scoring be a smooth weighted sum; hexgen&#39;s verifier checks (compiles, zero inverted elements, Jacobian/aspect bounds, boundary fidelity, feature capture) may need to be combined into an analogous graded scalar (e.g., fraction of checks passed, or a small weighted sum) to replicate this branch-scoring mechanism rather than relying on a single binary pass/fail. Code and benchmark are both publicly released, so the verifier-replay + DPO implementation could be inspected directly as a reference. Reported compute cost is modest (~14.5-23.5 GPU-hours on a single A100 for the core pipeline), suggesting a similar self-improvement stage would be cheap to prototype for hexgen. Also note the paper explicitly flags that verifier-based metrics are in-protocol (not independent), a caution equally applicable to over-trusting a frozen verifier as the sole hexgen training signal without periodic human/held-out audits.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.65</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.84</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.25622</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.25608">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.075</span>
-    <span class="card-title">A wall-first network reuses the Raster2Seq backbone (ResNet features + deformable-atten...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper compares two ways of extracting vector geometry (walls, openings, rooms) from a single trained floorplan-vectorization network -- emitting the geometry as an autoregressive coordinate sequence versus detecting it from dense heatmaps and assembling a graph -- and shows which one wins depends on scan domain and plan size rather than being universally better. It also tests whether the room-centric versus wall-first output representation is what drives topological quality, and finds instead that a deterministic reconciliation/post-processing step and evaluation convention explain most of the difference, with the representation itself contributing mainly a coverage limitation. Building on this, the authors show that combining the two systems&#39; outputs after generation (fusion) helps substantially, while feeding one system&#39;s output as an input prior to the other does not. They release an edit-cost evaluation metric and a new redistributable floorplan-vectorization benchmark (ResPlan-FP) along with corrected annotations for an existing dataset.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Several mechanisms are transferable by analogy even though the paper is 2D raster floorplan vectorization, not B-rep/CAD: (1) grammar/type-masked decoding that restricts the next token to what the output grammar allows at each step directly parallels our need for structural validity in the hexgen DSL decoder (e.g. masking to forbid referencing not-yet-emitted faces/points or duplicate IDs). (2) The training-free &#39;detect&#39; readout -- reading structure from a dense/graph representation instead of full autoregressive emission -- is a useful design pattern for our pointer/copy addressing over the B-rep face graph, and their finding that autoregressive decoding degrades with output length while dense detection does not is a relevant caution for our program-length scaling. (3) Their deterministic post-hoc reconciliation/repair step (welding, dedup) that guarantees a validity property (no double walls) after generation is analogous to using our frozen verifier&#39;s checks as a deterministic repair pass rather than relying purely on generation-time validity. (4) Their closed-form condition for when combining two candidate outputs helps (donor purity &gt; half the base F1) offers a reusable diagnostic for deciding when/how to fuse or select among best-of-N program candidates. (5) Their negative result on input-side conditioning (a deterministic re-encoding of the same evidence a model already sees adds no information, formalized via I(Y;D|X) &lt;= H(D|X) = 0 for deterministic D) is a useful caution against expecting gains from feeding a decoder a second deterministic view of the same B-rep it already encodes, unless the added signal is genuinely new (e.g., stochastic search or execution feedback). (6) The edit-cost metric concept -- scoring drafts by repair effort rather than pass/fail -- could inspire an analogous &#39;verifier-fix-distance&#39; metric for hexgen programs beyond binary structural validity.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a single-author arXiv preprint (Aug 2026, not obviously peer reviewed) in an unrelated application domain (2D raster floorplan vectorization/CV), so nothing here is directly reusable as code or a component -- the value is purely as design-pattern inspiration. The two most transferable ideas are (a) grammar/type-masked autoregressive decoding for structural validity and (b) a training-free/lightweight &#39;detect&#39; alternative to full autoregressive emission, both aligned with our top-priority structural-validity and pointer/graph-transformer problems. The negative input-side-conditioning result and the fusion purity condition are also worth keeping in mind when designing any candidate-combination or self-conditioning scheme for hexgen. Treat the applicability as analogical/tangential rather than a load-bearing citation.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.25608</span>
   </div>
 </a>
 
@@ -206,58 +154,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.25761">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.066</span>
-    <span class="card-title">Four sizes of Qwen2.5-Instruct (0.5B, 1.5B, 3B, 7B; 4-bit NF4 quantized) are evaluated...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper shows that under grammar-constrained decoding, beam search is never significantly worse than sample+vote (self-consistency) at matched inference budget, and is significantly better in 11 of 16 tested configurations -- the opposite of prior unconstrained-setting findings that favor self-consistency/sampling. It shows the grammar constraint itself can cost accuracy relative to unconstrained greedy decoding when the grammar&#39;s coverage is incomplete, causing correct, executable queries to be rejected and forcing worse forced continuations. It also shows additional inference-time compute (wider beams or more samples) reliably improves accuracy, especially for smaller models, but in 2 of the 3 tested model-size gaps this compute increase does not fully substitute for using a larger model.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly relevant to hexgen&#39;s core structural-validity problem (grammar/schema-constrained autoregressive DSL generation, verifier-screened best-of-N): (1) the paper&#39;s central finding -- that under a hard grammar constraint, beam search matches or beats sampling+execution-voting at every matched compute budget -- suggests hexgen&#39;s best-of-N-plus-verifier pipeline may benefit from adding or substituting a beam-search-style search over partial block/sweep/projection programs (possibly verifier- or partial-score-guided) rather than relying purely on independent sampling, since it targets the same structured/schema-constrained generation setting (problem 7) and constrained-decoding search-strategy tradeoff (problem 1). (2) Its diagnosis that an incomplete constraint grammar silently rejects valid, correct outputs and forces globally worse continuations is a concrete, transferable risk to audit in hexgen&#39;s DSL grammar/pointer-copy constraint set -- incompleteness there could be costing structural validity the same way, independent of model capacity. (3) The execution-based vote mechanism (group candidates by execution outcome, take the mode) is structurally analogous to hexgen&#39;s frozen verifier and worth comparing against beam-search-plus-verifier selection at matched compute. (4) The finding that inference compute only partially substitutes for model parameters is a relevant data point for hexgen&#39;s own tradeoff between the 27M-parameter model&#39;s capacity and the cost of larger best-of-N verifier passes.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a small, focused empirical study (two authors, one benchmark, one model family) rather than a new method paper -- treat its numeric findings as suggestive rather than general, per the authors&#39; own stated limitations. The text-to-SQL setting differs substantially from hexgen&#39;s pointer/copy-over-B-rep-graph decoding (different vocabulary structure, different grammar complexity, different notion of &#39;execution&#39;), so the specific magnitudes will not transfer, but the qualitative mechanisms (beam search advantage under hard constraints; grammar-incompleteness cost; partial-only compute-for-parameters substitution) are architecture-agnostic claims worth testing directly against hexgen&#39;s own verifier and DSL grammar. No code repository is mentioned/linked in the text, so replication would require reimplementing the beam-search/sample+vote comparison harness. Worth flagging to whoever owns hexgen&#39;s DSL grammar: run a coverage audit analogous to this paper&#39;s re-parsing analysis to check whether the hex-meshing DSL constraint set can express every valid block/sweep/projection program the deterministic mesher would accept.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.63</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.25761</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.25652">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.062</span>
-    <span class="card-title">RoofDiT is a two-stage pipeline built on the GSDiff framework: a conditional diffusion...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper formulates roof structure modeling as a generative problem over 2D roof graphs and proposes a diffusion-transformer prior that supports unconditional generation, footprint-conditioned generation, and image-guided reconstruction within a single model by varying the conditioning signal. It introduces relative geometry-aware attention, multimodal (footprint + image) conditioning, and a roof alignment regularizer tailored to recurring horizontal/vertical/diagonal roof patterns. The authors benchmark against a diffusion baseline (GSDiff), a geometric baseline (straight skeleton), and image-based reconstruction baselines (HEAT, RoofMapNet), showing improved distributional realism over GSDiff, a validity/flexibility tradeoff against straight skeleton, and competitive but not state-of-the-art reconstruction versus HEAT.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The relative geometry-aware attention mechanism (a small MLP mapping pairwise node offset/distance/direction into per-head attention-logit biases) is directly transferable to our graph-transformer B-rep encoder and pointer/copy heads: it is a lightweight, general way to inject explicit geometric relations (e.g., face-centroid offsets, adjacency angles) into attention over the face graph, which is squarely in our category-4 interest (Graphormer-style edge-biased attention / addressing into an input set) and could help disambiguate congruent/symmetric faces when pointing. The roof alignment regularizer — an auxiliary differentiable loss that softly penalizes deviation from a small set of canonical geometric relations during training — is a transferable pattern for shaping generation toward our own hard verifier criteria (e.g., scaled-Jacobian/aspect-ratio bounds, feature-edge capture) as a soft training signal that could reduce the reject rate before best-of-N verifier screening, rather than relying on rejection alone. The paper&#39;s explicit framing that &#39;validity is encouraged through learning rather than guaranteed by construction&#39; and its reliance on a downstream deterministic/verifiable stage (edge prediction, or in our case a frozen verifier) to make up the gap reinforces our architectural bet on pairing a learned generator with a frozen, machine-checkable verifier rather than expecting the generator alone to guarantee validity. The multimodal token-concatenation conditioning strategy (treating footprint vertices as additional tokens in the same representation space as generated nodes) is a loosely analogous idea to conditioning our decoder jointly on multiple structured input sources.</dd>
-    <dt>Additional context</dt>
-    <dd>This paper is out of our core domain (2D roof vector graphs from aerial imagery/footprints, computer vision/GIS application, not mechanical B-rep or hex-meshing), so most of its dataset, metrics, and baselines (GSDiff, straight skeleton, HEAT, RoofMapNet) are not directly reusable. The value here is narrowly mechanistic: the relative geometry-aware attention module and the soft alignment regularizer are small, self-contained architectural ideas worth mining rather than a paper to adopt wholesale. Note the dataset scale (~2,400 total roofs) is a similar order of magnitude to typical CAD auto-labeled corpora, so the paper&#39;s implicit lesson that a learned prior plus best-of-K sampling can partially compensate for limited deterministic guarantees is relevant context, though not a novel mechanism per se. No code repository is mentioned in the provided text (checked references and body), so mechanism reuse would require reimplementation from the equations given (Eqs. 2-5), which are fully specified and simple enough to reimplement quickly.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.63</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.25652</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2608.26859">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.056</span>
@@ -284,32 +180,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.26009">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.055</span>
-    <span class="card-title">The paper casts connection-tableau construction as a deterministic transition system wh...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces a general framing in which a proof calculus induces a transition system and a proof procedure becomes a stateful policy over it, making the soundness of any policy automatic and letting standard policy-learning methods (imitation learning, DAgger) apply directly to theorem proving. It proposes &#39;proof cloning&#39; plus &#39;proof aggregation&#39;: extracting supervised (state, action) demonstrations purely by replaying found proofs (never failed search), and iteratively retraining a graph-neural-network edit-scorer on self-found proofs. It studies three policies that differ only in how much search scaffolding (memory) restricts their action space, isolating the effect of learning from the effect of imposed search structure. Empirically it shows a single trained scorer, evaluated zero-shot across problems, consistently beats the leanCoP baseline across corpora and option profiles.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core mechanism is directly transferable to hexgen&#39;s structural-validity problem: the transition-system framing enumerates, at every decoding step, only the actions the calculus admits (analogous to masking the DSL decoder to only compile-admissible block/sweep/projection commands), giving validity &#39;for free&#39; by construction rather than by post-hoc checking. &#39;Proof cloning&#39; from replayed successful trajectories (discard all failed search, keep only the winning path) mirrors hexgen&#39;s supervised imitation on inverse-factory-synthesized programs, and &#39;proof aggregation&#39; is a concrete DAgger-style repair/self-improvement loop (retrain on trajectories from proofs the current policy itself finds) that could drive a rejection-sampled SFT flywheel against hexgen&#39;s frozen verifier, matching problems 1 and 6 in our problem statement. The edit-scoring head — an MLP over [edit-type embedding; source-node embedding; target-node embedding] where source/target are graph nodes already produced by a GNN encoder — is architecturally close to hexgen&#39;s pointer/copy heads addressing faces of the input B-rep graph, and the hash-consing / type-only node features used for signature-invariance is a related (though not identical) idea to rotation/pose-invariant encoding. Finally, the paper&#39;s diagnosis that omitting backtrack labels from proof replay starves the policy of undo/repair supervision is a concrete cautionary lesson for any repair/edit-distillation scheme hexgen builds from best-of-N verifier-passing rollouts.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a formal automated-theorem-proving paper (logic, not geometry/CAD) with no B-rep or meshing content whatsoever — everything above is a mechanism-level transfer, not a domain-level one, so weight it as inspiration for the training/decoding loop rather than as a directly reusable component. The most exportable idea is the coupling of (a) a calculus/grammar-restricted valid-action space with (b) imitation purely from replayed successful trajectories with (c) DAgger-style iterative self-improvement against that same admissibility check — this maps well onto hexgen&#39;s verifier-gated best-of-N + imitation setup. The explicit finding that action spaces lacking undo/backtrack supervision hurt retention is worth flagging for our own edit-distillation/repair design. Code is released, which would let someone actually inspect the R-GCN scorer and DAgger loop implementation if deeper borrowing is wanted.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.26009</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2608.30617">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.052</span>
@@ -332,32 +202,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.30617</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.25657">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.046</span>
-    <span class="card-title">Narcissus samples a handful of LLM program proposals once per task, parses them into AS...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper contributes a context-aware heuristic that scores each grammar-rule expansion by prefix alignment, sub-program reuse, and regularization instead of a single global rule frequency, cheap enough to consult at millions of search expansions. It contributes a pipeline that turns raw, often ungrammatical LLM proposal text into grammar-aware guidance by repairing proposals against the grammar and mining their recurring fragments into grammar extensions. It also contributes evidence across five program-synthesis domains and two search backends that this context-aware approximation beats static LLM-guided synthesis and direct re-prompting, and that the regularization term makes the method safe (no worse than unguided search) even when proposals are poor.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core mechanism -- treating a set of imperfect candidate programs (here LLM &#39;proposals&#39;, analogous to hexgen&#39;s best-of-N decoder rollouts) as structural evidence rather than answers, repairing them into valid partial ASTs with typed holes, and using a cheap, context-conditioned score (does this same local context recur across candidates? does this fragment recur across candidates? stay close to candidates&#39; size distribution, with a floor so no option is ever fully excluded) to guide a downstream search -- is directly relevant to our structural-validity problem (#1). Concretely: (a) the &#39;regularization floor that keeps every rule reachable&#39; is a transferable design lesson for any verifier-guided search/repair over hexgen programs, avoiding a search that gets stuck when best-of-N samples never used a needed block/sweep/projection command; (b) mining recurring sub-programs from multiple sampled rollouts into reusable macro-rules could shortcut generation of common block/sweep motifs; (c) the prefix-alignment idea (score a continuation by whether other same-context candidates continue the same way) is a lightweight, training-free alternative/complement to value/critic-guided search or MCTS over program prefixes for repairing a hexgen model&#39;s own broken rollouts, since it requires no LLM/critic calls, only tree lookups over already-sampled candidates plus the frozen verifier for final acceptance.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a symbolic program-synthesis paper (SyGuS/ARC-style CFG-grammar domains), not CAD/mesh or neural-graph-decoding work, so nothing here is a drop-in component for hexgen -- the transfer is at the level of a general &#39;search around sampled proposals with a cheap, never-fully-pruning heuristic&#39; pattern rather than a specific architecture. It assumes a hole-filling AST/CFG formalism; mapping &#39;context&#39; (root-to-hole rule path) onto hexgen&#39;s autoregressive pointer/copy decoding over a face graph would need real adaptation work, since hexgen&#39;s grammar is not a classic CFG and its &#39;holes&#39; are pointer choices over graph nodes plus a coordinate vocabulary rather than typed nonterminals. Also note the method is purely symbolic/counting-based (no learned model, no fine-tuning), so it does not touch domain-gap, rotation-robustness, or copy-mechanism concerns; its closest relevance is the structural-validity / execution-guided search bucket. Code and cached proposals are public, which lowers the cost of prototyping a similar heuristic offline against hexgen&#39;s own verifier output.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.84</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.25657</span>
   </div>
 </a>
 
@@ -410,6 +254,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.01345</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.03811">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.035</span>
+    <span class="card-title">VisCAD-M1 is a 27B multimodal model trained with a three-stage pipeline (large-scale mi...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper presents VisCAD, a foundation model suite for industrial CAD: VisCAD-M1 (27B), which achieves the best part-level profile-average score among evaluated models on PubCADBench/RealCADBench (0.5540 vs. 0.5496 for the best frontier model), rising to 0.5797 with self-reranking test-time scaling; and VisCAD-H1, a domain-specific assembly harness that scores 85.0 on an assembly judge versus 68.0 (Codex) and 52.0 (Claude Code). It also contributes a data-curation pipeline unifying heterogeneous CAD data into intent-program-shape triples and a multi-stage training recipe.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Several mechanisms transfer directly to hexgen: (1) parallel test-time scaling, using the model itself as a listwise reranker/verifier over multiple best-of-N rollouts, is directly analogous to hexgen&#39;s best-of-N + frozen verifier screening and suggests a learned reranker could be layered on top of or in place of hand-coded verifier checks to break ties among verifier-passing candidates; (2) the three-stage training curriculum (syntax/coverage mid-training -&gt; noisy-domain robust SFT with multi-candidate distillation -&gt; high-quality generate-verify-feedback fine-tuning) is a template for combining hexgen&#39;s inverse-factory synthetic data with auto-labeled real CAD parts while explicitly targeting the synthetic-to-real domain gap; (3) the DSL-agnostic intermediate representation for assembly generation is a reusable pattern for representing an hex-mesh program independent of mesher backend syntax, and the staged gating (syntax-valid per-part IR before anything is treated as a solid) parallels grammar/constrained decoding for structural validity.</dd>
+    <dt>Additional context</dt>
+    <dd>VisCAD targets general parametric CAD program generation (FreeCAD Python) rather than hex-meshing DSLs specifically, and its verifier is a self-reranking judge model rather than a hard machine-checkable compile/mesh-quality check like hexgen&#39;s; the domain-gap-bridging role of &#39;robust SFT&#39; (noisy real photos, multi-candidate teacher distillation) is the most directly reusable idea for hexgen&#39;s real-CAD auto-labeled data. No training/inference code appears to be released.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.03811</span>
   </div>
 </a>
 
@@ -488,6 +358,58 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.27893</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.04063">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.028</span>
+    <span class="card-title">SignBalance replaces GRPO&#39;s composition-dependent advantage with a magnitude that keeps...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper identifies a spurious-advantage failure mode in the GRPO advantage estimator that rewards lucky guesses as much as genuine reasoning whenever a task&#39;s effective answer surface is finite. It characterizes three cases where this becomes sizeable (bounded-answer tasks, bounded sub-cases within nominally open-answer sets such as 55.95% of MATH-7.5K, and multi-turn search agents with outcome-only reward) and proposes SignBalance, an advantage estimator whose per-rollout magnitude is independent of within-group composition. Experiments across math reasoning (0.5B and 3B Qwen models) and multi-turn search-agent QA (7B) show SignBalance matches GRPO on open-answer math while giving consistent, sustained gains on bounded-answer math and search-agent benchmarks.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>hexgen&#39;s proposed training regime (best-of-N candidate programs screened by a frozen, machine-checkable verifier) is structurally the finite/bounded-answer-surface + search-agent case this paper analyzes: many distinct DSL programs can pass the identical verifier check, so if hexgen is ever trained with GRPO-style RL against the verifier&#39;s pass/fail signal (rather than only supervised imitation + best-of-N filtering), a standard GRPO advantage would over-reward rollouts that pass the verifier by chance (e.g. degenerate or memorized command sequences) as much as genuinely well-formed programs. SignBalance&#39;s composition-independent, sign-based advantage with per-class force balance is a directly transferable one-line fix to avoid this reward-hacking-like failure mode in verifier-in-the-loop RL fine-tuning of the graph-transformer decoder.</dd>
+    <dt>Additional context</dt>
+    <dd>Caveat: this is anticipatory value, not immediately applicable, since hexgen&#39;s current recipe is supervised imitation on inverse-factory + auto-labeled real parts with best-of-N verifier screening at inference, not GRPO-style policy-gradient RL. The multi-turn search-agent case (many action sequences reaching the same correct final answer) is the closest structural analogy to autoregressive program generation where many token sequences can compile to a verifier-passing mesh. Worth keeping on file for if/when the roadmap adds RLVR-style fine-tuning against the frozen verifier.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.04063</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.03773">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.027</span>
+    <span class="card-title">RealCADBench curates 12,632 tasks across 19 factory-automation categories spanning text...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces RealCADBench, a large real-industrial-intent CAD benchmark spanning four input modalities and both part and assembly modeling with a shared FreeCAD execution contract. It proposes an evaluation protocol beyond executability/IoU that adds a rubric-based visual-semantic identity Judge, and reports a comparative study showing no single frontier model or agent leads all four metrics, that difficulty ordering shifts across input regimes, and that agentic execution-and-repair loops can trade off geometric IoU gains against loss of visual-semantic identity.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>This is close kin to hexgen&#39;s own evaluation design: RealCADBench&#39;s core lesson -- that executability alone is a poor proxy for structural/geometric fidelity and that different axes (compiles/executes vs. geometric IoU vs. semantic identity) can rank systems differently -- directly supports hexgen&#39;s multi-criterion frozen verifier (compiles, zero inverted elements, scaled-Jacobian/aspect-ratio bounds, surface-match fidelity, feature-edge capture, element-budget sanity) rather than a single pass/fail signal. Its shared-runtime, score-only-the-executed-artifact protocol, its staged reference-verification pipeline (candidate proposal -&gt; screening -&gt; expert acceptance, ~17% accept rate) for building trustworthy (B-rep, program) ground truth from noisy real industrial CAD assets, and its finding that agentic execute-and-repair harnesses trade IoU for structural/identity correctness are all directly transferable to how hexgen should construct and validate its real-CAD auto-labeled training/eval data and interpret verifier-passing-but-low-quality outputs.</dd>
+    <dt>Additional context</dt>
+    <dd>Produced by the same team as the VisCAD paper (2609.03811) and used as one of VisCAD&#39;s evaluation benchmarks; the two should be read together. RealCADBench targets general parametric CAD (FreeCAD Python) rather than hex-meshing specifically, and its &#39;verifier&#39; is a learned visual-semantic Judge rather than hexgen&#39;s hard geometric/mesh-quality checks, but the benchmark-design lessons (multi-axis evaluation, executability != quality) transfer directly.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.03773</span>
   </div>
 </a>
 

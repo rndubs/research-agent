@@ -26,9 +26,9 @@ _25 item(s) shown · top_n = 25 · 5 foundational slots reserved._
 | 20 | 0.039 | 3D CAD consensus selection: sample N parametric CAD programs from an LLM, compile each... | 0.50 | 0.72 | 0.43 | 4.0 | — | [2608.09706](https://arxiv.org/abs/2608.09706) | Requires an existing text-to-CAD (or here, B-rep-to-program) generator that produces a candidate pool to select from |
 | 21 | 0.038 | The paper frames the decision as a sequential hypothesis test on the paired loss differ... | 0.45 | 0.60 | 0.43 | 3.0 | — | [2608.27996](https://arxiv.org/abs/2608.27996) | — |
 | 22 | 0.038 | Builds a 'wind tunnel' with tasks that have a cheap ground-truth oracle from which the... | 0.50 | 0.54 | 0.43 | 3.0 | — | [2609.01345](https://arxiv.org/abs/2609.01345) | Qwen2.5 model family (as students), OpenAI models up to gpt-5-mini (as verifiers) |
-| 23 | 0.035 | PhysicsBench is a unified benchmark/leaderboard spanning 7 generation and prediction ta... | 0.30 | 0.36 | 0.64 | 2.0 | — | [2608.24056](https://arxiv.org/abs/2608.24056) | — |
-| 24 | 0.033 | Introduces 'generative compilation': a 'sealor' transformation converts a partial progr... | 0.70 | 0.66 | 0.43 | 6.0 | — | [2607.13921](https://arxiv.org/abs/2607.13921) | Standard off-the-shelf compilers (for diagnosis), Lean (for the correctness proof) |
-| 25 | 0.031 | Extracts a discrete-time Markov chain (DTMC) from a system-under-test's token-by-token... | 0.70 | 0.84 | 0.43 | 8.0 | — | [2609.00838](https://arxiv.org/abs/2609.00838) | PRISM probabilistic model checker, PCTL (Probabilistic Computation Tree Logic), CEGAR (counterexample-guided abstraction refinement) |
+| 23 | 0.035 | VisCAD-M1 is a 27B multimodal model trained with a three-stage pipeline (large-scale mi... | 0.55 | 0.72 | 0.45 | 5.0 | — | [2609.03811](https://arxiv.org/abs/2609.03811) | FreeCAD API / FreeCAD Python DSL, RealCADBench and PubCADBench for evaluation protocol and metrics, Kimi-K2.6 as the frozen judge model |
+| 24 | 0.035 | PhysicsBench is a unified benchmark/leaderboard spanning 7 generation and prediction ta... | 0.30 | 0.36 | 0.64 | 2.0 | — | [2608.24056](https://arxiv.org/abs/2608.24056) | — |
+| 25 | 0.033 | Introduces 'generative compilation': a 'sealor' transformation converts a partial progr... | 0.70 | 0.66 | 0.43 | 6.0 | — | [2607.13921](https://arxiv.org/abs/2607.13921) | Standard off-the-shelf compilers (for diagnosis), Lean (for the correctness proof) |
 
 ## Foundational lane
 
