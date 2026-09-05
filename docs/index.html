@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-04</title>
+<title>hexgen digest — 2026-09-05</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-04 · 22 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-09-05 · 20 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -150,32 +150,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.28229</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.26859">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.056</span>
-    <span class="card-title">The pi-Mechanism computes each object&#39;s principal axes of inertia (eigen-decomposition...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes a data-centric, model-agnostic preprocessing method (the pi-Mechanism) that replaces arbitrary object coordinate frames with a canonical frame defined by the object&#39;s principal axes of inertia, claiming three benefits: inherent robustness to noise/occlusion from the energy-minimizing property of principal axes, an analytical (loss- and architecture-free) resolution of rotational ambiguity for symmetric objects, and plug-and-play compatibility with any existing pose network. It reports consistent rotation-error reductions when applied on top of multiple instance- and category-level pose estimation baselines across several benchmarks.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>This is a close match to the still-open &#39;rotation/pose robustness&#39; care area: rather than a native rotation-invariant encoder, it is exactly the kind of deployment-time / data-level canonicalization trick that remains in scope -- computing a canonical, physically/geometrically-grounded reference frame (here, principal axes of inertia of the mesh) and re-expressing all training labels relative to it before training, with zero architecture change. For hexgen this suggests canonicalizing each B-rep&#39;s pose (e.g. via principal axes of the part&#39;s geometry) before graph-transformer encoding and coordinate-vocabulary prediction, which could reduce sensitivity to arbitrary input orientation. The symmetry-detection-and-canonical-relabeling procedure (classifying continuous/N-fold/2-fold symmetry via a shape-congruence test, then deterministically picking a canonical representative) is also a directly transferable analogue for resolving orbit ambiguity among congruent faces/features in a B-rep, similar in spirit to (and possibly simpler than) the Gromov-Monge graph-alignment idea in a companion paper reviewed this round.</dd>
-    <dt>Additional context</dt>
-    <dd>The technique presumes a full 3D mesh/point cloud of the object is available to compute the inertia tensor and run the Chamfer-distance symmetry test -- for hexgen this exists (the B-rep/mechanical part mesh), so applicability is plausible, though the target objects here are single mechanical parts (not classification categories with intra-class shape variation as tricky as in the category-level NOCS setting) and continuous or high-order polyhedral symmetries are only partially handled. Results are consistent but individually modest (roughly 3-26% relative rotation-error reduction) except on the T-LESS heavily-symmetric objects, where gains are large; the mechanism is orthogonal to and could be combined with other robustness techniques.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.5</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.26859</span>
   </div>
 </a>
 
@@ -540,32 +514,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.28128</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.26961">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.009</span>
-    <span class="card-title">The paper defines the graph quotient (Wasserstein) geometry under node relabeling and s...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper shows that optimal couplings on the graph-orbit quotient space lift to Euclidean couplings of the same cost, and that symmetrizing a coupling over the permutation group preserves the flow-matching objective and yields an equivariant minimizer, including for categorical (discrete) endpoint prediction. It then gives a practical outer-inner Gromov-Wasserstein/FLB alignment procedure for constructing minibatch training couplings for graph flow matching, and shows on cycle-graph, stochastic-block-model, QM9, and ZINC250k benchmarks that these structure-aware couplings substantially improve sample quality at small integration (Euler-step) budgets while remaining competitive with prior graph generative models at large budgets.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core mechanism -- resolving symmetry/orbit ambiguity by explicitly computing a canonical node correspondence (via Gromov-Wasserstein / Gromov-Monge alignment) between two graphs that are equivalent up to relabeling -- is directly analogous to the &#39;symmetry/orbit ambiguity when pointing at congruent nodes&#39; problem named in our own care areas for the pointer/copy decoder: when multiple B-rep faces are geometrically congruent, a GW-style alignment could be used at data-generation time (in the inverse-factory pairing of B-reps to programs) to pick a canonical, low-ambiguity face correspondence rather than an arbitrary one, potentially reducing label noise for the pointer/copy heads. The diagonal-symmetrization result (Theorem 3.2) -- that averaging a coupling over the permutation group yields an equivariant training objective without changing the model -- is also a transferable training-time trick for making supervision robust to face relabeling without touching the graph-transformer architecture.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a fairly theoretical/methods paper on flow-matching-style graph generation (not autoregressive program synthesis), evaluated only on small graphs (N&lt;=38) and generic graph-quality metrics rather than any structural/executability verifier, so the improvements shown (FGW-NNA, MMD, molecular validity/FCD) do not directly measure anything like our compiles/zero-inverted-elements verifier. The GW alignment step adds nontrivial training-time compute (Frank-Wolfe iterations per minibatch) though it is not needed at inference; a cheaper FLB variant captures part of the benefit. Most directly relevant to our care area 4/5 (pointer/graph-transformer symmetry and orbit ambiguity), only weakly to structural validity or B-rep representation learning per se.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.38</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.26961</span>
   </div>
 </a>
 
