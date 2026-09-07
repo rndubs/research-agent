@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-06</title>
+<title>hexgen digest — 2026-09-07</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,9 +98,35 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-06 · 20 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-09-07 · 31 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2609.05093">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.105</span>
+    <span class="card-title">Discovery Loop is a ~400-line Python system implementing a single-candidate (no populat...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper presents Discovery Loop, a minimal, open-source, single-machine reimplementation of the AlphaEvolve-style LLM-guided program evolution loop that uses one LLM call per iteration with no distributed infrastructure. Applied to the Packomania csqv circle-packing benchmark, it produced new best-known solutions for 10 of 12 targets (N=101-114), improving on prior records by 2.4%-5.4%, independently verified and accepted by Packomania, at a total LLM cost of $27.72 over 15 iterations in about 8 hours on a consumer PC. The authors also analyze cost-efficiency dynamics across iterations and propose a plateau-detection mechanism that would have cut cost by 50% with negligible quality loss, and catalog several non-trivial algorithmic ideas (e.g. hexagonal lattice initialization, defect migration) the LLM discovered on its own.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core loop — LLM proposes a full candidate program, an independent zero-tolerance (no-shared-code) verifier checks it, only verified improvements are kept, with a scoreboard/history fed back into the next prompt — is structurally analogous to our best-of-N + frozen-verifier screening setup (problem 6, self-play/verifier-in-the-loop training) and to problem 1 (structural validity via execution/verifier-guided generation), though here the &#39;decoder&#39; is an LLM prompted in natural language rather than our trained graph-transformer. The &#39;full replacement over patch&#39; design choice and the per-target-best-tracking-separate-from-champion idea could inform how we structure rejection-sampled SFT rounds or best-of-N bookkeeping across many parts. The plateau-detection mechanism (windowed diminishing-returns stopping) is a directly transferable, cheap idea for deciding when to stop a best-of-N sampling budget or a self-play round for a given part/target.</dd>
+    <dt>Additional context</dt>
+    <dd>This is an LLM-agent (prompted-program-search) paper, not a trained neural decoder, so the applicability is at the level of loop design and verifier discipline rather than architecture. Results (circle packing record-breaking) are in a very different domain (continuous geometric optimization via classical numerical methods) and the &#39;verifier&#39; here is a simple feasibility/overlap checker, much simpler than our scaled-Jacobian / surface-fidelity verifier — the core principle (independent, zero-tolerance, no-shared-code checker) is the transferable piece. Small-scale, single-author, non-peer-reviewed-venue paper (practicalsystems.io); treat headline numbers as self-reported though independently accepted by a third-party database (Packomania), which adds some credibility. The cost/iteration economics (specific dollar amounts) are not generalizable to our setting since they depend on LLM-as-agent pricing, not model training cost.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.05093</span>
+  </div>
+</a>
+
 <a class="card"
    href="https://arxiv.org/abs/2609.01441">
   <div class="card-head">
@@ -124,6 +150,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.01441</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.04697">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.075</span>
+    <span class="card-title">SQL-Zero is a proposer-solver self-play framework in which a challenger and a solver bo...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper contributes SQL-Zero, an execution-verified self-play framework that trains a Text-to-SQL solver with zero annotated NL-SQL pairs, using only database schemas, contents, and execution as ground truth. Under a controlled common evaluation pipeline, self-play improves over the zero-shot base by 6.6 points at 3B and 7.3 points at 7B on BIRD dev, and the 3B model also transfers to unseen Spider databases and paraphrased questions. They additionally show the self-play solver outperforms a matched control trained on human BIRD gold labels over the same databases, though an exact paired statistical test does not resolve that margin, and that self-play still adds gains on top of a strong supervised initialization (OmniSQL-7B).</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Strongly applicable to hexgen&#39;s self-play/verifier-in-the-loop and structural-validity priorities. SQL-Zero&#39;s core mechanism -- a challenger that proposes execution-verified tasks calibrated to be &#39;hard but solvable&#39; for the current model, used to drive RL training of a solver against a frozen oracle -- is directly analogous to training hexgen against its frozen mesh verifier. The difficulty-targeting curriculum (weight/sample training pairs by the current model&#39;s hit rate rather than uniformly) is a transferable idea for hexgen&#39;s inverse-factory sampling, even without a full adversarial challenger. The three-tier minimal reward (full credit for verifier-passing match, partial credit for &#39;compiles but fails verifier&#39;, zero for &#39;does not compile&#39;) is a simple, directly transferable reward-shaping pattern for any best-of-N or RL-style hexgen training signal. The template-deduplication/repetition-penalty mechanism for preventing generator diversity collapse is also relevant if hexgen&#39;s inverse factory is ever extended with a learned task-proposing component.</dd>
+    <dt>Additional context</dt>
+    <dd>Strong conceptual match for problem #6 (self-play/verifier-in-the-loop training) and partially #1 (execution-guided generation), despite the domain (text-to-SQL) and model scale (3B/7B LLM) being very different from hexgen&#39;s 27M graph-transformer. Key caveat to carry forward: the self-evolution loop does not compound past the first iteration, and at larger model scale the curriculum trades in-domain gains for transfer degradation -- a useful cautionary data point if hexgen ever moves from a static inverse-factory + best-of-N setup toward a full proposer-solver self-play loop. The difficulty-targeted sampling idea could likely be adopted more cheaply than the full challenger: just weight/sample harder (B-rep, program) pairs by current-model hit rate. Code is released at an anonymized repository link.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.90</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.04697</span>
   </div>
 </a>
 
@@ -154,6 +206,58 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.05221">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.069</span>
+    <span class="card-title">Qwen2.5-3B-Instruct is first adapted with field-weighted QLoRA supervision anchored to...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes a verifier-guided explainable reasoning framework combining gold-anchored QLoRA fine-tuning, task-aware routing to external symbolic verifiers (FOL/Z3 for logic, a unit-aware solver for physics) instead of a neural mixture-of-experts, and a group-relative RLVR scheme whose reward separately scores answer correctness (P1), evidence/unit consistency (P2), and reasoning depth (P3). It reports that on held-out educational QA examples RLVR substantially increases the reasoning-depth metric while leaving answer accuracy roughly stable, and that symbolic verification -- rather than RLVR or self-consistency alone -- delivers the largest gains in final answer correctness, particularly for physics questions.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Highly applicable as a training-pipeline template for hexgen&#39;s structural-validity and verifier-in-the-loop goals: (1) the task-aware router to an external, deterministic, machine-checkable verifier (FOL/Z3 for logic, unit-aware solver for physics) is structurally identical to dispatching a generated hexgen program to our frozen verifier (compiles / zero inverted elements / Jacobian and aspect-ratio bounds / surface fidelity / feature-edge capture / element-budget sanity) for a specific pass/fail breakdown rather than one opaque accept/reject signal. (2) &#39;Verifier-Guided Self-Revision&#39; (y~ = Revise(y, F_verifier(y))) is a direct analog of a repair/edit-distillation loop that could feed a specific verifier failure mode back into the decoder for a corrective regeneration pass rather than plain rejection sampling. (3) the group-relative RLVR reward (weighted sum of exact-correctness + dense partial credit + consistency + format terms, with GRPO-style advantage normalization within a sampled group of rollouts) is a concrete, reusable template for turning our verifier&#39;s multiple checks into a multi-term verifiable reward for an RLVR fine-tuning stage layered on top of supervised imitation. (4) the explicit empirical finding that RLVR mainly improved a reasoning-depth/explainability metric without improving execution/answer correctness, while the deterministic verifier gave the dominant correctness gain, is a useful cautionary prior suggesting that best-of-N + verifier screening may matter more for our structural-validity goal than RL fine-tuning of the policy alone.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is educational logic/physics QA with a 3B-parameter LLM on a single L4 GPU -- small-scale, single run, only 240 RLVR rollout steps with just 30 effective optimizer updates after skipping zero-variance groups; authors themselves flag the lack of confidence intervals/repeated runs as future work, and the 7-example Logic-Uncertain subset as too small to generalize from. Still, the three-way metric decomposition (exact correctness vs. consistency vs. reasoning-depth) and the verifier-guided revision plus group-relative multi-term reward design are clean, domain-independent ideas worth reusing even though the LLM-QA setting itself is unrelated to CAD/mesh generation. Code released on GitHub.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.90</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.05221</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.05388">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.054</span>
+    <span class="card-title">A Vision-Language Model (VLM) proposes candidate First-Order-Logic (FOL) rules, conform...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces a closed-loop neuro-symbolic framework that couples VLM-based induction of first-order-logic rules with a differentiable Logic Tensor Network verifier, using a grammar-constrained prompting strategy to keep VLM outputs syntactically valid and parseable. It demonstrates that the framework can discover valid Sudoku constraint rules from only three labelled visual examples within a bounded number of VLM iterations (3-19) across multiple visual domains, and that the resulting CNN+D-LTN architecture matches or outperforms prior neuro-symbolic baselines (NeuPSL, LTN-IND variants) on the ViSudo-PC benchmark.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The Think-Verify-Revise closed loop (propose structured symbolic output -&gt; run a differentiable/formal verifier -&gt; feed the verifier&#39;s pass/fail signal and any syntax errors back as context for the next generation attempt) is a direct structural analog to a verifier-guided repair loop for hexgen: instead of plain best-of-N rejection sampling against our frozen verifier, we could feed specific failure reasons (e.g. inverted element, surface-fidelity miss) back into the decoder&#39;s next-attempt context to steer regeneration, similar to this paper&#39;s feedback of parsing errors and unsatisfied-rule scores to the VLM. The grammar-constrained prompting strategy (restricting the generator to a fixed vocabulary of predicates/operators) is also analogous to constraining our DSL decoder&#39;s pointer/coordinate vocabulary to guarantee syntactic validity before semantic/geometric checking.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain (visual Sudoku via a frozen prompted VLM) is far from B-rep/mesh program synthesis, and the &#39;model&#39; being iterated is a frozen large VLM queried via API rather than a trained autoregressive decoder, so only the feedback-loop *pattern* transfers, not any architecture or training technique. Benchmark is small (10 eval splits x 100 board pairs), and the FMNIST failure shows this kind of loop can either fail to converge or silently settle on a syntactically valid but semantically incomplete rule -- a useful cautionary analog for accepting a hexgen program that passes the verifier&#39;s checks without actually doing what we want. Code is released on GitHub.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.78</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.05388</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.30617">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.052</span>
@@ -176,6 +280,58 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.30617</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.04672">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.047</span>
+    <span class="card-title">WEECFP-SuRGE has two parts. WEECFP-S is a deterministic, parameter-free fingerprint tha...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper contributes WEECFP, a parameter-free continuous fingerprint that scatters each Morgan substructure across many signed vector positions instead of hashing to a single bit, and SuRGE, a graph-distance analogue of Rotary Position Encoding for molecular transformers that substitutes sequence position with shortest-path graph distance, including an O(S) three-reference approximation of the full O(S^2) pairwise rotation. They show the resulting WEECFP-SuRGE transformer and a 7-model blend achieve the best average regression rank on the TDC ADMET leaderboard and rank first overall among non-pretrained methods, while also showing WEECFP tokenization is near-losslessly reversible back to the original molecule&#39;s SMILES.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Domain is cheminformatics/ADMET prediction, largely mismatched to hexgen, but one mechanism is concretely transferable to Problem #4 (pointer/copy mechanisms and graph transformers): SuRGE is a lightweight way to inject graph-distance-based relative-position signal into transformer self-attention via RoPE-style rotation keyed on shortest-path graph distance rather than sequence index -- directly analogous to adding graph-structural bias into hexgen&#39;s graph-transformer encoder over the B-rep face-adjacency graph (the paper explicitly positions itself against Graphormer-style edge-biased attention as the alternative). The paper&#39;s own note that full pairwise graph-distance rotation is simpler and matches or beats the O(S) ref3 approximation in small-graph regimes (ref3 LayerSuRGE vs. full pairwise SuRGE on ESOL: 0.782 vs 0.773 R^2 is actually comparable) suggests that for hexgen&#39;s small B-rep graphs (7-15 faces), the full pairwise version would be the simpler and cheaper choice to borrow, since O(S^2) memory is trivial at that scale.</dd>
+    <dt>Additional context</dt>
+    <dd>Essentially no direct program-synthesis or mesh-generation content -- relevance to hexgen is narrow and mechanism-level only (the SuRGE graph-distance RoPE trick). Worth a brief mention as a candidate positional-encoding addition for the B-rep face-graph encoder, but not a high-priority read otherwise. No code release was found in the visible text (single-author Eli Lilly paper). Given hexgen&#39;s small graph size, the paper&#39;s own motivating argument for the O(S) ref3 approximation (avoiding O(S^2) memory blowup) doesn&#39;t really apply, so if this idea is pursued, prefer the simpler full pairwise SuRGE variant the paper also describes and benchmarks.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.61</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.04672</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.04773">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.045</span>
+    <span class="card-title">Persistent Teacher Anchoring (PTA): the student proposes generation chunk-by-chunk; a f...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes teacher anchoring, a student-proposed but teacher-committed rollout construction in which the teacher decides both what text is retained and which tool calls are allowed to reach the environment. It makes this anchoring persistent across student updates via fixed-verifier atomic state boundaries, enabling a lookahead scheduler that raises training throughput by 24%. On Search-R1-style retrieval and DeepEyes-style perception RL tasks, PTA applied before downstream RL improves macro best@4 by 2.5 and 2.8 points respectively over on-policy knowledge distillation (OPKD) under the same RL budget, and this gain disappears if teacher corrections specifically inside tool-call spans are suppressed.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly transferable mechanism for problem #1 (structural validity): PTA&#39;s core idea -- gate execution of a generated action on a fully teacher-verified/committed prefix, correcting or rejecting deviations chunk-by-chunk before the action ever reaches the environment -- is analogous to gating hexgen&#39;s DSL command execution (block/sweep/projection) on grammar/verifier acceptance before the mesher executes it, i.e. &#39;verify-before-commit&#39; rather than our current &#39;generate-then-verify-after-the-fact&#39; best-of-N screening. The &#39;persistent lookahead&#39; scheduling trick (reusing partially-verified rollouts across training updates because the verifier is frozen) is a transferable training-efficiency idea applicable to our own frozen-verifier + rejection-sampling training loop (problem #6). Source-aware loss masking (distilling only on model-generated positions, not on environment/observation tokens) is also directly relevant if our training text interleaves verifier feedback or mesher outputs into context.</dd>
+    <dt>Additional context</dt>
+    <dd>A clear, well-executed empirical paper (concrete benchmarks -- NQ/PopQA/HotpotQA/Musique, VStar/HRBench -- with ablations and a mechanistic diagnostic via top-N retained probability mass), in contrast to some of the weaker papers in this batch. The domain (retrieval/perception tool-use RL for LLM agents) is far from CAD/meshing, but the verify-before-commit execution gating and frozen-verifier persistent/lookahead scheduling are the most transferable pieces and worth a closer read for our best-of-N + frozen-verifier training infra, even though our setting is single-shot supervised imitation rather than RL rollouts. No code or artifact link was found in the extracted text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.59</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.04773</span>
   </div>
 </a>
 
@@ -306,6 +462,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.30532</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.05328">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.029</span>
+    <span class="card-title">Embedded Graph Flows (EGF) places node and unordered-edge categories at trainable conti...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes Embedded Graph Flows (EGF), which makes the endpoint geometry of categorical graph generation trainable by learning node and edge category anchors jointly with a continuous flow-matching transport process and a terminal categorical readout, replacing fixed one-hot category encodings. The formulation is permutation-equivariant and handles padded, undirected graphs by sharing one state per unordered node pair. On the QM9 molecular benchmark, EGF reports the best result on all four evaluated metrics against DiGress and GruM baselines, and on the larger ZINC250k benchmark it attains the lowest graph-structural MMD of the three methods, though with higher FCD and lower validity than GruM.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The permutation-equivariant graph transformer with edge-feature-biased node attention (attention score = QK/sqrt(d) + a learned scalar from current edge features) is directly analogous to a Graphormer-style encoder over our B-rep face-adjacency graph. Its explicit masked/padded representation for variable-size graphs (zeroing out inactive node/edge slots, restricting supervision and decoding to an &#39;active coordinate set&#39;) is a reusable pattern for encoding our variable-face-count (7-15 face) B-reps with a fixed-size tensor. The idea of replacing fixed one-hot category codes with trainable continuous &#39;anchor&#39; embeddings could be borrowed for our small closed coordinate/command vocabulary, potentially giving pointer/copy heads a better-shaped embedding space to address into. The shared-weight two-mode (continuous-regression + discrete-readout) network design is a tangential but concrete example of combining a continuous intermediate representation with a final discrete-token decision in one model. Note this paper is about one-shot graph generation via flow matching, not autoregressive program synthesis, so it offers no mechanism for grammar/execution validity (our problem #1) by itself.</dd>
+    <dt>Additional context</dt>
+    <dd>This is graph generation (diffusion/flow-matching over node+edge categories), not program synthesis, and has no grammar- or execution-validity concept analogous to our DSL compiling and executing correctly -- transferability is at the level of graph-transformer architecture and padding/permutation-equivariance tricks, not the end-to-end pipeline. Molecular domain (QM9 &lt;=9 nodes, ZINC250k &lt;=38 nodes) is unrelated to CAD B-reps but graph sizes (&lt;=38 nodes) are in a comparable range to our 7-15 face B-reps. Single-seed results with no component ablation yet (authors flag this explicitly as future work), so the size of the claimed QM9 margins should be treated cautiously. Code and training configs released under PolyForm-Noncommercial license.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.05328</span>
   </div>
 </a>
 
@@ -492,6 +674,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.04751">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.012</span>
+    <span class="card-title">SeamFlow represents each mesh edge as a token (embedding of its endpoint coordinates),...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces two contributions: a structure-aware edge-token representation that explicitly encodes mesh connectivity (avoiding GNN message-passing locality limits), and a flow-matching formulation for seam generation in continuous edge-probability space that removes the need for sequential autoregressive decoding. This is claimed to be the first use of flow matching for 3D surface cutting, eliminating the spatial-projection errors and artificial ordering bias that autoregressive seam generators suffer from, while enabling diverse and editable (inpaintable) seam generation.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Mostly domain-mismatched (continuous UV-cutting vs. discrete DSL program synthesis), but two ideas are worth noting for hexgen: (1) the paper&#39;s central argument against autoregressive generation for unordered/non-sequential structures (projection error, ordering bias) is a useful cautionary analogy when evaluating hexgen&#39;s own autoregressive decoder, although hexgen&#39;s program genuinely is an ordered sequence of commands so the argument doesn&#39;t transfer cleanly; (2) the inpainting-based local repair mechanism -- re-synthesizing only a masked region while keeping the rest of the output fixed -- is a transferable pattern for repair/edit-distillation: if a generated hexgen program fails the verifier only because of one bad block/sweep/projection command, a masked local re-generation of just that command (rather than full resampling) is a plausible technique to borrow.</dd>
+    <dt>Additional context</dt>
+    <dd>This is a SIGGRAPH Asia graphics paper on UV unwrapping, not program synthesis or CAD -- the core contribution (flow matching over a fixed, finite element set&#39;s probabilities) depends on the target being a set of binary labels over a fixed set of mesh elements, which doesn&#39;t map onto variable-length DSL programs with parametric arguments. The model is also large (712M params) versus hexgen&#39;s 27M, so cost/architecture doesn&#39;t match. No obvious code repository found, only a project page. Low priority overall; flag the inpainting-repair idea and the anti-autoregressive framing as a minor talking point but not directly actionable without substantial adaptation.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.82</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.04751</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.28128">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.010</span>
@@ -514,6 +722,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.28128</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.04803">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.008</span>
+    <span class="card-title">Hierarchical Possession-aware Graph Pointer Network (HPGPN) formulates pass receiver se...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes HPGPN, which jointly models current player interactions (via a graph), local event context, and possession-level temporal dynamics to predict pass receivers under partial, broadcast-style observation with anonymous/unstable player identities. It introduces hierarchical candidate refinement combining spatial, contextual, and historical evidence, scored by a glimpse pointer head. Experiments on public football event and freeze-frame data show improved pass receiver selection performance, and ablations confirm the contributions of graph-based interaction modeling, fixed event context, and dual-branch possession-history modeling.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The &#39;glimpse pointer head&#39; scoring a variable-size set of candidates over a graph of interacting entities is structurally analogous to hexgen&#39;s pointer/copy heads that address a variable number of faces in the input B-rep graph (problem #4: pointer/copy mechanisms and graph transformers). The hierarchical fusion of graph-based interaction modeling with contextual/historical evidence before pointing is a transferable pattern for a face-addressing pointer decoder. The anonymous, unstable-identity visible-candidate setting (players without stable IDs) is loosely analogous to symmetry/orbit ambiguity when pointing at congruent B-rep faces (problem #5-adjacent), though the football-analytics domain itself is unrelated.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was present in the extracted text (no methods section, architecture diagram, dataset names, or numeric results), so this extraction is necessarily thin and low-confidence. The domain (football pass-receiver prediction) is unrelated to CAD/meshing; any relevance is purely through the generic pointer-network-over-graph mechanism, not the domain content. Worth a brief look only if we want more examples of &#39;glimpse&#39;-style pointer heads with hierarchical graph context.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.20</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.04803</span>
   </div>
 </a>
 
@@ -596,6 +830,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.04837">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.003</span>
+    <span class="card-title">PAPT++ is a risk-aware adversarial generation-training framework built on a pretrained...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes PAPT++, extending the authors&#39; earlier PAPT method from diversity-driven prompt generation to classifier-guided adversarial diffusion synthesis for single domain generalization. It introduces two modules (CSRL for semantic reference learning, CADS for risk-aware sample synthesis) plus a progressive denoising optimization strategy, and provides a theoretical connection to distributionally robust optimization including a target-domain risk bound. The authors report state-of-the-art results on SDG and multi-source DG benchmarks (PACS, VLCS, OfficeHome, CIFAR-10-C, TerraInc), with ablations confirming each component&#39;s contribution.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Limited direct applicability: this is an image-classification domain-generalization paper using text-to-image diffusion augmentation, which is not our program-generation/B-rep setting. The one loosely transferable mechanism is the alternating &#39;risk-guided, verifier/feedback-constrained generation&#39; loop itself: CADS generates candidates that maximize a frozen downstream model&#39;s loss subject to a fixed-reference consistency constraint, then retrains the model on the augmented pool, which is structurally analogous (at a high level) to an adversarial or hard-example-mining curriculum we could apply with our frozen verifier generating harder B-rep/program training pairs for DAgger-style repair distillation (problem 1) or for a domain-gap augmentation pass on the real-CAD-parts side of our data pipeline (problem 2) — e.g. using our verifier&#39;s pass/fail or quality-margin signal to bias the inverse-factory&#39;s part sampling toward parts the current hexgen model currently fails on, analogous to CADS&#39;s classifier-risk-guided sampling constrained by a semantic/validity reference. This is a tangential analogy, not a reusable component.</dd>
+    <dt>Additional context</dt>
+    <dd>Pure computer-vision image classification paper (ResNet backbones, Stable Diffusion augmentation) with no B-rep, CAD, mesh, program-synthesis, or pointer/graph-transformer content — falls outside most of our relevance categories (1,3,4,6,7) except as a loose analogy to problem 2 (domain gap) and the general idea of risk/verifier-guided curriculum generation (problem 6). No code link found in the provided text. Extends the authors&#39; own CVPR 2025 PAPT paper; results are self-reported against many baselines reproduced from other papers, typical of incremental-improvement CV venue papers. Low priority for our backlog; flagging mainly for the adversarial-curriculum-generation analogy.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.15</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.24</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.62</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.04837</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.28276">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.002</span>
@@ -621,12 +881,64 @@
   </div>
 </a>
 
+<a class="card"
+   href="https://arxiv.org/abs/2609.04782">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.000</span>
+    <span class="card-title">Proposes DODR: reasoning states are represented as high-dimensional deterministic &#39;snap...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper claims nine contributions: formalizing Peirce&#39;s three inference types as trainable matrix operators; grounding deductive irreversibility in the rank-nullity theorem; a Gram-Schmidt-orthogonal-projection &#39;hard veto&#39; mechanism for inductive counterexamples; defining abduction as the pseudo-inverse of deduction with a quantified null-space residual; a &#39;minimal complete operator-set&#39; theorem proving the three operators are irreducible and that no single super-operator exists; &#39;structural zero hallucination&#39; from removing token sampling entirely; reuse of frozen LLM hidden states as text snapshots plus dedicated encoders for other modalities; a physics-cognition unification proposition; and a reasoning-graph topology theory proven Turing-complete with convergent backflow reasoning.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Very little transfers directly. The closest analogy is the &#39;hard veto&#39; mechanism — a frozen checking rule that rejects/overturns a candidate conclusion on a counterexample — which loosely echoes our frozen, machine-checkable verifier rejecting invalid candidate programs (problem #1/#6, verifier-guided generation / rejection sampling), but DODR&#39;s actual mechanism (linear-algebra pseudo-inverse operators over sentence-embedding &#39;snapshots&#39;) does not transfer to autoregressive program/DSL generation over a B-rep graph. Given the paper&#39;s very weak empirical grounding (tiny self-built datasets, no recognized benchmarks or baselines, single run/seed), this is not a source to build on.</dd>
+    <dt>Additional context</dt>
+    <dd>This paper is self-published by a company (Beijing MQPat Technologies) and reads as highly speculative/unconventional: it makes extraordinary claims (&#39;structural zero hallucination&#39;, Turing-completeness proofs, a physics-cognition unification proposition) but validates them only on tiny self-constructed datasets (e.g., 20 syllogisms, 130 classification samples, 80 abduction problems), with no recognized benchmarks, no real baseline beyond a vague &#39;10-20% indicative estimate&#39; hallucination rate for GPT-2, a single run/seed, no hyperparameter search, and a self-acknowledged graph-scheduling controller that was never implemented. The paper itself lists these as limitations, which is commendably honest, but the overall credibility is low and it is very unlikely to be citable or useful for hexgen beyond the surface-level &#39;frozen verifier / hard veto&#39; framing, which is better sourced from the standard rejection-sampling/verifier-guided-generation literature instead.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.05</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.12</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.57</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.04782</span>
+  </div>
+</a>
+
 
 <h2>Current top 10 backlog</h2>
 <a class="card"
+   href="https://arxiv.org/abs/2609.05093">
+  <div class="card-head">
+<span class="rank">#1</span>    <span class="badge" title="composite RICE score">0.105</span>
+    <span class="card-title">Discovery Loop is a ~400-line Python system implementing a single-candidate (no populat...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper presents Discovery Loop, a minimal, open-source, single-machine reimplementation of the AlphaEvolve-style LLM-guided program evolution loop that uses one LLM call per iteration with no distributed infrastructure. Applied to the Packomania csqv circle-packing benchmark, it produced new best-known solutions for 10 of 12 targets (N=101-114), improving on prior records by 2.4%-5.4%, independently verified and accepted by Packomania, at a total LLM cost of $27.72 over 15 iterations in about 8 hours on a consumer PC. The authors also analyze cost-efficiency dynamics across iterations and propose a plateau-detection mechanism that would have cut cost by 50% with negligible quality loss, and catalog several non-trivial algorithmic ideas (e.g. hexagonal lattice initialization, defect migration) the LLM discovered on its own.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core loop — LLM proposes a full candidate program, an independent zero-tolerance (no-shared-code) verifier checks it, only verified improvements are kept, with a scoreboard/history fed back into the next prompt — is structurally analogous to our best-of-N + frozen-verifier screening setup (problem 6, self-play/verifier-in-the-loop training) and to problem 1 (structural validity via execution/verifier-guided generation), though here the &#39;decoder&#39; is an LLM prompted in natural language rather than our trained graph-transformer. The &#39;full replacement over patch&#39; design choice and the per-target-best-tracking-separate-from-champion idea could inform how we structure rejection-sampled SFT rounds or best-of-N bookkeeping across many parts. The plateau-detection mechanism (windowed diminishing-returns stopping) is a directly transferable, cheap idea for deciding when to stop a best-of-N sampling budget or a self-play round for a given part/target.</dd>
+    <dt>Additional context</dt>
+    <dd>This is an LLM-agent (prompted-program-search) paper, not a trained neural decoder, so the applicability is at the level of loop design and verifier discipline rather than architecture. Results (circle packing record-breaking) are in a very different domain (continuous geometric optimization via classical numerical methods) and the &#39;verifier&#39; here is a simple feasibility/overlap checker, much simpler than our scaled-Jacobian / surface-fidelity verifier — the core principle (independent, zero-tolerance, no-shared-code checker) is the transferable piece. Small-scale, single-author, non-peer-reviewed-venue paper (practicalsystems.io); treat headline numbers as self-reported though independently accepted by a third-party database (Packomania), which adds some credibility. The cost/iteration economics (specific dollar amounts) are not generalizable to our setting since they depend on LLM-as-agent pricing, not model training cost.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.05093</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.16485">
   <div class="card-head">
-<span class="rank">#1</span>    <span class="badge" title="composite RICE score">0.093</span>
+<span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.093</span>
     <span class="card-title">HiFi-BRep is a two-stage VAE + latent-diffusion pipeline for B-Rep generation. The topo...</span>
   </div>
   <dl class="fields">
@@ -652,7 +964,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2609.01441">
   <div class="card-head">
-<span class="rank">#2</span>    <span class="badge" title="composite RICE score">0.078</span>
+<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.078</span>
     <span class="card-title">Defines a per-edge structural invariant, edge-girth g_e (length of the shortest cycle t...</span>
   </div>
   <dl class="fields">
@@ -678,7 +990,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25622">
   <div class="card-head">
-<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.077</span>
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.077</span>
     <span class="card-title">RefineCut is a two-stage training recipe plus a closed-loop inference procedure for a c...</span>
   </div>
   <dl class="fields">
@@ -704,7 +1016,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25608">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.075</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.075</span>
     <span class="card-title">A wall-first network reuses the Raster2Seq backbone (ResNet features + deformable-atten...</span>
   </div>
   <dl class="fields">
@@ -728,9 +1040,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.04697">
+  <div class="card-head">
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.075</span>
+    <span class="card-title">SQL-Zero is a proposer-solver self-play framework in which a challenger and a solver bo...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper contributes SQL-Zero, an execution-verified self-play framework that trains a Text-to-SQL solver with zero annotated NL-SQL pairs, using only database schemas, contents, and execution as ground truth. Under a controlled common evaluation pipeline, self-play improves over the zero-shot base by 6.6 points at 3B and 7.3 points at 7B on BIRD dev, and the 3B model also transfers to unseen Spider databases and paraphrased questions. They additionally show the self-play solver outperforms a matched control trained on human BIRD gold labels over the same databases, though an exact paired statistical test does not resolve that margin, and that self-play still adds gains on top of a strong supervised initialization (OmniSQL-7B).</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Strongly applicable to hexgen&#39;s self-play/verifier-in-the-loop and structural-validity priorities. SQL-Zero&#39;s core mechanism -- a challenger that proposes execution-verified tasks calibrated to be &#39;hard but solvable&#39; for the current model, used to drive RL training of a solver against a frozen oracle -- is directly analogous to training hexgen against its frozen mesh verifier. The difficulty-targeting curriculum (weight/sample training pairs by the current model&#39;s hit rate rather than uniformly) is a transferable idea for hexgen&#39;s inverse-factory sampling, even without a full adversarial challenger. The three-tier minimal reward (full credit for verifier-passing match, partial credit for &#39;compiles but fails verifier&#39;, zero for &#39;does not compile&#39;) is a simple, directly transferable reward-shaping pattern for any best-of-N or RL-style hexgen training signal. The template-deduplication/repetition-penalty mechanism for preventing generator diversity collapse is also relevant if hexgen&#39;s inverse factory is ever extended with a learned task-proposing component.</dd>
+    <dt>Additional context</dt>
+    <dd>Strong conceptual match for problem #6 (self-play/verifier-in-the-loop training) and partially #1 (execution-guided generation), despite the domain (text-to-SQL) and model scale (3B/7B LLM) being very different from hexgen&#39;s 27M graph-transformer. Key caveat to carry forward: the self-evolution loop does not compound past the first iteration, and at larger model scale the curriculum trades in-domain gains for transfer degradation -- a useful cautionary data point if hexgen ever moves from a static inverse-factory + best-of-N setup toward a full proposer-solver self-play loop. The difficulty-targeted sampling idea could likely be adopted more cheaply than the full challenger: just weight/sample harder (B-rep, program) pairs by current-model hit rate. Code is released at an anonymized repository link.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.90</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.04697</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.28229">
   <div class="card-head">
-<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.073</span>
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.073</span>
     <span class="card-title">SWYB (Stay Within Your Bounds) models the grammar as a pushdown automaton (PDA) and off...</span>
   </div>
   <dl class="fields">
@@ -756,7 +1094,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.24338">
   <div class="card-head">
-<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.069</span>
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.069</span>
     <span class="card-title">SRD generates N candidate trajectories, routes each to Keep/Refine/Discard via rank-nor...</span>
   </div>
   <dl class="fields">
@@ -780,9 +1118,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.05221">
+  <div class="card-head">
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.069</span>
+    <span class="card-title">Qwen2.5-3B-Instruct is first adapted with field-weighted QLoRA supervision anchored to...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes a verifier-guided explainable reasoning framework combining gold-anchored QLoRA fine-tuning, task-aware routing to external symbolic verifiers (FOL/Z3 for logic, a unit-aware solver for physics) instead of a neural mixture-of-experts, and a group-relative RLVR scheme whose reward separately scores answer correctness (P1), evidence/unit consistency (P2), and reasoning depth (P3). It reports that on held-out educational QA examples RLVR substantially increases the reasoning-depth metric while leaving answer accuracy roughly stable, and that symbolic verification -- rather than RLVR or self-consistency alone -- delivers the largest gains in final answer correctness, particularly for physics questions.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Highly applicable as a training-pipeline template for hexgen&#39;s structural-validity and verifier-in-the-loop goals: (1) the task-aware router to an external, deterministic, machine-checkable verifier (FOL/Z3 for logic, unit-aware solver for physics) is structurally identical to dispatching a generated hexgen program to our frozen verifier (compiles / zero inverted elements / Jacobian and aspect-ratio bounds / surface fidelity / feature-edge capture / element-budget sanity) for a specific pass/fail breakdown rather than one opaque accept/reject signal. (2) &#39;Verifier-Guided Self-Revision&#39; (y~ = Revise(y, F_verifier(y))) is a direct analog of a repair/edit-distillation loop that could feed a specific verifier failure mode back into the decoder for a corrective regeneration pass rather than plain rejection sampling. (3) the group-relative RLVR reward (weighted sum of exact-correctness + dense partial credit + consistency + format terms, with GRPO-style advantage normalization within a sampled group of rollouts) is a concrete, reusable template for turning our verifier&#39;s multiple checks into a multi-term verifiable reward for an RLVR fine-tuning stage layered on top of supervised imitation. (4) the explicit empirical finding that RLVR mainly improved a reasoning-depth/explainability metric without improving execution/answer correctness, while the deterministic verifier gave the dominant correctness gain, is a useful cautionary prior suggesting that best-of-N + verifier screening may matter more for our structural-validity goal than RL fine-tuning of the policy alone.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is educational logic/physics QA with a 3B-parameter LLM on a single L4 GPU -- small-scale, single run, only 240 RLVR rollout steps with just 30 effective optimizer updates after skipping zero-variance groups; authors themselves flag the lack of confidence intervals/repeated runs as future work, and the 7-example Logic-Uncertain subset as too small to generalize from. Still, the three-way metric decomposition (exact correctness vs. consistency vs. reasoning-depth) and the verifier-guided revision plus group-relative multi-term reward design are clean, domain-independent ideas worth reusing even though the LLM-QA setting itself is unrelated to CAD/mesh generation. Code released on GitHub.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.90</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.05221</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2608.16742">
   <div class="card-head">
-<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.067</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.067</span>
     <span class="card-title">TDD-Agent is a single agent operationalizing test-driven development: Phase 1 (test-fir...</span>
   </div>
   <dl class="fields">
@@ -802,84 +1166,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.16742</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.25761">
-  <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.066</span>
-    <span class="card-title">Four sizes of Qwen2.5-Instruct (0.5B, 1.5B, 3B, 7B; 4-bit NF4 quantized) are evaluated...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper shows that under grammar-constrained decoding, beam search is never significantly worse than sample+vote (self-consistency) at matched inference budget, and is significantly better in 11 of 16 tested configurations -- the opposite of prior unconstrained-setting findings that favor self-consistency/sampling. It shows the grammar constraint itself can cost accuracy relative to unconstrained greedy decoding when the grammar&#39;s coverage is incomplete, causing correct, executable queries to be rejected and forcing worse forced continuations. It also shows additional inference-time compute (wider beams or more samples) reliably improves accuracy, especially for smaller models, but in 2 of the 3 tested model-size gaps this compute increase does not fully substitute for using a larger model.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly relevant to hexgen&#39;s core structural-validity problem (grammar/schema-constrained autoregressive DSL generation, verifier-screened best-of-N): (1) the paper&#39;s central finding -- that under a hard grammar constraint, beam search matches or beats sampling+execution-voting at every matched compute budget -- suggests hexgen&#39;s best-of-N-plus-verifier pipeline may benefit from adding or substituting a beam-search-style search over partial block/sweep/projection programs (possibly verifier- or partial-score-guided) rather than relying purely on independent sampling, since it targets the same structured/schema-constrained generation setting (problem 7) and constrained-decoding search-strategy tradeoff (problem 1). (2) Its diagnosis that an incomplete constraint grammar silently rejects valid, correct outputs and forces globally worse continuations is a concrete, transferable risk to audit in hexgen&#39;s DSL grammar/pointer-copy constraint set -- incompleteness there could be costing structural validity the same way, independent of model capacity. (3) The execution-based vote mechanism (group candidates by execution outcome, take the mode) is structurally analogous to hexgen&#39;s frozen verifier and worth comparing against beam-search-plus-verifier selection at matched compute. (4) The finding that inference compute only partially substitutes for model parameters is a relevant data point for hexgen&#39;s own tradeoff between the 27M-parameter model&#39;s capacity and the cost of larger best-of-N verifier passes.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a small, focused empirical study (two authors, one benchmark, one model family) rather than a new method paper -- treat its numeric findings as suggestive rather than general, per the authors&#39; own stated limitations. The text-to-SQL setting differs substantially from hexgen&#39;s pointer/copy-over-B-rep-graph decoding (different vocabulary structure, different grammar complexity, different notion of &#39;execution&#39;), so the specific magnitudes will not transfer, but the qualitative mechanisms (beam search advantage under hard constraints; grammar-incompleteness cost; partial-only compute-for-parameters substitution) are architecture-agnostic claims worth testing directly against hexgen&#39;s own verifier and DSL grammar. No code repository is mentioned/linked in the text, so replication would require reimplementing the beam-search/sample+vote comparison harness. Worth flagging to whoever owns hexgen&#39;s DSL grammar: run a coverage audit analogous to this paper&#39;s re-parsing analysis to check whether the hex-meshing DSL constraint set can express every valid block/sweep/projection program the deterministic mesher would accept.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.63</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.25761</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.25652">
-  <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.062</span>
-    <span class="card-title">RoofDiT is a two-stage pipeline built on the GSDiff framework: a conditional diffusion...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper formulates roof structure modeling as a generative problem over 2D roof graphs and proposes a diffusion-transformer prior that supports unconditional generation, footprint-conditioned generation, and image-guided reconstruction within a single model by varying the conditioning signal. It introduces relative geometry-aware attention, multimodal (footprint + image) conditioning, and a roof alignment regularizer tailored to recurring horizontal/vertical/diagonal roof patterns. The authors benchmark against a diffusion baseline (GSDiff), a geometric baseline (straight skeleton), and image-based reconstruction baselines (HEAT, RoofMapNet), showing improved distributional realism over GSDiff, a validity/flexibility tradeoff against straight skeleton, and competitive but not state-of-the-art reconstruction versus HEAT.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The relative geometry-aware attention mechanism (a small MLP mapping pairwise node offset/distance/direction into per-head attention-logit biases) is directly transferable to our graph-transformer B-rep encoder and pointer/copy heads: it is a lightweight, general way to inject explicit geometric relations (e.g., face-centroid offsets, adjacency angles) into attention over the face graph, which is squarely in our category-4 interest (Graphormer-style edge-biased attention / addressing into an input set) and could help disambiguate congruent/symmetric faces when pointing. The roof alignment regularizer — an auxiliary differentiable loss that softly penalizes deviation from a small set of canonical geometric relations during training — is a transferable pattern for shaping generation toward our own hard verifier criteria (e.g., scaled-Jacobian/aspect-ratio bounds, feature-edge capture) as a soft training signal that could reduce the reject rate before best-of-N verifier screening, rather than relying on rejection alone. The paper&#39;s explicit framing that &#39;validity is encouraged through learning rather than guaranteed by construction&#39; and its reliance on a downstream deterministic/verifiable stage (edge prediction, or in our case a frozen verifier) to make up the gap reinforces our architectural bet on pairing a learned generator with a frozen, machine-checkable verifier rather than expecting the generator alone to guarantee validity. The multimodal token-concatenation conditioning strategy (treating footprint vertices as additional tokens in the same representation space as generated nodes) is a loosely analogous idea to conditioning our decoder jointly on multiple structured input sources.</dd>
-    <dt>Additional context</dt>
-    <dd>This paper is out of our core domain (2D roof vector graphs from aerial imagery/footprints, computer vision/GIS application, not mechanical B-rep or hex-meshing), so most of its dataset, metrics, and baselines (GSDiff, straight skeleton, HEAT, RoofMapNet) are not directly reusable. The value here is narrowly mechanistic: the relative geometry-aware attention module and the soft alignment regularizer are small, self-contained architectural ideas worth mining rather than a paper to adopt wholesale. Note the dataset scale (~2,400 total roofs) is a similar order of magnitude to typical CAD auto-labeled corpora, so the paper&#39;s implicit lesson that a learned prior plus best-of-K sampling can partially compensate for limited deterministic guarantees is relevant context, though not a novel mechanism per se. No code repository is mentioned in the provided text (checked references and body), so mechanism reuse would require reimplementation from the equations given (Eqs. 2-5), which are fully specified and simple enough to reimplement quickly.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.63</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.25652</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2608.19751">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.062</span>
-    <span class="card-title">GenMatch maps a full dispatch batch directly to an assignment sequence via an encoder-d...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes GenMatch, stated to be the first end-to-end generative framework for ride-hailing Micro-View Order-Dispatching deployed in a production environment, replacing a multi-stage predict-then-match pipeline with a single encoder-decoder model that autoregressively generates the full batch assignment. It reports consistent improvements over competitive baselines in offline evaluation and online A/B tests across five cities in DiDi&#39;s international markets.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The State-Aware Pointer Decoder -- which autoregressively points into a graph&#39;s node set while dynamically masking candidates invalidated by prior selections -- is a close structural analogue to hexgen&#39;s pointer/copy heads addressing faces of the input B-rep graph: GenMatch&#39;s evolving-state masking mechanism (removing already-claimed nodes/edges from the pointer&#39;s feasible set at each decoding step) is directly transferable to enforcing hexgen&#39;s own structural constraints during autoregressive decoding, e.g. masking already-consumed faces or geometrically infeasible next-commands, which bears on care area 1 (structural validity) and area 4 (pointer/graph-transformer mechanisms).</dd>
-    <dt>Additional context</dt>
-    <dd>Deployed at production scale (DiDi, five cities), so the pointer-decoder-plus-dynamic-masking design has been stress-tested for latency and reliability under strict batch-level latency constraints, which is reassuring evidence for the masking idea -- though the application domain (bipartite driver-order matching) is unrelated to CAD/mesh generation, and the datasets/metrics are proprietary production data, not released.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.19751</span>
   </div>
 </a>
 
