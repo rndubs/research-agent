@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-10</title>
+<title>hexgen digest — 2026-09-11</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-10 · 26 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-09-11 · 26 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -284,6 +284,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.11573">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.036</span>
+    <span class="card-title">The paper introduces the canonical region graph: (1) canonical regions merge faces that...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper shows that popular B-rep encoders (UV-Net, AAGNet, BRepNet) are not robust to variation in B-rep partitioning, surface encoding, or rigid-body pose for the same underlying solid, with accuracy collapsing under standard-benchmark perturbations, kernel import/export round-trips, and a new human-authored FreeCAD dataset of designers modeling the same part differently. It proposes the canonical region graph, an input representation whose nodes/features/coordinate frame are derived from the solid itself, proves theoretical invariance guarantees to repartitioning and rigid motion, and shows it matches the strongest baseline on clean benchmarks while remaining stable under every tested perturbation, outperforming data augmentation as a fix.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Highly applicable: hexgen&#39;s graph-transformer encoder reads a B-rep face/edge/vertex graph and hexgen explicitly has a closed &#39;rotation-invariant encoder&#39; line -- this paper&#39;s canonical region graph offers a concrete, proven alternative/complementary mechanism (canonical frame from centroid + principal axes, scale normalization, exact-integral features) for rigid-motion invariance, plus a second axis of robustness hexgen does not appear to address: invariance to B-rep re-partitioning/re-triangulation artifacts, which is exactly the kind of domain-gap/tokenization-mismatch issue relevant when training on synthetic &#39;inverse factory&#39; B-reps vs auto-labeled real CAD parts that may be partitioned differently by different kernels or construction templates. The face-merging-into-region-nodes idea could directly reduce spurious variation in hexgen&#39;s pointer/copy targets (addressing congruent/split faces) since multiple raw faces of one underlying surface collapse to one canonical node.</dd>
+    <dt>Additional context</dt>
+    <dd>Directly measures the same kind of representation robustness problem hexgen would face if trained on both synthetic inverse-factory B-reps and auto-labeled real CAD parts from different construction templates/kernels -- worth reading in full. Caveat: the method loses information that might correlate with &#39;how a part was built&#39; (their Fusion-360 operation-labeling ablation), which is analogous to a concern for hexgen if any of its target programs are meant to reflect specific construction history rather than pure final-shape validity; also their pointer targets are per-region not per-original-face, which would require adapting hexgen&#39;s pointer/copy head to point at canonical regions instead of raw B-rep faces (or mapping region predictions back onto faces, as they do for segmentation).</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.11573</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2609.03811">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.035</span>
@@ -440,32 +466,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2609.02401">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.021</span>
-    <span class="card-title">CA-OPD gates every student-generated token by exact teacher confidence (not just teache...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces Confidence-Aware On-Policy Distillation (CA-OPD), which uses exact teacher confidence (rather than rank) to decide when to correct a student&#39;s autoregressive rollout, and couples that same correct/retain decision to which supervision signal (hard cross-entropy vs. full distributional) is applied at each position. In a multi-teacher GUI-grounding + OCR distillation setup into Qwen3.5-0.8B, CA-OPD beats the base model, offline KD, standard on-policy distillation, and speculative knowledge distillation on all six target benchmarks, and controlled ablations show the gains depend on intervention placement and progressive control, not just intervention frequency.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The confidence-gated intervene-or-retain mechanism is a strong candidate for a DAgger-style repair/edit distillation scheme for hexgen: during rollout, a stronger oracle/verifier-in-the-loop signal (or a higher-capacity teacher policy) could replace low-confidence DSL command predictions with a corrected command while leaving high-confidence commands untouched, with intervention frequency annealed down as the ~27M model&#39;s own rollouts become more reliable -- directly targeting our care-area-1 goal of getting the decoder to emit structurally valid programs. The idea of tying the supervision TYPE (hard replacement vs. soft distributional) to the same confidence gate used for rollout control is a specific, transferable design choice we could borrow even if we don&#39;t adopt the full framework.</dd>
-    <dt>Additional context</dt>
-    <dd>Structured visual prediction (GUI/OCR token sequences) is architecturally close to our setting (autoregressive decoder over a structured output space with compounding-error risk), more so than most other papers in this batch, but there is no B-rep/CAD or geometric-verifier connection here -- &#39;teacher confidence&#39; would need to be replaced by something we can compute cheaply for hexgen (e.g. a smaller learned critic, or the frozen verifier applied to partial/simulated completions) since we don&#39;t have a stronger teacher policy in the same sense.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.02401</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2609.09776">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.020</span>
@@ -514,32 +514,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.09876</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2609.02817">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.017</span>
-    <span class="card-title">Cliff uses a stronger teacher LLM to locate the single &#39;Pitfall Step&#39; (first mistake) i...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes Cliff, a reward-shaping method that asks a teacher model to identify only the first mistake in a rollout (rather than fully evaluating every step), decomposing rollouts into a valid prefix and an invalid suffix for GRPO-style token-level advantage assignment. Across 12 math/coding scenarios it outperforms on-policy distillation by 15% and vanilla GRPO by 7%, even with only moderately capable teachers, and the authors show the gains come from this two-segment credit assignment rather than merely adding a teacher signal.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core mechanism -- using a stronger checker to localize the FIRST point at which an autoregressive rollout goes wrong, then giving differentiated credit to the valid prefix vs. the invalid suffix -- maps directly onto hexgen&#39;s own verifier-in-the-loop training: our frozen verifier already tells us pass/fail (and even which check failed, e.g. first inverted element or first bad face-pointer), so Cliff-style prefix/suffix credit assignment could turn our coarse best-of-N accept/reject signal into token-level (i.e. command-level) advantages during RL fine-tuning, potentially improving structural-validity learning beyond pure imitation. It&#39;s also a plausible mechanism for the DAgger-style repair/edit distillation we&#39;re interested in: the &#39;pitfall step&#39; the verifier or a teacher identifies (e.g. the first DSL command that makes the mesh invalid) is a natural boundary for constructing repair-distillation training pairs.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is pure LLM math/code reasoning, not geometry/program synthesis, so nothing here is plug-and-play; the transferable part is purely the credit-assignment idea (localize-first-failure -&gt; segment rollout -&gt; differentiated advantage), which would need adaptation to our deterministic mesher verifier (which can already point to the exact failing check, arguably an even stronger &#39;pitfall&#39; signal than an LLM judge). Authors note in future work they plan to extend Cliff to agentic settings, which is worth tracking.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.02817</span>
   </div>
 </a>
 
@@ -722,6 +696,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.08497</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.11708">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.006</span>
+    <span class="card-title">LASP (Language-Augmented Semantic Priors) is a semantic reasoning layer above existing...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces LASP, described as the first language-driven framework that predicts structured B-spline priors from symbolic CAD modeling histories via rich-text semantic reasoning and a two-stage LLM fine-tuning pipeline. It shows these language-derived priors substantially improve both parameter-level prediction accuracy (e.g. B-spline detection F1 0.95 vs 0.51-0.67 for baselines) and, when instantiated as solver-accessible configuration choices, downstream engine-level fitting quality (71.2% RMS and 85.6% Hausdorff distance reduction), evaluated on an extended ABC-dataset subset via OpenCascade.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core transferable mechanism is using an LLM/language-conditioned model to predict structured, solver-usable priors from a symbolic procedural history (construction-history-as-representation, our care area 3) that then bias a deterministic geometric solver&#39;s search -- directly analogous to using a learned model to propose structured parameters (e.g. block/sweep/projection command arguments) that steer hexgen&#39;s deterministic mesher toward valid, high-quality configurations. The two-stage local-then-global autoregressive prior prediction over a sequence of operations is also a reasonable template for conditioning program-token generation on accumulated context.</dd>
+    <dt>Additional context</dt>
+    <dd>This is not directly about hex-meshing or pointer/copy networks over B-rep graphs -- it targets B-spline surface fitting parameters, not mesh-generation programs, and its &#39;verifier&#39; is a downstream fitting-error metric rather than a hard machine-checkable pass/fail gate. The LLM backbone (Qwen3-14B) is far larger than hexgen&#39;s 27M-parameter model, so the approach as implemented is not directly reusable at hexgen&#39;s scale; the transferable idea is the semantic-prior-as-solver-configuration-bias pattern, not the specific architecture.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.11708</span>
   </div>
 </a>
 
