@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-11</title>
+<title>hexgen digest — 2026-09-12</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-11 · 26 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-09-12 · 23 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -310,32 +310,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2609.03811">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.035</span>
-    <span class="card-title">VisCAD-M1 is a 27B multimodal model trained with a three-stage pipeline (large-scale mi...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper presents VisCAD, a foundation model suite for industrial CAD: VisCAD-M1 (27B), which achieves the best part-level profile-average score among evaluated models on PubCADBench/RealCADBench (0.5540 vs. 0.5496 for the best frontier model), rising to 0.5797 with self-reranking test-time scaling; and VisCAD-H1, a domain-specific assembly harness that scores 85.0 on an assembly judge versus 68.0 (Codex) and 52.0 (Claude Code). It also contributes a data-curation pipeline unifying heterogeneous CAD data into intent-program-shape triples and a multi-stage training recipe.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Several mechanisms transfer directly to hexgen: (1) parallel test-time scaling, using the model itself as a listwise reranker/verifier over multiple best-of-N rollouts, is directly analogous to hexgen&#39;s best-of-N + frozen verifier screening and suggests a learned reranker could be layered on top of or in place of hand-coded verifier checks to break ties among verifier-passing candidates; (2) the three-stage training curriculum (syntax/coverage mid-training -&gt; noisy-domain robust SFT with multi-candidate distillation -&gt; high-quality generate-verify-feedback fine-tuning) is a template for combining hexgen&#39;s inverse-factory synthetic data with auto-labeled real CAD parts while explicitly targeting the synthetic-to-real domain gap; (3) the DSL-agnostic intermediate representation for assembly generation is a reusable pattern for representing an hex-mesh program independent of mesher backend syntax, and the staged gating (syntax-valid per-part IR before anything is treated as a solid) parallels grammar/constrained decoding for structural validity.</dd>
-    <dt>Additional context</dt>
-    <dd>VisCAD targets general parametric CAD program generation (FreeCAD Python) rather than hex-meshing DSLs specifically, and its verifier is a self-reranking judge model rather than a hard machine-checkable compile/mesh-quality check like hexgen&#39;s; the domain-gap-bridging role of &#39;robust SFT&#39; (noisy real photos, multi-candidate teacher distillation) is the most directly reusable idea for hexgen&#39;s real-CAD auto-labeled data. No training/inference code appears to be released.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.03811</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2609.08602">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.031</span>
@@ -384,58 +358,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.05328</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2609.04063">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.028</span>
-    <span class="card-title">SignBalance replaces GRPO&#39;s composition-dependent advantage with a magnitude that keeps...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper identifies a spurious-advantage failure mode in the GRPO advantage estimator that rewards lucky guesses as much as genuine reasoning whenever a task&#39;s effective answer surface is finite. It characterizes three cases where this becomes sizeable (bounded-answer tasks, bounded sub-cases within nominally open-answer sets such as 55.95% of MATH-7.5K, and multi-turn search agents with outcome-only reward) and proposes SignBalance, an advantage estimator whose per-rollout magnitude is independent of within-group composition. Experiments across math reasoning (0.5B and 3B Qwen models) and multi-turn search-agent QA (7B) show SignBalance matches GRPO on open-answer math while giving consistent, sustained gains on bounded-answer math and search-agent benchmarks.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>hexgen&#39;s proposed training regime (best-of-N candidate programs screened by a frozen, machine-checkable verifier) is structurally the finite/bounded-answer-surface + search-agent case this paper analyzes: many distinct DSL programs can pass the identical verifier check, so if hexgen is ever trained with GRPO-style RL against the verifier&#39;s pass/fail signal (rather than only supervised imitation + best-of-N filtering), a standard GRPO advantage would over-reward rollouts that pass the verifier by chance (e.g. degenerate or memorized command sequences) as much as genuinely well-formed programs. SignBalance&#39;s composition-independent, sign-based advantage with per-class force balance is a directly transferable one-line fix to avoid this reward-hacking-like failure mode in verifier-in-the-loop RL fine-tuning of the graph-transformer decoder.</dd>
-    <dt>Additional context</dt>
-    <dd>Caveat: this is anticipatory value, not immediately applicable, since hexgen&#39;s current recipe is supervised imitation on inverse-factory + auto-labeled real parts with best-of-N verifier screening at inference, not GRPO-style policy-gradient RL. The multi-turn search-agent case (many action sequences reaching the same correct final answer) is the closest structural analogy to autoregressive program generation where many token sequences can compile to a verifier-passing mesh. Worth keeping on file for if/when the roadmap adds RLVR-style fine-tuning against the frozen verifier.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.04063</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2609.03773">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.027</span>
-    <span class="card-title">RealCADBench curates 12,632 tasks across 19 factory-automation categories spanning text...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces RealCADBench, a large real-industrial-intent CAD benchmark spanning four input modalities and both part and assembly modeling with a shared FreeCAD execution contract. It proposes an evaluation protocol beyond executability/IoU that adds a rubric-based visual-semantic identity Judge, and reports a comparative study showing no single frontier model or agent leads all four metrics, that difficulty ordering shifts across input regimes, and that agentic execution-and-repair loops can trade off geometric IoU gains against loss of visual-semantic identity.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>This is close kin to hexgen&#39;s own evaluation design: RealCADBench&#39;s core lesson -- that executability alone is a poor proxy for structural/geometric fidelity and that different axes (compiles/executes vs. geometric IoU vs. semantic identity) can rank systems differently -- directly supports hexgen&#39;s multi-criterion frozen verifier (compiles, zero inverted elements, scaled-Jacobian/aspect-ratio bounds, surface-match fidelity, feature-edge capture, element-budget sanity) rather than a single pass/fail signal. Its shared-runtime, score-only-the-executed-artifact protocol, its staged reference-verification pipeline (candidate proposal -&gt; screening -&gt; expert acceptance, ~17% accept rate) for building trustworthy (B-rep, program) ground truth from noisy real industrial CAD assets, and its finding that agentic execute-and-repair harnesses trade IoU for structural/identity correctness are all directly transferable to how hexgen should construct and validate its real-CAD auto-labeled training/eval data and interpret verifier-passing-but-low-quality outputs.</dd>
-    <dt>Additional context</dt>
-    <dd>Produced by the same team as the VisCAD paper (2609.03811) and used as one of VisCAD&#39;s evaluation benchmarks; the two should be read together. RealCADBench targets general parametric CAD (FreeCAD Python) rather than hex-meshing specifically, and its &#39;verifier&#39; is a learned visual-semantic Judge rather than hexgen&#39;s hard geometric/mesh-quality checks, but the benchmark-design lessons (multi-axis evaluation, executability != quality) transfer directly.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.03773</span>
   </div>
 </a>
 
