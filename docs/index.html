@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-17</title>
+<title>hexgen digest — 2026-09-18</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,35 +98,9 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-17 · 6 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-09-18 · 5 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
-<a class="card"
-   href="https://arxiv.org/abs/2609.09572">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.074</span>
-    <span class="card-title">The paper establishes finite-sample risk bounds for mixed training (synthetic and real...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proves that mixed training (synthetic and real data combined throughout SGD) induces strong model collapse -- a persistent excess-risk floor -- while two-stage training, which restricts synthetic data to an initial stage, avoids this floor entirely, showing collapse is not inevitable under a simple data curriculum. It further derives scaling laws under a random sketch model showing larger models can amplify synthetic-induced degradation under mixing, quantifies how high-quality synthetic pretraining can reduce bias in two-stage training, and gives an exact finite-sample condition for two-stage training to strictly outperform real-data-only training.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>hexgen trains on a mixture of synthetic &#39;inverse factory&#39; (B-rep, program) pairs and real, auto-labeled CAD parts -- exactly the mixed-vs-staged synthetic/real training regime this paper analyzes. Its core finding -- that mixing synthetic and real data throughout training can induce a persistent excess-risk floor (model collapse) that a two-stage curriculum (synthetic first, then real-only fine-tuning) avoids -- is directly actionable: it suggests hexgen should consider a staged synthetic-then-real curriculum (or at least measure for a collapse floor under its current mixed training) rather than assuming naive mixing is safe, and its finite-sample condition for when synthetic data helps gives a concrete criterion for how much/what-quality synthetic &#39;inverse factory&#39; data to keep relative to real CAD data (care area 2: data-diversity vs data-volume tradeoffs for geometric generation).</dd>
-    <dt>Additional context</dt>
-    <dd>This is a theory paper in linear regression, not a directly applicable algorithm -- transfer to hexgen&#39;s nonlinear graph-transformer setting is by analogy only. Still, the qualitative finding (mixed synthetic/real training can induce a collapse floor; staged training avoids it) is a specific, testable hypothesis worth checking empirically against hexgen&#39;s own synthetic-vs-real training mixture and curriculum ordering.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.09572</span>
-  </div>
-</a>
-
 <a class="card"
    href="https://arxiv.org/abs/2609.11573">
   <div class="card-head">
@@ -154,54 +128,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2609.09776">
+   href="https://arxiv.org/abs/2609.20814">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.020</span>
-    <span class="card-title">The paper models best-of-N selection as joint-Gaussian to derive verifier-gold correlat...</span>
+    <span class="badge" title="composite RICE score">0.021</span>
+    <span class="card-title">Pretrain a convolutional U-Net surrogate on 254,909 RANS airfoil solutions from one geo...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper proves verifier-gold correlation rho is the exact exchange rate between test-time compute and capability, with an unsound verifier paying a polynomial penalty N^(1/rho^2). It demonstrates, in program-synthesis testbeds and a pre-registered scaled replication, that unsound/frozen verifiers lose Soundness-under-Pressure and get hacked under best-of-N optimization while a sound or reality-settled verifier improves monotonically and closes the reward-hacking gap. With real LLM judges and unit-test execution as gold on MBPP/HumanEval, it further shows a weak judge loses soundness under best-of-N while a settlement model anchored to executed outcomes reduces judge pricing error, and that under real GRPO training a frozen reward model&#39;s executed reward collapses while a periodically-refit settled reward model preserves most of it.</dd>
+    <dd>The paper introduces a controlled experimental design that isolates one distribution-shift component at a time (geometry, then geometry+modeled-physics) rather than conflating multiple shifts, unlike prior PDE-pretraining evaluations. It shows that pretraining&#39;s sample-efficiency gain over training from scratch is not a fixed discount for distribution shift: the gain ordering between the two shift settings reverses as the target-data budget grows (favoring the harder shift at larger budgets), and that spreading a fixed budget across more distinct geometries (vs. more conditions per geometry) amplifies the pretraining gain only when the shift does not also change the modeled physics.</dd>
     <dt>Applicable to our work</dt>
-    <dd>This is a direct hit on hexgen&#39;s own training design: hexgen screens best-of-N candidate programs with a FROZEN machine-checkable verifier, and this paper&#39;s central finding is that unsound/frozen verifiers lose Soundness-under-Pressure and get hacked as best-of-N optimization pressure grows, while reality-anchored &#39;settlement&#39; (periodically re-anchoring the verifier/reward to executed ground truth instead of keeping it permanently frozen) closes the hacking gap and preserves most of the executed reward under live RL training. Even though hexgen&#39;s verifier is deterministic/machine-checkable rather than a learned judge, the paper&#39;s diagnostic (measure Soundness-under-Pressure as N grows) and its settlement-mechanism template are directly transferable if hexgen ever adds a learned critic/value model alongside the frozen verifier, or loosens/learns part of the verifier to reduce false negatives.</dd>
+    <dd>The paper&#39;s core methodology -- decomposing a domain gap into separate shift components (here: geometry vs. modeled physics) and measuring how the sample-efficiency benefit of pretraining/synthetic data depends jointly on target-budget size and target-data diversity -- is directly transferable to our own synthetic-inverse-factory-to-real-CAD domain gap: we could similarly vary &#39;shift components&#39; one at a time (e.g. construction-template distribution vs. face-count/topology distribution) to decompose why hexgen underperforms on real CAD parts. The breadth-vs-depth finding (spend a limited real-CAD fine-tuning budget on more distinct parts rather than more programs per part, unless it will not resolve a physics/template mismatch) is a concrete, low-cost experimental-design lesson for how we allocate real-CAD auto-labeled fine-tuning data. The frozen-backbone adapter result (83% of full fine-tuning gain at 5% extra params) also suggests a cheap way to re-target a pretrained hexgen encoder-decoder to a new part family without full retraining.</dd>
     <dt>Additional context</dt>
-    <dd>Largely theoretical/synthetic (small DSL programs, not CAD geometry); the paper&#39;s own Limitations section flags that the real-model results cover only one model family with heavy benchmark saturation and untested learning adversaries, so treat the specific numbers as suggestive rather than a validated recipe. The core actionable idea for hexgen is the diagnostic framing (soundness-under-pressure vs. best-of-N) and the general principle of not leaving a verifier permanently frozen if it can instead be periodically settled against new ground truth.</dd>
+    <dd>This is a workshop paper (Representations for the Physical Sciences) evaluated on 2D airfoil RANS surrogates with a single architecture family (U-Net) held fixed across the transfer sweep, so the generality of the shift-component ordering across architectures/domains is unverified. No code link is given in the excerpted text. The central lesson -- pretraining value is a joint function of target-data budget, target-data diversity, and source-target physics/distribution mismatch, not a fixed discount -- is a useful experimental-design template to borrow even though the domain (CFD surrogates) is unrelated to CAD/meshing.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.09776</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2609.09876">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.018</span>
-    <span class="card-title">QUAKE-CD represents binary change masks as grammar-constrained quadtree token sequences...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces QUAKE-CD, which recasts dense change-mask prediction as syntax-verifiable structured generation using a quadtree grammar, and QUAKE-CoT, a paired dataset of grounded chain-of-thought reasoning traces. It trains via curriculum SFT then grammar-gated dual-reward RL, achieving 78.31% accumulated F1 on QUAKE-CoT and clear gains over decoder-based and flat text-as-mask VLM baselines while producing more faithful bi-temporal reasoning.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core transferable mechanism is grammar-constrained, syntax-verifiable structured token generation for autoregressive decoders: a formal grammar with a single-pass linear-time parser gate that validates generated tokens, plus a rule-based structural reward computed directly from the decoded output, is directly analogous to constrained decoding for hexgen&#39;s DSL programs (care area 1) -- e.g. gating each program token against the DSL grammar during generation, and using a decoded-and-checked structural score as an RL reward alongside (or instead of relying solely on) the downstream frozen verifier. Their grammar-gated dual-reward RL (rule-based structural reward + learned semantic-quality reward) is a template for combining hexgen&#39;s frozen machine-checkable verifier with a learned critic reward.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is remote-sensing change detection, not CAD/mesh generation, so nothing about B-rep encoding, pointer/copy mechanisms, or 3D geometry transfers directly -- only the general grammar-constrained-decoding + dual-reward RL recipe. I did not review the appendix Failure Mode Analysis or Licenses/Limitations sections in this pass, so paper-stated limitations are not captured here.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.39</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.09876</span>
+    <span class="pid">2609.20814</span>
   </div>
 </a>
 
@@ -228,6 +176,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.17221</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.20323">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.007</span>
+    <span class="card-title">A hybrid neuro-symbolic pipeline: Phase I projects an unorganized point cloud onto the...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes NeuSOGA3D, a neuro-symbolic 3D reconstruction framework that restricts learning to perceptual abstraction and performs the actual geometric reconstruction through explicit, deterministic symbolic operators (implicit splines, PSPS volumetric lofting, and shape-preserving CSG), so every intermediate structure (contours, control polygons, cross-sections, CSG operators) remains inspectable and directly reusable as B-splines, NURBS surfaces, or boundary-representation (B-Rep) models. It also introduces a localized, compactly-supported R-function blending operator that suppresses the volumetric swelling and global distortion common in classical CSG blending. The framework is demonstrated across all 40 ModelNet40 categories without any category-specific training.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>This is a reverse-engineering direction (point cloud -&gt; symbolic CAD structures) rather than our forward direction (B-rep -&gt; hex-mesh program), but the underlying toolkit is relevant to our B-rep/CAD-representation-learning and structural-validity care areas: their deterministic, verifiable pipeline for turning geometric observations into explicit, CAD-compatible control structures (B-splines/NURBS/B-Rep) is a template for producing structurally-guaranteed-valid intermediate geometric representations, and their shape-preserving CSG blending operator (a compactly-supported R-function softMin) could be a useful deterministic primitive if hexgen or its verifier ever needs to compose or check solid-geometry operations symbolically rather than only via the downstream mesher. It&#39;s also a relevant related-work/contrast point: an alternative, fully-symbolic (non-autoregressive-decoder) philosophy for guaranteeing CAD-compatible, structurally valid output.</dd>
+    <dt>Additional context</dt>
+    <dd>Unreviewed arXiv preprint; authors explicitly note the methodology and presentation may change in revisions. No benchmark comparison against DeepCAD/BRepNet/Point2CAD/CAD-Recode/BrepGen is given in the excerpted text despite citing all of them as related work, so we cannot yet judge whether the reconstructed B-Reps are competitive in accuracy or compactness. The value to us is the symbolic geometry toolkit (PSPS splines, shape-preserving R-function CSG) as a possible verifier/utility primitive, not a directly transferable model architecture, since the task (point-cloud reverse engineering) differs from ours (program synthesis from an existing B-rep).</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.44</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.20323</span>
   </div>
 </a>
 
