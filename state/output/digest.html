@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-22</title>
+<title>hexgen digest — 2026-09-23</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,9 +98,35 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-22 · 3 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-09-23 · 5 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2609.26420">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.087</span>
+    <span class="card-title">Sample-simulate-select (S3) draws N candidates per prompt from a frozen text-to-motion...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces S3, a training-free pipeline that composes a frozen text-to-motion generator, a deterministic IK retargeter, and a physics simulator running the exact deployment tracking policy as a best-of-N selector. Because the simulator is the verifier, S3 attains the any-of-N ceiling by construction, letting the authors measure how much of the human-to-humanoid gap is closeable by selection alone versus requiring training. They show selection raises upright execution from 83.5% to 89.5% (and 80.5% to 89.5% on the full 4,184-prompt test split), that a cheap kinematic fall-predictor recovers only a quarter of this gain, and that all 177 gate-selected clips executed successfully on a real robot.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core best-of-N-screened-by-a-frozen-deterministic-verifier pattern is exactly hexgen&#39;s own architecture, so this paper&#39;s evaluation protocol is directly transferable: measure the &#39;any-of-N ceiling&#39; of the frozen hexgen decoder separately from what additional training buys, to see how much headroom sampling alone can close versus needing better training data. Its central finding -- that a cheap proxy/kinematic verifier with strong population-level classification accuracy (AUROC 0.90) still recovers only a quarter of the achievable gain because within-prompt ranking is harder than population classification -- is a direct caution against substituting a cheaper learned critic for hexgen&#39;s frozen machine-checkable verifier when doing best-of-N selection. The paper&#39;s method of isolating a specific unrecoverable failure class (squat/bend motions) and showing that only targeted training data (not more sampling) fixes it is a useful diagnostic pattern for identifying which classes of B-rep parts hexgen&#39;s decoder structurally cannot produce valid programs for, versus which just need more samples.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain (humanoid motion control) is unrelated to CAD/mesh generation, so nothing here is directly reusable as code, but the evaluation methodology (ceiling measurement, kinematic-vs-execution verifier comparison, isolating unrecoverable failure classes) is a strong conceptual match to hexgen&#39;s own best-of-N + frozen verifier design and worth reading in full for the S3 experimental protocol (Section III-E, IV-B, IV-C, IV-D).</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.26420</span>
+  </div>
+</a>
+
 <a class="card"
    href="https://arxiv.org/abs/2609.20814">
   <div class="card-head">
@@ -150,6 +176,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.17221</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.26039">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.007</span>
+    <span class="card-title">EMERGE is a fully SE(3)-equivariant graph-based diffusion backbone that alternates Mult...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces EMERGE, described as the first fully SE(3)-equivariant graph-based diffusion backbone for 3D point cloud generation. It proposes Canonical Frame Voxel Pooling and a Global Invariant Feature Attention module to capture multi-scale topology while strictly preserving continuous spatial symmetries, and a provably correct, parameter-free distribution-alignment technique that enables zero-shot super-resolution at arbitrary inference resolutions without retraining. The authors report state-of-the-art point cloud generation quality on ShapeNet with up to 10x fewer training epochs than prior diffusion baselines.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The Canonical Frame Voxel Pooling mechanism -- canonicalizing local geometry via covariance-matrix eigenvectors before any pooling/aggregation step, then un-projecting back -- is a concrete, transferable technique for building rotation-robust multi-scale pooling over a B-rep face-adjacency graph without discretizing to a fixed rotation group, offering a genuinely different mechanism than a native rotation-invariant encoder (which our problem statement notes is a closed design line) and could instead be explored as a deployment-time or architectural add-on for hexgen&#39;s pointer/graph-transformer encoder. The 13-dimensional SE(3)-invariant local geometric feature construction (curvature/linearity/planarity from neighborhood covariance eigenvalues) is also a lightweight way to inject rotation-invariant local shape descriptors into message passing that could enrich hexgen&#39;s face/edge features without adding discretization artifacts.</dd>
+    <dt>Additional context</dt>
+    <dd>Applicability is at the mechanism level only -- the application domain (unordered point cloud diffusion generation) is far from hexgen&#39;s B-rep-to-program autoregressive decoding, and the problem statement explicitly closes the &#39;native rotation-invariant encoder&#39; line, so this is most useful as a reference for an alternative equivariance mechanism (canonical-frame pooling) rather than a wholesale encoder replacement. No code link is given in the extracted text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.26039</span>
   </div>
 </a>
 
@@ -234,9 +286,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.26420">
+  <div class="card-head">
+<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.087</span>
+    <span class="card-title">Sample-simulate-select (S3) draws N candidates per prompt from a frozen text-to-motion...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces S3, a training-free pipeline that composes a frozen text-to-motion generator, a deterministic IK retargeter, and a physics simulator running the exact deployment tracking policy as a best-of-N selector. Because the simulator is the verifier, S3 attains the any-of-N ceiling by construction, letting the authors measure how much of the human-to-humanoid gap is closeable by selection alone versus requiring training. They show selection raises upright execution from 83.5% to 89.5% (and 80.5% to 89.5% on the full 4,184-prompt test split), that a cheap kinematic fall-predictor recovers only a quarter of this gain, and that all 177 gate-selected clips executed successfully on a real robot.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core best-of-N-screened-by-a-frozen-deterministic-verifier pattern is exactly hexgen&#39;s own architecture, so this paper&#39;s evaluation protocol is directly transferable: measure the &#39;any-of-N ceiling&#39; of the frozen hexgen decoder separately from what additional training buys, to see how much headroom sampling alone can close versus needing better training data. Its central finding -- that a cheap proxy/kinematic verifier with strong population-level classification accuracy (AUROC 0.90) still recovers only a quarter of the achievable gain because within-prompt ranking is harder than population classification -- is a direct caution against substituting a cheaper learned critic for hexgen&#39;s frozen machine-checkable verifier when doing best-of-N selection. The paper&#39;s method of isolating a specific unrecoverable failure class (squat/bend motions) and showing that only targeted training data (not more sampling) fixes it is a useful diagnostic pattern for identifying which classes of B-rep parts hexgen&#39;s decoder structurally cannot produce valid programs for, versus which just need more samples.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain (humanoid motion control) is unrelated to CAD/mesh generation, so nothing here is directly reusable as code, but the evaluation methodology (ceiling measurement, kinematic-vs-execution verifier comparison, isolating unrecoverable failure classes) is a strong conceptual match to hexgen&#39;s own best-of-N + frozen verifier design and worth reading in full for the S3 experimental protocol (Section III-E, IV-B, IV-C, IV-D).</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.26420</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2609.01441">
   <div class="card-head">
-<span class="rank">#3</span>    <span class="badge" title="composite RICE score">0.078</span>
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.078</span>
     <span class="card-title">Defines a per-edge structural invariant, edge-girth g_e (length of the shortest cycle t...</span>
   </div>
   <dl class="fields">
@@ -262,7 +340,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25622">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.077</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.077</span>
     <span class="card-title">RefineCut is a two-stage training recipe plus a closed-loop inference procedure for a c...</span>
   </div>
   <dl class="fields">
@@ -288,7 +366,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25608">
   <div class="card-head">
-<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.075</span>
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.075</span>
     <span class="card-title">A wall-first network reuses the Raster2Seq backbone (ResNet features + deformable-atten...</span>
   </div>
   <dl class="fields">
@@ -314,7 +392,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2609.04697">
   <div class="card-head">
-<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.075</span>
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.075</span>
     <span class="card-title">SQL-Zero is a proposer-solver self-play framework in which a challenger and a solver bo...</span>
   </div>
   <dl class="fields">
@@ -340,7 +418,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2609.09572">
   <div class="card-head">
-<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.074</span>
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.074</span>
     <span class="card-title">The paper establishes finite-sample risk bounds for mixed training (synthetic and real...</span>
   </div>
   <dl class="fields">
@@ -366,7 +444,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.28229">
   <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.073</span>
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.073</span>
     <span class="card-title">SWYB (Stay Within Your Bounds) models the grammar as a pushdown automaton (PDA) and off...</span>
   </div>
   <dl class="fields">
@@ -392,7 +470,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.24338">
   <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.069</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.069</span>
     <span class="card-title">SRD generates N candidate trajectories, routes each to Keep/Refine/Discard via rank-nor...</span>
   </div>
   <dl class="fields">
@@ -412,32 +490,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.24338</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2609.05221">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.069</span>
-    <span class="card-title">Qwen2.5-3B-Instruct is first adapted with field-weighted QLoRA supervision anchored to...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes a verifier-guided explainable reasoning framework combining gold-anchored QLoRA fine-tuning, task-aware routing to external symbolic verifiers (FOL/Z3 for logic, a unit-aware solver for physics) instead of a neural mixture-of-experts, and a group-relative RLVR scheme whose reward separately scores answer correctness (P1), evidence/unit consistency (P2), and reasoning depth (P3). It reports that on held-out educational QA examples RLVR substantially increases the reasoning-depth metric while leaving answer accuracy roughly stable, and that symbolic verification -- rather than RLVR or self-consistency alone -- delivers the largest gains in final answer correctness, particularly for physics questions.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Highly applicable as a training-pipeline template for hexgen&#39;s structural-validity and verifier-in-the-loop goals: (1) the task-aware router to an external, deterministic, machine-checkable verifier (FOL/Z3 for logic, unit-aware solver for physics) is structurally identical to dispatching a generated hexgen program to our frozen verifier (compiles / zero inverted elements / Jacobian and aspect-ratio bounds / surface fidelity / feature-edge capture / element-budget sanity) for a specific pass/fail breakdown rather than one opaque accept/reject signal. (2) &#39;Verifier-Guided Self-Revision&#39; (y~ = Revise(y, F_verifier(y))) is a direct analog of a repair/edit-distillation loop that could feed a specific verifier failure mode back into the decoder for a corrective regeneration pass rather than plain rejection sampling. (3) the group-relative RLVR reward (weighted sum of exact-correctness + dense partial credit + consistency + format terms, with GRPO-style advantage normalization within a sampled group of rollouts) is a concrete, reusable template for turning our verifier&#39;s multiple checks into a multi-term verifiable reward for an RLVR fine-tuning stage layered on top of supervised imitation. (4) the explicit empirical finding that RLVR mainly improved a reasoning-depth/explainability metric without improving execution/answer correctness, while the deterministic verifier gave the dominant correctness gain, is a useful cautionary prior suggesting that best-of-N + verifier screening may matter more for our structural-validity goal than RL fine-tuning of the policy alone.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is educational logic/physics QA with a 3B-parameter LLM on a single L4 GPU -- small-scale, single run, only 240 RLVR rollout steps with just 30 effective optimizer updates after skipping zero-variance groups; authors themselves flag the lack of confidence intervals/repeated runs as future work, and the 7-example Logic-Uncertain subset as too small to generalize from. Still, the three-way metric decomposition (exact correctness vs. consistency vs. reasoning-depth) and the verifier-guided revision plus group-relative multi-term reward design are clean, domain-independent ideas worth reusing even though the LLM-QA setting itself is unrelated to CAD/mesh generation. Code released on GitHub.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.90</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.83</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.05221</span>
   </div>
 </a>
 
