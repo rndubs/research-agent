@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-24</title>
+<title>hexgen digest — 2026-09-25</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-24 · 6 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-09-25 · 8 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -154,32 +154,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2609.20814">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.021</span>
-    <span class="card-title">Pretrain a convolutional U-Net surrogate on 254,909 RANS airfoil solutions from one geo...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces a controlled experimental design that isolates one distribution-shift component at a time (geometry, then geometry+modeled-physics) rather than conflating multiple shifts, unlike prior PDE-pretraining evaluations. It shows that pretraining&#39;s sample-efficiency gain over training from scratch is not a fixed discount for distribution shift: the gain ordering between the two shift settings reverses as the target-data budget grows (favoring the harder shift at larger budgets), and that spreading a fixed budget across more distinct geometries (vs. more conditions per geometry) amplifies the pretraining gain only when the shift does not also change the modeled physics.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The paper&#39;s core methodology -- decomposing a domain gap into separate shift components (here: geometry vs. modeled physics) and measuring how the sample-efficiency benefit of pretraining/synthetic data depends jointly on target-budget size and target-data diversity -- is directly transferable to our own synthetic-inverse-factory-to-real-CAD domain gap: we could similarly vary &#39;shift components&#39; one at a time (e.g. construction-template distribution vs. face-count/topology distribution) to decompose why hexgen underperforms on real CAD parts. The breadth-vs-depth finding (spend a limited real-CAD fine-tuning budget on more distinct parts rather than more programs per part, unless it will not resolve a physics/template mismatch) is a concrete, low-cost experimental-design lesson for how we allocate real-CAD auto-labeled fine-tuning data. The frozen-backbone adapter result (83% of full fine-tuning gain at 5% extra params) also suggests a cheap way to re-target a pretrained hexgen encoder-decoder to a new part family without full retraining.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a workshop paper (Representations for the Physical Sciences) evaluated on 2D airfoil RANS surrogates with a single architecture family (U-Net) held fixed across the transfer sweep, so the generality of the shift-component ordering across architectures/domains is unverified. No code link is given in the excerpted text. The central lesson -- pretraining value is a joint function of target-data budget, target-data diversity, and source-target physics/distribution mismatch, not a fixed discount -- is a useful experimental-design template to borrow even though the domain (CFD surrogates) is unrelated to CAD/meshing.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.20814</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2609.28416">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.017</span>
@@ -206,6 +180,110 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2609.30249">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.014</span>
+    <span class="card-title">RAPID reconstructs a simulation environment and success predicates from one demonstrati...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>RAPID automatically derives a testable task specification, action primitives, and an interactive verification environment from a single visual human demonstration, then uses a coding agent to construct, verify, and iteratively refine a reusable manipulation program. Its object-centric relational program representation expresses primitives as trajectory-optimization programs with runtime-resolved geometry, composed via relational constraints rather than fixed motions. On 8 nonprehensile manipulation tasks and the LIBERO-Pro benchmark, RAPID substantially outperforms code-as-policies and agentic baselines and transfers effectively to a real Franka arm.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The shared VerifyRevise loop (execute candidate program against a verification set, diagnose failure, revise, repeat until AllSuccessful) is a directly transferable pattern for hexgen: gate revision of a rejected best-of-N candidate on the frozen verifier&#39;s structural-validity signals (compiles, zero inverted elements, quality/fidelity bounds) instead of manipulation success predicates. The relational-interface mechanism, where a primitive declares typed semantic roles r_i and relations Γ_i and a runtime binding b∈Bind_E(r_i,Γ_i) assigns scene entities satisfying those relations, is a close conceptual analog to pointer/copy-head addressing that is constrained to satisfy face-adjacency relations in the B-rep graph — worth borrowing as a template for relation-constrained pointer decoding.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is robot manipulation, not CAD/mesh generation, so applicability is at the level of the agentic verify-revise architecture and relational program representation, not any mesh-specific mechanism. RAPID uses an off-the-shelf coding LLM agent (Codex/GPT-5.6) as the program author via in-context revision rather than a trained autoregressive network, so it is not directly reusable code/weights, only a design pattern.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.30249</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.30017">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.014</span>
+    <span class="card-title">CANOPY frames each tree-structured decision problem (model routing, prefix caching, tes...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces CANOPY, a multi-fidelity tree bandit that certifies local smoothness directly from cheap random-path probes rather than assuming or searching over a global smoothness schedule, and directs expensive leaf evaluations toward cells where the certificate detects a violation. It proves fixed-budget identification and regret guarantees whose extra cost over the smooth-tree rate is additive in the number of discontinuities, and shows empirically across twelve benchmarks (routing, top-k identification, test-time search, caching, prompt trimming) that this consistently improves matched-budget performance, including 2.9x higher top-10 recall on a 1000-model pool and 1.6x more SWE-bench Verified issues resolved than best-of-N.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>CANOPY&#39;s core mechanism — treat autoregressive generation as a tree where every prefix is a node, use cheap biased internal-node signals to certify where a smoothness/value assumption locally holds, and concentrate expensive exact evaluation (here, the frozen structural-validity verifier) only on flagged, uncertain prefixes — is a directly transferable template for MCTS/beam-style value-guided search over hexgen&#39;s program prefixes: rather than a fixed rollout/verification budget per node, a data-driven certificate could decide where cheap heuristic scores (e.g. partial-program feasibility estimates) are trustworthy versus where a full verifier run (compile + mesh + quality check) is needed, reducing best-of-N verifier calls at matched compute.</dd>
+    <dt>Additional context</dt>
+    <dd>Applied entirely to LLM-serving and search settings (routing, caching, trimming, math/code search), not to program or geometry generation, so the bridge is purely at the level of the tree-search/certification algorithm, not any domain-specific mechanism. The guarantees assume leaf-mean sub-Gaussianity and a dispersion condition on discontinuities (Balcan et al., 2018) that would need to be checked or approximated for the very different reward landscape of mesh-program validity.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.30017</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.30063">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.010</span>
+    <span class="card-title">Two randomly-initialized transformers co-evolve: a generator proposes byte-emitting pro...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Self-Play Pretraining with Zero Data, in which a generator and learner bootstrap entirely from random initialization with no natural data, using a universal Turing machine as the program space and a learning-progress RL reward to keep the generator&#39;s outputs at the frontier of the learner&#39;s capability. Across held-out natural datasets spanning text, images, audio, speech, music, and DNA, the resulting learner exhibits predictable zero-shot power-law loss scaling in self-play compute, with exponents comparable to direct training on natural data, plus emergent in-context learning and discovery of recognizable mathematical program families (arithmetic, Fibonacci, geometric, quadratic, cubic sequences) during training.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core mechanism — a generator trained by RL with a learning-progress reward to produce synthetic (input, target) pairs at the frontier of what the learner can currently master, replacing a fixed/random data-generating prior with an adaptive curriculum — is directly transferable to hexgen&#39;s &#39;inverse factory&#39;: instead of sampling uniformly random valid programs, an RL-trained generator could be shaped to propose B-rep/program pairs whose difficulty tracks the decoder&#39;s current capability, potentially improving data efficiency and coverage versus the current random-sampling data synthesis strategy. The self-play program pool&#39;s mix of fresh samples, mutations of high-reward programs, and experience replay is also a reusable recipe for curriculum-managing synthetic (B-rep, program) generation.</dd>
+    <dt>Additional context</dt>
+    <dd>This is a pretraining-methodology paper (predicting raw bytes from a universal Turing machine), not about B-rep encoders, pointer/copy mechanisms, or mesh validity; the transferable idea is specifically the adaptive, gradient-alignment-based learning-progress curriculum for synthetic data generation, not the architecture or byte-level tokenization itself. The learning-progress reward computation (Eq. 2) requires access to per-program learner gradients, which may be a nontrivial engineering cost to replicate for a 27M-parameter program-generation setting.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.30063</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2609.30233">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.010</span>
+    <span class="card-title">Each coding agent (Claude Code/Opus 5, Codex/GPT-5.6 Sol, Codex/GPT-6 Astra) is given a...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper presents a large-scale, systematic study (AgenticGenPlan) showing that off-the-shelf coding agents, given only a task description and simulator interaction (no hand-engineered TAMP predicates, operators, samplers, or skills), synthesize generalized programmatic policies that outperform hand-engineered TAMP planners, one-shot LLM generation, and an LLM-based generalized-planning baseline across 28 simulated environments spanning kinematic/dynamic 2D/3D tasks. Agents use targeted interaction to calibrate physical models, probe edge cases, and iteratively refine strategies, sometimes discovering unexpected manipulation strategies not seen in prior published solutions.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The core experimental design — give an agent interaction/simulator access and a frozen synthesis budget, let it freely choose what to probe and test, then freeze the program and evaluate on held-out instances with no further LLM calls — is a close methodological analog to using an LLM-agent authoring pipeline as a training-data source for hexgen: an agent could similarly interact with the deterministic mesher/verifier to synthesize or repair hex-meshing DSL programs for held-out B-rep instances, distilling the resulting verified programs into imitation-learning targets for the 27M-parameter decoder. Their finding that agents calibrate internal physical/geometric models purely through interaction (e.g., fitting 6 kinematic parameters from probing) is a useful precedent for execution-guided repair of a model&#39;s own broken rollouts.</dd>
+    <dt>Additional context</dt>
+    <dd>This is a study of general-purpose LLM coding agents as the synthesis mechanism, not a trained neural decoder; transfer to hexgen is at the level of the evaluation protocol and agentic-authoring-as-data-source idea, not any specific architecture or DSL mechanism. Programs are per-environment (not conditioned on a graph-structured input like a B-rep), so there&#39;s no direct pointer/copy-head or graph-transformer analog here.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2609.30233</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2609.26039">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.007</span>
@@ -228,32 +306,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.26039</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2609.20323">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.007</span>
-    <span class="card-title">A hybrid neuro-symbolic pipeline: Phase I projects an unorganized point cloud onto the...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes NeuSOGA3D, a neuro-symbolic 3D reconstruction framework that restricts learning to perceptual abstraction and performs the actual geometric reconstruction through explicit, deterministic symbolic operators (implicit splines, PSPS volumetric lofting, and shape-preserving CSG), so every intermediate structure (contours, control polygons, cross-sections, CSG operators) remains inspectable and directly reusable as B-splines, NURBS surfaces, or boundary-representation (B-Rep) models. It also introduces a localized, compactly-supported R-function blending operator that suppresses the volumetric swelling and global distortion common in classical CSG blending. The framework is demonstrated across all 40 ModelNet40 categories without any category-specific training.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>This is a reverse-engineering direction (point cloud -&gt; symbolic CAD structures) rather than our forward direction (B-rep -&gt; hex-mesh program), but the underlying toolkit is relevant to our B-rep/CAD-representation-learning and structural-validity care areas: their deterministic, verifiable pipeline for turning geometric observations into explicit, CAD-compatible control structures (B-splines/NURBS/B-Rep) is a template for producing structurally-guaranteed-valid intermediate geometric representations, and their shape-preserving CSG blending operator (a compactly-supported R-function softMin) could be a useful deterministic primitive if hexgen or its verifier ever needs to compose or check solid-geometry operations symbolically rather than only via the downstream mesher. It&#39;s also a relevant related-work/contrast point: an alternative, fully-symbolic (non-autoregressive-decoder) philosophy for guaranteeing CAD-compatible, structurally valid output.</dd>
-    <dt>Additional context</dt>
-    <dd>Unreviewed arXiv preprint; authors explicitly note the methodology and presentation may change in revisions. No benchmark comparison against DeepCAD/BRepNet/Point2CAD/CAD-Recode/BrepGen is given in the excerpted text despite citing all of them as related work, so we cannot yet judge whether the reconstructed B-Reps are competitive in accuracy or compactness. The value to us is the symbolic geometry toolkit (PSPS splines, shape-preserving R-function CSG) as a possible verifier/utility primitive, not a directly transferable model architecture, since the task (point-cloud reverse engineering) differs from ours (program synthesis from an existing B-rep).</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.44</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.20323</span>
   </div>
 </a>
 
