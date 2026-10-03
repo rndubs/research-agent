@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-09-28</title>
+<title>hexgen digest — 2026-10-03</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,35 +98,9 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-09-28 · 11 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-10-03 · 7 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
-<a class="card"
-   href="https://arxiv.org/abs/2609.26420">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.087</span>
-    <span class="card-title">Sample-simulate-select (S3) draws N candidates per prompt from a frozen text-to-motion...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces S3, a training-free pipeline that composes a frozen text-to-motion generator, a deterministic IK retargeter, and a physics simulator running the exact deployment tracking policy as a best-of-N selector. Because the simulator is the verifier, S3 attains the any-of-N ceiling by construction, letting the authors measure how much of the human-to-humanoid gap is closeable by selection alone versus requiring training. They show selection raises upright execution from 83.5% to 89.5% (and 80.5% to 89.5% on the full 4,184-prompt test split), that a cheap kinematic fall-predictor recovers only a quarter of this gain, and that all 177 gate-selected clips executed successfully on a real robot.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core best-of-N-screened-by-a-frozen-deterministic-verifier pattern is exactly hexgen&#39;s own architecture, so this paper&#39;s evaluation protocol is directly transferable: measure the &#39;any-of-N ceiling&#39; of the frozen hexgen decoder separately from what additional training buys, to see how much headroom sampling alone can close versus needing better training data. Its central finding -- that a cheap proxy/kinematic verifier with strong population-level classification accuracy (AUROC 0.90) still recovers only a quarter of the achievable gain because within-prompt ranking is harder than population classification -- is a direct caution against substituting a cheaper learned critic for hexgen&#39;s frozen machine-checkable verifier when doing best-of-N selection. The paper&#39;s method of isolating a specific unrecoverable failure class (squat/bend motions) and showing that only targeted training data (not more sampling) fixes it is a useful diagnostic pattern for identifying which classes of B-rep parts hexgen&#39;s decoder structurally cannot produce valid programs for, versus which just need more samples.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain (humanoid motion control) is unrelated to CAD/mesh generation, so nothing here is directly reusable as code, but the evaluation methodology (ceiling measurement, kinematic-vs-execution verifier comparison, isolating unrecoverable failure classes) is a strong conceptual match to hexgen&#39;s own best-of-N + frozen verifier design and worth reading in full for the S3 experimental protocol (Section III-E, IV-B, IV-C, IV-D).</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.26420</span>
-  </div>
-</a>
-
 <a class="card"
    href="https://arxiv.org/abs/2609.30948">
   <div class="card-head">
@@ -154,158 +128,80 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2609.27532">
+   href="https://arxiv.org/abs/2610.01903">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.042</span>
-    <span class="card-title">ProCredit reruns the task&#39;s existing acceptance checks after every turn during training...</span>
+    <span class="badge" title="composite RICE score">0.020</span>
+    <span class="card-title">Compute positional encodings from Hodge Laplacians of clique complexes (lifted incidenc...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper proposes ProCredit, which converts a long-horizon agentic task&#39;s existing binary acceptance checks into a verified, environment-grounded progress signal read after every turn, rather than relying solely on the terminal outcome reward or a learned reward/critic model. This progress signal supplies both a trajectory-level advantage (separating failed attempts by how much they completed) and a turn-level advantage (crediting the specific turn where progress occurred), which the authors show via ablation is what drives the improvement, not merely having any progress signal at all.</dd>
+    <dd>Proposes higher-order positional encodings that let standard graph models exploit lifted incidence structure without architecture changes. Proves node-level operators induced by higher-order lifts can mix Laplacian frequencies in ways scalar spectral filters cannot. Instantiated with Hodge Laplacians and tested on ZINC and synthetic benchmarks.</dd>
     <dt>Applicable to our work</dt>
-    <dd>hexgen already has a frozen, machine-checkable verifier (compiles, zero inverted elements, quality bounds, surface-match, feature-edge capture) -- ProCredit&#39;s core idea transfers directly: rerun a subset of that verifier&#39;s checks after each emitted block/sweep/projection command during autoregressive generation to get a fraction-of-checks-passed progress signal, then use the *change* in that fraction between consecutive generation steps as a dense, per-command RL reward. This would let an RL fine-tuning stage over hexgen&#39;s decoder credit the specific command that first produces an inverted element or breaks surface-match fidelity, rather than only rewarding/penalizing the whole best-of-N candidate at the end -- directly addressing the &#39;self-play/verifier-in-the-loop training&#39; care area, and it would make all-fail best-of-N batches (no candidate compiles) still informative during RL fine-tuning, which outcome-only training currently discards.</dd>
+    <dd>B-rep face/edge/vertex structure is naturally a cell complex; Hodge-Laplacian positional encodings over the face-adjacency/incidence structure could be a drop-in PSE for the graph-transformer encoder, possibly helping disambiguate congruent faces for the pointer heads.</dd>
     <dt>Additional context</dt>
-    <dd>Domain is text/tool-use agentic RL (AppWorld app-automation tasks), not geometric/program-mesh generation, so the transfer is at the mechanism level only. Key caveat from the paper&#39;s own discussion: progress must come from the environment state, not from the policy&#39;s own predictions, or group normalization lets the policy game the signal without improving task success -- for hexgen this means incremental verifier checks used for reward must run against actual partial program execution/mesh state, not a learned proxy. The method also assumes checks are meaningful on partial/intermediate states; hexgen&#39;s verifier currently seems designed to check only completed candidates, so some checks (e.g. inverted-elements-so-far, partial surface coverage) would need engineering to be well-defined mid-generation.</dd>
+    <dd>Gains demonstrated on molecules/synthetic only; no CAD evidence. Cheap to try as an encoder ablation. Note the B-rep graph is tiny (7-15 faces) so eigen-decomposition cost is trivial but benefit is uncertain.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.65</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.20</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.27532</span>
+    <span class="pid">2610.01903</span>
   </div>
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2609.28416">
+   href="https://arxiv.org/abs/2610.02186">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.017</span>
-    <span class="card-title">AEWM has two capabilities sharing one model: Action Judge classifies a proposed reasoni...</span>
+    <span class="badge" title="composite RICE score">0.019</span>
+    <span class="card-title">Lift molecules to combinatorial complexes and parse each into a sequence of production...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper proposes the Agent-Editing World Model (AEWM), which predicts the downstream effect of an agent&#39;s proposed reasoning-action pair and, when that pair is judged noisy, directly edits it using real execution feedback rather than simulating environment observations. EditAct integrates this judge-then-edit loop with real execution across Search, Terminal, and Software-Engineering agent domains, and AEWM-RFT distills the resulting corrected trajectories back into the base agent via rejection-sampling fine-tuning so gains persist without AEWM at inference time.</dd>
+    <dd>Introduces Higher-order Grammar Representation (HGR), which serialises higher-order molecular topology into compact production-rule sequences usable by standard sequence models. HGR-based generators have 100% validity by construction and top FCD on all five generation benchmarks. The paper also contributes the RingDiv benchmark (1.18M molecules) with a ring diversity index, and HGR-FM for transfer learning.</dd>
     <dt>Applicable to our work</dt>
-    <dd>The State Revision / EditAct mechanism -- judging a proposed decision as noisy and generating a direct replacement using real execution feedback, then continuing from the repaired state -- is a close analog to the repair/edit-distillation technique named in our structural-validity care area: hexgen&#39;s best-of-N verifier screening could be extended so that once a sampled program prefix is flagged invalid by the frozen verifier (analogous to &#39;noisy&#39;), a trained repair model edits the offending block/sweep/projection command(s) rather than discarding the whole rollout, and verified repairs could seed AEWM-RFT-style rejection-sampling fine-tuning to internalize the fix distribution into hexgen&#39;s decoder directly.</dd>
+    <dd>Directly analogous to structural validity: a grammar whose derivations are valid by construction plus grammar-constrained decoding could inform a hexgen DSL decoder mask (guaranteeing compilable block/sweep/projection programs). Higher-order (cell-level) position encodings may also inform the face/edge graph encoder.</dd>
     <dt>Additional context</dt>
-    <dd>Domain is long-horizon LLM tool-use agents (web search, terminal, software engineering), not geometric/CAD program synthesis -- the transfer is at the mechanism level (judge-then-edit-then-verify), not a reusable component or code. The paper reports diminishing returns when the inference agent is much stronger than AEWM, so a hexgen repair model would likely need to scale/retrain alongside the main decoder. No explicit code URL found in the extracted text (a &#39;Dataset GitHub&#39; link is referenced but not printed).</dd>
+    <dd>Chemistry domain; the transferable part is grammar-constrained decoding with guaranteed validity, a technique already well known (GVAE-style). Validity here is syntactic/chemical, not execution-quality like Jacobian bounds, so it does not replace the verifier. Based on partially processed paper text (supplementary heavy).</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2610.02186</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2610.01729">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.012</span>
+    <span class="card-title">SFT to generate code from function graphs, then GRPO with answer-gated, multi-verifier...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Proposes FSG-RL, linking subproblem graphs with Python implementations and private verification specs under multi-verifier feedback. GRPO with answer-gated rewards and span-level credit assignment raises final-answer accuracy from 43.25% to 67.50% and full success from 32.25% to 52.25% over SFT. A benchmark from GSM8K, MathQA, MATH and Omni-MATH is built, with teacher supervision as an extension.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Multi-component verifier reward decomposition with gating maps onto hexgen&#39;s verifier checks (compiles, no inverted elements, Jacobian, fidelity); gated reward plus span-level credit assignment could drive verifier-in-the-loop RL fine-tuning after rejection-sampled SFT and localise which commands cause failures.</dd>
+    <dt>Additional context</dt>
+    <dd>Math word problems with Python, far from geometry; evidence is single-benchmark. Code is released. The reward-shaping ideas are the transferable piece; the DSL execution here is much cheaper than meshing, so sample cost differs.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
     <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.28416</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2609.30249">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.014</span>
-    <span class="card-title">RAPID reconstructs a simulation environment and success predicates from one demonstrati...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>RAPID automatically derives a testable task specification, action primitives, and an interactive verification environment from a single visual human demonstration, then uses a coding agent to construct, verify, and iteratively refine a reusable manipulation program. Its object-centric relational program representation expresses primitives as trajectory-optimization programs with runtime-resolved geometry, composed via relational constraints rather than fixed motions. On 8 nonprehensile manipulation tasks and the LIBERO-Pro benchmark, RAPID substantially outperforms code-as-policies and agentic baselines and transfers effectively to a real Franka arm.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The shared VerifyRevise loop (execute candidate program against a verification set, diagnose failure, revise, repeat until AllSuccessful) is a directly transferable pattern for hexgen: gate revision of a rejected best-of-N candidate on the frozen verifier&#39;s structural-validity signals (compiles, zero inverted elements, quality/fidelity bounds) instead of manipulation success predicates. The relational-interface mechanism, where a primitive declares typed semantic roles r_i and relations Γ_i and a runtime binding b∈Bind_E(r_i,Γ_i) assigns scene entities satisfying those relations, is a close conceptual analog to pointer/copy-head addressing that is constrained to satisfy face-adjacency relations in the B-rep graph — worth borrowing as a template for relation-constrained pointer decoding.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is robot manipulation, not CAD/mesh generation, so applicability is at the level of the agentic verify-revise architecture and relational program representation, not any mesh-specific mechanism. RAPID uses an off-the-shelf coding LLM agent (Codex/GPT-5.6) as the program author via in-context revision rather than a trained autoregressive network, so it is not directly reusable code/weights, only a design pattern.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
     <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.30249</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2609.30017">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.014</span>
-    <span class="card-title">CANOPY frames each tree-structured decision problem (model routing, prefix caching, tes...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces CANOPY, a multi-fidelity tree bandit that certifies local smoothness directly from cheap random-path probes rather than assuming or searching over a global smoothness schedule, and directs expensive leaf evaluations toward cells where the certificate detects a violation. It proves fixed-budget identification and regret guarantees whose extra cost over the smooth-tree rate is additive in the number of discontinuities, and shows empirically across twelve benchmarks (routing, top-k identification, test-time search, caching, prompt trimming) that this consistently improves matched-budget performance, including 2.9x higher top-10 recall on a 1000-model pool and 1.6x more SWE-bench Verified issues resolved than best-of-N.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>CANOPY&#39;s core mechanism — treat autoregressive generation as a tree where every prefix is a node, use cheap biased internal-node signals to certify where a smoothness/value assumption locally holds, and concentrate expensive exact evaluation (here, the frozen structural-validity verifier) only on flagged, uncertain prefixes — is a directly transferable template for MCTS/beam-style value-guided search over hexgen&#39;s program prefixes: rather than a fixed rollout/verification budget per node, a data-driven certificate could decide where cheap heuristic scores (e.g. partial-program feasibility estimates) are trustworthy versus where a full verifier run (compile + mesh + quality check) is needed, reducing best-of-N verifier calls at matched compute.</dd>
-    <dt>Additional context</dt>
-    <dd>Applied entirely to LLM-serving and search settings (routing, caching, trimming, math/code search), not to program or geometry generation, so the bridge is purely at the level of the tree-search/certification algorithm, not any domain-specific mechanism. The guarantees assume leaf-mean sub-Gaussianity and a dispersion condition on discontinuities (Balcan et al., 2018) that would need to be checked or approximated for the very different reward landscape of mesh-program validity.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.30017</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2609.30063">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.010</span>
-    <span class="card-title">Two randomly-initialized transformers co-evolve: a generator proposes byte-emitting pro...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces Self-Play Pretraining with Zero Data, in which a generator and learner bootstrap entirely from random initialization with no natural data, using a universal Turing machine as the program space and a learning-progress RL reward to keep the generator&#39;s outputs at the frontier of the learner&#39;s capability. Across held-out natural datasets spanning text, images, audio, speech, music, and DNA, the resulting learner exhibits predictable zero-shot power-law loss scaling in self-play compute, with exponents comparable to direct training on natural data, plus emergent in-context learning and discovery of recognizable mathematical program families (arithmetic, Fibonacci, geometric, quadratic, cubic sequences) during training.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core mechanism — a generator trained by RL with a learning-progress reward to produce synthetic (input, target) pairs at the frontier of what the learner can currently master, replacing a fixed/random data-generating prior with an adaptive curriculum — is directly transferable to hexgen&#39;s &#39;inverse factory&#39;: instead of sampling uniformly random valid programs, an RL-trained generator could be shaped to propose B-rep/program pairs whose difficulty tracks the decoder&#39;s current capability, potentially improving data efficiency and coverage versus the current random-sampling data synthesis strategy. The self-play program pool&#39;s mix of fresh samples, mutations of high-reward programs, and experience replay is also a reusable recipe for curriculum-managing synthetic (B-rep, program) generation.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a pretraining-methodology paper (predicting raw bytes from a universal Turing machine), not about B-rep encoders, pointer/copy mechanisms, or mesh validity; the transferable idea is specifically the adaptive, gradient-alignment-based learning-progress curriculum for synthetic data generation, not the architecture or byte-level tokenization itself. The learning-progress reward computation (Eq. 2) requires access to per-program learner gradients, which may be a nontrivial engineering cost to replicate for a 27M-parameter program-generation setting.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.30063</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2609.30233">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.010</span>
-    <span class="card-title">Each coding agent (Claude Code/Opus 5, Codex/GPT-5.6 Sol, Codex/GPT-6 Astra) is given a...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper presents a large-scale, systematic study (AgenticGenPlan) showing that off-the-shelf coding agents, given only a task description and simulator interaction (no hand-engineered TAMP predicates, operators, samplers, or skills), synthesize generalized programmatic policies that outperform hand-engineered TAMP planners, one-shot LLM generation, and an LLM-based generalized-planning baseline across 28 simulated environments spanning kinematic/dynamic 2D/3D tasks. Agents use targeted interaction to calibrate physical models, probe edge cases, and iteratively refine strategies, sometimes discovering unexpected manipulation strategies not seen in prior published solutions.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The core experimental design — give an agent interaction/simulator access and a frozen synthesis budget, let it freely choose what to probe and test, then freeze the program and evaluate on held-out instances with no further LLM calls — is a close methodological analog to using an LLM-agent authoring pipeline as a training-data source for hexgen: an agent could similarly interact with the deterministic mesher/verifier to synthesize or repair hex-meshing DSL programs for held-out B-rep instances, distilling the resulting verified programs into imitation-learning targets for the 27M-parameter decoder. Their finding that agents calibrate internal physical/geometric models purely through interaction (e.g., fitting 6 kinematic parameters from probing) is a useful precedent for execution-guided repair of a model&#39;s own broken rollouts.</dd>
-    <dt>Additional context</dt>
-    <dd>This is a study of general-purpose LLM coding agents as the synthesis mechanism, not a trained neural decoder; transfer to hexgen is at the level of the evaluation protocol and agentic-authoring-as-data-source idea, not any specific architecture or DSL mechanism. Programs are per-environment (not conditioned on a graph-structured input like a B-rep), so there&#39;s no direct pointer/copy-head or graph-transformer analog here.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.30233</span>
+    <span class="pid">2610.01729</span>
   </div>
 </a>
 
@@ -336,32 +232,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2609.26039">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.007</span>
-    <span class="card-title">EMERGE is a fully SE(3)-equivariant graph-based diffusion backbone that alternates Mult...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces EMERGE, described as the first fully SE(3)-equivariant graph-based diffusion backbone for 3D point cloud generation. It proposes Canonical Frame Voxel Pooling and a Global Invariant Feature Attention module to capture multi-scale topology while strictly preserving continuous spatial symmetries, and a provably correct, parameter-free distribution-alignment technique that enables zero-shot super-resolution at arbitrary inference resolutions without retraining. The authors report state-of-the-art point cloud generation quality on ShapeNet with up to 10x fewer training epochs than prior diffusion baselines.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The Canonical Frame Voxel Pooling mechanism -- canonicalizing local geometry via covariance-matrix eigenvectors before any pooling/aggregation step, then un-projecting back -- is a concrete, transferable technique for building rotation-robust multi-scale pooling over a B-rep face-adjacency graph without discretizing to a fixed rotation group, offering a genuinely different mechanism than a native rotation-invariant encoder (which our problem statement notes is a closed design line) and could instead be explored as a deployment-time or architectural add-on for hexgen&#39;s pointer/graph-transformer encoder. The 13-dimensional SE(3)-invariant local geometric feature construction (curvature/linearity/planarity from neighborhood covariance eigenvalues) is also a lightweight way to inject rotation-invariant local shape descriptors into message passing that could enrich hexgen&#39;s face/edge features without adding discretization artifacts.</dd>
-    <dt>Additional context</dt>
-    <dd>Applicability is at the mechanism level only -- the application domain (unordered point cloud diffusion generation) is far from hexgen&#39;s B-rep-to-program autoregressive decoding, and the problem statement explicitly closes the &#39;native rotation-invariant encoder&#39; line, so this is most useful as a reference for an alternative equivariance mechanism (canonical-frame pooling) rather than a wholesale encoder replacement. No code link is given in the extracted text.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2609.26039</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2609.30936">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.007</span>
@@ -384,6 +254,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2609.30936</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2610.01799">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.004</span>
+    <span class="card-title">Jointly evolve a solving policy and reference knowledge via progressive trajectory-base...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Proposes SkillEvoLean, a mutation-enhanced skill self-evolution framework for Lean provers. Concept-guided mutation is triggered when no proof succeeds, sampling mathematical concepts to generate and select new skill candidates under verifier feedback. It reports 100.0% on MiniF2F and 90.6% on PutnamBench with GPT-5.5, with 4/6 on IMO 2025 and USAMO 2026.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The failure mode (no verified-successful samples, so rejection sampling yields no signal) mirrors best-of-N flywheel stagnation on hard B-reps; structured perturbation of authoring guidance when all N candidates fail the frozen verifier could be borrowed for the LLM-agent authoring pipeline, not for the 27M decoder.</dd>
+    <dt>Additional context</dt>
+    <dd>Prompt/skill-file evolution with frozen LLM, no weight training; applies only to the LLM-agent data-authoring side of the problem. Results rely on a very strong backbone; benchmark saturation (100% MiniF2F) limits inference.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.15</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2610.01799</span>
   </div>
 </a>
 
