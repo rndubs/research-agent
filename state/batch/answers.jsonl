@@ -78,3 +78,44 @@
 {"key": "RiceEstimate:2610.01903", "payload": {"expected_impact": 0.2, "applicability": 0.55, "effort": 3, "impact_rationale": "Hodge-Laplacian PSE might help the face-graph encoder but no CAD evidence and graphs are tiny.", "effort_rationale": "Drop-in positional encoding ablation on small graphs; cheap."}}
 {"key": "RiceEstimate:2610.01799", "payload": {"expected_impact": 0.15, "applicability": 0.25, "effort": 5, "impact_rationale": "Only relevant to the LLM-authoring side when all N candidates fail the verifier; not the 27M decoder.", "effort_rationale": "Requires building an LLM skill-evolution loop around the authoring pipeline."}}
 {"key": "RiceEstimate:2610.01729", "payload": {"expected_impact": 0.3, "applicability": 0.45, "effort": 6, "impact_rationale": "Gated multi-verifier reward and span-level credit could shape verifier-in-the-loop RL, but math domain and untested on geometry.", "effort_rationale": "GRPO infrastructure plus mapping verifier checks into reward components; sizeable."}}
+{"key": "RelevanceJudgment:2610.12147", "payload": {"relevant": false, "score": 0.02, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11896", "payload": {"relevant": false, "score": 0.2, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12039", "payload": {"relevant": false, "score": 0.15, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11754", "payload": {"relevant": false, "score": 0.05, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12172", "payload": {"relevant": true, "score": 0.4, "rationale": "Discrete coordinate vocabulary + grammar, autoregressive transformer; methodological bridge to closed-vocab program decoding."}}
+{"key": "RelevanceJudgment:2610.12281", "payload": {"relevant": false, "score": 0.02, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12470", "payload": {"relevant": false, "score": 0.05, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12388", "payload": {"relevant": false, "score": 0.1, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12282", "payload": {"relevant": false, "score": 0.05, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11815", "payload": {"relevant": false, "score": 0.05, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12119", "payload": {"relevant": false, "score": 0.25, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12465", "payload": {"relevant": false, "score": 0.05, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12135", "payload": {"relevant": false, "score": 0.08, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12333", "payload": {"relevant": false, "score": 0.1, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11954", "payload": {"relevant": true, "score": 0.45, "rationale": "Parametric CAD reconstruction; CAD program generation bridge, but image-based."}}
+{"key": "RelevanceJudgment:2610.12156", "payload": {"relevant": false, "score": 0.25, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12211", "payload": {"relevant": true, "score": 0.35, "rationale": "Verifier-in-the-loop information bounds; loose bridge to verifier-driven training."}}
+{"key": "RelevanceJudgment:2610.12127", "payload": {"relevant": false, "score": 0.03, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11857", "payload": {"relevant": false, "score": 0.05, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11994", "payload": {"relevant": false, "score": 0.08, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12126", "payload": {"relevant": false, "score": 0.03, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12142", "payload": {"relevant": false, "score": 0.03, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12307", "payload": {"relevant": false, "score": 0.03, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12265", "payload": {"relevant": false, "score": 0.12, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12437", "payload": {"relevant": false, "score": 0.2, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12293", "payload": {"relevant": false, "score": 0.02, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12424", "payload": {"relevant": true, "score": 0.3, "rationale": "Code repair from execution feedback with validation; loose program-synthesis bridge."}}
+{"key": "RelevanceJudgment:2610.11866", "payload": {"relevant": false, "score": 0.05, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12115", "payload": {"relevant": false, "score": 0.05, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11967", "payload": {"relevant": false, "score": 0.03, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12003", "payload": {"relevant": true, "score": 0.3, "rationale": "Symbolic program search with structured feedback; loose program-synthesis bridge."}}
+{"key": "RelevanceJudgment:2610.12451", "payload": {"relevant": false, "score": 0.03, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12468", "payload": {"relevant": false, "score": 0.03, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12469", "payload": {"relevant": false, "score": 0.25, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11750", "payload": {"relevant": false, "score": 0.05, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11858", "payload": {"relevant": false, "score": 0.15, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11918", "payload": {"relevant": false, "score": 0.02, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12327", "payload": {"relevant": false, "score": 0.15, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.11756", "payload": {"relevant": false, "score": 0.03, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12420", "payload": {"relevant": false, "score": 0.1, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
+{"key": "RelevanceJudgment:2610.12343", "payload": {"relevant": false, "score": 0.03, "rationale": "No clear methodological bridge to B-rep-to-hexproj program generation care-areas."}}
