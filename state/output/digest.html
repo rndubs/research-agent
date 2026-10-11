@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-10-10</title>
+<title>hexgen digest — 2026-10-11</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,113 +98,10 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-10-10 · 4 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-10-11 · 0 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
-<a class="card"
-   href="https://arxiv.org/abs/2610.01903">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.020</span>
-    <span class="card-title">Compute positional encodings from Hodge Laplacians of clique complexes (lifted incidenc...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Proposes higher-order positional encodings that let standard graph models exploit lifted incidence structure without architecture changes. Proves node-level operators induced by higher-order lifts can mix Laplacian frequencies in ways scalar spectral filters cannot. Instantiated with Hodge Laplacians and tested on ZINC and synthetic benchmarks.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>B-rep face/edge/vertex structure is naturally a cell complex; Hodge-Laplacian positional encodings over the face-adjacency/incidence structure could be a drop-in PSE for the graph-transformer encoder, possibly helping disambiguate congruent faces for the pointer heads.</dd>
-    <dt>Additional context</dt>
-    <dd>Gains demonstrated on molecules/synthetic only; no CAD evidence. Cheap to try as an encoder ablation. Note the B-rep graph is tiny (7-15 faces) so eigen-decomposition cost is trivial but benefit is uncertain.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.20</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2610.01903</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2610.02186">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.019</span>
-    <span class="card-title">Lift molecules to combinatorial complexes and parse each into a sequence of production...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Introduces Higher-order Grammar Representation (HGR), which serialises higher-order molecular topology into compact production-rule sequences usable by standard sequence models. HGR-based generators have 100% validity by construction and top FCD on all five generation benchmarks. The paper also contributes the RingDiv benchmark (1.18M molecules) with a ring diversity index, and HGR-FM for transfer learning.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly analogous to structural validity: a grammar whose derivations are valid by construction plus grammar-constrained decoding could inform a hexgen DSL decoder mask (guaranteeing compilable block/sweep/projection programs). Higher-order (cell-level) position encodings may also inform the face/edge graph encoder.</dd>
-    <dt>Additional context</dt>
-    <dd>Chemistry domain; the transferable part is grammar-constrained decoding with guaranteed validity, a technique already well known (GVAE-style). Validity here is syntactic/chemical, not execution-quality like Jacobian bounds, so it does not replace the verifier. Based on partially processed paper text (supplementary heavy).</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2610.02186</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2610.01729">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.012</span>
-    <span class="card-title">SFT to generate code from function graphs, then GRPO with answer-gated, multi-verifier...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Proposes FSG-RL, linking subproblem graphs with Python implementations and private verification specs under multi-verifier feedback. GRPO with answer-gated rewards and span-level credit assignment raises final-answer accuracy from 43.25% to 67.50% and full success from 32.25% to 52.25% over SFT. A benchmark from GSM8K, MathQA, MATH and Omni-MATH is built, with teacher supervision as an extension.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Multi-component verifier reward decomposition with gating maps onto hexgen&#39;s verifier checks (compiles, no inverted elements, Jacobian, fidelity); gated reward plus span-level credit assignment could drive verifier-in-the-loop RL fine-tuning after rejection-sampled SFT and localise which commands cause failures.</dd>
-    <dt>Additional context</dt>
-    <dd>Math word problems with Python, far from geometry; evidence is single-benchmark. Code is released. The reward-shaping ideas are the transferable piece; the DSL execution here is much cheaper than meshing, so sample cost differs.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2610.01729</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2610.01799">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.004</span>
-    <span class="card-title">Jointly evolve a solving policy and reference knowledge via progressive trajectory-base...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Proposes SkillEvoLean, a mutation-enhanced skill self-evolution framework for Lean provers. Concept-guided mutation is triggered when no proof succeeds, sampling mathematical concepts to generate and select new skill candidates under verifier feedback. It reports 100.0% on MiniF2F and 90.6% on PutnamBench with GPT-5.5, with 4/6 on IMO 2025 and USAMO 2026.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The failure mode (no verified-successful samples, so rejection sampling yields no signal) mirrors best-of-N flywheel stagnation on hard B-reps; structured perturbation of authoring guidance when all N candidates fail the frozen verifier could be borrowed for the LLM-agent authoring pipeline, not for the 27M decoder.</dd>
-    <dt>Additional context</dt>
-    <dd>Prompt/skill-file evolution with frozen LLM, no weight training; applies only to the LLM-agent data-authoring side of the problem. Results rely on a very strong backbone; benchmark saturation (100% MiniF2F) limits inference.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.15</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2610.01799</span>
-  </div>
-</a>
-
+<p class="empty">No new items in this window.</p>
 
 <h2>Current top 10 backlog</h2>
 <a class="card"
