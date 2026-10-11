@@ -1,33 +1,10 @@
-# hexgen digest — 2026-10-10
+# hexgen digest — 2026-10-11
 
-**4** new backlog item(s) in the last 7 day(s).
+**0** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
-- **Compute positional encodings from Hodge Laplacians of clique complexes (lifted incidenc...** · score 0.020
-  - _Contributions:_ Proposes higher-order positional encodings that let standard graph models exploit lifted incidence structure without architecture changes. Proves node-level operators induced by higher-order lifts can mix Laplacian frequencies in ways scalar spectral filters cannot. Instantiated with Hodge Laplacians and tested on ZINC and synthetic benchmarks.
-  - _Applicable to our work:_ B-rep face/edge/vertex structure is naturally a cell complex; Hodge-Laplacian positional encodings over the face-adjacency/incidence structure could be a drop-in PSE for the graph-transformer encoder, possibly helping disambiguate congruent faces for the pointer heads.
-  - _Additional context:_ Gains demonstrated on molecules/synthetic only; no CAD evidence. Cheap to try as an encoder ablation. Note the B-rep graph is tiny (7-15 faces) so eigen-decomposition cost is trivial but benefit is uncertain.
-  - _Impact_ 0.20 · _Applicability_ 0.66 · _Confidence_ 0.46 · _Effort_ 3.0/10
-  [2610.01903](https://arxiv.org/abs/2610.01903)
-- **Lift molecules to combinatorial complexes and parse each into a sequence of production...** · score 0.019
-  - _Contributions:_ Introduces Higher-order Grammar Representation (HGR), which serialises higher-order molecular topology into compact production-rule sequences usable by standard sequence models. HGR-based generators have 100% validity by construction and top FCD on all five generation benchmarks. The paper also contributes the RingDiv benchmark (1.18M molecules) with a ring diversity index, and HGR-FM for transfer learning.
-  - _Applicable to our work:_ Directly analogous to structural validity: a grammar whose derivations are valid by construction plus grammar-constrained decoding could inform a hexgen DSL decoder mask (guaranteeing compilable block/sweep/projection programs). Higher-order (cell-level) position encodings may also inform the face/edge graph encoder.
-  - _Additional context:_ Chemistry domain; the transferable part is grammar-constrained decoding with guaranteed validity, a technique already well known (GVAE-style). Validity here is syntactic/chemical, not execution-quality like Jacobian bounds, so it does not replace the verifier. Based on partially processed paper text (supplementary heavy).
-  - _Impact_ 0.35 · _Applicability_ 0.60 · _Confidence_ 0.46 · _Effort_ 5.0/10
-  [2610.02186](https://arxiv.org/abs/2610.02186)
-- **SFT to generate code from function graphs, then GRPO with answer-gated, multi-verifier...** · score 0.012
-  - _Contributions:_ Proposes FSG-RL, linking subproblem graphs with Python implementations and private verification specs under multi-verifier feedback. GRPO with answer-gated rewards and span-level credit assignment raises final-answer accuracy from 43.25% to 67.50% and full success from 32.25% to 52.25% over SFT. A benchmark from GSM8K, MathQA, MATH and Omni-MATH is built, with teacher supervision as an extension.
-  - _Applicable to our work:_ Multi-component verifier reward decomposition with gating maps onto hexgen's verifier checks (compiles, no inverted elements, Jacobian, fidelity); gated reward plus span-level credit assignment could drive verifier-in-the-loop RL fine-tuning after rejection-sampled SFT and localise which commands cause failures.
-  - _Additional context:_ Math word problems with Python, far from geometry; evidence is single-benchmark. Code is released. The reward-shaping ideas are the transferable piece; the DSL execution here is much cheaper than meshing, so sample cost differs.
-  - _Impact_ 0.30 · _Applicability_ 0.54 · _Confidence_ 0.45 · _Effort_ 6.0/10
-  [2610.01729](https://arxiv.org/abs/2610.01729)
-- **Jointly evolve a solving policy and reference knowledge via progressive trajectory-base...** · score 0.004
-  - _Contributions:_ Proposes SkillEvoLean, a mutation-enhanced skill self-evolution framework for Lean provers. Concept-guided mutation is triggered when no proof succeeds, sampling mathematical concepts to generate and select new skill candidates under verifier feedback. It reports 100.0% on MiniF2F and 90.6% on PutnamBench with GPT-5.5, with 4/6 on IMO 2025 and USAMO 2026.
-  - _Applicable to our work:_ The failure mode (no verified-successful samples, so rejection sampling yields no signal) mirrors best-of-N flywheel stagnation on hard B-reps; structured perturbation of authoring guidance when all N candidates fail the frozen verifier could be borrowed for the LLM-agent authoring pipeline, not for the 27M decoder.
-  - _Additional context:_ Prompt/skill-file evolution with frozen LLM, no weight training; applies only to the LLM-agent data-authoring side of the problem. Results rely on a very strong backbone; benchmark saturation (100% MiniF2F) limits inference.
-  - _Impact_ 0.15 · _Applicability_ 0.30 · _Confidence_ 0.46 · _Effort_ 5.0/10
-  [2610.01799](https://arxiv.org/abs/2610.01799)
+_No new items in this window._
 
 ## Current top 10 backlog
 
