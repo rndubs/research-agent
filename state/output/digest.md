@@ -1,10 +1,15 @@
-# hexgen digest — 2026-10-11
+# hexgen digest — 2026-10-12
 
-**0** new backlog item(s) in the last 7 day(s).
+**1** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
-_No new items in this window._
+- **Two rule-based detectors (graph-wire-search on the B-Rep face-adjacency graph; multi-vi...** · score 0.019
+  - _Contributions:_ The paper introduces two task-specific rule-based hole detectors and a human-annotated real-world benchmark of engineering CAD parts. It runs a systematic study of accuracy, dataset-size sensitivity, IoU thresholds and cross-domain generalisation, finding rule-based methods generalise without training data while learning-based B-Rep networks degrade under domain shift.
+  - _Applicable to our work:_ Evidence for the domain-gap care-area: B-Rep graph networks (esp. AAGNet) trained on one CAD source collapse on another, so hexgen's synthetic-to-real gap needs explicit testing. Rule-based hole/wire-loop detection on the face-adjacency graph could serve as cheap geometric checks or auxiliary features, and the real annotated CAD dataset is a candidate eval source.
+  - _Additional context:_ Not program synthesis; value is as domain-shift evidence and B-Rep graph tooling. Dataset release status not confirmed in the text read.
+  - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.46 · _Effort_ 3.0/10
+  [2610.13466](https://arxiv.org/abs/2610.13466)
 
 ## Current top 10 backlog
 
