@@ -1,6 +1,6 @@
-# hexgen digest — 2026-10-13
+# hexgen digest — 2026-10-14
 
-**1** new backlog item(s) in the last 7 day(s).
+**2** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -10,6 +10,12 @@
   - _Additional context:_ Not program synthesis; value is as domain-shift evidence and B-Rep graph tooling. Dataset release status not confirmed in the text read.
   - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.46 · _Effort_ 3.0/10
   [2610.13466](https://arxiv.org/abs/2610.13466)
+- **A local iterative generator for degree-based PD-equivalent graphs, and a global constra...** · score 0.002
+  - _Contributions:_ Introduces two methods for generating graphs that exactly match a target persistence diagram: a provably correct and complete local generator for degree filtrations, and a global constraint-satisfaction formulation that avoids the local approach's diversity/infeasibility trade-off. Both realize the target PD exactly on four standard graph generation benchmarks.
+  - _Applicable to our work:_ Tangential: the idea of recasting hard structural validity requirements as a complete constraint-programming encoding could inspire exact/constraint-based repair or validity-guaranteed completion of face-graph topology in generated programs; not a direct fit for autoregressive decoding.
+  - _Additional context:_ Non-neural, graph-topology (persistent homology) focus; weak bridge. Scalability of CP encoding to program-level constraints unclear.
+  - _Impact_ 0.12 · _Applicability_ 0.18 · _Confidence_ 0.68 · _Effort_ 7.0/10
+  [2610.18856](https://arxiv.org/abs/2610.18856)
 
 ## Current top 10 backlog
 
