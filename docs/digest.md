@@ -1,4 +1,4 @@
-# hexgen digest — 2026-10-14
+# hexgen digest — 2026-10-15
 
 **2** new backlog item(s) in the last 7 day(s).
 
