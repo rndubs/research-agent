@@ -1,15 +1,9 @@
-# hexgen digest — 2026-10-19
+# hexgen digest — 2026-10-20
 
-**2** new backlog item(s) in the last 7 day(s).
+**1** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
-- **Two rule-based detectors (graph-wire-search on the B-Rep face-adjacency graph; multi-vi...** · score 0.019
-  - _Contributions:_ The paper introduces two task-specific rule-based hole detectors and a human-annotated real-world benchmark of engineering CAD parts. It runs a systematic study of accuracy, dataset-size sensitivity, IoU thresholds and cross-domain generalisation, finding rule-based methods generalise without training data while learning-based B-Rep networks degrade under domain shift.
-  - _Applicable to our work:_ Evidence for the domain-gap care-area: B-Rep graph networks (esp. AAGNet) trained on one CAD source collapse on another, so hexgen's synthetic-to-real gap needs explicit testing. Rule-based hole/wire-loop detection on the face-adjacency graph could serve as cheap geometric checks or auxiliary features, and the real annotated CAD dataset is a candidate eval source.
-  - _Additional context:_ Not program synthesis; value is as domain-shift evidence and B-Rep graph tooling. Dataset release status not confirmed in the text read.
-  - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.46 · _Effort_ 3.0/10
-  [2610.13466](https://arxiv.org/abs/2610.13466)
 - **A local iterative generator for degree-based PD-equivalent graphs, and a global constra...** · score 0.002
   - _Contributions:_ Introduces two methods for generating graphs that exactly match a target persistence diagram: a provably correct and complete local generator for degree filtrations, and a global constraint-satisfaction formulation that avoids the local approach's diversity/infeasibility trade-off. Both realize the target PD exactly on four standard graph generation benchmarks.
   - _Applicable to our work:_ Tangential: the idea of recasting hard structural validity requirements as a complete constraint-programming encoding could inspire exact/constraint-based repair or validity-guaranteed completion of face-graph topology in generated programs; not a direct fit for autoregressive decoding.
