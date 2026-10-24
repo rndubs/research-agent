@@ -1,10 +1,21 @@
-# hexgen digest — 2026-10-21
+# hexgen digest — 2026-10-24
 
-**0** new backlog item(s) in the last 7 day(s).
+**2** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
-_No new items in this window._
+- **Compiles schemas into context-parameterized transition programs: cold compilation speci...** · score 0.028
+  - _Contributions:_ Presents DConstrain, an exact grammar-constrained decoder for diffusion LMs that supports arbitrary property order without enumerating field subsets. Token-effect grouping provably preserves the Viterbi optimum and token-labeled path distribution. On BFCL it compiles all schemas and cuts end-to-end latency while keeping 100% schema validity.
+  - _Applicable to our work:_ Grammar/schema-constrained decoding is directly relevant to making hexproj programs compile: the symbolic transition-program idea could encode the DSL grammar plus context guards (e.g. which face indices/blocks are in scope) as a decoding mask for the pointer heads. The compile-ahead-of-forward-pass overlap is also reusable for best-of-N sampling. Our decoder is autoregressive, so the parallel-token compatibility machinery is mostly unneeded.
+  - _Additional context:_ Targets JSON-schema tool calling in diffusion LMs, not geometry; transfer is the constrained-decoding mechanism only. Pointer-head masking would need custom state tracking.
+  - _Impact_ 0.50 · _Applicability_ 0.60 · _Confidence_ 0.46 · _Effort_ 5.0/10
+  [2610.30920](https://arxiv.org/abs/2610.30920)
+- **Represents a B-rep as an Edge-Adjacency Graph (EAG) and applies hybrid discrete/continu...** · score 0.011
+  - _Contributions:_ Introduces the Edge-Adjacency Graph as a graph representation of B-reps for generation, and GraphCAD, a hybrid graph diffusion model with geometry-aware denoising. Also builds EAGBench, a large dataset of engineering CAD parts aggregated from existing repositories. Claims state-of-the-art geometric fidelity and distributional alignment against sequence-based baselines, including models with more than 50 faces.
+  - _Applicable to our work:_ The EAG representation and edge-level graph encoding are a candidate alternative or complement to the face-adjacency graph in the hexgen encoder; the render-to-point-set geometric grounding of node attributes and the EAGBench B-rep corpus are possible sources for real-CAD diversity (domain gap). The diffusion decoder itself is not a program generator.
+  - _Additional context:_ Generates B-rep graphs, not programs, so no direct structural-validity mechanism; the SE(3) equivariance aspect touches our closed rotation line. Code availability not confirmed in the extracted text.
+  - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.46 · _Effort_ 6.0/10
+  [2610.30974](https://arxiv.org/abs/2610.30974)
 
 ## Current top 10 backlog
 
