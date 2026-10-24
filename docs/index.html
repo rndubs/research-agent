@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-10-21</title>
+<title>hexgen digest — 2026-10-24</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,10 +98,61 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-10-21 · 0 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-10-24 · 2 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
-<p class="empty">No new items in this window.</p>
+<a class="card"
+   href="https://arxiv.org/abs/2610.30920">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.028</span>
+    <span class="card-title">Compiles schemas into context-parameterized transition programs: cold compilation speci...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Presents DConstrain, an exact grammar-constrained decoder for diffusion LMs that supports arbitrary property order without enumerating field subsets. Token-effect grouping provably preserves the Viterbi optimum and token-labeled path distribution. On BFCL it compiles all schemas and cuts end-to-end latency while keeping 100% schema validity.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Grammar/schema-constrained decoding is directly relevant to making hexproj programs compile: the symbolic transition-program idea could encode the DSL grammar plus context guards (e.g. which face indices/blocks are in scope) as a decoding mask for the pointer heads. The compile-ahead-of-forward-pass overlap is also reusable for best-of-N sampling. Our decoder is autoregressive, so the parallel-token compatibility machinery is mostly unneeded.</dd>
+    <dt>Additional context</dt>
+    <dd>Targets JSON-schema tool calling in diffusion LMs, not geometry; transfer is the constrained-decoding mechanism only. Pointer-head masking would need custom state tracking.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2610.30920</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2610.30974">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.011</span>
+    <span class="card-title">Represents a B-rep as an Edge-Adjacency Graph (EAG) and applies hybrid discrete/continu...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Introduces the Edge-Adjacency Graph as a graph representation of B-reps for generation, and GraphCAD, a hybrid graph diffusion model with geometry-aware denoising. Also builds EAGBench, a large dataset of engineering CAD parts aggregated from existing repositories. Claims state-of-the-art geometric fidelity and distributional alignment against sequence-based baselines, including models with more than 50 faces.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The EAG representation and edge-level graph encoding are a candidate alternative or complement to the face-adjacency graph in the hexgen encoder; the render-to-point-set geometric grounding of node attributes and the EAGBench B-rep corpus are possible sources for real-CAD diversity (domain gap). The diffusion decoder itself is not a program generator.</dd>
+    <dt>Additional context</dt>
+    <dd>Generates B-rep graphs, not programs, so no direct structural-validity mechanism; the SE(3) equivariance aspect touches our closed rotation line. Code availability not confirmed in the extracted text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2610.30974</span>
+  </div>
+</a>
+
 
 <h2>Current top 10 backlog</h2>
 <a class="card"
