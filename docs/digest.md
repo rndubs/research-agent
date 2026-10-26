@@ -1,6 +1,6 @@
-# hexgen digest — 2026-10-25
+# hexgen digest — 2026-10-26
 
-**2** new backlog item(s) in the last 7 day(s).
+**4** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -10,12 +10,24 @@
   - _Additional context:_ Targets JSON-schema tool calling in diffusion LMs, not geometry; transfer is the constrained-decoding mechanism only. Pointer-head masking would need custom state tracking.
   - _Impact_ 0.50 · _Applicability_ 0.60 · _Confidence_ 0.46 · _Effort_ 5.0/10
   [2610.30920](https://arxiv.org/abs/2610.30920)
+- **Maps each graph to a sequence of WL colors, encodes it with a VAE into a Gaussian laten...** · score 0.014
+  - _Contributions:_ WL-SeqVAE is a sequence-based VAE for graph generation that uses Weisfeiler-Leman node colors as discrete structural tokens. Graph generation becomes sequence generation, with compatibility constraints derived from the colors guiding decoding. It is competitive with established baselines on several local structural and molecular metrics.
+  - _Applicable to our work:_ Constraint-guided autoregressive decoding of graph-structured outputs is analogous to masking invalid face/edge pointers during program decoding; WL colors could also serve as symmetry-aware node tokens/positional features for the B-rep face graph (congruent-face ambiguity).
+  - _Additional context:_ Molecular/generic graphs only; no program or CAD setting. Competitive rather than SOTA. Constraints are structural compatibility, not execution validity.
+  - _Impact_ 0.25 · _Applicability_ 0.42 · _Confidence_ 0.67 · _Effort_ 5.0/10
+  [2610.32650](https://arxiv.org/abs/2610.32650)
 - **Represents a B-rep as an Edge-Adjacency Graph (EAG) and applies hybrid discrete/continu...** · score 0.011
   - _Contributions:_ Introduces the Edge-Adjacency Graph as a graph representation of B-reps for generation, and GraphCAD, a hybrid graph diffusion model with geometry-aware denoising. Also builds EAGBench, a large dataset of engineering CAD parts aggregated from existing repositories. Claims state-of-the-art geometric fidelity and distributional alignment against sequence-based baselines, including models with more than 50 faces.
   - _Applicable to our work:_ The EAG representation and edge-level graph encoding are a candidate alternative or complement to the face-adjacency graph in the hexgen encoder; the render-to-point-set geometric grounding of node attributes and the EAGBench B-rep corpus are possible sources for real-CAD diversity (domain gap). The diffusion decoder itself is not a program generator.
   - _Additional context:_ Generates B-rep graphs, not programs, so no direct structural-validity mechanism; the SE(3) equivariance aspect touches our closed rotation line. Code availability not confirmed in the extracted text.
   - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.46 · _Effort_ 6.0/10
   [2610.30974](https://arxiv.org/abs/2610.30974)
+- **A single policy acts as Questioner and Solver over executable environments whose progra...** · score 0.011
+  - _Contributions:_ Tempo-Zero closes a loop of executable environments, execution-verified self-play, and environment evolution for video reasoning. Executing a program renders a video with exact ground-truth options and intervals, replacing consensus-based pseudo-labels. Solver performance steers a curriculum and the policy selects rule changes that enrich later event dynamics.
+  - _Applicable to our work:_ The loop of program execution giving exact verifiable rewards, plus a curriculum that evolves the generator's program distribution from learner performance, maps to hexgen's inverse factory and frozen verifier: adaptively re-weight factory sampling toward program types the decoder fails, and filter synthetic pairs by execution-consistency checks.
+  - _Additional context:_ Video-VLM domain; transfer is conceptual (verifier-in-the-loop, adaptive synthetic curriculum), not directly a mesh/CAD method. Code only promised ('will be made publicly available'). RL-based, heavier than hexgen's SFT flywheel.
+  - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.42 · _Effort_ 5.0/10
+  [2610.32433](https://arxiv.org/abs/2610.32433)
 
 ## Current top 10 backlog
 

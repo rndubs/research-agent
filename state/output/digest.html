@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-10-25</title>
+<title>hexgen digest — 2026-10-26</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-10-25 · 2 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-10-26 · 4 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -128,6 +128,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2610.32650">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.014</span>
+    <span class="card-title">Maps each graph to a sequence of WL colors, encodes it with a VAE into a Gaussian laten...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>WL-SeqVAE is a sequence-based VAE for graph generation that uses Weisfeiler-Leman node colors as discrete structural tokens. Graph generation becomes sequence generation, with compatibility constraints derived from the colors guiding decoding. It is competitive with established baselines on several local structural and molecular metrics.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Constraint-guided autoregressive decoding of graph-structured outputs is analogous to masking invalid face/edge pointers during program decoding; WL colors could also serve as symmetry-aware node tokens/positional features for the B-rep face graph (congruent-face ambiguity).</dd>
+    <dt>Additional context</dt>
+    <dd>Molecular/generic graphs only; no program or CAD setting. Competitive rather than SOTA. Constraints are structural compatibility, not execution validity.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.67</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2610.32650</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2610.30974">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.011</span>
@@ -150,6 +176,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2610.30974</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2610.32433">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.011</span>
+    <span class="card-title">A single policy acts as Questioner and Solver over executable environments whose progra...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Tempo-Zero closes a loop of executable environments, execution-verified self-play, and environment evolution for video reasoning. Executing a program renders a video with exact ground-truth options and intervals, replacing consensus-based pseudo-labels. Solver performance steers a curriculum and the policy selects rule changes that enrich later event dynamics.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The loop of program execution giving exact verifiable rewards, plus a curriculum that evolves the generator&#39;s program distribution from learner performance, maps to hexgen&#39;s inverse factory and frozen verifier: adaptively re-weight factory sampling toward program types the decoder fails, and filter synthetic pairs by execution-consistency checks.</dd>
+    <dt>Additional context</dt>
+    <dd>Video-VLM domain; transfer is conceptual (verifier-in-the-loop, adaptive synthetic curriculum), not directly a mesh/CAD method. Code only promised (&#39;will be made publicly available&#39;). RL-based, heavier than hexgen&#39;s SFT flywheel.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2610.32433</span>
   </div>
 </a>
 
