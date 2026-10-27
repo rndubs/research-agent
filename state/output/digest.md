@@ -1,15 +1,27 @@
-# hexgen digest — 2026-10-26
+# hexgen digest — 2026-10-27
 
-**4** new backlog item(s) in the last 7 day(s).
+**7** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
+- **A taxonomy of format, validity and reasoning constraints, a theoretical argument that a...** · score 0.054
+  - _Contributions:_ Argues that apparent accuracy loss from constrained decoding mostly stems from non-equivalent prompts and output formats rather than masking. Shows validity constraints improve reliability and extractability, and reasoning constraints can improve accuracy when they enforce beneficial trajectories.
+  - _Applicable to our work:_ Directly supports grammar/validity-constrained decoding for the hexgen DSL: masking invalid tokens (closed vocabulary, pointer targets to existing faces, command arity) should not hurt quality and removes invalid outputs. Guidance on controlling for format/prompt differences when comparing constrained vs unconstrained decoders.
+  - _Additional context:_ LLM/JSON focused, no program-synthesis geometry; evidence is general but supportive of structural-validity masking. Code not yet public.
+  - _Impact_ 0.45 · _Applicability_ 0.84 · _Confidence_ 0.43 · _Effort_ 3.0/10
+  [2610.35328](https://arxiv.org/abs/2610.35328)
 - **Compiles schemas into context-parameterized transition programs: cold compilation speci...** · score 0.028
   - _Contributions:_ Presents DConstrain, an exact grammar-constrained decoder for diffusion LMs that supports arbitrary property order without enumerating field subsets. Token-effect grouping provably preserves the Viterbi optimum and token-labeled path distribution. On BFCL it compiles all schemas and cuts end-to-end latency while keeping 100% schema validity.
   - _Applicable to our work:_ Grammar/schema-constrained decoding is directly relevant to making hexproj programs compile: the symbolic transition-program idea could encode the DSL grammar plus context guards (e.g. which face indices/blocks are in scope) as a decoding mask for the pointer heads. The compile-ahead-of-forward-pass overlap is also reusable for best-of-N sampling. Our decoder is autoregressive, so the parallel-token compatibility machinery is mostly unneeded.
   - _Additional context:_ Targets JSON-schema tool calling in diffusion LMs, not geometry; transfer is the constrained-decoding mechanism only. Pointer-head masking would need custom state tracking.
   - _Impact_ 0.50 · _Applicability_ 0.60 · _Confidence_ 0.46 · _Effort_ 5.0/10
   [2610.30920](https://arxiv.org/abs/2610.30920)
+- **RAINFALL, a generate-verify-refine neuro-symbolic framework: placeholders are inserted...** · score 0.017
+  - _Contributions:_ Proposes RAINFALL, tightly coupling LLM generation with symbolic verification for ranking-function synthesis. It synthesizes verifiable ranking functions for 323 of 358 programs (90.22%) and beats baselines including PROTON 2.1; combined with PROTON 2.1 it reaches 96.65%.
+  - _Applicable to our work:_ Transferable pattern: constrain generation to fixed slots of a template and feed structured verifier diagnostics (e.g. which mesh check failed) back for repair, supporting a verifier-in-the-loop repair/authoring pipeline and repair-data generation.
+  - _Additional context:_ Uses an LLM, not a trained small decoder; value is the generate-verify-refine design and diagnostic-feedback ablation, not the termination domain.
+  - _Impact_ 0.30 · _Applicability_ 0.54 · _Confidence_ 0.41 · _Effort_ 4.0/10
+  [2610.35523](https://arxiv.org/abs/2610.35523)
 - **Maps each graph to a sequence of WL colors, encodes it with a VAE into a Gaussian laten...** · score 0.014
   - _Contributions:_ WL-SeqVAE is a sequence-based VAE for graph generation that uses Weisfeiler-Leman node colors as discrete structural tokens. Graph generation becomes sequence generation, with compatibility constraints derived from the colors guiding decoding. It is competitive with established baselines on several local structural and molecular metrics.
   - _Applicable to our work:_ Constraint-guided autoregressive decoding of graph-structured outputs is analogous to masking invalid face/edge pointers during program decoding; WL colors could also serve as symmetry-aware node tokens/positional features for the B-rep face graph (congruent-face ambiguity).
@@ -28,6 +40,12 @@
   - _Additional context:_ Video-VLM domain; transfer is conceptual (verifier-in-the-loop, adaptive synthetic curriculum), not directly a mesh/CAD method. Code only promised ('will be made publicly available'). RL-based, heavier than hexgen's SFT flywheel.
   - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.42 · _Effort_ 5.0/10
   [2610.32433](https://arxiv.org/abs/2610.32433)
+- **Evaluate the value at a less noisy lookahead state one sampler step ahead and pull its...** · score 0.005
+  - _Contributions:_ Shows that errors of denoised-estimate and learned-value gradients are posterior covariances that grow with noise. Proposes VaLoP, a unified family of lookahead value gradients with a generator-correction term, and VaLoP-Fast, an amortized correction head reusable across rewards. Reports gains over existing value-gradient guidance on text-to-image models and critic-guided robot policies.
+  - _Applicable to our work:_ Only the idea of critic/value-guided steering transfers: a learned value (verifier-pass predictor) over partial programs to steer decoding or best-of-N. The mechanism is continuous-diffusion specific; discrete program tokens need an adaptation (e.g. value over prefixes), so it is mostly conceptual.
+  - _Additional context:_ Continuous diffusion/flow setting; transfer to discrete autoregressive decoders is non-trivial. Low direct priority; relevant for value-guided search ideas.
+  - _Impact_ 0.20 · _Applicability_ 0.30 · _Confidence_ 0.60 · _Effort_ 8.0/10
+  [2610.35607](https://arxiv.org/abs/2610.35607)
 
 ## Current top 10 backlog
 
