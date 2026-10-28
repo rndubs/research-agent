@@ -1,6 +1,6 @@
-# hexgen digest — 2026-10-27
+# hexgen digest — 2026-10-28
 
-**7** new backlog item(s) in the last 7 day(s).
+**8** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -40,6 +40,12 @@
   - _Additional context:_ Video-VLM domain; transfer is conceptual (verifier-in-the-loop, adaptive synthetic curriculum), not directly a mesh/CAD method. Code only promised ('will be made publicly available'). RL-based, heavier than hexgen's SFT flywheel.
   - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.42 · _Effort_ 5.0/10
   [2610.32433](https://arxiv.org/abs/2610.32433)
+- **MLE-World is a world model finetuned from Qwen3.5-4B that reads a program's code and pr...** · score 0.006
+  - _Contributions:_ The paper introduces a learned execution-prediction world model for ML code that predicts error classes, crash status and validation metrics. It shows the predictor beats larger general LLMs at predicting terminal output and crashes. Using it to screen candidate programs inside an agent search loop improves mean medal percentile on a 17-task benchmark under an 8-hour budget.
+  - _Applicable to our work:_ The idea of a learned predictor of execution outcome (compiles, crashes) could act as a cheap critic to pre-screen best-of-N hexproj programs before the deterministic mesher/verifier runs, and its UCB-style selection with a confidence bonus is a transferable value-guided search mechanism. The domain differs (Python ML code vs a hex-meshing DSL), and the frozen verifier is already machine-checkable, so the gain would be mainly in cost.
+  - _Additional context:_ Tangential: the bridge is execution-guided/critic-guided candidate selection, not geometry. The code link is not stated in the portion of the text read.
+  - _Impact_ 0.30 · _Applicability_ 0.36 · _Confidence_ 0.29 · _Effort_ 5.0/10
+  [2610.37175](https://arxiv.org/abs/2610.37175)
 - **Evaluate the value at a less noisy lookahead state one sampler step ahead and pull its...** · score 0.005
   - _Contributions:_ Shows that errors of denoised-estimate and learned-value gradients are posterior covariances that grow with noise. Proposes VaLoP, a unified family of lookahead value gradients with a generator-correction term, and VaLoP-Fast, an amortized correction head reusable across rewards. Reports gains over existing value-gradient guidance on text-to-image models and critic-guided robot policies.
   - _Applicable to our work:_ Only the idea of critic/value-guided steering transfers: a learned value (verifier-pass predictor) over partial programs to steer decoding or best-of-N. The mechanism is continuous-diffusion specific; discrete program tokens need an adaptation (e.g. value over prefixes), so it is mostly conceptual.
