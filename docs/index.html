@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-10-27</title>
+<title>hexgen digest — 2026-10-29</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-10-27 · 7 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-10-29 · 8 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -254,6 +254,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2610.32433</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2610.37175">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.006</span>
+    <span class="card-title">MLE-World is a world model finetuned from Qwen3.5-4B that reads a program&#39;s code and pr...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces a learned execution-prediction world model for ML code that predicts error classes, crash status and validation metrics. It shows the predictor beats larger general LLMs at predicting terminal output and crashes. Using it to screen candidate programs inside an agent search loop improves mean medal percentile on a 17-task benchmark under an 8-hour budget.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The idea of a learned predictor of execution outcome (compiles, crashes) could act as a cheap critic to pre-screen best-of-N hexproj programs before the deterministic mesher/verifier runs, and its UCB-style selection with a confidence bonus is a transferable value-guided search mechanism. The domain differs (Python ML code vs a hex-meshing DSL), and the frozen verifier is already machine-checkable, so the gain would be mainly in cost.</dd>
+    <dt>Additional context</dt>
+    <dd>Tangential: the bridge is execution-guided/critic-guided candidate selection, not geometry. The code link is not stated in the portion of the text read.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.29</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2610.37175</span>
   </div>
 </a>
 
