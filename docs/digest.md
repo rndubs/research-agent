@@ -1,6 +1,6 @@
-# hexgen digest — 2026-10-30
+# hexgen digest — 2026-10-31
 
-**10** new backlog item(s) in the last 7 day(s).
+**8** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -10,12 +10,6 @@
   - _Additional context:_ LLM/JSON focused, no program-synthesis geometry; evidence is general but supportive of structural-validity masking. Code not yet public.
   - _Impact_ 0.45 · _Applicability_ 0.84 · _Confidence_ 0.43 · _Effort_ 3.0/10
   [2610.35328](https://arxiv.org/abs/2610.35328)
-- **Compiles schemas into context-parameterized transition programs: cold compilation speci...** · score 0.028
-  - _Contributions:_ Presents DConstrain, an exact grammar-constrained decoder for diffusion LMs that supports arbitrary property order without enumerating field subsets. Token-effect grouping provably preserves the Viterbi optimum and token-labeled path distribution. On BFCL it compiles all schemas and cuts end-to-end latency while keeping 100% schema validity.
-  - _Applicable to our work:_ Grammar/schema-constrained decoding is directly relevant to making hexproj programs compile: the symbolic transition-program idea could encode the DSL grammar plus context guards (e.g. which face indices/blocks are in scope) as a decoding mask for the pointer heads. The compile-ahead-of-forward-pass overlap is also reusable for best-of-N sampling. Our decoder is autoregressive, so the parallel-token compatibility machinery is mostly unneeded.
-  - _Additional context:_ Targets JSON-schema tool calling in diffusion LMs, not geometry; transfer is the constrained-decoding mechanism only. Pointer-head masking would need custom state tracking.
-  - _Impact_ 0.50 · _Applicability_ 0.60 · _Confidence_ 0.46 · _Effort_ 5.0/10
-  [2610.30920](https://arxiv.org/abs/2610.30920)
 - **RAINFALL, a generate-verify-refine neuro-symbolic framework: placeholders are inserted...** · score 0.017
   - _Contributions:_ Proposes RAINFALL, tightly coupling LLM generation with symbolic verification for ranking-function synthesis. It synthesizes verifiable ranking functions for 323 of 358 programs (90.22%) and beats baselines including PROTON 2.1; combined with PROTON 2.1 it reaches 96.65%.
   - _Applicable to our work:_ Transferable pattern: constrain generation to fixed slots of a template and feed structured verifier diagnostics (e.g. which mesh check failed) back for repair, supporting a verifier-in-the-loop repair/authoring pipeline and repair-data generation.
@@ -28,12 +22,6 @@
   - _Additional context:_ Molecular/generic graphs only; no program or CAD setting. Competitive rather than SOTA. Constraints are structural compatibility, not execution validity.
   - _Impact_ 0.25 · _Applicability_ 0.42 · _Confidence_ 0.67 · _Effort_ 5.0/10
   [2610.32650](https://arxiv.org/abs/2610.32650)
-- **Represents a B-rep as an Edge-Adjacency Graph (EAG) and applies hybrid discrete/continu...** · score 0.011
-  - _Contributions:_ Introduces the Edge-Adjacency Graph as a graph representation of B-reps for generation, and GraphCAD, a hybrid graph diffusion model with geometry-aware denoising. Also builds EAGBench, a large dataset of engineering CAD parts aggregated from existing repositories. Claims state-of-the-art geometric fidelity and distributional alignment against sequence-based baselines, including models with more than 50 faces.
-  - _Applicable to our work:_ The EAG representation and edge-level graph encoding are a candidate alternative or complement to the face-adjacency graph in the hexgen encoder; the render-to-point-set geometric grounding of node attributes and the EAGBench B-rep corpus are possible sources for real-CAD diversity (domain gap). The diffusion decoder itself is not a program generator.
-  - _Additional context:_ Generates B-rep graphs, not programs, so no direct structural-validity mechanism; the SE(3) equivariance aspect touches our closed rotation line. Code availability not confirmed in the extracted text.
-  - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.46 · _Effort_ 6.0/10
-  [2610.30974](https://arxiv.org/abs/2610.30974)
 - **A single policy acts as Questioner and Solver over executable environments whose progra...** · score 0.011
   - _Contributions:_ Tempo-Zero closes a loop of executable environments, execution-verified self-play, and environment evolution for video reasoning. Executing a program renders a video with exact ground-truth options and intervals, replacing consensus-based pseudo-labels. Solver performance steers a curriculum and the policy selects rule changes that enrich later event dynamics.
   - _Applicable to our work:_ The loop of program execution giving exact verifiable rewards, plus a curriculum that evolves the generator's program distribution from learner performance, maps to hexgen's inverse factory and frozen verifier: adaptively re-weight factory sampling toward program types the decoder fails, and filter synthetic pairs by execution-consistency checks.
