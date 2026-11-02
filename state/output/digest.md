@@ -1,6 +1,6 @@
-# hexgen digest — 2026-11-01
+# hexgen digest — 2026-11-02
 
-**8** new backlog item(s) in the last 7 day(s).
+**10** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -16,6 +16,12 @@
   - _Additional context:_ Uses an LLM, not a trained small decoder; value is the generate-verify-refine design and diagnostic-feedback ablation, not the termination domain.
   - _Impact_ 0.30 · _Applicability_ 0.54 · _Confidence_ 0.41 · _Effort_ 4.0/10
   [2610.35523](https://arxiv.org/abs/2610.35523)
+- **Integrates a symbolic (SMT) reasoner into grammar-constrained decoding: before each ass...** · score 0.015
+  - _Contributions:_ Introduces specification-guided decoding that refines the decoding grammar with a symbolic reasoner so every completed output satisfies a formal specification. Presents forward-only and backtracking variants, model-agnostic and requiring no retraining. Evaluates on configuration and constraint-solving benchmarks.
+  - _Applicable to our work:_ Transferable mechanism: prune pointer/command choices during decoding using a reasoner that checks whether a program prefix can still be completed validly (e.g. face-index consistency, topological constraints), giving validity by construction beyond syntax and reducing best-of-N waste; backtracking idea maps to prefix search/repair.
+  - _Additional context:_ Hexgen validity (zero inverted elements, surface match) is geometric and likely not expressible as SMT constraints; only cheap symbolic preconditions on the DSL (reference validity, arity, block adjacency) would be feasible. Paper targets LLM prompting, not trained small decoders.
+  - _Impact_ 0.40 · _Applicability_ 0.54 · _Confidence_ 0.35 · _Effort_ 5.0/10
+  [2610.41511](https://arxiv.org/abs/2610.41511)
 - **Maps each graph to a sequence of WL colors, encodes it with a VAE into a Gaussian laten...** · score 0.014
   - _Contributions:_ WL-SeqVAE is a sequence-based VAE for graph generation that uses Weisfeiler-Leman node colors as discrete structural tokens. Graph generation becomes sequence generation, with compatibility constraints derived from the colors guiding decoding. It is competitive with established baselines on several local structural and molecular metrics.
   - _Applicable to our work:_ Constraint-guided autoregressive decoding of graph-structured outputs is analogous to masking invalid face/edge pointers during program decoding; WL colors could also serve as symmetry-aware node tokens/positional features for the B-rep face graph (congruent-face ambiguity).
@@ -28,6 +34,12 @@
   - _Additional context:_ Video-VLM domain; transfer is conceptual (verifier-in-the-loop, adaptive synthetic curriculum), not directly a mesh/CAD method. Code only promised ('will be made publicly available'). RL-based, heavier than hexgen's SFT flywheel.
   - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.42 · _Effort_ 5.0/10
   [2610.32433](https://arxiv.org/abs/2610.32433)
+- **GraphMP, a local message-passing graph decoder; beam search guided by its predictions r...** · score 0.009
+  - _Contributions:_ Proposes GraphMP, a scalable message-passing decoder transferring without fine-tuning across code families, sizes, error rates and noise models. Shows beam search over its predictions lowers logical error rate at higher decode time. Introduces a decoder model factory that distills verified search trajectories into successive model generations and adapts to noise drift.
+  - _Applicable to our work:_ Closest analogue to our verifier-in-the-loop flywheel: model-guided search (beam) outputs filtered by an independent checker become training data for the next generation, plus analysis of training-objective vs in-search decoding misalignment and data-difficulty drift across generations. Also graph-based decoder with candidate refinement.
+  - _Additional context:_ Domain is quantum error correction; no code link seen. Misalignment between training objective and decoding inside beam search is a useful caution for best-of-N/MCTS over program prefixes.
+  - _Impact_ 0.35 · _Applicability_ 0.48 · _Confidence_ 0.33 · _Effort_ 6.0/10
+  [2610.41398](https://arxiv.org/abs/2610.41398)
 - **MLE-World is a world model finetuned from Qwen3.5-4B that reads a program's code and pr...** · score 0.006
   - _Contributions:_ The paper introduces a learned execution-prediction world model for ML code that predicts error classes, crash status and validation metrics. It shows the predictor beats larger general LLMs at predicting terminal output and crashes. Using it to screen candidate programs inside an agent search loop improves mean medal percentile on a 17-task benchmark under an 8-hour budget.
   - _Applicable to our work:_ The idea of a learned predictor of execution outcome (compiles, crashes) could act as a cheap critic to pre-screen best-of-N hexproj programs before the deterministic mesher/verifier runs, and its UCB-style selection with a confidence bonus is a transferable value-guided search mechanism. The domain differs (Python ML code vs a hex-meshing DSL), and the frozen verifier is already machine-checkable, so the gain would be mainly in cost.

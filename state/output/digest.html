@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-01</title>
+<title>hexgen digest — 2026-11-02</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-01 · 8 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-02 · 10 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -154,6 +154,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2610.41511">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.015</span>
+    <span class="card-title">Integrates a symbolic (SMT) reasoner into grammar-constrained decoding: before each ass...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Introduces specification-guided decoding that refines the decoding grammar with a symbolic reasoner so every completed output satisfies a formal specification. Presents forward-only and backtracking variants, model-agnostic and requiring no retraining. Evaluates on configuration and constraint-solving benchmarks.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Transferable mechanism: prune pointer/command choices during decoding using a reasoner that checks whether a program prefix can still be completed validly (e.g. face-index consistency, topological constraints), giving validity by construction beyond syntax and reducing best-of-N waste; backtracking idea maps to prefix search/repair.</dd>
+    <dt>Additional context</dt>
+    <dd>Hexgen validity (zero inverted elements, surface match) is geometric and likely not expressible as SMT constraints; only cheap symbolic preconditions on the DSL (reference validity, arity, block adjacency) would be feasible. Paper targets LLM prompting, not trained small decoders.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2610.41511</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2610.32650">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.014</span>
@@ -202,6 +228,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2610.32433</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2610.41398">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.009</span>
+    <span class="card-title">GraphMP, a local message-passing graph decoder; beam search guided by its predictions r...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Proposes GraphMP, a scalable message-passing decoder transferring without fine-tuning across code families, sizes, error rates and noise models. Shows beam search over its predictions lowers logical error rate at higher decode time. Introduces a decoder model factory that distills verified search trajectories into successive model generations and adapts to noise drift.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Closest analogue to our verifier-in-the-loop flywheel: model-guided search (beam) outputs filtered by an independent checker become training data for the next generation, plus analysis of training-objective vs in-search decoding misalignment and data-difficulty drift across generations. Also graph-based decoder with candidate refinement.</dd>
+    <dt>Additional context</dt>
+    <dd>Domain is quantum error correction; no code link seen. Misalignment between training objective and decoding inside beam search is a useful caution for best-of-N/MCTS over program prefixes.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.33</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2610.41398</span>
   </div>
 </a>
 
