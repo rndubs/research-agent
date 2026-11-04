@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-03</title>
+<title>hexgen digest — 2026-11-04</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,32 +98,32 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-03 · 12 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-04 · 12 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
-   href="https://arxiv.org/abs/2610.35328">
+   href="https://arxiv.org/abs/2611.05041">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.054</span>
-    <span class="card-title">A taxonomy of format, validity and reasoning constraints, a theoretical argument that a...</span>
+    <span class="badge" title="composite RICE score">0.030</span>
+    <span class="card-title">Inject a positional encoding with learnable scale that breaks the model&#39;s symmetry duri...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>Argues that apparent accuracy loss from constrained decoding mostly stems from non-equivalent prompts and output formats rather than masking. Shows validity constraints improve reliability and extractability, and reasoning constraints can improve accuracy when they enforce beneficial trajectories.</dd>
+    <dd>Proposes constraint relaxation via positional encoding as a cheap alternative to dense relaxation layers. The PE is annealed to zero so the final model is strictly equivariant, giving gains for translational and rotational equivariant models with marginal compute and memory overhead.</dd>
     <dt>Applicable to our work</dt>
-    <dd>Directly supports grammar/validity-constrained decoding for the hexgen DSL: masking invalid tokens (closed vocabulary, pointer targets to existing faces, command arity) should not hurt quality and removes invalid outputs. Guidance on controlling for format/prompt differences when comparing constrained vs unconstrained decoders.</dd>
+    <dd>A genuinely new training-time mechanism for rotation robustness that does not require a natively invariant encoder: add an annealed pose/positional signal to the graph-transformer inputs during training. Could also be used to relax symmetry/orbit constraints in pointer heads during optimization, then restore them.</dd>
     <dt>Additional context</dt>
-    <dd>LLM/JSON focused, no program-synthesis geometry; evidence is general but supportive of structural-validity masking. Code not yet public.</dd>
+    <dd>Our own natively rotation-invariant line is closed; this is about easing optimization of equivariant models, so its payoff for a 27M graph transformer is unproven. Evaluated on point clouds, grids and E(3) GNNs, not B-rep graphs.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
     <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2610.35328</span>
+    <span class="pid">2611.05041</span>
   </div>
 </a>
 
@@ -206,6 +206,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2611.05039">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.022</span>
+    <span class="card-title">Replace the ASP generator with an LLM that proposes hypotheses from structured prompts,...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Introduces ALBI, a neuro-symbolic ILP framework with an iterative generate-test-constrain loop where an LLM generates and a Prolog verifier checks. Also proposes semantic anonymization, a metamorphic test separating structural induction from predicate-name pattern matching.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>A clean template for verifier-in-the-loop program generation: diagnostic feedback from a formal checker constrains the next generation, with beam search over candidates. The same pattern could drive an LLM-agent authoring pipeline for hexgen programs, or error-message-conditioned repair data from our frozen verifier. Semantic anonymization suggests a check that the model relies on structure rather than surface cues.</dd>
+    <dt>Additional context</dt>
+    <dd>Symbolic logic domain with prompted frontier LLMs, not a trained decoder; transfer is conceptual (generate-test-refine loop, failure-conditioned feedback). Code at github.com/seddiqbenterki/albi.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.61</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.05039</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2611.03143">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.018</span>
@@ -232,32 +258,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2610.35523">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.017</span>
-    <span class="card-title">RAINFALL, a generate-verify-refine neuro-symbolic framework: placeholders are inserted...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Proposes RAINFALL, tightly coupling LLM generation with symbolic verification for ranking-function synthesis. It synthesizes verifiable ranking functions for 323 of 358 programs (90.22%) and beats baselines including PROTON 2.1; combined with PROTON 2.1 it reaches 96.65%.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Transferable pattern: constrain generation to fixed slots of a template and feed structured verifier diagnostics (e.g. which mesh check failed) back for repair, supporting a verifier-in-the-loop repair/authoring pipeline and repair-data generation.</dd>
-    <dt>Additional context</dt>
-    <dd>Uses an LLM, not a trained small decoder; value is the generate-verify-refine design and diagnostic-feedback ablation, not the termination domain.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.41</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2610.35523</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2610.41511">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.015</span>
@@ -280,6 +280,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2610.41511</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2611.05158">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.014</span>
+    <span class="card-title">Self-play perturb-verify-repair-verify loop: a Mutator makes a typed perturbation of a...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>Introduces PROVE, a self-play framework that trains a verifier through a closed perturb-verify-repair-verify loop using a single shared backbone. The two verification rounds yield structured rewards for informative perturbations and visually grounded repairs, so updating shared parameters also improves the verifier.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The perturb-then-repair loop with verifier feedback maps onto repair/edit distillation: corrupt valid hexgen programs with typed edits, have the model fix them against the frozen verifier&#39;s feedback, and reward informative failures. Typed perturbation of known-good (B-rep, program) pairs could also generate hard negatives/repair data from the inverse factory.</dd>
+    <dt>Additional context</dt>
+    <dd>Vision-language domain; the transferable piece is the self-play reward design, not the architecture. Verifier here is learned, whereas ours is frozen and machine-checkable, which makes the reward simpler.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.49</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.05158</span>
   </div>
 </a>
 
@@ -384,32 +410,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2610.40005</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2610.35607">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.005</span>
-    <span class="card-title">Evaluate the value at a less noisy lookahead state one sampler step ahead and pull its...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Shows that errors of denoised-estimate and learned-value gradients are posterior covariances that grow with noise. Proposes VaLoP, a unified family of lookahead value gradients with a generator-correction term, and VaLoP-Fast, an amortized correction head reusable across rewards. Reports gains over existing value-gradient guidance on text-to-image models and critic-guided robot policies.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Only the idea of critic/value-guided steering transfers: a learned value (verifier-pass predictor) over partial programs to steer decoding or best-of-N. The mechanism is continuous-diffusion specific; discrete program tokens need an adaptation (e.g. value over prefixes), so it is mostly conceptual.</dd>
-    <dt>Additional context</dt>
-    <dd>Continuous diffusion/flow setting; transfer to discrete autoregressive decoders is non-trivial. Low direct priority; relevant for value-guided search ideas.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.20</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">8.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2610.35607</span>
   </div>
 </a>
 
