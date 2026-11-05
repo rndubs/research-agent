@@ -28,7 +28,7 @@ _25 item(s) shown · top_n = 25 · 5 foundational slots reserved._
 | 22 | 0.054 | A Vision-Language Model (VLM) proposes candidate First-Order-Logic (FOL) rules, conform... | 0.50 | 0.78 | 0.83 | 6.0 | — | [2609.05388](https://arxiv.org/abs/2609.05388) | Logic Tensor Networks (LTN) framework, Llama-4-Maverick-17B-128E-Instruct VLM via Groq API, NeuPSL and LTN-IND A/B/C baselines for comparison |
 | 23 | 0.054 | A taxonomy of format, validity and reasoning constraints, a theoretical argument that a... | 0.45 | 0.84 | 0.43 | 3.0 | — | [2610.35328](https://arxiv.org/abs/2610.35328) | grammar-constrained decoding (Outlines, XGrammar-style) |
 | 24 | 0.052 | RealCAD is a unified Sim2Real framework that (1) revises the DeepCAD parameterization b... | 0.35 | 0.66 | 0.67 | 3.0 | — | [2608.30617](https://arxiv.org/abs/2608.30617) | DeepCAD representation (Wu, Xiao, and Zheng 2021), Frozen pretrained DINOv3-ViT-7B encoder (Siméoni et al. 2025), Edge-conditioned ControlNet (Zhang, Rao, and Agrawala 2023) |
-| 25 | 0.047 | WEECFP-SuRGE has two parts. WEECFP-S is a deterministic, parameter-free fingerprint tha... | 0.35 | 0.66 | 0.61 | 3.0 | — | [2609.04672](https://arxiv.org/abs/2609.04672) | RDKit Morgan fingerprint enumeration (Landrum), RoPE / RoFormer rotary position encoding (Su et al., 2024), Graphormer-style structural attention as the contrastive baseline design (Ying et al., 2021), MapLight ECFP+Avalon+ErG augmented-feature baseline recipe (Notwell and Selzer, 2023) |
+| 25 | 0.051 | Simple-PAT: zeroth-order optimization over a procedural generator's control parameters... | 0.50 | 0.72 | 0.71 | 5.0 | — | [2611.06890](https://arxiv.org/abs/2611.06890) | — |
 
 ## Foundational lane
 

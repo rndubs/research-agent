@@ -1,9 +1,15 @@
-# hexgen digest — 2026-11-04
+# hexgen digest — 2026-11-05
 
-**12** new backlog item(s) in the last 7 day(s).
+**16** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
+- **Simple-PAT: zeroth-order optimization over a procedural generator's control parameters...** · score 0.051
+  - _Contributions:_ Introduces procedural adversarial learning (PAL), a minimax training and adversarial evaluation framework that searches a procedural generator's parameter space for hard instances. Presents Simple-PAT and PAL-Dojo, generators for normals, segmentation and pose. Reports reduced worst-case error versus standard and robust-training baselines.
+  - _Applicable to our work:_ Analogous to our inverse factory: instead of sampling random valid programs uniformly, adaptively search the factory's parameter space for program/B-rep instances where the current decoder (or verifier-screened best-of-N) fails and oversample them. Also gives a worst-case evaluation protocol for the synthetic-to-real domain gap.
+  - _Additional context:_ Vision tasks only; zeroth-order search fits a non-differentiable mesher pipeline. Risk: adversarial samples may be unrealistic CAD; needs a validity filter.
+  - _Impact_ 0.50 · _Applicability_ 0.72 · _Confidence_ 0.71 · _Effort_ 5.0/10
+  [2611.06890](https://arxiv.org/abs/2611.06890)
 - **Inject a positional encoding with learnable scale that breaks the model's symmetry duri...** · score 0.030
   - _Contributions:_ Proposes constraint relaxation via positional encoding as a cheap alternative to dense relaxation layers. The PE is annealed to zero so the final model is strictly equivariant, giving gains for translational and rotational equivariant models with marginal compute and memory overhead.
   - _Applicable to our work:_ A genuinely new training-time mechanism for rotation robustness that does not require a natively invariant encoder: add an annealed pose/positional signal to the graph-transformer inputs during training. Could also be used to relax symmetry/orbit constraints in pointer heads during optimization, then restore them.
@@ -28,6 +34,18 @@
   - _Additional context:_ Text-to-SQL domain; negatives come from LLM agents, whereas hexgen can mine them directly by perturbing programs and executing the mesher.
   - _Impact_ 0.50 · _Applicability_ 0.66 · _Confidence_ 0.41 · _Effort_ 5.0/10
   [2611.03298](https://arxiv.org/abs/2611.03298)
+- **Analysis and online replay experiments of allocation policies (round-robin, Thompson Sa...** · score 0.024
+  - _Contributions:_ Shows difficulty-proportional ('harder gets more') allocation captures little oracle gain on hard workloads, and that with a verifier the prior quality matters more than the policy. Provides a decision guide on when adaptive allocation helps.
+  - _Applicable to our work:_ Informs how to spend a fixed best-of-N budget across B-rep inputs: use a cheap prior (face count, past pass rates) with Thompson sampling and avoid wasting samples on hopeless parts. Reinforces that the frozen verifier must have rare false accepts.
+  - _Additional context:_ Text/math/code workloads; relevant only to inference-budget policy, not modeling.
+  - _Impact_ 0.25 · _Applicability_ 0.54 · _Confidence_ 0.35 · _Effort_ 2.0/10
+  [2611.06372](https://arxiv.org/abs/2611.06372)
+- **VGSC proposes candidate next steps from the base LM and accepts/resamples using step-le...** · score 0.023
+  - _Contributions:_ Proposes Verifier-Guided Self-Consistency, a stochastic decoding framework combining step-level verification and future-outcome estimates. Interprets it as approximate sampling from a verifier-tilted trajectory distribution. Shows higher average accuracy than baselines across benchmarks, generators and verifiers.
+  - _Applicable to our work:_ Prefix-level accept/resample guided by a step verifier plus a value estimate maps to guiding hexgen decoding over program prefixes with a learned prefix-validity/compile-success predictor, tilting sampling toward executable programs before best-of-N screening by the frozen verifier.
+  - _Additional context:_ Evaluated on text reasoning, not programs; our verifier scores only complete programs, so the prefix value model must be trained from rollouts (Monte Carlo continuation labels are cheap here).
+  - _Impact_ 0.50 · _Applicability_ 0.66 · _Confidence_ 0.42 · _Effort_ 6.0/10
+  [2611.06606](https://arxiv.org/abs/2611.06606)
 - **Replace the ASP generator with an LLM that proposes hypotheses from structured prompts,...** · score 0.022
   - _Contributions:_ Introduces ALBI, a neuro-symbolic ILP framework with an iterative generate-test-constrain loop where an LLM generates and a Prolog verifier checks. Also proposes semantic anonymization, a metamorphic test separating structural induction from predicate-name pattern matching.
   - _Applicable to our work:_ A clean template for verifier-in-the-loop program generation: diagnostic feedback from a formal checker constrains the next generation, with beam search over candidates. The same pattern could drive an LLM-agent authoring pipeline for hexgen programs, or error-message-conditioned repair data from our frozen verifier. Semantic anonymization suggests a check that the model relies on structure rather than surface cues.
@@ -58,12 +76,12 @@
   - _Additional context:_ Domain is quantum error correction; no code link seen. Misalignment between training objective and decoding inside beam search is a useful caution for best-of-N/MCTS over program prefixes.
   - _Impact_ 0.35 · _Applicability_ 0.48 · _Confidence_ 0.33 · _Effort_ 6.0/10
   [2610.41398](https://arxiv.org/abs/2610.41398)
-- **MLE-World is a world model finetuned from Qwen3.5-4B that reads a program's code and pr...** · score 0.006
-  - _Contributions:_ The paper introduces a learned execution-prediction world model for ML code that predicts error classes, crash status and validation metrics. It shows the predictor beats larger general LLMs at predicting terminal output and crashes. Using it to screen candidate programs inside an agent search loop improves mean medal percentile on a 17-task benchmark under an 8-hour budget.
-  - _Applicable to our work:_ The idea of a learned predictor of execution outcome (compiles, crashes) could act as a cheap critic to pre-screen best-of-N hexproj programs before the deterministic mesher/verifier runs, and its UCB-style selection with a confidence bonus is a transferable value-guided search mechanism. The domain differs (Python ML code vs a hex-meshing DSL), and the frozen verifier is already machine-checkable, so the gain would be mainly in cost.
-  - _Additional context:_ Tangential: the bridge is execution-guided/critic-guided candidate selection, not geometry. The code link is not stated in the portion of the text read.
-  - _Impact_ 0.30 · _Applicability_ 0.36 · _Confidence_ 0.29 · _Effort_ 5.0/10
-  [2610.37175](https://arxiv.org/abs/2610.37175)
+- **Turn-level best-of-N with a generator-selector framework: a generator proposes candidat...** · score 0.008
+  - _Contributions:_ Evaluates turn-level best-of-N sampling with an LLM selector comparing candidate actions directly. Shows accuracy and consistency gains on terminal tasks and analyzes behavior shifts.
+  - _Applicable to our work:_ Command-level candidate selection during program decoding: sample several next DSL commands and pick with a learned critic rather than only whole-program best-of-N.
+  - _Additional context:_ Selector is an LLM judging text actions; for us a trained critic or partial-execution check would replace it.
+  - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.28 · _Effort_ 5.0/10
+  [2611.06868](https://arxiv.org/abs/2611.06868)
 - **RFW-A has agents build category-level procedural generators from reusable components an...** · score 0.006
   - _Contributions:_ The paper combines agentic program synthesis with procedural generation: agents author reusable category-level generators once, and execution then yields many assets. It releases RFW-A-400K, over 400K sim-ready articulated assets across 500+ categories, and reports gains in articulation estimation and zero-shot sim-to-real policy transfer.
   - _Applicable to our work:_ The agent-authored generator plus validate/repair loop is an analogue of the inverse factory: LLM agents could author program generators that emit (B-rep, program) pairs, with the frozen verifier acting as the test/repair gate. Failure localization and blueprint-code consistency checks could inform repair-data creation.
@@ -76,6 +94,12 @@
   - _Additional context:_ Planar linkages, not 3D B-rep; contributions are representation and sampling ideas rather than a decoder. Evaluated on small MLPs.
   - _Impact_ 0.20 · _Applicability_ 0.30 · _Confidence_ 0.43 · _Effort_ 5.0/10
   [2610.40005](https://arxiv.org/abs/2610.40005)
+- **Objective programmatic verifiers flag guideline violations and serve as rewards for RLV...** · score 0.004
+  - _Contributions:_ Describes a deployed pipeline generating animated icons, focusing on image generation. Designs objective verifiers and uses them for RLVR, raising pass rate from 15.7% to 58.7%.
+  - _Applicable to our work:_ Supports our verifier-in-the-loop line: a frozen machine-checkable verifier as RL reward when no supervised data exists; dual use as reward and deployment gate mirrors our best-of-N screening.
+  - _Additional context:_ Image domain; evidence of the pattern rather than a transferable mechanism. Reward hacking risk; they use an independent judge.
+  - _Impact_ 0.20 · _Applicability_ 0.42 · _Confidence_ 0.37 · _Effort_ 7.0/10
+  [2611.06123](https://arxiv.org/abs/2611.06123)
 
 ## Current top 10 backlog
 
