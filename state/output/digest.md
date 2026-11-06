@@ -1,6 +1,6 @@
-# hexgen digest — 2026-11-05
+# hexgen digest — 2026-11-06
 
-**16** new backlog item(s) in the last 7 day(s).
+**18** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -22,6 +22,12 @@
   - _Additional context:_ Closest CAD-program-synthesis paper this cycle; text-to-CAD with LLM fine-tuning rather than graph encoders, so mechanism transfers at the data/representation level only.
   - _Impact_ 0.50 · _Applicability_ 0.72 · _Confidence_ 0.40 · _Effort_ 5.0/10
   [2611.03449](https://arxiv.org/abs/2611.03449)
+- **Controlled comparison of a self-improving embodied coding agent with and without Criter...** · score 0.028
+  - _Contributions:_ The paper defines Criteria Exposure in self-improving embodied agents and shows that the success-rate advantage under original criteria vanishes when judged by slightly changed, instruction-faithful criteria. Skills learned under exposure transfer poorly across tasks. It proposes instruction-faithful criteria that better reflect the quality of agent-generated programs.
+  - _Applicable to our work:_ Cautionary evidence for the frozen-verifier flywheel: when a generator is trained/selected against a verifier it can overfit the verifier's quirks. Suggests auditing hexgen's verifier thresholds for hidden rules and validating best-of-N self-improvement with held-out/perturbed criteria.
+  - _Additional context:_ Embodied robotics setting; relevance is by analogy to verifier-in-the-loop training only. No code released that we saw beyond a project page.
+  - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.45 · _Effort_ 2.0/10
+  [2611.08318](https://arxiv.org/abs/2611.08318)
 - **LAND learns a discrete empirical mixture of source-conditioned score distributions from...** · score 0.027
   - _Contributions:_ Proposes LAND, an adaptive best-of-N stopping rule derived from posterior-predictive marginal value of another draw under a compute budget. On machine translation it improves quality at matched compute or cuts candidate generations by about 20-40% at matched quality.
   - _Applicable to our work:_ hexgen draws best-of-N programs screened by a frozen verifier; LAND's adaptive per-input draw budget (stop early on easy B-reps, sample more on hard ones) could cut mesher/verifier cost. Verifier quality scores or pass/fail could serve as the score signal.
@@ -82,6 +88,12 @@
   - _Additional context:_ Selector is an LLM judging text actions; for us a trained critic or partial-execution check would replace it.
   - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.28 · _Effort_ 5.0/10
   [2611.06868](https://arxiv.org/abs/2611.06868)
+- **We compare six execution-free predictors from four families on Qwen3-Coder-30B and gpt-...** · score 0.008
+  - _Contributions:_ The paper compares six execution-free correctness predictors (output confidence, EigenScore consistency, hidden-state probes, causal-subspace probes) for LLM code judgments under benchmark and language shift. It adapts two causal localization methods to code and finds they improve robustness to language shift for verdict correctness on Qwen3-Coder, but not consistently elsewhere. For program correctness, predictors mostly identify hard problems and rank candidates within a problem poorly.
+  - _Applicable to our work:_ Learned critic/value signals for ranking best-of-N candidates when the frozen verifier is expensive; shows such predictors triage problems better than they rank candidates, and degrade under shift, relevant to synthetic-to-real CAD gap.
+  - _Additional context:_ LLM code-judging setting, not geometric programs; transfer is indirect. Weak within-problem ranking limits use for best-of-N selection.
+  - _Impact_ 0.25 · _Applicability_ 0.36 · _Confidence_ 0.43 · _Effort_ 5.0/10
+  [2611.07876](https://arxiv.org/abs/2611.07876)
 - **RFW-A has agents build category-level procedural generators from reusable components an...** · score 0.006
   - _Contributions:_ The paper combines agentic program synthesis with procedural generation: agents author reusable category-level generators once, and execution then yields many assets. It releases RFW-A-400K, over 400K sim-ready articulated assets across 500+ categories, and reports gains in articulation estimation and zero-shot sim-to-real policy transfer.
   - _Applicable to our work:_ The agent-authored generator plus validate/repair loop is an analogue of the inverse factory: LLM agents could author program generators that emit (B-rep, program) pairs, with the frozen verifier acting as the test/repair gate. Failure localization and blueprint-code consistency checks could inform repair-data creation.

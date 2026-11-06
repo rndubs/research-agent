@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-05</title>
+<title>hexgen digest — 2026-11-06</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-05 · 16 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-06 · 18 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -176,6 +176,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.03449</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2611.08318">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.028</span>
+    <span class="card-title">Controlled comparison of a self-improving embodied coding agent with and without Criter...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper defines Criteria Exposure in self-improving embodied agents and shows that the success-rate advantage under original criteria vanishes when judged by slightly changed, instruction-faithful criteria. Skills learned under exposure transfer poorly across tasks. It proposes instruction-faithful criteria that better reflect the quality of agent-generated programs.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Cautionary evidence for the frozen-verifier flywheel: when a generator is trained/selected against a verifier it can overfit the verifier&#39;s quirks. Suggests auditing hexgen&#39;s verifier thresholds for hidden rules and validating best-of-N self-improvement with held-out/perturbed criteria.</dd>
+    <dt>Additional context</dt>
+    <dd>Embodied robotics setting; relevance is by analogy to verifier-in-the-loop training only. No code released that we saw beyond a project page.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.08318</span>
   </div>
 </a>
 
@@ -436,6 +462,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.06868</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2611.07876">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.008</span>
+    <span class="card-title">We compare six execution-free predictors from four families on Qwen3-Coder-30B and gpt-...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper compares six execution-free correctness predictors (output confidence, EigenScore consistency, hidden-state probes, causal-subspace probes) for LLM code judgments under benchmark and language shift. It adapts two causal localization methods to code and finds they improve robustness to language shift for verdict correctness on Qwen3-Coder, but not consistently elsewhere. For program correctness, predictors mostly identify hard problems and rank candidates within a problem poorly.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Learned critic/value signals for ranking best-of-N candidates when the frozen verifier is expensive; shows such predictors triage problems better than they rank candidates, and degrade under shift, relevant to synthetic-to-real CAD gap.</dd>
+    <dt>Additional context</dt>
+    <dd>LLM code-judging setting, not geometric programs; transfer is indirect. Weak within-problem ranking limits use for best-of-N selection.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.07876</span>
   </div>
 </a>
 
