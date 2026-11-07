@@ -1,6 +1,6 @@
-# hexgen digest — 2026-11-06
+# hexgen digest — 2026-11-07
 
-**18** new backlog item(s) in the last 7 day(s).
+**16** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -94,18 +94,6 @@
   - _Additional context:_ LLM code-judging setting, not geometric programs; transfer is indirect. Weak within-problem ranking limits use for best-of-N selection.
   - _Impact_ 0.25 · _Applicability_ 0.36 · _Confidence_ 0.43 · _Effort_ 5.0/10
   [2611.07876](https://arxiv.org/abs/2611.07876)
-- **RFW-A has agents build category-level procedural generators from reusable components an...** · score 0.006
-  - _Contributions:_ The paper combines agentic program synthesis with procedural generation: agents author reusable category-level generators once, and execution then yields many assets. It releases RFW-A-400K, over 400K sim-ready articulated assets across 500+ categories, and reports gains in articulation estimation and zero-shot sim-to-real policy transfer.
-  - _Applicable to our work:_ The agent-authored generator plus validate/repair loop is an analogue of the inverse factory: LLM agents could author program generators that emit (B-rep, program) pairs, with the frozen verifier acting as the test/repair gate. Failure localization and blueprint-code consistency checks could inform repair-data creation.
-  - _Additional context:_ Domain is articulated objects, not B-rep or meshing; transfer is the data-generation pattern only. Abstract-level evidence; details beyond the abstract were not verified.
-  - _Impact_ 0.25 · _Applicability_ 0.36 · _Confidence_ 0.41 · _Effort_ 6.0/10
-  [2610.40333](https://arxiv.org/abs/2610.40333)
-- **Assur-KB represents planar mechanisms through irreducible modules (Assur groups), bound...** · score 0.005
-  - _Contributions:_ The paper proposes a compositional module-based representation of planar mechanisms with theory on transfer through module interfaces and physical limits from missing interface information. Experiments report better sample efficiency, invariance under joint relabelling, higher valid-generation rates under dyadic composition, and a structural index over 10.02 million mechanisms.
-  - _Applicable to our work:_ Constructive sampling by admissible-by-construction composition raised validity over adjacency sampling, which parallels the inverse factory sampling valid programs. Relabelling-invariant structural representation is relevant to symmetry and orbit ambiguity when pointing at congruent faces, and modular decomposition with interfaces may inspire sub-block program structure.
-  - _Additional context:_ Planar linkages, not 3D B-rep; contributions are representation and sampling ideas rather than a decoder. Evaluated on small MLPs.
-  - _Impact_ 0.20 · _Applicability_ 0.30 · _Confidence_ 0.43 · _Effort_ 5.0/10
-  [2610.40005](https://arxiv.org/abs/2610.40005)
 - **Objective programmatic verifiers flag guideline violations and serve as rewards for RLV...** · score 0.004
   - _Contributions:_ Describes a deployed pipeline generating animated icons, focusing on image generation. Designs objective verifiers and uses them for RLVR, raising pass rate from 15.7% to 58.7%.
   - _Applicable to our work:_ Supports our verifier-in-the-loop line: a frozen machine-checkable verifier as RL reward when no supervised data exists; dual use as reward and deployment gate mirrors our best-of-N screening.
