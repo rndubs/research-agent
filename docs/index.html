@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-10</title>
+<title>hexgen digest — 2026-11-11</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-10 · 14 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-11 · 13 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -154,28 +154,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2611.05041">
+   href="https://arxiv.org/abs/2611.13627">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.030</span>
-    <span class="card-title">Inject a positional encoding with learnable scale that breaks the model&#39;s symmetry duri...</span>
+    <span class="badge" title="composite RICE score">0.037</span>
+    <span class="card-title">Given a failed proof and verifier error, TopoVerus (QwQ-32B based) generates a structur...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>Proposes constraint relaxation via positional encoding as a cheap alternative to dense relaxation layers. The PE is annealed to zero so the final model is strictly equivariant, giving gains for translational and rotational equivariant models with marginal compute and memory overhead.</dd>
+    <dd>TopoVerus internalizes counterexample-guided diagnosis: counterexample generation is trained not as a standalone task but via downstream credit, being rewarded when conditioning on it yields a safe, verifier-passing proof. A dependency-aware curriculum with a topological graph reward encourages repairing prerequisite invariants first. Across 471 Verus problems it beats Claude Sonnet 4.5, and its counterexamples also boost other repair tools.</dd>
     <dt>Applicable to our work</dt>
-    <dd>A genuinely new training-time mechanism for rotation robustness that does not require a natively invariant encoder: add an annealed pose/positional signal to the graph-transformer inputs during training. Could also be used to relax symmetry/orbit constraints in pointer heads during optimization, then restore them.</dd>
+    <dd>Directly maps to hexgen&#39;s repair/edit distillation care-area: train a repair head that, given a broken hexproj program and the frozen verifier&#39;s failure report (e.g. which faces/blocks produced inverted elements or failed surface match), first emits a localized diagnosis then an edited program, with credit assigned only through downstream verifier pass (diagnosis rewarded by usefulness, not standalone correctness). The dependency-ordered curriculum is analogous to fixing upstream block/sweep commands before dependent projections. The safety gate idea maps to forbidding edits that change the target B-rep.</dd>
     <dt>Additional context</dt>
-    <dd>Our own natively rotation-invariant line is closed; this is about easing optimization of equivariant models, so its payoff for a 27M graph transformer is unproven. Evaluated on point clouds, grids and E(3) GNNs, not B-rep graphs.</dd>
+    <dd>Uses a 32B LM with RL; hexgen is a 27M model, so take the training recipe (diagnose-then-repair with downstream-credited intermediate, ordering curriculum) rather than the scale. Our verifier already gives richer-than-binary signals (Jacobian, fidelity), which could serve as the &#39;counterexample&#39; analog cheaply. Code and weights are released.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.47</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.74</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.05041</span>
+    <span class="pid">2611.13627</span>
   </div>
 </a>
 
@@ -258,32 +258,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2611.05039">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.022</span>
-    <span class="card-title">Replace the ASP generator with an LLM that proposes hypotheses from structured prompts,...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Introduces ALBI, a neuro-symbolic ILP framework with an iterative generate-test-constrain loop where an LLM generates and a Prolog verifier checks. Also proposes semantic anonymization, a metamorphic test separating structural induction from predicate-name pattern matching.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>A clean template for verifier-in-the-loop program generation: diagnostic feedback from a formal checker constrains the next generation, with beam search over candidates. The same pattern could drive an LLM-agent authoring pipeline for hexgen programs, or error-message-conditioned repair data from our frozen verifier. Semantic anonymization suggests a check that the model relies on structure rather than surface cues.</dd>
-    <dt>Additional context</dt>
-    <dd>Symbolic logic domain with prompted frontier LLMs, not a trained decoder; transfer is conceptual (generate-test-refine loop, failure-conditioned feedback). Code at github.com/seddiqbenterki/albi.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.61</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.05039</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2611.12160">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.017</span>
@@ -310,28 +284,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2611.05158">
+   href="https://arxiv.org/abs/2611.13831">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.014</span>
-    <span class="card-title">Self-play perturb-verify-repair-verify loop: a Mutator makes a typed perturbation of a...</span>
+    <span class="badge" title="composite RICE score">0.016</span>
+    <span class="card-title">FairlySymbolic evolves a triplet of parser (grid -&gt; typed multigraph of core-knowledge...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>Introduces PROVE, a self-play framework that trains a verifier through a closed perturb-verify-repair-verify loop using a single shared backbone. The two verification rounds yield structured rewards for informative perturbations and visually grounded repairs, so updating shared parameters also improves the verifier.</dd>
+    <dd>The paper presents FairlySymbolic, a fully symbolic evolutionary program-synthesis system for ARC that co-evolves the input parser, the transformation program and the output projector, effectively evolving a task-specific DSL. Parser symbols are grounded in core-knowledge theory, and an object-aware fitness grades partially correct outputs beyond pixel matching. It was the only evolutionary entry scored on the ARC-AGI-2 semi-private set.</dd>
     <dt>Applicable to our work</dt>
-    <dd>The perturb-then-repair loop with verifier feedback maps onto repair/edit distillation: corrupt valid hexgen programs with typed edits, have the model fix them against the frozen verifier&#39;s feedback, and reward informative failures. Typed perturbation of known-good (B-rep, program) pairs could also generate hard negatives/repair data from the inverse factory.</dd>
+    <dd>Two transferable ideas: (1) a graded, structure-aware partial-credit score for imperfect programs (object/structure-level rather than exact match) could become a dense value/critic signal for hexgen&#39;s verifier-guided best-of-N or prefix search, instead of only binary pass/fail; (2) their proposed future &#39;learned fitness estimator&#39; predicting mutation distance to a correct program, trained on progressively mutated correct programs, maps directly onto inverse-factory data: mutate valid hexproj programs to train a repair-distance critic.</dd>
     <dt>Additional context</dt>
-    <dd>Vision-language domain; the transferable piece is the self-play reward design, not the architecture. Verifier here is learned, whereas ours is frozen and machine-checkable, which makes the reward simpler.</dd>
+    <dd>Purely symbolic EA, no learning; the mechanism worth borrowing is the fitness design and mutation-distance idea, not the system. ARC grids are far from B-rep geometry. The ablation is the most useful evidence that graded fitness beats coarse pass/fail for search.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
     <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.49</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.52</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.05158</span>
+    <span class="pid">2611.13831</span>
   </div>
 </a>
 

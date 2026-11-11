@@ -1,6 +1,6 @@
-# hexgen digest — 2026-11-10
+# hexgen digest — 2026-11-11
 
-**14** new backlog item(s) in the last 7 day(s).
+**13** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -16,12 +16,12 @@
   - _Additional context:_ Targets LLM-written CadQuery, not a small graph-transformer with pointer heads; RL on a 27M model needs adapting. Verifier-in-loop idea maps closely to our item 1 and 6. Code released.
   - _Impact_ 0.50 · _Applicability_ 0.66 · _Confidence_ 0.66 · _Effort_ 5.0/10
   [2611.09401](https://arxiv.org/abs/2611.09401)
-- **Inject a positional encoding with learnable scale that breaks the model's symmetry duri...** · score 0.030
-  - _Contributions:_ Proposes constraint relaxation via positional encoding as a cheap alternative to dense relaxation layers. The PE is annealed to zero so the final model is strictly equivariant, giving gains for translational and rotational equivariant models with marginal compute and memory overhead.
-  - _Applicable to our work:_ A genuinely new training-time mechanism for rotation robustness that does not require a natively invariant encoder: add an annealed pose/positional signal to the graph-transformer inputs during training. Could also be used to relax symmetry/orbit constraints in pointer heads during optimization, then restore them.
-  - _Additional context:_ Our own natively rotation-invariant line is closed; this is about easing optimization of equivariant models, so its payoff for a 27M graph transformer is unproven. Evaluated on point clouds, grids and E(3) GNNs, not B-rep graphs.
-  - _Impact_ 0.35 · _Applicability_ 0.54 · _Confidence_ 0.47 · _Effort_ 3.0/10
-  [2611.05041](https://arxiv.org/abs/2611.05041)
+- **Given a failed proof and verifier error, TopoVerus (QwQ-32B based) generates a structur...** · score 0.037
+  - _Contributions:_ TopoVerus internalizes counterexample-guided diagnosis: counterexample generation is trained not as a standalone task but via downstream credit, being rewarded when conditioning on it yields a safe, verifier-passing proof. A dependency-aware curriculum with a topological graph reward encourages repairing prerequisite invariants first. Across 471 Verus problems it beats Claude Sonnet 4.5, and its counterexamples also boost other repair tools.
+  - _Applicable to our work:_ Directly maps to hexgen's repair/edit distillation care-area: train a repair head that, given a broken hexproj program and the frozen verifier's failure report (e.g. which faces/blocks produced inverted elements or failed surface match), first emits a localized diagnosis then an edited program, with credit assigned only through downstream verifier pass (diagnosis rewarded by usefulness, not standalone correctness). The dependency-ordered curriculum is analogous to fixing upstream block/sweep commands before dependent projections. The safety gate idea maps to forbidding edits that change the target B-rep.
+  - _Additional context:_ Uses a 32B LM with RL; hexgen is a 27M model, so take the training recipe (diagnose-then-repair with downstream-credited intermediate, ordering curriculum) rather than the scale. Our verifier already gives richer-than-binary signals (Jacobian, fidelity), which could serve as the 'counterexample' analog cheaply. Code and weights are released.
+  - _Impact_ 0.50 · _Applicability_ 0.60 · _Confidence_ 0.74 · _Effort_ 6.0/10
+  [2611.13627](https://arxiv.org/abs/2611.13627)
 - **Controlled comparison of a self-improving embodied coding agent with and without Criter...** · score 0.028
   - _Contributions:_ The paper defines Criteria Exposure in self-improving embodied agents and shows that the success-rate advantage under original criteria vanishes when judged by slightly changed, instruction-faithful criteria. Skills learned under exposure transfer poorly across tasks. It proposes instruction-faithful criteria that better reflect the quality of agent-generated programs.
   - _Applicable to our work:_ Cautionary evidence for the frozen-verifier flywheel: when a generator is trained/selected against a verifier it can overfit the verifier's quirks. Suggests auditing hexgen's verifier thresholds for hidden rules and validating best-of-N self-improvement with held-out/perturbed criteria.
@@ -40,24 +40,18 @@
   - _Additional context:_ Evaluated on text reasoning, not programs; our verifier scores only complete programs, so the prefix value model must be trained from rollouts (Monte Carlo continuation labels are cheap here).
   - _Impact_ 0.50 · _Applicability_ 0.66 · _Confidence_ 0.42 · _Effort_ 6.0/10
   [2611.06606](https://arxiv.org/abs/2611.06606)
-- **Replace the ASP generator with an LLM that proposes hypotheses from structured prompts,...** · score 0.022
-  - _Contributions:_ Introduces ALBI, a neuro-symbolic ILP framework with an iterative generate-test-constrain loop where an LLM generates and a Prolog verifier checks. Also proposes semantic anonymization, a metamorphic test separating structural induction from predicate-name pattern matching.
-  - _Applicable to our work:_ A clean template for verifier-in-the-loop program generation: diagnostic feedback from a formal checker constrains the next generation, with beam search over candidates. The same pattern could drive an LLM-agent authoring pipeline for hexgen programs, or error-message-conditioned repair data from our frozen verifier. Semantic anonymization suggests a check that the model relies on structure rather than surface cues.
-  - _Additional context:_ Symbolic logic domain with prompted frontier LLMs, not a trained decoder; transfer is conceptual (generate-test-refine loop, failure-conditioned feedback). Code at github.com/seddiqbenterki/albi.
-  - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.61 · _Effort_ 4.0/10
-  [2611.05039](https://arxiv.org/abs/2611.05039)
 - **A hierarchical graph abstraction and coarse-to-fine generation pipeline separating coar...** · score 0.017
   - _Contributions:_ The paper introduces a hierarchical serialization pipeline for autoregressive graph generation and studies community coarsening, hierarchical tokenization and order randomization. Traversal-based hierarchy improves distributional and structural fidelity, and gains depend on how well the hierarchy aligns with the target distribution.
   - _Applicable to our work:_ Hierarchical, order-randomized tokenization of structured objects is analogous to serializing hexgen programs (e.g. block then sweep/projection hierarchy) and to ordering augmentation for the decoder.
   - _Additional context:_ Molecule-focused; transfer is at the level of serialization/ordering design.
   - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.60 · _Effort_ 5.0/10
   [2611.12160](https://arxiv.org/abs/2611.12160)
-- **Self-play perturb-verify-repair-verify loop: a Mutator makes a typed perturbation of a...** · score 0.014
-  - _Contributions:_ Introduces PROVE, a self-play framework that trains a verifier through a closed perturb-verify-repair-verify loop using a single shared backbone. The two verification rounds yield structured rewards for informative perturbations and visually grounded repairs, so updating shared parameters also improves the verifier.
-  - _Applicable to our work:_ The perturb-then-repair loop with verifier feedback maps onto repair/edit distillation: corrupt valid hexgen programs with typed edits, have the model fix them against the frozen verifier's feedback, and reward informative failures. Typed perturbation of known-good (B-rep, program) pairs could also generate hard negatives/repair data from the inverse factory.
-  - _Additional context:_ Vision-language domain; the transferable piece is the self-play reward design, not the architecture. Verifier here is learned, whereas ours is frozen and machine-checkable, which makes the reward simpler.
-  - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.49 · _Effort_ 5.0/10
-  [2611.05158](https://arxiv.org/abs/2611.05158)
+- **FairlySymbolic evolves a triplet of parser (grid -> typed multigraph of core-knowledge...** · score 0.016
+  - _Contributions:_ The paper presents FairlySymbolic, a fully symbolic evolutionary program-synthesis system for ARC that co-evolves the input parser, the transformation program and the output projector, effectively evolving a task-specific DSL. Parser symbols are grounded in core-knowledge theory, and an object-aware fitness grades partially correct outputs beyond pixel matching. It was the only evolutionary entry scored on the ARC-AGI-2 semi-private set.
+  - _Applicable to our work:_ Two transferable ideas: (1) a graded, structure-aware partial-credit score for imperfect programs (object/structure-level rather than exact match) could become a dense value/critic signal for hexgen's verifier-guided best-of-N or prefix search, instead of only binary pass/fail; (2) their proposed future 'learned fitness estimator' predicting mutation distance to a correct program, trained on progressively mutated correct programs, maps directly onto inverse-factory data: mutate valid hexproj programs to train a repair-distance critic.
+  - _Additional context:_ Purely symbolic EA, no learning; the mechanism worth borrowing is the fitness design and mutation-distance idea, not the system. ARC grids are far from B-rep geometry. The ablation is the most useful evidence that graded fitness beats coarse pass/fail for search.
+  - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.52 · _Effort_ 4.0/10
+  [2611.13831](https://arxiv.org/abs/2611.13831)
 - **Training-free, verifier-guided agentic framework separating visual planning (DrawingInt...** · score 0.013
   - _Contributions:_ AMSchem is a training-free agentic framework that generates human-readable schematics from analog netlists. It splits planning from executable geometry and applies bounded repair patches that are revalidated by deterministic validators. The authors also introduce AMSchem-Bench with 64 circuits of 12 types.
   - _Applicable to our work:_ Pattern of a frozen deterministic validator gating generation plus bounded local repair of failed outputs; could inspire a repair loop for hexgen programs that fail compile/inverted-element checks, and a two-stage plan-then-executable-IR split.
