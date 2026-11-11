@@ -1,6 +1,6 @@
-# hexgen digest — 2026-11-09
+# hexgen digest — 2026-11-11
 
-**17** new backlog item(s) in the last 7 day(s).
+**13** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -16,36 +16,18 @@
   - _Additional context:_ Targets LLM-written CadQuery, not a small graph-transformer with pointer heads; RL on a 27M model needs adapting. Verifier-in-loop idea maps closely to our item 1 and 6. Code released.
   - _Impact_ 0.50 · _Applicability_ 0.66 · _Confidence_ 0.66 · _Effort_ 5.0/10
   [2611.09401](https://arxiv.org/abs/2611.09401)
-- **Inject a positional encoding with learnable scale that breaks the model's symmetry duri...** · score 0.030
-  - _Contributions:_ Proposes constraint relaxation via positional encoding as a cheap alternative to dense relaxation layers. The PE is annealed to zero so the final model is strictly equivariant, giving gains for translational and rotational equivariant models with marginal compute and memory overhead.
-  - _Applicable to our work:_ A genuinely new training-time mechanism for rotation robustness that does not require a natively invariant encoder: add an annealed pose/positional signal to the graph-transformer inputs during training. Could also be used to relax symmetry/orbit constraints in pointer heads during optimization, then restore them.
-  - _Additional context:_ Our own natively rotation-invariant line is closed; this is about easing optimization of equivariant models, so its payoff for a 27M graph transformer is unproven. Evaluated on point clouds, grids and E(3) GNNs, not B-rep graphs.
-  - _Impact_ 0.35 · _Applicability_ 0.54 · _Confidence_ 0.47 · _Effort_ 3.0/10
-  [2611.05041](https://arxiv.org/abs/2611.05041)
-- **Builds Intent2CAD, an intent-explicit CadQuery representation made by a two-stage conse...** · score 0.028
-  - _Contributions:_ Introduces intent-oriented text-to-CAD generation and IntentCAD-100K (100K text-CadQuery pairs from CAD construction traces) plus IntentCAD-Edit-1K for zero-shot intent-preserving editing. Shows that supervision representation granularity alone, without architecture or decoding changes, improves generation reliability and editing.
-  - _Applicable to our work:_ Strong evidence that target-program representation (higher-level feature ops vs low-level primitives) drives executability; hexgen could lift its DSL/inverse-factory targets to higher-level, template-aligned commands. The lift-and-validate (execute + geometric consistency + locality checks) pipeline is a model for auto-labeling real CAD parts.
-  - _Additional context:_ Closest CAD-program-synthesis paper this cycle; text-to-CAD with LLM fine-tuning rather than graph encoders, so mechanism transfers at the data/representation level only.
-  - _Impact_ 0.50 · _Applicability_ 0.72 · _Confidence_ 0.40 · _Effort_ 5.0/10
-  [2611.03449](https://arxiv.org/abs/2611.03449)
+- **Given a failed proof and verifier error, TopoVerus (QwQ-32B based) generates a structur...** · score 0.037
+  - _Contributions:_ TopoVerus internalizes counterexample-guided diagnosis: counterexample generation is trained not as a standalone task but via downstream credit, being rewarded when conditioning on it yields a safe, verifier-passing proof. A dependency-aware curriculum with a topological graph reward encourages repairing prerequisite invariants first. Across 471 Verus problems it beats Claude Sonnet 4.5, and its counterexamples also boost other repair tools.
+  - _Applicable to our work:_ Directly maps to hexgen's repair/edit distillation care-area: train a repair head that, given a broken hexproj program and the frozen verifier's failure report (e.g. which faces/blocks produced inverted elements or failed surface match), first emits a localized diagnosis then an edited program, with credit assigned only through downstream verifier pass (diagnosis rewarded by usefulness, not standalone correctness). The dependency-ordered curriculum is analogous to fixing upstream block/sweep commands before dependent projections. The safety gate idea maps to forbidding edits that change the target B-rep.
+  - _Additional context:_ Uses a 32B LM with RL; hexgen is a 27M model, so take the training recipe (diagnose-then-repair with downstream-credited intermediate, ordering curriculum) rather than the scale. Our verifier already gives richer-than-binary signals (Jacobian, fidelity), which could serve as the 'counterexample' analog cheaply. Code and weights are released.
+  - _Impact_ 0.50 · _Applicability_ 0.60 · _Confidence_ 0.74 · _Effort_ 6.0/10
+  [2611.13627](https://arxiv.org/abs/2611.13627)
 - **Controlled comparison of a self-improving embodied coding agent with and without Criter...** · score 0.028
   - _Contributions:_ The paper defines Criteria Exposure in self-improving embodied agents and shows that the success-rate advantage under original criteria vanishes when judged by slightly changed, instruction-faithful criteria. Skills learned under exposure transfer poorly across tasks. It proposes instruction-faithful criteria that better reflect the quality of agent-generated programs.
   - _Applicable to our work:_ Cautionary evidence for the frozen-verifier flywheel: when a generator is trained/selected against a verifier it can overfit the verifier's quirks. Suggests auditing hexgen's verifier thresholds for hidden rules and validating best-of-N self-improvement with held-out/perturbed criteria.
   - _Additional context:_ Embodied robotics setting; relevance is by analogy to verifier-in-the-loop training only. No code released that we saw beyond a project page.
   - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.45 · _Effort_ 2.0/10
   [2611.08318](https://arxiv.org/abs/2611.08318)
-- **LAND learns a discrete empirical mixture of source-conditioned score distributions from...** · score 0.027
-  - _Contributions:_ Proposes LAND, an adaptive best-of-N stopping rule derived from posterior-predictive marginal value of another draw under a compute budget. On machine translation it improves quality at matched compute or cuts candidate generations by about 20-40% at matched quality.
-  - _Applicable to our work:_ hexgen draws best-of-N programs screened by a frozen verifier; LAND's adaptive per-input draw budget (stop early on easy B-reps, sample more on hard ones) could cut mesher/verifier cost. Verifier quality scores or pass/fail could serve as the score signal.
-  - _Additional context:_ Inference-time compute only; no direct validity or domain-gap benefit. Verifier score is largely binary, which weakens the variance-based allocation unless quality metrics (Jacobian) are used.
-  - _Impact_ 0.30 · _Applicability_ 0.66 · _Confidence_ 0.41 · _Effort_ 3.0/10
-  [2611.03388](https://arxiv.org/abs/2611.03388)
-- **SQLoom adds a unified set-contrastive objective at syntactic, semantic and logical leve...** · score 0.027
-  - _Contributions:_ Presents SQLoom, constraint-aware fine-tuning with three-level verified supervision, and the Spider-Refined dataset. A 1.7B model reaches 88.7% execution accuracy on Spider dev, beating larger fine-tuning, RL and agent baselines in a single pass.
-  - _Applicable to our work:_ Transferable idea: build minimally perturbed invalid programs (wrong face pointer, bad block topology) verified by the frozen mesher/verifier and train with a contrastive/preference objective against valid ones, giving structural-validity signal beyond token likelihood. Complements repair/edit distillation.
-  - _Additional context:_ Text-to-SQL domain; negatives come from LLM agents, whereas hexgen can mine them directly by perturbing programs and executing the mesher.
-  - _Impact_ 0.50 · _Applicability_ 0.66 · _Confidence_ 0.41 · _Effort_ 5.0/10
-  [2611.03298](https://arxiv.org/abs/2611.03298)
 - **Analysis and online replay experiments of allocation policies (round-robin, Thompson Sa...** · score 0.024
   - _Contributions:_ Shows difficulty-proportional ('harder gets more') allocation captures little oracle gain on hard workloads, and that with a verifier the prior quality matters more than the policy. Provides a decision guide on when adaptive allocation helps.
   - _Applicable to our work:_ Informs how to spend a fixed best-of-N budget across B-rep inputs: use a cheap prior (face count, past pass rates) with Thompson sampling and avoid wasting samples on hopeless parts. Reinforces that the frozen verifier must have rare false accepts.
@@ -58,36 +40,30 @@
   - _Additional context:_ Evaluated on text reasoning, not programs; our verifier scores only complete programs, so the prefix value model must be trained from rollouts (Monte Carlo continuation labels are cheap here).
   - _Impact_ 0.50 · _Applicability_ 0.66 · _Confidence_ 0.42 · _Effort_ 6.0/10
   [2611.06606](https://arxiv.org/abs/2611.06606)
-- **Replace the ASP generator with an LLM that proposes hypotheses from structured prompts,...** · score 0.022
-  - _Contributions:_ Introduces ALBI, a neuro-symbolic ILP framework with an iterative generate-test-constrain loop where an LLM generates and a Prolog verifier checks. Also proposes semantic anonymization, a metamorphic test separating structural induction from predicate-name pattern matching.
-  - _Applicable to our work:_ A clean template for verifier-in-the-loop program generation: diagnostic feedback from a formal checker constrains the next generation, with beam search over candidates. The same pattern could drive an LLM-agent authoring pipeline for hexgen programs, or error-message-conditioned repair data from our frozen verifier. Semantic anonymization suggests a check that the model relies on structure rather than surface cues.
-  - _Additional context:_ Symbolic logic domain with prompted frontier LLMs, not a trained decoder; transfer is conceptual (generate-test-refine loop, failure-conditioned feedback). Code at github.com/seddiqbenterki/albi.
-  - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.61 · _Effort_ 4.0/10
-  [2611.05039](https://arxiv.org/abs/2611.05039)
-- **Two structured prediction stages: a fine-tuned layout model with render-guided visual-s...** · score 0.018
-  - _Contributions:_ Proposes image-based procedural building reconstruction that outputs executable CGA programs. Decomposing into structured intermediate representations compiled deterministically avoids brittle direct low-level program generation, and render-guided reflection repairs layouts.
-  - _Applicable to our work:_ Two ideas fit hexgen: emit a high-level structured schema and compile it deterministically to the DSL to guarantee executability, and a render/execute-then-repair reflection loop on failed programs. Mixed synthetic-plus-real training is also a domain-gap data point.
-  - _Additional context:_ Vision-language, image-conditioned and architectural; evidence is mostly qualitative and assets are unreleased.
-  - _Impact_ 0.40 · _Applicability_ 0.60 · _Confidence_ 0.37 · _Effort_ 5.0/10
-  [2611.03143](https://arxiv.org/abs/2611.03143)
-- **Integrates a symbolic (SMT) reasoner into grammar-constrained decoding: before each ass...** · score 0.015
-  - _Contributions:_ Introduces specification-guided decoding that refines the decoding grammar with a symbolic reasoner so every completed output satisfies a formal specification. Presents forward-only and backtracking variants, model-agnostic and requiring no retraining. Evaluates on configuration and constraint-solving benchmarks.
-  - _Applicable to our work:_ Transferable mechanism: prune pointer/command choices during decoding using a reasoner that checks whether a program prefix can still be completed validly (e.g. face-index consistency, topological constraints), giving validity by construction beyond syntax and reducing best-of-N waste; backtracking idea maps to prefix search/repair.
-  - _Additional context:_ Hexgen validity (zero inverted elements, surface match) is geometric and likely not expressible as SMT constraints; only cheap symbolic preconditions on the DSL (reference validity, arity, block adjacency) would be feasible. Paper targets LLM prompting, not trained small decoders.
-  - _Impact_ 0.40 · _Applicability_ 0.54 · _Confidence_ 0.35 · _Effort_ 5.0/10
-  [2610.41511](https://arxiv.org/abs/2610.41511)
-- **Self-play perturb-verify-repair-verify loop: a Mutator makes a typed perturbation of a...** · score 0.014
-  - _Contributions:_ Introduces PROVE, a self-play framework that trains a verifier through a closed perturb-verify-repair-verify loop using a single shared backbone. The two verification rounds yield structured rewards for informative perturbations and visually grounded repairs, so updating shared parameters also improves the verifier.
-  - _Applicable to our work:_ The perturb-then-repair loop with verifier feedback maps onto repair/edit distillation: corrupt valid hexgen programs with typed edits, have the model fix them against the frozen verifier's feedback, and reward informative failures. Typed perturbation of known-good (B-rep, program) pairs could also generate hard negatives/repair data from the inverse factory.
-  - _Additional context:_ Vision-language domain; the transferable piece is the self-play reward design, not the architecture. Verifier here is learned, whereas ours is frozen and machine-checkable, which makes the reward simpler.
-  - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.49 · _Effort_ 5.0/10
-  [2611.05158](https://arxiv.org/abs/2611.05158)
-- **GraphMP, a local message-passing graph decoder; beam search guided by its predictions r...** · score 0.009
-  - _Contributions:_ Proposes GraphMP, a scalable message-passing decoder transferring without fine-tuning across code families, sizes, error rates and noise models. Shows beam search over its predictions lowers logical error rate at higher decode time. Introduces a decoder model factory that distills verified search trajectories into successive model generations and adapts to noise drift.
-  - _Applicable to our work:_ Closest analogue to our verifier-in-the-loop flywheel: model-guided search (beam) outputs filtered by an independent checker become training data for the next generation, plus analysis of training-objective vs in-search decoding misalignment and data-difficulty drift across generations. Also graph-based decoder with candidate refinement.
-  - _Additional context:_ Domain is quantum error correction; no code link seen. Misalignment between training objective and decoding inside beam search is a useful caution for best-of-N/MCTS over program prefixes.
-  - _Impact_ 0.35 · _Applicability_ 0.48 · _Confidence_ 0.33 · _Effort_ 6.0/10
-  [2610.41398](https://arxiv.org/abs/2610.41398)
+- **A hierarchical graph abstraction and coarse-to-fine generation pipeline separating coar...** · score 0.017
+  - _Contributions:_ The paper introduces a hierarchical serialization pipeline for autoregressive graph generation and studies community coarsening, hierarchical tokenization and order randomization. Traversal-based hierarchy improves distributional and structural fidelity, and gains depend on how well the hierarchy aligns with the target distribution.
+  - _Applicable to our work:_ Hierarchical, order-randomized tokenization of structured objects is analogous to serializing hexgen programs (e.g. block then sweep/projection hierarchy) and to ordering augmentation for the decoder.
+  - _Additional context:_ Molecule-focused; transfer is at the level of serialization/ordering design.
+  - _Impact_ 0.30 · _Applicability_ 0.48 · _Confidence_ 0.60 · _Effort_ 5.0/10
+  [2611.12160](https://arxiv.org/abs/2611.12160)
+- **FairlySymbolic evolves a triplet of parser (grid -> typed multigraph of core-knowledge...** · score 0.016
+  - _Contributions:_ The paper presents FairlySymbolic, a fully symbolic evolutionary program-synthesis system for ARC that co-evolves the input parser, the transformation program and the output projector, effectively evolving a task-specific DSL. Parser symbols are grounded in core-knowledge theory, and an object-aware fitness grades partially correct outputs beyond pixel matching. It was the only evolutionary entry scored on the ARC-AGI-2 semi-private set.
+  - _Applicable to our work:_ Two transferable ideas: (1) a graded, structure-aware partial-credit score for imperfect programs (object/structure-level rather than exact match) could become a dense value/critic signal for hexgen's verifier-guided best-of-N or prefix search, instead of only binary pass/fail; (2) their proposed future 'learned fitness estimator' predicting mutation distance to a correct program, trained on progressively mutated correct programs, maps directly onto inverse-factory data: mutate valid hexproj programs to train a repair-distance critic.
+  - _Additional context:_ Purely symbolic EA, no learning; the mechanism worth borrowing is the fitness design and mutation-distance idea, not the system. ARC grids are far from B-rep geometry. The ablation is the most useful evidence that graded fitness beats coarse pass/fail for search.
+  - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.52 · _Effort_ 4.0/10
+  [2611.13831](https://arxiv.org/abs/2611.13831)
+- **Training-free, verifier-guided agentic framework separating visual planning (DrawingInt...** · score 0.013
+  - _Contributions:_ AMSchem is a training-free agentic framework that generates human-readable schematics from analog netlists. It splits planning from executable geometry and applies bounded repair patches that are revalidated by deterministic validators. The authors also introduce AMSchem-Bench with 64 circuits of 12 types.
+  - _Applicable to our work:_ Pattern of a frozen deterministic validator gating generation plus bounded local repair of failed outputs; could inspire a repair loop for hexgen programs that fail compile/inverted-element checks, and a two-stage plan-then-executable-IR split.
+  - _Additional context:_ Different domain (circuits, LLM prompting, no training); only the verifier/repair methodology transfers.
+  - _Impact_ 0.25 · _Applicability_ 0.42 · _Confidence_ 0.61 · _Effort_ 5.0/10
+  [2611.12333](https://arxiv.org/abs/2611.12333)
+- **Restrict global attention to a randomized near-neighbor graph built once by within-bin...** · score 0.009
+  - _Contributions:_ NearFormer is a graph transformer whose global attention is restricted to a randomized near-neighbor graph, giving attention support of linear size O(|E|+nk). It adds geometry-aware long-range channels with few edges and is analysed in terms of rewiring and over-squashing.
+  - _Applicable to our work:_ Hybrid of global attention and local message passing with geometry-derived attention bias is relevant to the graph-transformer B-rep encoder (e.g. biasing attention by face adjacency/geometric proximity), though sparsity is unnecessary at 7-15 faces.
+  - _Additional context:_ Scalability benefit is moot at our graph size; the geometric-bias idea is the only transferable part.
+  - _Impact_ 0.15 · _Applicability_ 0.48 · _Confidence_ 0.37 · _Effort_ 3.0/10
+  [2611.12186](https://arxiv.org/abs/2611.12186)
 - **Turn-level best-of-N with a generator-selector framework: a generator proposes candidat...** · score 0.008
   - _Contributions:_ Evaluates turn-level best-of-N sampling with an LLM selector comparing candidate actions directly. Shows accuracy and consistency gains on terminal tasks and analyzes behavior shifts.
   - _Applicable to our work:_ Command-level candidate selection during program decoding: sample several next DSL commands and pick with a learned critic rather than only whole-program best-of-N.
