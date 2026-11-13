@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-12</title>
+<title>hexgen digest — 2026-11-13</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,35 +98,9 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-12 · 13 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-13 · 9 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
-<a class="card"
-   href="https://arxiv.org/abs/2611.06890">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.051</span>
-    <span class="card-title">Simple-PAT: zeroth-order optimization over a procedural generator&#39;s control parameters...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Introduces procedural adversarial learning (PAL), a minimax training and adversarial evaluation framework that searches a procedural generator&#39;s parameter space for hard instances. Presents Simple-PAT and PAL-Dojo, generators for normals, segmentation and pose. Reports reduced worst-case error versus standard and robust-training baselines.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Analogous to our inverse factory: instead of sampling random valid programs uniformly, adaptively search the factory&#39;s parameter space for program/B-rep instances where the current decoder (or verifier-screened best-of-N) fails and oversample them. Also gives a worst-case evaluation protocol for the synthetic-to-real domain gap.</dd>
-    <dt>Additional context</dt>
-    <dd>Vision tasks only; zeroth-order search fits a non-differentiable mesher pipeline. Risk: adversarial samples may be unrealistic CAD; needs a validity filter.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.71</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.06890</span>
-  </div>
-</a>
-
 <a class="card"
    href="https://arxiv.org/abs/2611.09401">
   <div class="card-head">
@@ -150,6 +124,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.09401</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2611.17287">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.039</span>
+    <span class="card-title">Negative-Only Policy Optimization (NOPO) treats verified positives as unlabeled and upd...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper formalizes one-sided verifiability (OSV), where verified negatives are reliable counterexamples but verified positives are merely non-falsified. It proposes NOPO, which learns only from suppressing verified negatives relative to a reference policy, with a group-level adapter. It reports pass@k gains over baselines on code, logic and math with unit-test, constraint-check and LLM self-verifiers when oracle rewards are unavailable.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly maps onto hexgen&#39;s frozen verifier: compile/zero-inverted-element/Jacobian failures are trustworthy negatives, while &#39;passes&#39; may still be poor programs (e.g. templates that game boundary-fidelity thresholds). NOPO-style negative-only fine-tuning on best-of-N rollouts could raise structural validity (care-area 1) and serve as a safer alternative to rejection-sampled SFT in the verifier-in-the-loop flywheel (care-area 6), especially pass@k which matches best-of-N deployment.</dd>
+    <dt>Additional context</dt>
+    <dd>Only the abstract was available; loss details, hyperparameters and model scales are not verified here. Evaluated on LLM reasoning tasks, not small graph-conditioned decoders; transfer to a 27M model with pointer heads is plausible but untested. Note hexgen&#39;s verifier is fairly strict, so positives are less noisy than in the OSV setting — benefit may be largest for the softer checks.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.39</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.17287</span>
   </div>
 </a>
 
@@ -180,80 +180,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2611.08318">
+   href="https://arxiv.org/abs/2611.17321">
   <div class="card-head">
-    <span class="badge" title="composite RICE score">0.028</span>
-    <span class="card-title">Controlled comparison of a self-improving embodied coding agent with and without Criter...</span>
+    <span class="badge" title="composite RICE score">0.021</span>
+    <span class="card-title">A set-conditioned SE(3) flow-matching model (DiT) is pretrained on procedurally generat...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper defines Criteria Exposure in self-improving embodied agents and shows that the success-rate advantage under original criteria vanishes when judged by slightly changed, instruction-faithful criteria. Skills learned under exposure transfer poorly across tasks. It proposes instruction-faithful criteria that better reflect the quality of agent-generated programs.</dd>
+    <dd>BrickFlow is the first method to reconstruct a LEGO object from an image and its partset. It pretrains a set-conditioned SE(3) flow prior on procedural assemblies, adapts it to images with ~1% of the data, and introduces a training-free connectivity-field guidance energy that raises assembly validity for every model size and halves disconnected components in large assemblies.</dd>
     <dt>Applicable to our work</dt>
-    <dd>Cautionary evidence for the frozen-verifier flywheel: when a generator is trained/selected against a verifier it can overfit the verifier&#39;s quirks. Suggests auditing hexgen&#39;s verifier thresholds for hidden rules and validating best-of-N self-improvement with held-out/perturbed criteria.</dd>
+    <dd>Three transferable ideas: (1) procedural/synthetic pretraining then small-data finetuning on real data, with an ablation showing the synthetic prior is what gives structural validity (19.4% vs 2.3%) — analogous to hexgen&#39;s inverse-factory data and the synthetic-to-real CAD gap (care-area 2); (2) a differentiable/analytic constraint energy applied as test-time guidance to push samples toward validity without retraining — an analogue for verifier-guided decoding of hexgen programs, e.g. a soft validity critic steering beam/best-of-N (care-area 1); (3) best-of-N validity curves vs part count and symmetry-aware matching of interchangeable parts, related to pointer ambiguity over congruent faces (care-area 4).</dd>
     <dt>Additional context</dt>
-    <dd>Embodied robotics setting; relevance is by analogy to verifier-in-the-loop training only. No code released that we saw beyond a project page.</dd>
+    <dd>Continuous flow model over poses, not an autoregressive program decoder, so guidance does not transfer directly to discrete token decoding; the mechanism would need reformulating as a value/critic over prefixes. Absolute validity is still low (~35%). Code and data released.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.08318</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.06372">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.024</span>
-    <span class="card-title">Analysis and online replay experiments of allocation policies (round-robin, Thompson Sa...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Shows difficulty-proportional (&#39;harder gets more&#39;) allocation captures little oracle gain on hard workloads, and that with a verifier the prior quality matters more than the policy. Provides a decision guide on when adaptive allocation helps.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Informs how to spend a fixed best-of-N budget across B-rep inputs: use a cheap prior (face count, past pass rates) with Thompson sampling and avoid wasting samples on hopeless parts. Reinforces that the frozen verifier must have rare false accepts.</dd>
-    <dt>Additional context</dt>
-    <dd>Text/math/code workloads; relevant only to inference-budget policy, not modeling.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.06372</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.06606">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.023</span>
-    <span class="card-title">VGSC proposes candidate next steps from the base LM and accepts/resamples using step-le...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Proposes Verifier-Guided Self-Consistency, a stochastic decoding framework combining step-level verification and future-outcome estimates. Interprets it as approximate sampling from a verifier-tilted trajectory distribution. Shows higher average accuracy than baselines across benchmarks, generators and verifiers.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Prefix-level accept/resample guided by a step verifier plus a value estimate maps to guiding hexgen decoding over program prefixes with a learned prefix-validity/compile-success predictor, tilting sampling toward executable programs before best-of-N screening by the frozen verifier.</dd>
-    <dt>Additional context</dt>
-    <dd>Evaluated on text reasoning, not programs; our verifier scores only complete programs, so the prefix value model must be trained from rollouts (Monte Carlo continuation labels are cheap here).</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.66</span></span>
     <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.06606</span>
+    <span class="pid">2611.17321</span>
   </div>
 </a>
 
@@ -336,6 +284,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2611.17141">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.010</span>
+    <span class="card-title">ISLA (Invariant Slice Attention) is a slice-attention transformer where no learned oper...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces ISLA, claimed as the first slice-attention surrogate exactly equivariant to the Euclidean group, invariant to units and consistent under mesh refinement. It proves these invariances and shows measure-weighted slice attention is a ratio of quadratures. Empirically it has the lowest errors on AeroZoo, is second to GLOBE on AirfRANS, and its error changes by at most 1.1% under changes of presentation.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The hexgen encoder-level rotation-invariance line is closed, but two ISLA ideas are new relative to it: (1) a boundary-derived length unit and measure-weighted (area-weighted) aggregation over boundary faces, giving invariance to tessellation/resampling and scale — relevant to the coordinate/tokenization domain gap between factory-synthesized and real CAD B-reps (care-area 2); (2) its finding that principal-axis canonical frames at inference still leave 5-6x errors while full SO(3) augmentation nearly closes the gap, informative for deployment-time canonical-frame vs augmentation choices (care-area 5). Anchor-relative distance/angle features could also augment face tokens in the graph transformer.</dd>
+    <dt>Additional context</dt>
+    <dd>PDE surrogate, not a generative/program model; outputs are fields, not discrete pointer decisions. hexgen B-reps have only ~7-15 faces, so quadrature/remeshing consistency matters less than for dense meshes. Exact equivariance conflicts with hexgen&#39;s need to emit absolute coordinates in a closed vocabulary — would require canonicalizing outputs. Code promised in NVIDIA PhysicsNeMo.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.17141</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2611.12186">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.009</span>
@@ -358,84 +332,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.12186</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.06868">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.008</span>
-    <span class="card-title">Turn-level best-of-N with a generator-selector framework: a generator proposes candidat...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Evaluates turn-level best-of-N sampling with an LLM selector comparing candidate actions directly. Shows accuracy and consistency gains on terminal tasks and analyzes behavior shifts.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Command-level candidate selection during program decoding: sample several next DSL commands and pick with a learned critic rather than only whole-program best-of-N.</dd>
-    <dt>Additional context</dt>
-    <dd>Selector is an LLM judging text actions; for us a trained critic or partial-execution check would replace it.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.28</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.06868</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.07876">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.008</span>
-    <span class="card-title">We compare six execution-free predictors from four families on Qwen3-Coder-30B and gpt-...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper compares six execution-free correctness predictors (output confidence, EigenScore consistency, hidden-state probes, causal-subspace probes) for LLM code judgments under benchmark and language shift. It adapts two causal localization methods to code and finds they improve robustness to language shift for verdict correctness on Qwen3-Coder, but not consistently elsewhere. For program correctness, predictors mostly identify hard problems and rank candidates within a problem poorly.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Learned critic/value signals for ranking best-of-N candidates when the frozen verifier is expensive; shows such predictors triage problems better than they rank candidates, and degrade under shift, relevant to synthetic-to-real CAD gap.</dd>
-    <dt>Additional context</dt>
-    <dd>LLM code-judging setting, not geometric programs; transfer is indirect. Weak within-problem ranking limits use for best-of-N selection.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.07876</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.06123">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.004</span>
-    <span class="card-title">Objective programmatic verifiers flag guideline violations and serve as rewards for RLV...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>Describes a deployed pipeline generating animated icons, focusing on image generation. Designs objective verifiers and uses them for RLVR, raising pass rate from 15.7% to 58.7%.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Supports our verifier-in-the-loop line: a frozen machine-checkable verifier as RL reward when no supervised data exists; dual use as reward and deployment gate mirrors our best-of-N screening.</dd>
-    <dt>Additional context</dt>
-    <dd>Image domain; evidence of the pattern rather than a transferable mechanism. Reward hacking risk; they use an independent judge.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.20</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.37</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.06123</span>
   </div>
 </a>
 
