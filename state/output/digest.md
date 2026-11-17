@@ -1,15 +1,9 @@
-# hexgen digest — 2026-11-16
+# hexgen digest — 2026-11-17
 
-**11** new backlog item(s) in the last 7 day(s).
+**10** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
-- **Trains LLMs to write CadQuery programs with GRPO using a deterministic CAD-CAE verifier...** · score 0.043
-  - _Contributions:_ PhyCAD is a physics-aware Text-to-CAD framework that trains language models to produce executable CadQuery programs under geometric and physical constraints. It contributes a dataset linking parametric CAD with geometric specs, loading conditions and limits, an automated CAD-CAE verifier, and a Hierarchical Balanced Advantage for GRPO that keeps cross-level priority while giving fine-grained within-level feedback.
-  - _Applicable to our work:_ Directly transferable: our frozen verifier (compiles, zero inverted elements, Jacobian/aspect bounds, boundary fidelity) is naturally a level hierarchy. The hierarchical advantage (between-level + within-level peer ranking) could drive GRPO/RL fine-tuning of the hexgen decoder or weight rejection-sampled SFT, avoiding flat-reward masking of validity failures.
-  - _Additional context:_ Targets LLM-written CadQuery, not a small graph-transformer with pointer heads; RL on a 27M model needs adapting. Verifier-in-loop idea maps closely to our item 1 and 6. Code released.
-  - _Impact_ 0.50 · _Applicability_ 0.66 · _Confidence_ 0.66 · _Effort_ 5.0/10
-  [2611.09401](https://arxiv.org/abs/2611.09401)
 - **Negative-Only Policy Optimization (NOPO) treats verified positives as unlabeled and upd...** · score 0.039
   - _Contributions:_ The paper formalizes one-sided verifiability (OSV), where verified negatives are reliable counterexamples but verified positives are merely non-falsified. It proposes NOPO, which learns only from suppressing verified negatives relative to a reference policy, with a group-level adapter. It reports pass@k gains over baselines on code, logic and math with unit-test, constraint-check and LLM self-verifiers when oracle rewards are unavailable.
   - _Applicable to our work:_ Directly maps onto hexgen's frozen verifier: compile/zero-inverted-element/Jacobian failures are trustworthy negatives, while 'passes' may still be poor programs (e.g. templates that game boundary-fidelity thresholds). NOPO-style negative-only fine-tuning on best-of-N rollouts could raise structural validity (care-area 1) and serve as a safer alternative to rejection-sampled SFT in the verifier-in-the-loop flywheel (care-area 6), especially pass@k which matches best-of-N deployment.
