@@ -1,6 +1,6 @@
-# hexgen digest — 2026-11-19
+# hexgen digest — 2026-11-20
 
-**10** new backlog item(s) in the last 7 day(s).
+**14** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -16,6 +16,12 @@
   - _Additional context:_ Encoder-side gain only; it says nothing about program validity. Our graphs are small (7-15 faces), so pretraining benefit may be smaller than on MFCAD/Fusion, and our face features may differ from UV-grids. A cheap experiment: MAE-pretrain our encoder on real-part B-reps without labels and measure real-part verifier pass rate. Related: UV-Net, BRepNet, SDF-SSL (Jones et al.), REPA.
   - _Impact_ 0.50 · _Applicability_ 0.84 · _Confidence_ 0.54 · _Effort_ 5.0/10
   [2611.22903](https://arxiv.org/abs/2611.22903)
+- **Compare answer-only vs program-producing (DSL) LLM arms on ARC-AGI-2, plus a short evol...** · score 0.040
+  - _Contributions:_ The paper measures, on ARC-AGI-2, the cost of requiring an LLM to produce a verifiable program: the score dropped from 93 to 68 of 120 tasks, mostly because verified programs fail to generalize rather than because none is found. A cheap evolutionary search over already-sampled programs beats best-of-2 sampling by about 9 tasks, and verifiability enables early stopping that saves up to 38-49% of budget. The method transfers to synthesizing interpretable QEC decoders.
+  - _Applicable to our work:_ Directly maps onto hexgen's best-of-N + frozen verifier: (1) recombining/mutating already-sampled candidate programs (crossover at command level) before verification could raise pass rate without extra decoder calls; (2) early termination once a program passes; (3) caution that a verifier-passing program may still be the 'wrong explanation' — check generalization across perturbations of the part.
+  - _Additional context:_ LLM-based, not a small trained decoder; but the evolutionary-over-samples result is model-agnostic. Its 'explanation that does not generalize' finding parallels verifier-overfitting risks. Linked GitHub is the ARC benchmarking harness, not this paper's code.
+  - _Impact_ 0.40 · _Applicability_ 0.66 · _Confidence_ 0.46 · _Effort_ 3.0/10
+  [2611.25896](https://arxiv.org/abs/2611.25896)
 - **Negative-Only Policy Optimization (NOPO) treats verified positives as unlabeled and upd...** · score 0.039
   - _Contributions:_ The paper formalizes one-sided verifiability (OSV), where verified negatives are reliable counterexamples but verified positives are merely non-falsified. It proposes NOPO, which learns only from suppressing verified negatives relative to a reference policy, with a group-level adapter. It reports pass@k gains over baselines on code, logic and math with unit-test, constraint-check and LLM self-verifiers when oracle rewards are unavailable.
   - _Applicable to our work:_ Directly maps onto hexgen's frozen verifier: compile/zero-inverted-element/Jacobian failures are trustworthy negatives, while 'passes' may still be poor programs (e.g. templates that game boundary-fidelity thresholds). NOPO-style negative-only fine-tuning on best-of-N rollouts could raise structural validity (care-area 1) and serve as a safer alternative to rejection-sampled SFT in the verifier-in-the-loop flywheel (care-area 6), especially pass@k which matches best-of-N deployment.
@@ -52,18 +58,36 @@
   - _Additional context:_ Robotics/VLA domain; no direct geometric overlap. For B-reps, canonical frame estimation is cheaper (exact geometry, no image warping), so the main novelty to borrow is training on estimator artefacts plus the consistency gate. Symmetric parts give ambiguous frames, related to our pointer orbit ambiguity. Project page only; no code repo found in text.
   - _Impact_ 0.35 · _Applicability_ 0.48 · _Confidence_ 0.49 · _Effort_ 4.0/10
   [2611.24360](https://arxiv.org/abs/2611.24360)
+- **Cluster candidates by final answer, score clusters with reward-weighted self-consistenc...** · score 0.019
+  - _Contributions:_ The paper introduces Reward-Weighted Self-Consistency (RWSC) for aggregating best-of-N candidates by answer cluster, and an anytime-valid stopping rule (e-RWSC) built on per-answer betting e-processes that bounds the probability of certifying a non-dominant answer by alpha. It also gives an SPRT variant that works empirically but lacks the guarantee, and shows certification cost scales as log(1/alpha)/KL.
+  - _Applicable to our work:_ The e-process stopping rule could make hexgen's best-of-N adaptive: stop sampling once a verifier-passing program class (or canonicalized program) is certified dominant, saving decode/verify budget on easy parts and spending it on hard ones. Clustering by executed-mesh equivalence rather than final answer is the transferable idea.
+  - _Additional context:_ Our verifier gives a hard pass/fail, so the simpler 'stop at first verified program' rule already applies; the value here is mainly for choosing among multiple valid programs or budget allocation across a batch. Evaluated only on LLM math reasoning.
+  - _Impact_ 0.20 · _Applicability_ 0.42 · _Confidence_ 0.46 · _Effort_ 2.0/10
+  [2611.26413](https://arxiv.org/abs/2611.26413)
 - **Hybrid 'agentic FunSearch': a frontier LLM writes Python programs (via a custom circuit...** · score 0.017
   - _Contributions:_ The paper formulates fault-tolerant quantum circuit design as agentic evolutionary program synthesis, in which an LLM with tool access to an exact fault-tolerance verifier evolves circuit-defining programs. It reports that this finds verified fault-tolerant circuits for all curated tasks spanning logical state preparation, logical gates, and code-switching/code-growth routines, matching or improving existing benchmarks in several cases, and that a few generations with frontier LLMs beat the classic many-weak-mutations FunSearch regime.
   - _Applicable to our work:_ The loop is a direct analogue of our best-of-N + frozen verifier setup, upgraded to iterative search: (1) expose the frozen hexproj verifier as a tool so a proposer can test/repair a program before submission (repair loop, problem 1); (2) lexicographic ranking of candidates (compile/execute validity > zero inverted elements > Jacobian/aspect quality > boundary fidelity > element budget) instead of a scalar, used both for best-of-N selection and for building rejection-sampled SFT data (problem 6); (3) an LLM-agent evolutionary authoring pipeline over hexgen DSL programs could generate hard real-CAD training labels where deterministic templates fail, shrinking the synthetic-vs-real domain gap (problem 2); (4) island-based diversity to avoid mode collapse in self-improvement data.
   - _Additional context:_ Not a neural-model method — it's an LLM-search pipeline, so the value for hexgen is as a data-generation/labeling engine and a design pattern for verifier-guided repair, not as a decoder architecture. Our verifier is cheap and exact like theirs, which makes the transfer plausible. No code link found in the extracted text. Connects to FunSearch/AlphaEvolve; cost is dominated by frontier LLM calls.
   - _Impact_ 0.40 · _Applicability_ 0.54 · _Confidence_ 0.46 · _Effort_ 6.0/10
   [2611.18504](https://arxiv.org/abs/2611.18504)
+- **At each node build invariant features, then two equivariant vectors y1,y2 as weighted c...** · score 0.011
+  - _Contributions:_ The paper proposes a simple Euclidean-equivariant message-passing architecture for point clouds that uses only order-one vector features yet is provably complete, i.e. separates any two non-congruent point clouds. The proof handles degenerate (balanced) configurations via Leech's classification. It also proves completeness of a slightly modified SEGNN and validates separation on synthetic hard pairs.
+  - _Applicable to our work:_ A cheap, learned per-node local frame (y1, y2, y1xy2) is a genuinely new mechanism for rotation robustness, distinct from our closed native-invariance line: it could be used as a canonicalization/frame-estimation front-end for B-rep face centroids/normals, and completeness bears on distinguishing near-congruent faces that pointer heads confuse.
+  - _Additional context:_ Theory-heavy; no evidence on real tasks or on graphs with B-rep attributes. Degenerate symmetric configurations (common in CAD parts) are exactly where frames fail, though the paper's completeness proof covers them. Likely more useful as an idea than as a drop-in.
+  - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.45 · _Effort_ 5.0/10
+  [2611.26384](https://arxiv.org/abs/2611.26384)
 - **ISLA (Invariant Slice Attention) is a slice-attention transformer where no learned oper...** · score 0.010
   - _Contributions:_ The paper introduces ISLA, claimed as the first slice-attention surrogate exactly equivariant to the Euclidean group, invariant to units and consistent under mesh refinement. It proves these invariances and shows measure-weighted slice attention is a ratio of quadratures. Empirically it has the lowest errors on AeroZoo, is second to GLOBE on AirfRANS, and its error changes by at most 1.1% under changes of presentation.
   - _Applicable to our work:_ The hexgen encoder-level rotation-invariance line is closed, but two ISLA ideas are new relative to it: (1) a boundary-derived length unit and measure-weighted (area-weighted) aggregation over boundary faces, giving invariance to tessellation/resampling and scale — relevant to the coordinate/tokenization domain gap between factory-synthesized and real CAD B-reps (care-area 2); (2) its finding that principal-axis canonical frames at inference still leave 5-6x errors while full SO(3) augmentation nearly closes the gap, informative for deployment-time canonical-frame vs augmentation choices (care-area 5). Anchor-relative distance/angle features could also augment face tokens in the graph transformer.
   - _Additional context:_ PDE surrogate, not a generative/program model; outputs are fields, not discrete pointer decisions. hexgen B-reps have only ~7-15 faces, so quadrature/remeshing consistency matters less than for dense meshes. Exact equivariance conflicts with hexgen's need to emit absolute coordinates in a closed vocabulary — would require canonicalizing outputs. Code promised in NVIDIA PhysicsNeMo.
   - _Impact_ 0.25 · _Applicability_ 0.36 · _Confidence_ 0.66 · _Effort_ 6.0/10
   [2611.17141](https://arxiv.org/abs/2611.17141)
+- **A general-purpose LLM agent edits a CAD geometry parametrisation (~1650 values) in roun...** · score 0.006
+  - _Contributions:_ The paper shows an LLM agent can optimise a magnesium stent through a CAD parametrisation of about 1,650 values within 15 nonlinear finite-element simulations, lowering the strain objective by 32% versus about 10% for the industrial optimiser Tosca. A design was validated in an independent higher-fidelity deployment model, and the study compares methods across a ladder of problem sizes.
+  - _Applicable to our work:_ Evidence that an LLM agent can author/edit structured CAD programs with execution feedback (build, mesh, check) — relevant as an LLM-agent authoring pipeline for hexgen training data (care-area 6) and for verifier-feedback repair loops on failed hex programs.
+  - _Additional context:_ Uses a frontier proprietary model and an expensive FE loop; the task is optimization of one design, not generalizing generation. Bridge to hexgen is analogical (agent + deterministic executor feedback). openPASO is an existing agent framework they built on, not necessarily this paper's release.
+  - _Impact_ 0.25 · _Applicability_ 0.36 · _Confidence_ 0.43 · _Effort_ 7.0/10
+  [2611.26003](https://arxiv.org/abs/2611.26003)
 
 ## Current top 10 backlog
 

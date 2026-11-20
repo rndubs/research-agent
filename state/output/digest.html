@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-19</title>
+<title>hexgen digest — 2026-11-20</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-19 · 10 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-20 · 14 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -150,6 +150,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.22903</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2611.25896">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.040</span>
+    <span class="card-title">Compare answer-only vs program-producing (DSL) LLM arms on ARC-AGI-2, plus a short evol...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper measures, on ARC-AGI-2, the cost of requiring an LLM to produce a verifiable program: the score dropped from 93 to 68 of 120 tasks, mostly because verified programs fail to generalize rather than because none is found. A cheap evolutionary search over already-sampled programs beats best-of-2 sampling by about 9 tasks, and verifiability enables early stopping that saves up to 38-49% of budget. The method transfers to synthesizing interpretable QEC decoders.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly maps onto hexgen&#39;s best-of-N + frozen verifier: (1) recombining/mutating already-sampled candidate programs (crossover at command level) before verification could raise pass rate without extra decoder calls; (2) early termination once a program passes; (3) caution that a verifier-passing program may still be the &#39;wrong explanation&#39; — check generalization across perturbations of the part.</dd>
+    <dt>Additional context</dt>
+    <dd>LLM-based, not a small trained decoder; but the evolutionary-over-samples result is model-agnostic. Its &#39;explanation that does not generalize&#39; finding parallels verifier-overfitting risks. Linked GitHub is the ARC benchmarking harness, not this paper&#39;s code.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.66</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.25896</span>
   </div>
 </a>
 
@@ -310,6 +336,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2611.26413">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.019</span>
+    <span class="card-title">Cluster candidates by final answer, score clusters with reward-weighted self-consistenc...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces Reward-Weighted Self-Consistency (RWSC) for aggregating best-of-N candidates by answer cluster, and an anytime-valid stopping rule (e-RWSC) built on per-answer betting e-processes that bounds the probability of certifying a non-dominant answer by alpha. It also gives an SPRT variant that works empirically but lacks the guarantee, and shows certification cost scales as log(1/alpha)/KL.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>The e-process stopping rule could make hexgen&#39;s best-of-N adaptive: stop sampling once a verifier-passing program class (or canonicalized program) is certified dominant, saving decode/verify budget on easy parts and spending it on hard ones. Clustering by executed-mesh equivalence rather than final answer is the transferable idea.</dd>
+    <dt>Additional context</dt>
+    <dd>Our verifier gives a hard pass/fail, so the simpler &#39;stop at first verified program&#39; rule already applies; the value here is mainly for choosing among multiple valid programs or budget allocation across a batch. Evaluated only on LLM math reasoning.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.20</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.26413</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2611.18504">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.017</span>
@@ -336,6 +388,32 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2611.26384">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.011</span>
+    <span class="card-title">At each node build invariant features, then two equivariant vectors y1,y2 as weighted c...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper proposes a simple Euclidean-equivariant message-passing architecture for point clouds that uses only order-one vector features yet is provably complete, i.e. separates any two non-congruent point clouds. The proof handles degenerate (balanced) configurations via Leech&#39;s classification. It also proves completeness of a slightly modified SEGNN and validates separation on synthetic hard pairs.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>A cheap, learned per-node local frame (y1, y2, y1xy2) is a genuinely new mechanism for rotation robustness, distinct from our closed native-invariance line: it could be used as a canonicalization/frame-estimation front-end for B-rep face centroids/normals, and completeness bears on distinguishing near-congruent faces that pointer heads confuse.</dd>
+    <dt>Additional context</dt>
+    <dd>Theory-heavy; no evidence on real tasks or on graphs with B-rep attributes. Degenerate symmetric configurations (common in CAD parts) are exactly where frames fail, though the paper&#39;s completeness proof covers them. Likely more useful as an idea than as a drop-in.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.42</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.26384</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2611.17141">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.010</span>
@@ -358,6 +436,32 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.17141</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2611.26003">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.006</span>
+    <span class="card-title">A general-purpose LLM agent edits a CAD geometry parametrisation (~1650 values) in roun...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper shows an LLM agent can optimise a magnesium stent through a CAD parametrisation of about 1,650 values within 15 nonlinear finite-element simulations, lowering the strain objective by 32% versus about 10% for the industrial optimiser Tosca. A design was validated in an independent higher-fidelity deployment model, and the study compares methods across a ladder of problem sizes.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Evidence that an LLM agent can author/edit structured CAD programs with execution feedback (build, mesh, check) — relevant as an LLM-agent authoring pipeline for hexgen training data (care-area 6) and for verifier-feedback repair loops on failed hex programs.</dd>
+    <dt>Additional context</dt>
+    <dd>Uses a frontier proprietary model and an expensive FE loop; the task is optimization of one design, not generalizing generation. Bridge to hexgen is analogical (agent + deterministic executor feedback). openPASO is an existing agent framework they built on, not necessarily this paper&#39;s release.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.43</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">7.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.26003</span>
   </div>
 </a>
 
