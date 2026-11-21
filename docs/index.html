@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-20</title>
+<title>hexgen digest — 2026-11-21</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-20 · 14 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-21 · 11 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -180,32 +180,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2611.17287">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.039</span>
-    <span class="card-title">Negative-Only Policy Optimization (NOPO) treats verified positives as unlabeled and upd...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper formalizes one-sided verifiability (OSV), where verified negatives are reliable counterexamples but verified positives are merely non-falsified. It proposes NOPO, which learns only from suppressing verified negatives relative to a reference policy, with a group-level adapter. It reports pass@k gains over baselines on code, logic and math with unit-test, constraint-check and LLM self-verifiers when oracle rewards are unavailable.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly maps onto hexgen&#39;s frozen verifier: compile/zero-inverted-element/Jacobian failures are trustworthy negatives, while &#39;passes&#39; may still be poor programs (e.g. templates that game boundary-fidelity thresholds). NOPO-style negative-only fine-tuning on best-of-N rollouts could raise structural validity (care-area 1) and serve as a safer alternative to rejection-sampled SFT in the verifier-in-the-loop flywheel (care-area 6), especially pass@k which matches best-of-N deployment.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract was available; loss details, hyperparameters and model scales are not verified here. Evaluated on LLM reasoning tasks, not small graph-conditioned decoders; transfer to a 27M model with pointer heads is plausible but untested. Note hexgen&#39;s verifier is fairly strict, so positives are less noisy than in the OSV setting — benefit may be largest for the softer checks.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.72</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.39</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.17287</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2611.22838">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.036</span>
@@ -280,32 +254,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.24171</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.17321">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.021</span>
-    <span class="card-title">A set-conditioned SE(3) flow-matching model (DiT) is pretrained on procedurally generat...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>BrickFlow is the first method to reconstruct a LEGO object from an image and its partset. It pretrains a set-conditioned SE(3) flow prior on procedural assemblies, adapts it to images with ~1% of the data, and introduces a training-free connectivity-field guidance energy that raises assembly validity for every model size and halves disconnected components in large assemblies.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Three transferable ideas: (1) procedural/synthetic pretraining then small-data finetuning on real data, with an ablation showing the synthetic prior is what gives structural validity (19.4% vs 2.3%) — analogous to hexgen&#39;s inverse-factory data and the synthetic-to-real CAD gap (care-area 2); (2) a differentiable/analytic constraint energy applied as test-time guidance to push samples toward validity without retraining — an analogue for verifier-guided decoding of hexgen programs, e.g. a soft validity critic steering beam/best-of-N (care-area 1); (3) best-of-N validity curves vs part count and symmetry-aware matching of interchangeable parts, related to pointer ambiguity over congruent faces (care-area 4).</dd>
-    <dt>Additional context</dt>
-    <dd>Continuous flow model over poses, not an autoregressive program decoder, so guidance does not transfer directly to discrete token decoding; the mechanism would need reformulating as a value/critic over prefixes. Absolute validity is still low (~35%). Code and data released.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.17321</span>
   </div>
 </a>
 
@@ -410,32 +358,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.26384</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.17141">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.010</span>
-    <span class="card-title">ISLA (Invariant Slice Attention) is a slice-attention transformer where no learned oper...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces ISLA, claimed as the first slice-attention surrogate exactly equivariant to the Euclidean group, invariant to units and consistent under mesh refinement. It proves these invariances and shows measure-weighted slice attention is a ratio of quadratures. Empirically it has the lowest errors on AeroZoo, is second to GLOBE on AirfRANS, and its error changes by at most 1.1% under changes of presentation.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The hexgen encoder-level rotation-invariance line is closed, but two ISLA ideas are new relative to it: (1) a boundary-derived length unit and measure-weighted (area-weighted) aggregation over boundary faces, giving invariance to tessellation/resampling and scale — relevant to the coordinate/tokenization domain gap between factory-synthesized and real CAD B-reps (care-area 2); (2) its finding that principal-axis canonical frames at inference still leave 5-6x errors while full SO(3) augmentation nearly closes the gap, informative for deployment-time canonical-frame vs augmentation choices (care-area 5). Anchor-relative distance/angle features could also augment face tokens in the graph transformer.</dd>
-    <dt>Additional context</dt>
-    <dd>PDE surrogate, not a generative/program model; outputs are fields, not discrete pointer decisions. hexgen B-reps have only ~7-15 faces, so quadrature/remeshing consistency matters less than for dense meshes. Exact equivariance conflicts with hexgen&#39;s need to emit absolute coordinates in a closed vocabulary — would require canonicalizing outputs. Code promised in NVIDIA PhysicsNeMo.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.25</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.36</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.66</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.17141</span>
   </div>
 </a>
 
