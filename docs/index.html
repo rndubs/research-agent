@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-23</title>
+<title>hexgen digest — 2026-11-24</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-23 · 11 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-24 · 9 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -206,32 +206,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2611.17780">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.033</span>
-    <span class="card-title">LuthorSQL is a non-autoregressive 7B model that, in one forward pass, predicts slot sco...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper presents LuthorSQL, a one-pass non-autoregressive text-to-SQL model that scores slots in a bounded query-plan grammar, executes multiple candidate plans, and picks one with a trained validator. It reports 68.03% execution accuracy on BIRD&#39;s hidden test, zero-shot transfer across SQL dialects, and a confidence cascade with a frontier LLM agent that answers nearly half of questions locally while cutting API cost by a third at equal accuracy.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Several transferable mechanisms for structural validity (problem 1): (1) predicting scores over slots of a bounded grammar so every decoded candidate is well-formed by construction — analogous to a grammar-slot head over hexproj block/sweep/projection commands with pointer slots into B-rep faces; (2) enumerate-compile-execute top-K candidates then rank with a learned validator, a cheap complement to our frozen verifier (a learned value model could pre-rank before the expensive mesher run); (3) the System1/System2 confidence cascade suggests routing low-confidence parts to a slower search/repair path; (4) zero-shot dialect transfer is a mild data point on distribution shift.</dd>
-    <dt>Additional context</dt>
-    <dd>Only the abstract was available in the extracted text, so architectural details (how slots are defined, validator training) are unverified. Hexgen programs have variable length, so a fully non-autoregressive bounded-grammar formulation may only fit sub-structures (e.g. per-block templates). Code and data are released, which lowers adoption cost.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.61</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.17780</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2611.24171">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.022</span>
@@ -306,32 +280,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.26413</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.18504">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.017</span>
-    <span class="card-title">Hybrid &#39;agentic FunSearch&#39;: a frontier LLM writes Python programs (via a custom circuit...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper formulates fault-tolerant quantum circuit design as agentic evolutionary program synthesis, in which an LLM with tool access to an exact fault-tolerance verifier evolves circuit-defining programs. It reports that this finds verified fault-tolerant circuits for all curated tasks spanning logical state preparation, logical gates, and code-switching/code-growth routines, matching or improving existing benchmarks in several cases, and that a few generations with frontier LLMs beat the classic many-weak-mutations FunSearch regime.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The loop is a direct analogue of our best-of-N + frozen verifier setup, upgraded to iterative search: (1) expose the frozen hexproj verifier as a tool so a proposer can test/repair a program before submission (repair loop, problem 1); (2) lexicographic ranking of candidates (compile/execute validity &gt; zero inverted elements &gt; Jacobian/aspect quality &gt; boundary fidelity &gt; element budget) instead of a scalar, used both for best-of-N selection and for building rejection-sampled SFT data (problem 6); (3) an LLM-agent evolutionary authoring pipeline over hexgen DSL programs could generate hard real-CAD training labels where deterministic templates fail, shrinking the synthetic-vs-real domain gap (problem 2); (4) island-based diversity to avoid mode collapse in self-improvement data.</dd>
-    <dt>Additional context</dt>
-    <dd>Not a neural-model method — it&#39;s an LLM-search pipeline, so the value for hexgen is as a data-generation/labeling engine and a design pattern for verifier-guided repair, not as a decoder architecture. Our verifier is cheap and exact like theirs, which makes the transfer plausible. No code link found in the extracted text. Connects to FunSearch/AlphaEvolve; cost is dominated by frontier LLM calls.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.46</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.18504</span>
   </div>
 </a>
 
