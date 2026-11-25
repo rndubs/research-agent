@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-24</title>
+<title>hexgen digest — 2026-11-25</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,9 +98,35 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-24 · 9 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-25 · 12 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2611.33135">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.072</span>
+    <span class="card-title">The model chooses the next part type and the previously placed parent; a precomputed ge...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>BriConstrain is an inference-time constrained decoding method that enforces dynamic, state-dependent geometric validity in autoregressive LEGO assembly generation without retraining. It narrows the combinatorial placement space by constraining how a part attaches to a model-chosen parent, using a precomputed attachment oracle, dynamic collision filtering and a prefix-tree token mask, plus a parent veto. It also proposes ICLF, a relative implicit-connectivity LDraw format, and shows large gains in collision-free builds over freeform decoding and rejection sampling at lower decoding cost.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly transferable to hexgen structural validity: (1) treat each DSL command (block/sweep/projection) as a &#39;placement&#39; whose validity depends on the partially executed mesh state, enumerate a precomputed table of legal command templates per (face-type, face-type) pair, filter them against the current partial state with a cheap incremental checker, and mask the pointer/coordinate head via a prefix tree over the survivors. (2) The parent-veto insight maps cleanly onto our pointer heads: constrain the pointer to faces that still admit at least one valid continuation, since in their ablation ~99.9% of residual invalidity came from choosing a &#39;parent&#39; with no valid continuation. (3) Their finding that soft penalties are overridden confidently and wrongly argues for hard masks before our frozen verifier. (4) Relative/parent-referenced encoding with a closed rotation vocabulary resembles our closed coordinate vocabulary.</dd>
+    <dt>Additional context</dt>
+    <dd>Strongest backlog candidate for care-area 1. Evidence is on 14B/27B LLMs; our 27M model with pointer heads should make masking cheaper since the action space is already small (7-15 faces). The key engineering question is whether our verifier&#39;s checks (inverted elements, Jacobian) can be decomposed into an incremental per-command prefix check; compile/reference validity surely can, quality bounds may only be approximable. Related prior lines cited: PICARD, Synchromesh, type-constrained decoding, XGrammar. No code link found in the text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.75</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.96</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.33135</span>
+  </div>
+</a>
+
 <a class="card"
    href="https://arxiv.org/abs/2611.24681">
   <div class="card-head">
@@ -202,6 +228,58 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.22838</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2611.32821">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.027</span>
+    <span class="card-title">A VLM plus masks/depth build an editable, typed physical program of grounded objects, e...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>PhysMend is a training-free framework for verification-guided program refinement in physics-aware video generation. It verifies and locally repairs an editable physical program on its simulated rollout and depth control rather than on generated videos, using a hybrid verifier in which VLM judgments cannot override failed physical measurements. Failed checks localize repairable fields and residual-scaled bounded updates fix them, with the generator called once per input; it reports state-of-the-art results on Physics-IQ and PhyGenBench.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Mechanism worth borrowing for hexgen repair: give each verifier check (inverted elements, scaled-Jacobian, surface-match, feature-edge capture) an explicit &#39;field ownership&#39; map to the DSL commands/coordinate tokens that produced the offending elements, then do localized edits of only those fields and re-run the full frozen verifier with rollback, instead of resampling whole programs best-of-N. Their ablation (localized repair &gt; global rebuild &gt; no repair) is a direct analog of edit-repair vs re-generation for broken programs, and the trajectories could feed a DAgger-style repair-distillation dataset. Also: typed/schema-validated programs alone gave a sizable gain over untyped.</dd>
+    <dt>Additional context</dt>
+    <dd>Training-free and in a very different domain (video), so the transferable part is the verify-localize-repair loop design, not the model. Their parameter updates are continuous and heuristic (per-check direction rules); our coordinate vocabulary is discrete, so updates would be neighbor-token moves. Note the &#39;Typed simulation&#39; ablation as evidence that schema enforcement matters.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.49</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.32821</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2611.32657">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.027</span>
+    <span class="card-title">A surface-action grammar maps typed action fields (template, surface count, orientation...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>GeoSurge formulates liver resection-surface planning as learnable geometric decision-making over executable actions. It introduces a surface-action grammar that maps actions to parametric geometry, generates and hard-filters template-based candidates, and trains a multimodal reasoner on candidate-level supervision derived from geometric agreement with experts and recomputed metrics. An independent geometry engine materializes and verifies the chosen action, raising constraint satisfaction substantially on two cohorts.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Analogous design for hexgen: instead of free autoregressive generation of all coordinates, generate candidate programs from deterministic construction templates (as our real-CAD auto-labeler already does), hard-gate them with cheap verifier checks, and train the network to select / complete / revise a candidate. Their ablation (direct parameter prediction 0.27 CCSR vs candidate selection 0.56 vs metric-gated 1.00) is evidence that a template-candidate + select interface can dominate free generation for structural validity, and suggests a hybrid fallback path for real parts where free decoding fails.</dd>
+    <dt>Additional context</dt>
+    <dd>Medical domain, LLM reasoner over small candidate sets; the transferable idea is the action-grammar + candidate gating + select/revise training tasks, which overlaps with our template auto-labeler. Note deterministic metric selection alone hit CCSR 1.00, so the learned component mainly improves fidelity, not validity. No code link in text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.49</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.32657</span>
   </div>
 </a>
 
@@ -572,28 +650,28 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2608.24338">
+   href="https://arxiv.org/abs/2611.33135">
   <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.069</span>
-    <span class="card-title">SRD generates N candidate trajectories, routes each to Keep/Refine/Discard via rank-nor...</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.072</span>
+    <span class="card-title">The model chooses the next part type and the previously placed parent; a precomputed ge...</span>
   </div>
   <dl class="fields">
     <dt>Contributions</dt>
-    <dd>The paper introduces Selective Regenerative Decoding (SRD), an inference-time decoding algorithm that performs segment-level intervention on reasoning trajectories instead of whole-trajectory accept/reject, regenerating only a trajectory&#39;s degraded suffix while keeping its useful prefix. It proves SRD achieves a provable 1.28-1.36x sample-efficiency gain and strictly higher expected best-trajectory quality than rejection sampling, with formal termination and monotonicity guarantees. Across MATH500, GPQA Diamond, HotpotQA, and AlpacaEval, SRD matches Best-of-N accuracy with substantially fewer generated tokens and beats speculative rejection in low-compute regimes.</dd>
+    <dd>BriConstrain is an inference-time constrained decoding method that enforces dynamic, state-dependent geometric validity in autoregressive LEGO assembly generation without retraining. It narrows the combinatorial placement space by constraining how a part attaches to a model-chosen parent, using a precomputed attachment oracle, dynamic collision filtering and a prefix-tree token mask, plus a parent veto. It also proposes ICLF, a relative implicit-connectivity LDraw format, and shows large gains in collision-free builds over freeform decoding and rejection sampling at lower decoding cost.</dd>
     <dt>Applicable to our work</dt>
-    <dd>Directly borrowable as a best-of-N alternative for hexgen&#39;s own program sampling: instead of discarding whole failed candidate programs from the frozen verifier, route partially-valid candidates (e.g. correct block/sweep prefix but a broken final projection command) to &#39;Refine&#39; and regenerate only the tail of the program conditioned on the verifier&#39;s failure signal, keeping the valid prefix. This is a concrete mechanism for structural validity via repair/edit distillation (area #1) and best-of-N self-improvement flywheels (area #6) that doesn&#39;t require a larger teacher model -- a good fit since hexgen&#39;s verifier is frozen and machine-checkable, giving a clean segment-level signal (which command first breaks execution) to drive Keep/Refine/Discard routing.</dd>
+    <dd>Directly transferable to hexgen structural validity: (1) treat each DSL command (block/sweep/projection) as a &#39;placement&#39; whose validity depends on the partially executed mesh state, enumerate a precomputed table of legal command templates per (face-type, face-type) pair, filter them against the current partial state with a cheap incremental checker, and mask the pointer/coordinate head via a prefix tree over the survivors. (2) The parent-veto insight maps cleanly onto our pointer heads: constrain the pointer to faces that still admit at least one valid continuation, since in their ablation ~99.9% of residual invalidity came from choosing a &#39;parent&#39; with no valid continuation. (3) Their finding that soft penalties are overridden confidently and wrongly argues for hard masks before our frozen verifier. (4) Relative/parent-referenced encoding with a closed rotation vocabulary resembles our closed coordinate vocabulary.</dd>
     <dt>Additional context</dt>
-    <dd>Domain is LLM text/math reasoning (token-level trajectories scored by a separate reward model), not structured DSL program generation, so the routing/reward machinery (rank-normalized thresholds tuned per task) would need re-deriving against our verifier&#39;s specific failure modes rather than a scalar reward-model score. The theoretical efficiency-gain guarantees rest on assumptions (e.g. stochastic dominance of refinement) that would need re-validating in the DSL-program setting, but the core three-phase Keep/Refine/Discard mechanism is architecture-agnostic and a natural fit for a frozen, machine-checkable verifier like ours.</dd>
+    <dd>Strongest backlog candidate for care-area 1. Evidence is on 14B/27B LLMs; our 27M model with pointer heads should make masking cheaper since the action space is already small (7-15 faces). The key engineering question is whether our verifier&#39;s checks (inverted elements, Jacobian) can be decomposed into an incremental per-command prefix check; compile/reference validity surely can, quality bounds may only be approximable. Related prior lines cited: PICARD, Synchromesh, type-constrained decoding, XGrammar. No code link found in the text.</dd>
   </dl>
   <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.78</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.44</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.75</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.96</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.50</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
   </div>
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
-    <span class="pid">2608.24338</span>
+    <span class="pid">2611.33135</span>
   </div>
 </a>
 
