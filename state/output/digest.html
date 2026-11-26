@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-25</title>
+<title>hexgen digest — 2026-11-26</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,9 +98,35 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-25 · 12 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-26 · 13 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
+<a class="card"
+   href="https://arxiv.org/abs/2611.34928">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.081</span>
+    <span class="card-title">DART starts from a rejected greedy trace, has the model segment it into reasoning steps...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces DART, a trace-mining method that revisits rejected reasoning traces, branches at uncertain steps with deliberately diverse alternatives, and completes them to find verifier-accepted traces. At a matched number of generated traces it recovers 37% more greedy-unsolved DeepMath-103K problems than MC sampling at about 30% lower cost per accepted trace. SFT of Llama-3.1-8B-Instruct on DART-mined traces gives the best point estimate in five of six MATH-500/AIME evaluations.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly maps to hexgen&#39;s rejection-sampled SFT/repair-distillation loop: when all best-of-N programs fail the frozen verifier, take a failed rollout, rank its DSL commands by position-weighted model uncertainty (G-NLL), resample a deliberately different command at the top-ranked step, and greedily complete — a cheap way to recover verified programs for hard (especially real-CAD, out-of-distribution) parts that pure best-of-N never solves. The analogue of &#39;reference-answer guidance&#39; is the template-derived or inverse-factory ground-truth program, which can condition the alternative command during data mining. Segmentation is trivial in a DSL (command boundaries), removing DART&#39;s LLM segmentation step.</dd>
+    <dt>Additional context</dt>
+    <dd>The &#39;meta-thought&#39; alternative proposal relies on an instruction-following LLM; for a 27M decoder, replace with constrained resampling (e.g., exclude the original token / top-k alternatives at that command). The coverage argument (1-(1-q)^k) is the same reason hexgen best-of-N stalls on hard parts. Apple/JKU workshop paper; no released code link found in text (only Math-Verify). Complements BRIAR (also tonight) which does branching at bifurcation points during RL.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.52</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.34928</span>
+  </div>
+</a>
+
 <a class="card"
    href="https://arxiv.org/abs/2611.33135">
   <div class="card-head">
@@ -154,32 +180,6 @@
 </a>
 
 <a class="card"
-   href="https://arxiv.org/abs/2611.22903">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.045</span>
-    <span class="card-title">BRepA encodes UV-grid surface and edge samples with CNN+self-attention encoders, propag...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper introduces BRepA, a 13.5M-parameter B-Rep encoder pretrained once on unlabeled CAD with joint geometry and topology masked autoencoding. It reports large label-efficiency gains for face segmentation (e.g. +32.52% mIoU with 1% labels) and few-shot classification, and shows that aligning a B-Rep diffusion model&#39;s intermediate features to BRepA features roughly halves training time while improving generation quality.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly transferable: (1) pretrain hexgen&#39;s B-rep graph encoder with dual geometry+topology MAE on large unlabeled CAD (ABC/Fusion) including real parts, which may reduce the synthetic-&gt;real domain gap since the inverse factory distribution dominates our labeled data; (2) REPA-style auxiliary alignment of the decoder/encoder hidden states to frozen BRepA-like features as a regularizer that speeds convergence; (3) the BRepA-L (27M) scale matches our model budget. Topology link-prediction pretraining may also help pointer heads that address faces.</dd>
-    <dt>Additional context</dt>
-    <dd>Encoder-side gain only; it says nothing about program validity. Our graphs are small (7-15 faces), so pretraining benefit may be smaller than on MFCAD/Fusion, and our face features may differ from UV-grids. A cheap experiment: MAE-pretrain our encoder on real-part B-reps without labels and measure real-part verifier pass rate. Related: UV-Net, BRepNet, SDF-SSL (Jones et al.), REPA.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.22903</span>
-  </div>
-</a>
-
-<a class="card"
    href="https://arxiv.org/abs/2611.25896">
   <div class="card-head">
     <span class="badge" title="composite RICE score">0.040</span>
@@ -202,32 +202,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.25896</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.22838">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.036</span>
-    <span class="card-title">Exact full-catalogue ranking compares SFT and GRPO models at hit@K up to 500 on five da...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper shows that GRPO post-training of semantic-ID generative recommenders raises top-of-list accuracy but lowers candidate-list recall at large K on all five datasets studied. It traces the loss to negative advantages assigned to plausible but unlogged candidates, which generalize to similar users, and proposes out-of-rollout anchoring, a single extra loss term that restores recall to SFT level while keeping the top-of-list gain.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Hexgen draws best-of-N candidates screened by a frozen verifier, i.e. it is a retriever whose value is pass@N, not top-1. If we add RL/self-play fine-tuning with verifier reward, penalizing sampled programs that fail (or differ from the label) may collapse diversity and hurt pass@N even while pass@1 rises. Borrowable: (1) always evaluate post-training at the deployed N (pass@N vs verifier), not just pass@1; (2) out-of-rollout anchoring — a KL/ordering-preservation term to the SFT policy over non-sampled alternatives — as a cheap guard; (3) be careful with negative advantages on &#39;different but valid&#39; programs, since multiple valid hex programs exist per part (like multiple acceptable next items).</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is recommendation, so the &#39;single logged positive&#39; cause is partly specific; in hexgen the verifier can mark many programs valid, which removes the false-negative issue if reward is verifier-based rather than imitation-match based. Still a useful warning aligned with the &#39;RL sharpens pass@1, not pass@k&#39; literature (Yue et al. 2025). Uses TRL; no dedicated code link found.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.30</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">2.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.22838</span>
   </div>
 </a>
 
@@ -280,6 +254,58 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.32657</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2611.34746">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.024</span>
+    <span class="card-title">Briar builds on-policy, discourse-segmented reasoning trees, expanding nodes along a UC...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper shows that the prefix pass probability under an on-policy verifier is a bounded Doob martingale whose step-credit variance is conserved and vanishes at derailed and absorbed boundaries. Building on this, it proposes Briar, a tree-structured RLVR framework that steers branching toward unresolved decision points, computes exact linear-time posterior node values via RTS smoothing, and applies conciseness advantages only post-absorption. Across four 1.7B-8B backbones and five reasoning benchmarks it reports accuracy gains over DAPO with shorter responses and fewer GPU-hours.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Hexgen programs are verified by a frozen, deterministic checker, so the prefix pass probability V(prefix) of a partial DSL program is exactly the quantity Briar models. Transferable pieces: (1) branch best-of-N/beam search at program-prefix &#39;bifurcation points&#39; (estimated pass rate in ~[0.15,0.85]) instead of sampling N full programs from scratch, which concentrates compute on the command where validity is decided; (2) RTS tree smoothing as a cheap, principled estimator of per-prefix value from a handful of verified rollouts, usable as training targets for a value/critic head that guides decoding; (3) natural segmentation at DSL command boundaries replaces discourse segmentation. The conciseness/absorption part maps loosely to element-budget or program-length regularization.</dd>
+    <dt>Additional context</dt>
+    <dd>Developed for multi-thousand-token LLM math reasoning with RL (DAPO baseline), whereas hexgen is a 27M supervised model with short programs; the RL policy-update machinery is the least transferable part, but the frontier-selection and value-smoothing components can be used purely at data-generation/search time. Results are against RLVR baselines on public math benchmarks; no code link found in the text. Related to VinePPO / TreeRL lines of prefix-value estimation.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.45</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.52</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.34746</span>
+  </div>
+</a>
+
+<a class="card"
+   href="https://arxiv.org/abs/2611.34319">
+  <div class="card-head">
+    <span class="badge" title="composite RICE score">0.023</span>
+    <span class="card-title">PostMesh post-trains the flow-based MeshFlow generator on its own samples via LoRA. Eac...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>PostMesh is presented as the first post-training method for a diffusion- or flow-based artist-mesh generator, self-training on its own samples without any artist meshes. It contributes an artistic mesh reward combining input-consistency and artist-structure terms, and a gating algorithm plus multi-negative flow preference optimisation that converts rewards into weighted preference pairs. After short LoRA post-training it is comparable to or better than slow autoregressive generators on most artist-mesh quality metrics at 2.53 s per mesh.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Two transferable mechanisms for hexgen&#39;s verifier-in-the-loop flywheel: (1) the finding that preference optimisation over own samples beats rejection-sampled imitation (RAFT made outputs worse; reward-selected SFT lost most of the structural gain) is a direct caution for hexgen&#39;s planned best-of-N SFT — use verifier-passing vs failing programs from the same B-rep as multi-negative DPO pairs; (2) group-relative gating (reject samples that are outliers relative to the same input&#39;s group on fidelity/flipped faces/decode failure) maps onto hexgen&#39;s verifier signals (inverted elements, scaled Jacobian, boundary fidelity), giving a graded reward instead of pass/fail. Also a neural quad-dominant mesh generation reference point.</dd>
+    <dt>Additional context</dt>
+    <dd>Operates on triangle/quad surface meshes with a flow model, not volumetric hex meshes or programs; the reward terms (silhouette IoU, valence, slivers) do not map one-to-one to hex quality. Multi-negative DPO applies equally to autoregressive token likelihoods (cf. DeepMesh, Mesh-RFT DPO). No code link found in the text.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.40</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.52</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.34319</span>
   </div>
 </a>
 
@@ -494,9 +520,35 @@
 </a>
 
 <a class="card"
+   href="https://arxiv.org/abs/2611.34928">
+  <div class="card-head">
+<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.081</span>
+    <span class="card-title">DART starts from a rejected greedy trace, has the model segment it into reasoning steps...</span>
+  </div>
+  <dl class="fields">
+    <dt>Contributions</dt>
+    <dd>The paper introduces DART, a trace-mining method that revisits rejected reasoning traces, branches at uncertain steps with deliberately diverse alternatives, and completes them to find verifier-accepted traces. At a matched number of generated traces it recovers 37% more greedy-unsolved DeepMath-103K problems than MC sampling at about 30% lower cost per accepted trace. SFT of Llama-3.1-8B-Instruct on DART-mined traces gives the best point estimate in five of six MATH-500/AIME evaluations.</dd>
+    <dt>Applicable to our work</dt>
+    <dd>Directly maps to hexgen&#39;s rejection-sampled SFT/repair-distillation loop: when all best-of-N programs fail the frozen verifier, take a failed rollout, rank its DSL commands by position-weighted model uncertainty (G-NLL), resample a deliberately different command at the top-ranked step, and greedily complete — a cheap way to recover verified programs for hard (especially real-CAD, out-of-distribution) parts that pure best-of-N never solves. The analogue of &#39;reference-answer guidance&#39; is the template-derived or inverse-factory ground-truth program, which can condition the alternative command during data mining. Segmentation is trivial in a DSL (command boundaries), removing DART&#39;s LLM segmentation step.</dd>
+    <dt>Additional context</dt>
+    <dd>The &#39;meta-thought&#39; alternative proposal relies on an instruction-following LLM; for a 27M decoder, replace with constrained resampling (e.g., exclude the original token / top-k alternatives at that command). The coverage argument (1-(1-q)^k) is the same reason hexgen best-of-N stalls on hard parts. Apple/JKU workshop paper; no released code link found in text (only Math-Verify). Complements BRIAR (also tonight) which does branching at bifurcation points during RL.</dd>
+  </dl>
+  <div class="chips" aria-label="RICE components">
+    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.55</span></span>
+    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.84</span></span>
+    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.52</span></span>
+    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
+  </div>
+  <div class="card-foot">
+    <span class="view">View paper on arXiv →</span>
+    <span class="pid">2611.34928</span>
+  </div>
+</a>
+
+<a class="card"
    href="https://arxiv.org/abs/2609.01441">
   <div class="card-head">
-<span class="rank">#4</span>    <span class="badge" title="composite RICE score">0.078</span>
+<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.078</span>
     <span class="card-title">Defines a per-edge structural invariant, edge-girth g_e (length of the shortest cycle t...</span>
   </div>
   <dl class="fields">
@@ -522,7 +574,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25622">
   <div class="card-head">
-<span class="rank">#5</span>    <span class="badge" title="composite RICE score">0.077</span>
+<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.077</span>
     <span class="card-title">RefineCut is a two-stage training recipe plus a closed-loop inference procedure for a c...</span>
   </div>
   <dl class="fields">
@@ -548,7 +600,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.25608">
   <div class="card-head">
-<span class="rank">#6</span>    <span class="badge" title="composite RICE score">0.075</span>
+<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.075</span>
     <span class="card-title">A wall-first network reuses the Raster2Seq backbone (ResNet features + deformable-atten...</span>
   </div>
   <dl class="fields">
@@ -574,7 +626,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2609.04697">
   <div class="card-head">
-<span class="rank">#7</span>    <span class="badge" title="composite RICE score">0.075</span>
+<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.075</span>
     <span class="card-title">SQL-Zero is a proposer-solver self-play framework in which a challenger and a solver bo...</span>
   </div>
   <dl class="fields">
@@ -600,7 +652,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2609.09572">
   <div class="card-head">
-<span class="rank">#8</span>    <span class="badge" title="composite RICE score">0.074</span>
+<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.074</span>
     <span class="card-title">The paper establishes finite-sample risk bounds for mixed training (synthetic and real...</span>
   </div>
   <dl class="fields">
@@ -626,7 +678,7 @@
 <a class="card"
    href="https://arxiv.org/abs/2608.28229">
   <div class="card-head">
-<span class="rank">#9</span>    <span class="badge" title="composite RICE score">0.073</span>
+<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.073</span>
     <span class="card-title">SWYB (Stay Within Your Bounds) models the grammar as a pushdown automaton (PDA) and off...</span>
   </div>
   <dl class="fields">
@@ -646,32 +698,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2608.28229</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.33135">
-  <div class="card-head">
-<span class="rank">#10</span>    <span class="badge" title="composite RICE score">0.072</span>
-    <span class="card-title">The model chooses the next part type and the previously placed parent; a precomputed ge...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>BriConstrain is an inference-time constrained decoding method that enforces dynamic, state-dependent geometric validity in autoregressive LEGO assembly generation without retraining. It narrows the combinatorial placement space by constraining how a part attaches to a model-chosen parent, using a precomputed attachment oracle, dynamic collision filtering and a prefix-tree token mask, plus a parent veto. It also proposes ICLF, a relative implicit-connectivity LDraw format, and shows large gains in collision-free builds over freeform decoding and rejection sampling at lower decoding cost.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Directly transferable to hexgen structural validity: (1) treat each DSL command (block/sweep/projection) as a &#39;placement&#39; whose validity depends on the partially executed mesh state, enumerate a precomputed table of legal command templates per (face-type, face-type) pair, filter them against the current partial state with a cheap incremental checker, and mask the pointer/coordinate head via a prefix tree over the survivors. (2) The parent-veto insight maps cleanly onto our pointer heads: constrain the pointer to faces that still admit at least one valid continuation, since in their ablation ~99.9% of residual invalidity came from choosing a &#39;parent&#39; with no valid continuation. (3) Their finding that soft penalties are overridden confidently and wrongly argues for hard masks before our frozen verifier. (4) Relative/parent-referenced encoding with a closed rotation vocabulary resembles our closed coordinate vocabulary.</dd>
-    <dt>Additional context</dt>
-    <dd>Strongest backlog candidate for care-area 1. Evidence is on 14B/27B LLMs; our 27M model with pointer heads should make masking cheaper since the action space is already small (7-15 faces). The key engineering question is whether our verifier&#39;s checks (inverted elements, Jacobian) can be decomposed into an incremental per-command prefix check; compile/reference validity surely can, quality bounds may only be approximable. Related prior lines cited: PICARD, Synchromesh, type-constrained decoding, XGrammar. No code link found in the text.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.75</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.96</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">5.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.33135</span>
   </div>
 </a>
 
