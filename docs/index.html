@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>hexgen digest — 2026-11-26</title>
+<title>hexgen digest — 2026-11-27</title>
 <style>
   :root {
     color-scheme: light dark;
@@ -98,7 +98,7 @@
 </head>
 <body>
 <h1>hexgen digest</h1>
-<p class="meta">2026-11-26 · 13 new item(s) in the last 7 day(s)</p>
+<p class="meta">2026-11-27 · 10 new item(s) in the last 7 day(s)</p>
 
 <h2>New this window</h2>
 <a class="card"
@@ -150,32 +150,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.33135</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.24681">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.051</span>
-    <span class="card-title">Formalizes geometric similarity metrics in a unified integral form showing local-error...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper gives an integration-dimension analysis explaining why volume- and surface-based CAD metrics under-weight small local errors. It proposes DrawScore, an engineering-drawing-based metric comparing visible and hidden lines of three orthographic views with a saturating penalty. It shows DrawScore exposes errors IoU misses on CAD-agent outputs, improves generation when used as an RL reward, and works as a best-of-N test-time verifier against an input drawing without 3D ground truth.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The integration-dimension analysis directly informs our verifier&#39;s boundary-fidelity and feature-edge-capture checks: volume/surface-integrated scores under-weight small features (holes, slots) on our 7-15-face parts, so a curve-based (1D) saturating-penalty term — e.g. on projected feature curves or B-rep edges of the meshed boundary vs the input B-rep — would make best-of-N screening and any reward signal more sensitive to small-feature misses. The &#39;reward that improves valid-output rate&#39; result and best-of-N selection-without-ground-truth idea bear on our verifier-in-the-loop / rejection-sampled SFT flywheel.</dd>
-    <dt>Additional context</dt>
-    <dd>Domain is drawing-to-CAD code generation with LLM agents, not hex meshing, but the metric analysis is general. Our verifier already uses strict parametric surface match, which is stricter than Chamfer; the main transferable value is the decay-order argument for any graded (non-binary) reward or ranking we use among verifier-passing candidates. Code released. Related: CADGenBench metrics, Ortho2CAD.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.60</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.74</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">3.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.24681</span>
   </div>
 </a>
 
@@ -306,58 +280,6 @@
   <div class="card-foot">
     <span class="view">View paper on arXiv →</span>
     <span class="pid">2611.34319</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.24171">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.022</span>
-    <span class="card-title">PGSD combines Execution-Aware Selection (simulate execution, pick highest-scoring feasi...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper proposes execution-aware selection plus beyond-pool repair for world-model planners, mapping frozen predictive features and physical execution feedback to a verified correction. It distills an expensive execution-rollout search teacher into a single-shot repair student, choosing teacher targets by maximum constraint margin so student imitation errors still pass the verifier. It reports state-of-the-art single-view results on NAVSIM v1 and v2 with one extra verification rollout per repair.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>Strong analogy to our best-of-N + frozen-verifier loop (care-areas 1 and 6): (a) when no best-of-N candidate passes the verifier, train a repair student that takes the failing program plus structured verifier feedback (which check failed, inverted-element locations, Jacobian minima) and emits one correction, verified once with fallback — a DAgger-style repair-distillation recipe; (b) distill an expensive search teacher (MCTS/beam over program prefixes) into the student; (c) the margin-aware target selection idea: among verifier-passing teacher programs, imitate the one with the largest quality margin (e.g. highest min scaled-Jacobian), so student imitation errors still clear the verifier thresholds.</dd>
-    <dt>Additional context</dt>
-    <dd>Autonomous-driving domain with continuous lateral corrections rather than discrete programs; transferring to discrete DSL edits requires an edit/action representation for repairs. The 53%-&gt;70% acceptance gain from margin-aware targets is the most transferable empirical finding. No code link found.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.50</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.54</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.49</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">6.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.24171</span>
-  </div>
-</a>
-
-<a class="card"
-   href="https://arxiv.org/abs/2611.24360">
-  <div class="card-head">
-    <span class="badge" title="composite RICE score">0.021</span>
-    <span class="card-title">WACO estimates camera and base shifts from a single RGB-D frame using the arm (placed b...</span>
-  </div>
-  <dl class="fields">
-    <dt>Contributions</dt>
-    <dd>The paper shows camera and base pose shifts are one phenomenon (a change of the camera-to-base extrinsic) and introduces WACO, a training-free world-anchored canonicalization that maps observations back to the training pose without ground-truth extrinsics or perturbed data. It adds error-aware fine-tuning on the canonicalizer&#39;s own artefacts and introduces the LIBERO-PoseShift benchmark. WACO substantially improves shifted-pose success in simulation and on a real UR5e robot.</dd>
-    <dt>Applicable to our work</dt>
-    <dd>The deployment-time recipe transfers by analogy to our pose-robustness problem (care-area 5, where native invariance is closed): estimate a canonical frame for the input B-rep at inference, map it back to the training-distribution frame, and — the key borrowable idea — fine-tune the unchanged decoder on the canonicalizer&#39;s own estimation errors (error-aware fine-tuning) so the model tolerates residual misalignment. The confidence gate with fallback to the uncanonicalized input maps onto canonicalizing only when the frame estimate is unambiguous (e.g. distinct principal axes), else using test-time pose augmentation plus our verifier.</dd>
-    <dt>Additional context</dt>
-    <dd>Robotics/VLA domain; no direct geometric overlap. For B-reps, canonical frame estimation is cheaper (exact geometry, no image warping), so the main novelty to borrow is training on estimator artefacts plus the consistency gate. Symmetric parts give ambiguous frames, related to our pointer orbit ambiguity. Project page only; no code repo found in text.</dd>
-  </dl>
-  <div class="chips" aria-label="RICE components">
-    <span class="chip"><span class="chip-k">Impact</span><span class="chip-v">0.35</span></span>
-    <span class="chip"><span class="chip-k">Applicability</span><span class="chip-v">0.48</span></span>
-    <span class="chip"><span class="chip-k">Confidence</span><span class="chip-v">0.49</span></span>
-    <span class="chip"><span class="chip-k">Effort</span><span class="chip-v">4.0</span></span>
-  </div>
-  <div class="card-foot">
-    <span class="view">View paper on arXiv →</span>
-    <span class="pid">2611.24360</span>
   </div>
 </a>
 
