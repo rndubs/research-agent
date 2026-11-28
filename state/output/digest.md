@@ -1,6 +1,6 @@
-# hexgen digest — 2026-11-27
+# hexgen digest — 2026-11-28
 
-**10** new backlog item(s) in the last 7 day(s).
+**6** new backlog item(s) in the last 7 day(s).
 
 ## New this window
 
@@ -16,12 +16,6 @@
   - _Additional context:_ Strongest backlog candidate for care-area 1. Evidence is on 14B/27B LLMs; our 27M model with pointer heads should make masking cheaper since the action space is already small (7-15 faces). The key engineering question is whether our verifier's checks (inverted elements, Jacobian) can be decomposed into an incremental per-command prefix check; compile/reference validity surely can, quality bounds may only be approximable. Related prior lines cited: PICARD, Synchromesh, type-constrained decoding, XGrammar. No code link found in the text.
   - _Impact_ 0.75 · _Applicability_ 0.96 · _Confidence_ 0.50 · _Effort_ 5.0/10
   [2611.33135](https://arxiv.org/abs/2611.33135)
-- **Compare answer-only vs program-producing (DSL) LLM arms on ARC-AGI-2, plus a short evol...** · score 0.040
-  - _Contributions:_ The paper measures, on ARC-AGI-2, the cost of requiring an LLM to produce a verifiable program: the score dropped from 93 to 68 of 120 tasks, mostly because verified programs fail to generalize rather than because none is found. A cheap evolutionary search over already-sampled programs beats best-of-2 sampling by about 9 tasks, and verifiability enables early stopping that saves up to 38-49% of budget. The method transfers to synthesizing interpretable QEC decoders.
-  - _Applicable to our work:_ Directly maps onto hexgen's best-of-N + frozen verifier: (1) recombining/mutating already-sampled candidate programs (crossover at command level) before verification could raise pass rate without extra decoder calls; (2) early termination once a program passes; (3) caution that a verifier-passing program may still be the 'wrong explanation' — check generalization across perturbations of the part.
-  - _Additional context:_ LLM-based, not a small trained decoder; but the evolutionary-over-samples result is model-agnostic. Its 'explanation that does not generalize' finding parallels verifier-overfitting risks. Linked GitHub is the ARC benchmarking harness, not this paper's code.
-  - _Impact_ 0.40 · _Applicability_ 0.66 · _Confidence_ 0.46 · _Effort_ 3.0/10
-  [2611.25896](https://arxiv.org/abs/2611.25896)
 - **A VLM plus masks/depth build an editable, typed physical program of grounded objects, e...** · score 0.027
   - _Contributions:_ PhysMend is a training-free framework for verification-guided program refinement in physics-aware video generation. It verifies and locally repairs an editable physical program on its simulated rollout and depth control rather than on generated videos, using a hybrid verifier in which VLM judgments cannot override failed physical measurements. Failed checks localize repairable fields and residual-scaled bounded updates fix them, with the generator called once per input; it reports state-of-the-art results on Physics-IQ and PhyGenBench.
   - _Applicable to our work:_ Mechanism worth borrowing for hexgen repair: give each verifier check (inverted elements, scaled-Jacobian, surface-match, feature-edge capture) an explicit 'field ownership' map to the DSL commands/coordinate tokens that produced the offending elements, then do localized edits of only those fields and re-run the full frozen verifier with rollback, instead of resampling whole programs best-of-N. Their ablation (localized repair > global rebuild > no repair) is a direct analog of edit-repair vs re-generation for broken programs, and the trajectories could feed a DAgger-style repair-distillation dataset. Also: typed/schema-validated programs alone gave a sizable gain over untyped.
@@ -46,24 +40,6 @@
   - _Additional context:_ Operates on triangle/quad surface meshes with a flow model, not volumetric hex meshes or programs; the reward terms (silhouette IoU, valence, slivers) do not map one-to-one to hex quality. Multi-negative DPO applies equally to autoregressive token likelihoods (cf. DeepMesh, Mesh-RFT DPO). No code link found in the text.
   - _Impact_ 0.40 · _Applicability_ 0.54 · _Confidence_ 0.52 · _Effort_ 5.0/10
   [2611.34319](https://arxiv.org/abs/2611.34319)
-- **Cluster candidates by final answer, score clusters with reward-weighted self-consistenc...** · score 0.019
-  - _Contributions:_ The paper introduces Reward-Weighted Self-Consistency (RWSC) for aggregating best-of-N candidates by answer cluster, and an anytime-valid stopping rule (e-RWSC) built on per-answer betting e-processes that bounds the probability of certifying a non-dominant answer by alpha. It also gives an SPRT variant that works empirically but lacks the guarantee, and shows certification cost scales as log(1/alpha)/KL.
-  - _Applicable to our work:_ The e-process stopping rule could make hexgen's best-of-N adaptive: stop sampling once a verifier-passing program class (or canonicalized program) is certified dominant, saving decode/verify budget on easy parts and spending it on hard ones. Clustering by executed-mesh equivalence rather than final answer is the transferable idea.
-  - _Additional context:_ Our verifier gives a hard pass/fail, so the simpler 'stop at first verified program' rule already applies; the value here is mainly for choosing among multiple valid programs or budget allocation across a batch. Evaluated only on LLM math reasoning.
-  - _Impact_ 0.20 · _Applicability_ 0.42 · _Confidence_ 0.46 · _Effort_ 2.0/10
-  [2611.26413](https://arxiv.org/abs/2611.26413)
-- **At each node build invariant features, then two equivariant vectors y1,y2 as weighted c...** · score 0.011
-  - _Contributions:_ The paper proposes a simple Euclidean-equivariant message-passing architecture for point clouds that uses only order-one vector features yet is provably complete, i.e. separates any two non-congruent point clouds. The proof handles degenerate (balanced) configurations via Leech's classification. It also proves completeness of a slightly modified SEGNN and validates separation on synthetic hard pairs.
-  - _Applicable to our work:_ A cheap, learned per-node local frame (y1, y2, y1xy2) is a genuinely new mechanism for rotation robustness, distinct from our closed native-invariance line: it could be used as a canonicalization/frame-estimation front-end for B-rep face centroids/normals, and completeness bears on distinguishing near-congruent faces that pointer heads confuse.
-  - _Additional context:_ Theory-heavy; no evidence on real tasks or on graphs with B-rep attributes. Degenerate symmetric configurations (common in CAD parts) are exactly where frames fail, though the paper's completeness proof covers them. Likely more useful as an idea than as a drop-in.
-  - _Impact_ 0.30 · _Applicability_ 0.42 · _Confidence_ 0.45 · _Effort_ 5.0/10
-  [2611.26384](https://arxiv.org/abs/2611.26384)
-- **A general-purpose LLM agent edits a CAD geometry parametrisation (~1650 values) in roun...** · score 0.006
-  - _Contributions:_ The paper shows an LLM agent can optimise a magnesium stent through a CAD parametrisation of about 1,650 values within 15 nonlinear finite-element simulations, lowering the strain objective by 32% versus about 10% for the industrial optimiser Tosca. A design was validated in an independent higher-fidelity deployment model, and the study compares methods across a ladder of problem sizes.
-  - _Applicable to our work:_ Evidence that an LLM agent can author/edit structured CAD programs with execution feedback (build, mesh, check) — relevant as an LLM-agent authoring pipeline for hexgen training data (care-area 6) and for verifier-feedback repair loops on failed hex programs.
-  - _Additional context:_ Uses a frontier proprietary model and an expensive FE loop; the task is optimization of one design, not generalizing generation. Bridge to hexgen is analogical (agent + deterministic executor feedback). openPASO is an existing agent framework they built on, not necessarily this paper's release.
-  - _Impact_ 0.25 · _Applicability_ 0.36 · _Confidence_ 0.43 · _Effort_ 7.0/10
-  [2611.26003](https://arxiv.org/abs/2611.26003)
 
 ## Current top 10 backlog
 
